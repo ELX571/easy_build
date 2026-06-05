@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <!-- Font Awesome (Ikonkalar uchun) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Umumiy Stillar */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Navigatsiya (Header) */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #0f172a;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        .btn-contact {
+            background: #2563eb;
+            color: #fff !important;
+            padding: 8px 20px;
+            border-radius: 25px;
+            transition: background 0.3s !important;
+        }
+
+        .btn-contact:hover {
+            background: #1d4ed8;
+        }
+
+        /* Hero Bo'limi (Asosiy ekran) */
+        .hero {
+            padding: 180px 0 100px 0;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            display: flex;
+            align-items: center;
+            min-height: 90vh;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 48px;
+            color: #0f172a;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero-text h1 span {
+            color: #2563eb;
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            color: #475569;
+            margin-bottom: 30px;
+        }
+
+        .cta-buttons .btn {
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            margin-right: 15px;
+            transition: transform 0.3s;
+        }
+
+        .cta-buttons .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: #fff;
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* Xizmatlar Bo'limi */
+        .services {
+            padding: 100px 0;
+            background: #fff;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 36px;
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+
+        .section-subtitle {
+            color: #64748b;
+            margin-bottom: 60px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            padding: 40px 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .service-card:hover {
+            background: #fff;
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            border-bottom: 4px solid #2563eb;
+        }
+
+        .service-card i {
+            font-size: 40px;
+            color: #2563eb;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 22px;
+            color: #0f172a;
+            margin-bottom: 15px;
+        }
+
+        /* Footer (Sayt cheki) */
+        footer {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 60px 0 30px 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about h3 {
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h4 {
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links ul li a:hover {
+            color: #2563eb;
+        }
+
+        .social-icons a {
+            color: #fff;
+            font-size: 20px;
+            margin-right: 15px;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #2563eb;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid #334155;
+            margin-bottom: 30px;
+        }
+
+        .copy {
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* Moslashuvchanlik (Responsive) */
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .nav-links {
+                display: none; /* Mobil menyu uchun (oddiy variantda yashirildi) */
+            }
+            .hero-text h1 {
+                font-size: 36px;
+            }
+            .cta-buttons .btn {
+                margin-bottom: 15px;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATSIYA BO'LIMI -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="{% url 'home' %}" class="logo">Easy<span>Build</span></a>
+                <ul class="nav-links">
+                    <li><a href="#services">Reytingli Quruvchilar</a></li>
+                    <li><a href="#about">Biz haqimizda</a></li>
+                    <li><a href="#contact" class="btn-contact">Aloqa</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+<!--    &lt;!&ndash; HERO BO'LIMI &ndash;&gt;-->
+<!--    <section class="hero" id="home">-->
+<!--        <div class="container">-->
+<!--            <div class="hero-content">-->
+<!--                <div class="hero-text">-->
+<!--                    <h1>Raqamli Dunyoda O'z <span>Biznesingizni</span> Yarating</h1>-->
+<!--                    <p>Biz sizning g'oyalaringizni zamonaviy veb-saytlar va mukammal dasturiy yechimlar ko'rinishida haqiqatga aylantiramiz.</p>-->
+<!--                    <div class="cta-buttons">-->
+<!--                        <a href="#services" class="btn btn-primary">Boshlash</a>-->
+<!--                        <a href="#contact" class="btn btn-secondary">Bog'lanish</a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="hero-image">-->
+<!--                    &lt;!&ndash; Namuna uchun chiroyli illyustratsiya rasm linki joylangan &ndash;&gt;-->
+<!--                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop" alt="Digital Marketing">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+
+<!--    &lt;!&ndash; XIZMATLAR BO'LIMI &ndash;&gt;-->
+<!--    <section class="services" id="services">-->
+<!--        <div class="container">-->
+<!--            <h2 class="section-title">Bizning Xizmatlar</h2>-->
+<!--            <p class="section-subtitle">Sizga eng yaxshi sifatni taklif etamiz</p>-->
+
+<!--            <div class="services-grid">-->
+<!--                &lt;!&ndash; Xizmat 1 &ndash;&gt;-->
+<!--                <div class="service-card">-->
+<!--                    <i class="fa-solid fa-code"></i>-->
+<!--                    <h3>Veb Dasturlash</h3>-->
+<!--                    <p>Zamonaviy, tezkor va har qanday qurilmaga moslashuvchi (responsive) veb-saytlar tayyorlash.</p>-->
+<!--                </div>-->
+<!--                &lt;!&ndash; Xizmat 2 &ndash;&gt;-->
+<!--                <div class="service-card">-->
+<!--                    <i class="fa-solid fa-paint-brush"></i>-->
+<!--                    <h3>UI/UX Dizayn</h3>-->
+<!--                    <p>Foydalanuvchilar uchun qulay va ko'zga tashlanadigan chiroyli interfeys dizaynlarini chizish.</p>-->
+<!--                </div>-->
+<!--                &lt;!&ndash; Xizmat 3 &ndash;&gt;-->
+<!--                <div class="service-card">-->
+<!--                    <i class="fa-solid fa-chart-line"></i>-->
+<!--                    <h3>SEO optimizatsiya</h3>-->
+<!--                    <p>Saytingizni Google va boshqa qidiruv tizimlarida eng yuqori o'rinlarga olib chiqish.</p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+
+<!--    &lt;!&ndash; FOOTER BO'LIMI &ndash;&gt;-->
+<!--    <footer>-->
+<!--        <div class="container">-->
+<!--            <div class="footer-content">-->
+<!--                <div class="footer-about">-->
+<!--                    <h3>SmartDev</h3>-->
+<!--                    <p>Kelajak texnologiyalarini bugun quring. Biz bilan biznesingizni yangi bosqichga olib chiqing.</p>-->
+<!--                    <br>-->
+<!--                    <div class="social-icons">-->
+<!--                        <a href="#"><i class="fa-brands fa-telegram"></i></a>-->
+<!--                        <a href="#"><i class="fa-brands fa-instagram"></i></a>-->
+<!--                        <a href="#"><i class="fa-brands fa-linkedin"></i></a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="footer-links">-->
+<!--                    <h4>Sahifalar</h4>-->
+<!--                    <ul>-->
+<!--                        <li><a href="#home">Bosh sahifa</a></li>-->
+<!--                        <li><a href="#services">Xizmatlar</a></li>-->
+<!--                        <li><a href="#about">Biz haqimizda</a></li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--                <div class="footer-links">-->
+<!--                    <h4>Yordam</h4>-->
+<!--                    <ul>-->
+<!--                        <li><a href="#">FAQ</a></li>-->
+<!--                        <li><a href="#">Qo'llab-quvvatlash</a></li>-->
+<!--                        <li><a href="#">Maxfiylik siyosati</a></li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <hr>-->
+<!--            <div class="copy">-->
+<!--                <p>&copy; 2026 SmartDev. Barcha huquqlar himoyalangan.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </footer>-->
+
+</body>
+</html>
