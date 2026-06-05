@@ -21,3 +21,5 @@ class Profile(models.Model):
                                )
 
     bio = models.TextField(blank=True)
+
+

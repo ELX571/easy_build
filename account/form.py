@@ -6,6 +6,7 @@ from django.forms import ModelForm
 
 
 class RegisterForm(UserCreationForm):
+    # avatar = forms.ImageField(required=False)
 
     ROLE_CHOICES = (
 
@@ -19,8 +20,6 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = (
-
-            'username',
             'role',
             'first_name',
             'last_name',
@@ -29,7 +28,6 @@ class RegisterForm(UserCreationForm):
 
         widgets = {
 
-            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
             'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),
         }
@@ -41,6 +39,14 @@ class RegisterForm(UserCreationForm):
 
         return user
 
+class SecondRegisterForm(ModelForm):
+    avatar = forms.ImageField(required=False)
+    class Meta:
+        model = User
+        fields = (
+            'username',
+        )
+
 
 
 class LoginForm(forms.Form):
@@ -49,3 +55,6 @@ class LoginForm(forms.Form):
     def clean(self):
         username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
+
+
+
