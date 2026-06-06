@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django import forms
 from django.forms import ModelForm
 
+from account.models import Profile
+
 
 class RegisterForm(UserCreationForm):
     # avatar = forms.ImageField(required=False)
@@ -40,11 +42,13 @@ class RegisterForm(UserCreationForm):
         return user
 
 class SecondRegisterForm(ModelForm):
-    avatar = forms.ImageField(required=False)
+
     class Meta:
-        model = User
+        model = Profile
         fields = (
             'username',
+            'bio',
+            'avatar',
         )
 
 
