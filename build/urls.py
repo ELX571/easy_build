@@ -6,6 +6,6 @@ app_name = 'build'
 
 urlpatterns=[
 
-    path('home/',views.PostListView.as_view(),name='home'),
+    path('',views.PostListView.as_view(),name='home'),
 
 ]

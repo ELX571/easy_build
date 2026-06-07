@@ -41,14 +41,16 @@ INSTALLED_APPS = [
     'account',
     'build',
     #installed apps
-    'tailwind',
+
     'templates',
+    'django_browser_reload',
+    'tailwind',
 
 ]
 
 if DEBUG:
     # Add django_browser_reload only in DEBUG mode
-    INSTALLED_APPS += ["django_browser_reload"]
+    pass # INSTALLED_APPS += ["django_browser_reload"]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

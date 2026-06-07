@@ -1,20 +1,247 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uz">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Profilni yakunlash - SmartDev</title>
+    <!-- Font Awesome (Ikonkalar) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Umumiy sozlamalar */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        /* Chiroyli to'q fon (Skrinshotdagi kabi, lekin biroz zamonaviyroq gradiyent) */
+        body {
+            background: radial-gradient(circle at top left, #1e1b4b, #0f172a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #111827;
+        }
+
+        /* Asosiy oq karta */
+        .profile-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 540px;
+            padding: 50px 45px;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            animation: formAppear 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes formAppear {
+            from { opacity: 0; transform: translateY(20px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Qadamlar ko'rsatkichi (Stepper) */
+        .stepper {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+
+        .step {
+            height: 6px;
+            border-radius: 6px;
+            background: #e5e7eb;
+            transition: all 0.3s;
+        }
+
+        .step.completed { width: 30px; background: #4f46e5; }
+        .step.active { width: 45px; background: #4f46e5; }
+
+        /* Sarlavha qismi */
+        .card-header { text-align: center; margin-bottom: 35px; }
+        .card-header h2 { font-size: 26px; font-weight: 700; margin-bottom: 8px; color: #111827; }
+        .card-header p { font-size: 14px; color: #6b7280; line-height: 1.5; }
+
+        /* Form elementlari */
+        .form-group { margin-bottom: 24px; }
+        label { display: block; font-size: 14px; font-weight: 600; color: #374151; margin-bottom: 8px; }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 14px 16px;
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            border-radius: 12px;
+            font-size: 15px;
+            color: #111827;
+            transition: all 0.2s ease;
+        }
+
+        input:hover, textarea:hover { border-color: #9ca3af; }
+        input:focus, textarea:focus {
+            background: #ffffff;
+            border-color: #4f46e5;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        }
+
+        textarea { resize: vertical; min-height: 110px; }
+
+        /* =========================================
+           MUKAMMAL AVATAR YUKLASH QISMI (Yangi)
+           ========================================= */
+        .avatar-upload {
+            position: relative;
+            width: 100%;
+        }
+
+        /* Asl xunuk inputni yashiramiz */
+        .avatar-upload input[type="file"] {
+            position: absolute;
+            width: 1px; height: 1px;
+            padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0,0,0,0); border: 0;
+        }
+
+        /* Chiroyli label qutisi */
+        .upload-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 25px 20px;
+            border: 2px dashed #cbd5e1;
+            border-radius: 16px;
+            background: #f8fafc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .upload-box:hover {
+            border-color: #4f46e5;
+            background: #eef2ff;
+        }
+
+        .upload-icon {
+            width: 48px;
+            height: 48px;
+            background: #e0e7ff;
+            color: #4f46e5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .upload-box:hover .upload-icon {
+            transform: translateY(-4px);
+        }
+
+        .upload-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #4f46e5;
+            margin-bottom: 4px;
+        }
+        .upload-title span { color: #374151; font-weight: 500; }
+        .upload-desc { font-size: 12px; color: #64748b; }
+
+        /* Tugma */
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: #4f46e5;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
+            transition: all 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: #4338ca;
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Mobil uchun moslashuv */
+        @media (max-width: 480px) {
+            .profile-card { padding: 40px 25px; border-radius: 20px; }
+            .card-header h2 { font-size: 22px; }
+        }
+    </style>
 </head>
 <body>
 
-    <h1>Register</h1>
+    <div class="profile-card">
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+        <!-- Bosqich ko'rsatkichi (Skrinshotdagi elementni professional ko'rinishi) -->
+        <div class="stepper">
+            <div class="step completed"></div>
+            <div class="step active"></div>
+        </div>
 
-        <button type="submit">Register</button>
-    </form>
+        <div class="card-header">
+            <h2>Profil ma'lumotlari</h2>
+            <p>Ro'yxatdan o'tishni yakunlash uchun qo'shimcha ma'lumotlarni kiriting</p>
+        </div>
 
+        <form method="POST" enctype="multipart/form-data">
+
+            <!-- Username -->
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" placeholder="Foydalanuvchi nomini kiriting" required>
+            </div>
+
+            <!-- Bio -->
+            <div class="form-group">
+                <label>Bio</label>
+                <textarea placeholder="O'zingiz, qiziqishlaringiz yoki sohangiz haqida qisqacha yozing..."></textarea>
+            </div>
+
+            <!-- Avatar (Maxsus chiroyli dizayn) -->
+            <div class="form-group">
+                <label>Avatar</label>
+                <div class="avatar-upload">
+                    <input type="file" id="avatar" name="avatar" accept="image/*">
+                    <label for="avatar" class="upload-box">
+                        <div class="upload-icon">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                        </div>
+                        <div class="upload-title">Rasmni yuklash uchun <span>bosing</span></div>
+                        <div class="upload-desc">SVG, PNG, JPG yoki GIF (max. 5MB)</div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Saqlash tugmasi -->
+            <button type="submit" class="btn-submit">
+                Saqlash va Yakunlash
+            </button>
+        </form>
+
+    </div>
+
+    <!-- Kichik JS kod: Rasm tanlanganda nomini ko'rsatib qo'yish (Foydalanuvchiga qulaylik) -->
+    <script>
+        const fileInput = document.getElementById('avatar');
+        const uploadTitle = document.querySelector('.upload-title');
+
+        fileInput.addEventListener('change', function() {
+            if (this.files && this.files.length > 0) {
+                uploadTitle.innerHTML = `<span style="color: #10b981;"><i class="fa-solid fa-check-circle"></i> Tanlandi: ${this.files[0].name}</span>`;
+            }
+        });
+    </script>
 </body>
 </html>
