@@ -96,6 +96,7 @@
             transition: all 0.2s;
         }
         .social-btn:hover { background: #f9fafb; border-color: #d1d5db; transform: translateY(-2px); }
+        .social-btn { text-decoration: none; }
 
         .divider {
             display: flex; align-items: center; text-align: center; color: #9ca3af; font-size: 13px; margin-bottom: 30px;
@@ -170,6 +171,13 @@
         .form-footer { text-align: center; margin-top: 30px; font-size: 14px; color: #6b7280; }
         .form-footer a { color: #4f46e5; font-weight: 600; text-decoration: none; }
         .form-footer a:hover { text-decoration: underline; }
+        .errorlist {
+            color: #dc2626;
+            font-size: 12px;
+            list-style: none;
+            padding: 0;
+            margin: 6px 0 0;
+        }
 
         /* Moslashuvchanlik (Mobil uchun) */
         @media (max-width: 900px) {
@@ -210,9 +218,9 @@
             </div>
 
             <div class="social-login">
-                <button class="social-btn">
+                <a href="{% url 'google_login' %}?process=signup" class="social-btn">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width="18" alt="Google"> Google bilan
-                </button>
+                </a>
                 <button class="social-btn">
                     <i class="fa-brands fa-github" style="font-size: 18px;"></i> GitHub bilan
                 </button>
@@ -221,29 +229,41 @@
             <div class="divider">yoki elektron pochta orqali</div>
 
             <form method="POST">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
 
                 <div class="form-group">
                     <label>Rolni tanlang</label>
-                    <select name="role">
+                    <select name="role" required>
                         <option value="client">Mijoz (Client)</option>
-                        <option value="developer">Dasturchi (Developer)</option>
+                        <option value="builder">Quruvchi (Builder)</option>
                     </select>
+                    {{ form.role.errors }}
+                </div>
+
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="username" placeholder="username" value="{{ form.username.value|default:'' }}" required>
+                    {{ form.username.errors }}
                 </div>
 
                 <div class="input-row">
                     <div class="form-group">
                         <label>Ism (First name)</label>
-                        <input type="text" placeholder="John" required>
+                        <input type="text" name="first_name" placeholder="John" value="{{ form.first_name.value|default:'' }}" required>
+                        {{ form.first_name.errors }}
                     </div>
                     <div class="form-group">
                         <label>Familiya (Last name)</label>
-                        <input type="text" placeholder="Doe" required>
+                        <input type="text" name="last_name" placeholder="Doe" value="{{ form.last_name.value|default:'' }}" required>
+                        {{ form.last_name.errors }}
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>Parol (Password)</label>
-                    <input type="password" placeholder="Parol o'ylab toping" required>
+                    <input type="password" name="password1" placeholder="Parol o'ylab toping" required>
+                    {{ form.password1.errors }}
 
                     <ul class="password-rules">
                         <li>Parol shaxsiy ma'lumotlarga o'xshash bo'lmasligi kerak.</li>
@@ -255,14 +275,15 @@
 
                 <div class="form-group">
                     <label>Parolni tasdiqlang</label>
-                    <input type="password" placeholder="Parolni qayta kiriting" required>
+                    <input type="password" name="password2" placeholder="Parolni qayta kiriting" required>
+                    {{ form.password2.errors }}
                 </div>
 
                 <button type="submit" class="btn-submit">Ro'yxatdan o'tish</button>
             </form>
 
             <div class="form-footer">
-                Allaqachon akkauntingiz bormi? <a href="login.html">Tizimga kirish</a>
+                Allaqachon akkauntingiz bormi? <a href="{% url 'accounts:login' %}">Tizimga kirish</a>
             </div>
         </div>
 

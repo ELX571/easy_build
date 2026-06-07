@@ -196,17 +196,21 @@
         </div>
 
         <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
 
             <!-- Username -->
             <div class="form-group">
                 <label>Username</label>
-                <input type="text" placeholder="Foydalanuvchi nomini kiriting" required>
+                <input type="text" name="username" placeholder="Foydalanuvchi nomini kiriting" value="{{ form.username.value|default:'' }}" required>
+                {{ form.username.errors }}
             </div>
 
             <!-- Bio -->
             <div class="form-group">
                 <label>Bio</label>
-                <textarea placeholder="O'zingiz, qiziqishlaringiz yoki sohangiz haqida qisqacha yozing..."></textarea>
+                <textarea name="bio" placeholder="O'zingiz, qiziqishlaringiz yoki sohangiz haqida qisqacha yozing...">{{ form.bio.value|default:'' }}</textarea>
+                {{ form.bio.errors }}
             </div>
 
             <!-- Avatar (Maxsus chiroyli dizayn) -->

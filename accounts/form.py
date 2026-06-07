@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django import forms
 from django.forms import ModelForm
 
-from account.models import Profile
+from accounts.models import Profile
 
 
 class RegisterForm(UserCreationForm):
@@ -17,14 +17,17 @@ class RegisterForm(UserCreationForm):
 
     )
 
-    role = forms.ChoiceField( choices=ROLE_CHOICES,widget=forms.Select(), )
+    role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.Select())
 
     class Meta:
         model = User
         fields = (
             'role',
+            'username',
             'first_name',
             'last_name',
+            'password1',
+            'password2',
 
         )
 
@@ -35,9 +38,16 @@ class RegisterForm(UserCreationForm):
         }
 
     def save(self, commit=True):
-        user = User.objects.create_user(
-            **self.cleaned_data,
-        )
+        role = self.cleaned_data.pop('role')
+        user = super().save(commit=False)
+        user.first_name = self.cleaned_data.get('first_name', '')
+        user.last_name = self.cleaned_data.get('last_name', '')
+
+        if commit:
+            user.save()
+            from accounts.models import Role
+
+            Role.objects.update_or_create(user=user, defaults={'role': role})
 
         return user
 
@@ -56,9 +66,5 @@ class SecondRegisterForm(ModelForm):
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
-    def clean(self):
-        username = self.cleaned_data.get('username')
-        password = self.cleaned_data.get('password')
-
 
 

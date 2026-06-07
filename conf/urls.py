@@ -21,13 +21,13 @@ from conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("", include("build.urls")),
+    path('accounts/', include('accounts.urls')),
+    path('accounts/', include('allauth.urls')),
 ]
 
 if settings.DEBUG:
     # Include django_browser_reload URLs only in DEBUG mode
     urlpatterns += [
         path("__reload__/", include("django_browser_reload.urls")),
-        path("", include("build.urls")),
-        path('account/', include('account.urls'))
-
     ]
