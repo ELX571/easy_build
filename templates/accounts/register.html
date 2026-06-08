@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mukammal Ro'yxatdan O'tish - SmartDev</title>
+    <title>EasyBuild Register</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -200,14 +200,14 @@
 
         <div class="branding-side">
             <div class="logo">
-                <i class="fa-solid fa-layer-group"></i> SmartDev
+                <i class="fa-solid fa-layer-group"></i> EasyBuild
             </div>
             <div class="branding-content">
-                <h2>Kelajakni biz bilan quring.</h2>
-                <p>Platformamizga qo'shiling va loyihalaringizni mukammal darajaga olib chiqing. Bizning vositalarimiz sizning muvaffaqiyatingiz uchun yaratilgan.</p>
+                <h2>Kelajak uylarini biz bilan quring.</h2>
+                <p>Platformamizga qo'shiling va biz bilan birga uylar quring yoki uyingizni quring</p>
             </div>
             <div class="branding-footer">
-                <p style="font-size: 13px; color: #a5b4fc;"><i class="fa-solid fa-star" style="color: #fbbf24;"></i> 10,000+ dasturchilar ishonchini oqlagan</p>
+                <p style="font-size: 13px; color: #a5b4fc;"><i class="fa-solid fa-star" style="color: #fbbf24;"></i> 1,000+ mijozlar ishonchida</p>
             </div>
         </div>
 
@@ -221,9 +221,9 @@
                 <a href="{% url 'google_login' %}?process=signup" class="social-btn">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width="18" alt="Google"> Google bilan
                 </a>
-                <button class="social-btn">
-                    <i class="fa-brands fa-github" style="font-size: 18px;"></i> GitHub bilan
-                </button>
+{#                <button class="social-btn">#}
+{#                    <i class="fa-brands fa-github" style="font-size: 18px;"></i> GitHub bilan#}
+{#                </button>#}
             </div>
 
             <div class="divider">yoki elektron pochta orqali</div>
@@ -250,12 +250,12 @@
                 <div class="input-row">
                     <div class="form-group">
                         <label>Ism (First name)</label>
-                        <input type="text" name="first_name" placeholder="John" value="{{ form.first_name.value|default:'' }}" required>
+                        <input type="text" name="first_name" placeholder="Ism" value="{{ form.first_name.value|default:'' }}" required>
                         {{ form.first_name.errors }}
                     </div>
                     <div class="form-group">
                         <label>Familiya (Last name)</label>
-                        <input type="text" name="last_name" placeholder="Doe" value="{{ form.last_name.value|default:'' }}" required>
+                        <input type="text" name="last_name" placeholder="Familya" value="{{ form.last_name.value|default:'' }}" required>
                         {{ form.last_name.errors }}
                     </div>
                 </div>
