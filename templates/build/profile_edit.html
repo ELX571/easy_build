@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profilni Tahrirlash</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .profile-card {
+            background: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        .profile-card h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #0f172a;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #475569;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            outline: none;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #2563eb;
+        }
+        .btn-submit {
+            display: block;
+            width: 100%;
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-bottom: 10px;
+            text-align: center;
+            text-decoration: none;
+        }
+        .btn-submit:hover {
+            background: #1d4ed8;
+        }
+        .btn-cancel {
+            display: block;
+            width: 100%;
+            background: #e2e8f0;
+            color: #475569;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .btn-cancel:hover {
+            background: #cbd5e1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-card">
+        <h2>Profilni Tahrirlash</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="id_username">Ismingiz (Username):</label>
+                {{ form.username }}
+            </div>
+            
+            <div class="form-group">
+                <label for="id_bio">O'zingiz haqingizda (Bio):</label>
+                {{ form.bio }}
+            </div>
+            
+            <div class="form-group">
+                <label for="id_avatar">Profil rasmi (Avatar):</label>
+                {{ form.avatar }}
+            </div>
+            
+            <button type="submit" class="btn-submit">Saqlash</button>
+            <a href="{% url 'build:profile' %}" class="btn-cancel">Bekor qilish</a>
+        </form>
+    </div>
+
+</body>
+</html>

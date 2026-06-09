@@ -3,404 +3,510 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <!-- Font Awesome (Ikonkalar uchun) -->
+    <title>EasyBuild - Premium Cyber Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* Umumiy Stillar */
+        /* —————————————————————————————————————————————————————————
+           PREMIUM VARIABLE-TIZIMI (CYBER ORANGE & DEEP GLASS)
+           ————————————————————————————————————————————————————————— */
+        :root {
+            /* Light Mode */
+            --bg-body: #f4f6f9;
+            --bg-panel: rgba(255, 255, 255, 0.9);
+            --border-color: #e4e9f2;
+            --text-main: #0b0f19;
+            --text-muted: #657795;
+            --text-label: #8da2be;
+            --link-color: #4a5d78;
+            --link-hover-bg: #f0f4fc;
+            --active-bg-light: rgba(255, 107, 0, 0.08);
+            --active-text-blue: #ff6b00; /* Light mode'da ham yorqin sabzirang */
+            --rail-item-color: #657795;
+            --rail-item-hover-bg: #eef2fa;
+            --shadow-rail: rgba(0, 0, 0, 0.04);
+            --shadow-menu: rgba(0, 0, 0, 0.08);
+            --divider-col: #eef2fa;
+        }
+
+        [data-theme="dark"] {
+            /* MUKAMMAL MODERN UI ULTRA-DARK PALITRA */
+            --bg-body: #06070b;         /* Haqiqiy chuqur qorong'ulik (Glossy Black) */
+            --bg-panel: rgba(13, 16, 24, 0.75); /* Shaffof oyna effekti uchun panel foni */
+            --border-color: rgba(255, 255, 255, 0.04); /* O'ta nafis nozik chegara */
+
+            --text-main: #f8fafc;        /* Silliq oq matn */
+            --text-muted: #79869c;       /* Gradient va orqa fon matni */
+            --text-label: #475369;       /* Kichik sarlavhalar */
+
+            --link-color: #8fa0bc;
+            --link-hover-bg: rgba(255, 255, 255, 0.03);
+
+            /* PREMIUM ELECTRIC CYBER ORANGE */
+            --active-bg-light: rgba(255, 107, 0, 0.08);  /* Mayin sabzirang yorug'lik konturi */
+            --active-text-blue: #ff6b00;                 /* Odamni tortadigan yorqin sabzirang */
+
+            --rail-item-color: #79869c;
+            --rail-item-hover-bg: rgba(255, 255, 255, 0.02);
+
+            --shadow-rail: rgba(0, 0, 0, 0.5);
+            --shadow-menu: rgba(0, 0, 0, 0.7);
+            --divider-col: rgba(255, 255, 255, 0.03);
+        }
+
+        /* —————————————————————————————————————————————————————————
+           UMUMIY STILLAR & ANIMATSIYALAR
+           ————————————————————————————————————————————————————————— */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
-            scroll-behavior: smooth;
+            transition: background-color 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+                        border-color 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+                        color 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+                        box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         body {
-            background-color: #f8f9fa;
-            color: #333;
-            line-height: 1.6;
+            background-color: var(--bg-body);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        .container {
-            width: 85%;
-            max-width: 1200px;
-            margin: 0 auto;
+        /* Orqa fondagi jiddiy UI kiber-yorug'lik gibridi */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            top: -100px;
+            right: -50px;
+            background: radial-gradient(circle, rgba(255, 107, 0, 0.07) 0%, rgba(0,0,0,0) 70%);
+            z-index: -1;
+            pointer-events: none;
         }
 
-        /* Navigatsiya (Header) */
+        /* —————————————————————————————————————————————————————————
+           HEADER (GLASSMORPHISM NAV)
+           ————————————————————————————————————————————————————————— */
         header {
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--bg-panel);
             position: fixed;
             width: 100%;
+            height: 72px;
             top: 0;
             left: 0;
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            backdrop-filter: blur(20px); /* UI trendidagi mukammal shaffoflik */
+            -webkit-backdrop-filter: blur(20px);
         }
 
-        nav {
-            display: flex;
-            justify-content: space-between;
+        .header-container {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
             align-items: center;
-            padding: 20px 0;
+        }
+
+        .header-left {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .menu-hamburger {
+            font-size: 18px;
+            cursor: pointer;
+            color: var(--link-color);
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        .menu-hamburger:hover {
+            color: var(--text-main);
+            background: var(--link-hover-bg);
+        }
+
+        .header-center {
+            display: flex;
+            justify-content: center;
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: #2563eb;
-            text-decoration: none;
-        }
-
-        .logo span {
-            color: #0f172a;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-
-        .nav-links li {
-            margin-left: 30px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #475569;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #2563eb;
-        }
-
-        .btn-contact {
-            background: #2563eb;
-            color: #fff !important;
-            padding: 8px 20px;
-            border-radius: 25px;
-            transition: background 0.3s !important;
-        }
-
-        .btn-contact:hover {
-            background: #1d4ed8;
-        }
-
-        /* Hero Bo'limi (Asosiy ekran) */
-        .hero {
-            padding: 180px 0 100px 0;
-            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-            display: flex;
-            align-items: center;
-            min-height: 90vh;
-        }
-
-        .hero-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-
-        .hero-text h1 {
-            font-size: 48px;
-            color: #0f172a;
-            line-height: 1.2;
-            margin-bottom: 20px;
-        }
-
-        .hero-text h1 span {
-            color: #2563eb;
-        }
-
-        .hero-text p {
-            font-size: 18px;
-            color: #475569;
-            margin-bottom: 30px;
-        }
-
-        .cta-buttons .btn {
-            padding: 12px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-block;
-            margin-right: 15px;
-            transition: transform 0.3s;
-        }
-
-        .cta-buttons .btn:hover {
-            transform: translateY(-3px);
-        }
-
-        .btn-primary {
-            background: #2563eb;
-            color: #fff;
-            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: #2563eb;
-            border: 2px solid #2563eb;
-        }
-
-        .hero-image img {
-            width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            animation: float 4s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-
-        /* Xizmatlar Bo'limi */
-        .services {
-            padding: 100px 0;
-            background: #fff;
-            text-align: center;
-        }
-
-        .section-title {
-            font-size: 36px;
-            color: #0f172a;
-            margin-bottom: 10px;
-        }
-
-        .section-subtitle {
-            color: #64748b;
-            margin-bottom: 60px;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .service-card {
-            padding: 40px 30px;
-            background: #f8f9fa;
-            border-radius: 15px;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .service-card:hover {
-            background: #fff;
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-            border-bottom: 4px solid #2563eb;
-        }
-
-        .service-card i {
-            font-size: 40px;
-            color: #2563eb;
-            margin-bottom: 20px;
-        }
-
-        .service-card h3 {
             font-size: 22px;
-            color: #0f172a;
-            margin-bottom: 15px;
-        }
-
-        /* Footer (Sayt cheki) */
-        footer {
-            background: #0f172a;
-            color: #94a3b8;
-            padding: 60px 0 30px 0;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 50px;
-            margin-bottom: 40px;
-        }
-
-        .footer-about h3 {
-            color: #fff;
-            margin-bottom: 20px;
-        }
-
-        .footer-links h4 {
-            color: #fff;
-            margin-bottom: 20px;
-        }
-
-        .footer-links ul {
-            list-style: none;
-        }
-
-        .footer-links ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-links ul li a {
-            color: #94a3b8;
+            font-weight: 700;
+            color: var(--active-text-blue);
             text-decoration: none;
-            transition: color 0.3s;
+            letter-spacing: -0.5px;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            text-shadow: 0 0 20px rgba(255, 107, 0, 0.2); /* Neon sabzirang nur */
+        }
+        .logo span {
+            color: var(--text-main);
+            font-weight: 400;
         }
 
-        .footer-links ul li a:hover {
-            color: #2563eb;
+        .header-right {
+            display: flex;
+            justify-content: flex-end;
         }
 
-        .social-icons a {
-            color: #fff;
-            font-size: 20px;
-            margin-right: 15px;
-            transition: color 0.3s;
+        .profile-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+            background: var(--bg-body);
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .profile-avatar:hover {
+            border-color: var(--active-text-blue);
+            box-shadow: 0 0 12px rgba(255, 107, 0, 0.3);
+            transform: translateY(-1px);
         }
 
-        .social-icons a:hover {
-            color: #2563eb;
+        /* —————————————————————————————————————————————————————————
+           SIDEBAR (MODERN SIDE-MENU)
+           ————————————————————————————————————————————————————————— */
+        .sidebar-container {
+            position: fixed;
+            top: 96px;
+            left: 24px;
+            display: flex;
+            z-index: 999;
+            height: calc(100vh - 120px);
         }
 
-        hr {
-            border: 0;
-            border-top: 1px solid #334155;
-            margin-bottom: 30px;
+        .icon-rail {
+            width: 64px;
+            height: 100%;
+            background: var(--bg-panel);
+            border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            box-shadow: 0 15px 35px var(--shadow-rail);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 10;
         }
 
-        .copy {
+        .rail-item {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--rail-item-color);
+            font-size: 16px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .rail-item.active {
+            background: var(--active-text-blue);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.35);
+        }
+        [data-theme="dark"] .rail-item.active {
+            background: rgba(255, 107, 0, 0.12);
+            color: var(--active-text-blue);
+            border: 1px solid rgba(255, 107, 0, 0.25);
+            box-shadow: inset 0 0 8px rgba(255, 107, 0, 0.1);
+        }
+
+        .rail-divider {
+            width: 20px;
+            height: 1px;
+            background: var(--border-color);
+            margin: 12px 0;
+        }
+
+        .expanded-menu {
+            width: 0;
+            opacity: 0;
+            overflow: hidden;
+            background: var(--bg-panel);
+            border-radius: 14px;
+            box-shadow: 0 30px 60px var(--shadow-menu);
+            border: 1px solid var(--border-color);
+            margin-left: -10px;
+            padding-left: 10px;
+            display: flex;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            pointer-events: none;
+        }
+
+        .sidebar-container:hover .expanded-menu {
+            width: 500px;
+            opacity: 1;
+            margin-left: 12px;
+            pointer-events: auto;
+        }
+
+        .rail-item:hover:not(.active) {
+            background: var(--rail-item-hover-bg);
+            color: var(--text-main);
+        }
+
+        .menu-col {
+            min-width: 245px;
+            height: 100%;
+            padding: 24px 18px;
+            display: flex;
+            flex-direction: column;
+        }
+        .menu-col:first-child { border-right: 1px solid var(--divider-col); }
+
+        .menu-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.3px;
+        }
+
+        .section-label {
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--text-label);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 18px 0 6px 8px;
+        }
+
+        .menu-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .menu-list li a {
+            display: flex;
+            align-items: center;
+            padding: 9px 12px;
+            color: var(--link-color);
+            font-size: 13.5px;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .menu-list li a:hover {
+            background: var(--link-hover-bg);
+            color: var(--text-main);
+            transform: translateX(3px);
+        }
+
+        .menu-list li a i.main-icon {
+            font-size: 15px;
+            margin-right: 10px;
+            color: var(--text-label);
+            width: 18px;
             text-align: center;
-            font-size: 14px;
         }
 
-        /* Moslashuvchanlik (Responsive) */
+        .menu-list li a:hover i.main-icon {
+            color: var(--active-text-blue);
+        }
+
+        .menu-list li a.active-link {
+            background: var(--active-bg-light);
+            color: var(--active-text-blue);
+            font-weight: 500;
+            position: relative;
+        }
+        /* UI chiziqli indikatorli faol havola */
+        .menu-list li a.active-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 25%;
+            height: 50%;
+            width: 3px;
+            background: var(--active-text-blue);
+            border-radius: 0 4px 4px 0;
+        }
+
+        .badge {
+            background: rgba(255, 107, 0, 0.1);
+            color: var(--active-text-blue);
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 7px;
+            border-radius: 6px;
+            margin-left: auto;
+            border: 1px solid rgba(255, 107, 0, 0.15);
+        }
+
+        /* —————————————————————————————————————————————————————————
+           MAIN WORKSPACE
+           ————————————————————————————————————————————————————————— */
+        .main-content {
+            margin-left: 100px;
+            padding: 112px 40px 40px 40px;
+            transition: margin-left 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .dashboard-card {
+            background: var(--bg-panel);
+            border-radius: 14px;
+            padding: 35px;
+            border: 1px solid var(--border-color);
+            max-width: 850px;
+            box-shadow: 0 15px 35px var(--shadow-rail);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Premium UI chiziqli dekoratsiyasi */
+        .dashboard-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--active-text-blue), rgba(0,0,0,0));
+        }
+
+        .dashboard-card h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+        .dashboard-card p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
         @media (max-width: 768px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .nav-links {
-                display: none; /* Mobil menyu uchun (oddiy variantda yashirildi) */
-            }
-            .hero-text h1 {
-                font-size: 36px;
-            }
-            .cta-buttons .btn {
-                margin-bottom: 15px;
-            }
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
+            .sidebar-container:hover .expanded-menu { width: 245px; }
+            .menu-col:last-child { display: none; }
+            .main-content { margin-left: 85px; padding: 95px 15px 20px 15px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- NAVIGATSIYA BO'LIMI -->
     <header>
-        <div class="container">
-            <nav>
-                <a href="{% url 'build:home' %}" class="logo">Easy<span>Build</span></a>
-                <ul class="nav-links">
-                    <li><a href="#services">Reytingli Quruvchilar</a></li>
-                    <li><a href="#about">Biz haqimizda info.</a></li>
-                    <li><a href="#contact" class="btn-contact">Chat</a></li>
-                </ul>
-            </nav>
+        <div class="header-container">
+            <div class="header-left">
+                <i class="fa-solid fa-bars menu-hamburger"></i>
+            </div>
+            <div class="header-center">
+                <div class="logo" id="themeToggleBtn">Easy<span>Build</span></div>
+            </div>
+            <div class="header-right">
+                <a href="/profile/edit/">
+                    {% if user.is_authenticated and user.profile.avatar %}
+                        <img src="{{ user.profile.avatar.url }}" alt="Profil" class="profile-avatar">
+                    {% else %}
+                        <img src="https://via.placeholder.com/38?text=UI" alt="Profil" class="profile-avatar">
+                    {% endif %}
+                </a>
+            </div>
         </div>
     </header>
 
-<!--    &lt;!&ndash; HERO BO'LIMI &ndash;&gt;-->
-<!--    <section class="hero" id="home">-->
-<!--        <div class="container">-->
-<!--            <div class="hero-content">-->
-<!--                <div class="hero-text">-->
-<!--                    <h1>Raqamli Dunyoda O'z <span>Biznesingizni</span> Yarating</h1>-->
-<!--                    <p>Biz sizning g'oyalaringizni zamonaviy veb-saytlar va mukammal dasturiy yechimlar ko'rinishida haqiqatga aylantiramiz.</p>-->
-<!--                    <div class="cta-buttons">-->
-<!--                        <a href="#services" class="btn btn-primary">Boshlash</a>-->
-<!--                        <a href="#contact" class="btn btn-secondary">Bog'lanish</a>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="hero-image">-->
-<!--                    &lt;!&ndash; Namuna uchun chiroyli illyustratsiya rasm linki joylangan &ndash;&gt;-->
-<!--                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop" alt="Digital Marketing">-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </section>-->
+    <div class="sidebar-container">
+        <div class="icon-rail">
+            <div class="rail-item active" title="Bosh sahifa"><i class="fa-solid fa-house"></i></div>
+            <div class="rail-item" title="Chat"><i class="fa-regular fa-comment-dots"></i></div>
+            <div class="rail-item" title="Saqlanganlar"><i class="fa-regular fa-star"></i></div>
+            <div class="rail-divider"></div>
+            <div class="rail-item" title="Profil"><i class="fa-regular fa-user"></i></div>
+        </div>
 
-<!--    &lt;!&ndash; XIZMATLAR BO'LIMI &ndash;&gt;-->
-<!--    <section class="services" id="services">-->
-<!--        <div class="container">-->
-<!--            <h2 class="section-title">Bizning Xizmatlar</h2>-->
-<!--            <p class="section-subtitle">Sizga eng yaxshi sifatni taklif etamiz</p>-->
+        <div class="expanded-menu">
+            <div class="menu-col">
+                <div class="menu-title"><i class="fa-solid fa-compass" style="color: var(--active-text-blue);"></i> Navigator</div>
+                <ul class="menu-list">
+                    <li><a href="#" class="active-link"><i class="fa-solid fa-house main-icon"></i> Bosh sahifa</a></li>
+                    <li><a href="#"><i class="fa-regular fa-comment-dots main-icon"></i> Xabarlar <span class="badge">3</span></a></li>
+                    <li><a href="#"><i class="fa-regular fa-user main-icon"></i> Profil sozlamalari</a></li>
+                </ul>
 
-<!--            <div class="services-grid">-->
-<!--                &lt;!&ndash; Xizmat 1 &ndash;&gt;-->
-<!--                <div class="service-card">-->
-<!--                    <i class="fa-solid fa-code"></i>-->
-<!--                    <h3>Veb Dasturlash</h3>-->
-<!--                    <p>Zamonaviy, tezkor va har qanday qurilmaga moslashuvchi (responsive) veb-saytlar tayyorlash.</p>-->
-<!--                </div>-->
-<!--                &lt;!&ndash; Xizmat 2 &ndash;&gt;-->
-<!--                <div class="service-card">-->
-<!--                    <i class="fa-solid fa-paint-brush"></i>-->
-<!--                    <h3>UI/UX Dizayn</h3>-->
-<!--                    <p>Foydalanuvchilar uchun qulay va ko'zga tashlanadigan chiroyli interfeys dizaynlarini chizish.</p>-->
-<!--                </div>-->
-<!--                &lt;!&ndash; Xizmat 3 &ndash;&gt;-->
-<!--                <div class="service-card">-->
-<!--                    <i class="fa-solid fa-chart-line"></i>-->
-<!--                    <h3>SEO optimizatsiya</h3>-->
-<!--                    <p>Saytingizni Google va boshqa qidiruv tizimlarida eng yuqori o'rinlarga olib chiqish.</p>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </section>-->
+                <div class="section-label">Tizim</div>
+                <ul class="menu-list">
+                    <li><a href="#"><i class="fa-solid fa-layer-group main-icon"></i> Ish jarayonlari</a></li>
+                    <li><a href="#"><i class="fa-regular fa-address-book main-icon"></i> Hamkorlar</a></li>
+                </ul>
+            </div>
 
-<!--    &lt;!&ndash; FOOTER BO'LIMI &ndash;&gt;-->
-<!--    <footer>-->
-<!--        <div class="container">-->
-<!--            <div class="footer-content">-->
-<!--                <div class="footer-about">-->
-<!--                    <h3>SmartDev</h3>-->
-<!--                    <p>Kelajak texnologiyalarini bugun quring. Biz bilan biznesingizni yangi bosqichga olib chiqing.</p>-->
-<!--                    <br>-->
-<!--                    <div class="social-icons">-->
-<!--                        <a href="#"><i class="fa-brands fa-telegram"></i></a>-->
-<!--                        <a href="#"><i class="fa-brands fa-instagram"></i></a>-->
-<!--                        <a href="#"><i class="fa-brands fa-linkedin"></i></a>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="footer-links">-->
-<!--                    <h4>Sahifalar</h4>-->
-<!--                    <ul>-->
-<!--                        <li><a href="#home">Bosh sahifa</a></li>-->
-<!--                        <li><a href="#services">Xizmatlar</a></li>-->
-<!--                        <li><a href="#about">Biz haqimizda</a></li>-->
-<!--                    </ul>-->
-<!--                </div>-->
-<!--                <div class="footer-links">-->
-<!--                    <h4>Yordam</h4>-->
-<!--                    <ul>-->
-<!--                        <li><a href="#">FAQ</a></li>-->
-<!--                        <li><a href="#">Qo'llab-quvvatlash</a></li>-->
-<!--                        <li><a href="#">Maxfiylik siyosati</a></li>-->
-<!--                    </ul>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <hr>-->
-<!--            <div class="copy">-->
-<!--                <p>&copy; 2026 SmartDev. Barcha huquqlar himoyalangan.</p>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </footer>-->
+            <div class="menu-col">
+                <div class="section-label" style="margin-top: 44px;">Hujjatlar</div>
+                <ul class="menu-list">
+                    <li><a href="#"><i class="fa-regular fa-bookmark main-icon"></i> Arxivlanganlar</a></li>
+                    <li><a href="#"><i class="fa-regular fa-star main-icon"></i> Saralanganlar</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
+    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+            const hamburgerBtn = document.querySelector('.menu-hamburger');
+            const sidebar = document.querySelector('.sidebar-container');
+            const mainContent = document.querySelector('.main-content');
+
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+
+            themeToggleBtn.addEventListener('click', () => {
+                let theme = document.documentElement.getAttribute('data-theme');
+                if (theme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+
+            if (hamburgerBtn && sidebar && mainContent) {
+                hamburgerBtn.addEventListener('click', function() {
+                    if (sidebar.style.display !== 'none' && sidebar.style.display !== '') {
+                        sidebar.style.display = 'none';
+                        mainContent.style.marginLeft = '0';
+                    } else {
+                        sidebar.style.display = 'flex';
+                        mainContent.style.marginLeft = '100px';
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

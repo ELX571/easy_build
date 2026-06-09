@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mening Profilim</title>
+    <!-- Font Awesome (Ikonkalar uchun) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .profile-card {
+            background: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 4px solid #2563eb;
+        }
+        .profile-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 5px;
+        }
+        .profile-bio {
+            color: #64748b;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        .btn-back {
+            display: inline-block;
+            background: #2563eb;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .btn-back:hover {
+            background: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-card">
+        {% if profile and profile.avatar %}
+            <img src="{{ profile.avatar.url }}" alt="Profile Picture" class="profile-img">
+        {% else %}
+            <img src="https://via.placeholder.com/150" alt="Default Picture" class="profile-img">
+        {% endif %}
+        
+        <div class="profile-name">
+            {% if profile and profile.username %}
+                {{ profile.username }}
+            {% else %}
+                {{ request.user.username }}
+            {% endif %}
+        </div>
+        
+        <div class="profile-bio">
+            {% if profile and profile.bio %}
+                {{ profile.bio }}
+            {% else %}
+                O'zi haqida ma'lumot kiritilmagan.
+            {% endif %}
+        </div>
+        
+        <div style="margin-top: 15px; display: flex; justify-content: center; gap: 10px;">
+            <a href="{% url 'build:home' %}" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Bosh sahifaga qaytish</a>
+            <a href="{% url 'build:profile_edit' %}" class="btn-back" style="background: #10b981;"><i class="fa-solid fa-pen"></i> Tahrirlash</a>
+        </div>
+    </div>
+
+</body>
+</html>
