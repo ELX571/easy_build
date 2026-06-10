@@ -1,121 +1,131 @@
 <!DOCTYPE html>
-<html lang="uz">
+<html lang="uz" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profilni Tahrirlash</title>
-    <!-- Font Awesome -->
+    <title>EasyBuild - Profilni Tahrirlash</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+        :root {
+            --bg-body: #f4f6fa;
+            --bg-panel: rgba(255, 255, 255, 0.75);
+            --border-color: rgba(0, 0, 0, 0.06);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --active-text-blue: #ff6b00;
+            --glow-color: rgba(255, 107, 0, 0.2);
+            --card-gradient: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+            --input-bg: #ffffff;
         }
+
+        [data-theme="dark"] {
+            --bg-body: #05070c;
+            --bg-panel: rgba(10, 14, 23, 0.7);
+            --border-color: rgba(255, 255, 255, 0.05);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --active-text-blue: #ff6b00;
+            --glow-color: rgba(255, 107, 0, 0.4);
+            --card-gradient: linear-gradient(135deg, rgba(13, 18, 30, 0.85), rgba(8, 11, 20, 0.6));
+            --input-bg: rgba(255, 255, 255, 0.02);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
         body {
-            background-color: #f8f9fa;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            background-color: var(--bg-body); color: var(--text-main);
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; padding: 20px;
         }
+
         .profile-card {
-            background: #fff;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 500px;
+            background: var(--card-gradient); padding: 40px; border-radius: 28px;
+            border: 1px solid var(--border-color); width: 100%; max-width: 540px;
+            backdrop-filter: blur(24px); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
         }
-        .profile-card h2 {
-            margin-bottom: 20px;
-            text-align: center;
-            color: #0f172a;
+
+        .form-group { margin-bottom: 22px; position: relative; }
+        .form-group label { display: block; margin-bottom: 9px; font-weight: 600; font-size: 14px; color: var(--text-main); }
+
+        /* INPUT & SELECT STYLE */
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%; padding: 12px 16px; background: var(--input-bg);
+            border: 1px solid var(--border-color); border-radius: 14px;
+            outline: none; color: var(--text-main); font-size: 14px;
+            transition: all 0.3s ease;
         }
-        .form-group {
-            margin-bottom: 20px;
+
+        /* Select wrapper - Chiroyli strelka uchun */
+        .select-wrapper { position: relative; }
+        .select-wrapper::after {
+            content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+            position: absolute; right: 16px; top: 14px; color: var(--text-muted);
+            pointer-events: none; font-size: 12px;
         }
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #475569;
-        }
-        .form-group input, .form-group textarea {
-            width: 100%;
+        .form-group select { appearance: none; cursor: pointer; z-index: 10; position: relative; }
+        .form-group select:focus { border-color: var(--active-text-blue); box-shadow: 0 0 10px var(--glow-color); }
+
+        /* Fayl yuklashni kiber-uslubga moslash */
+        input[type="file"] {
+            background: rgba(255, 107, 0, 0.05) !important;
+            border: 1px dashed var(--active-text-blue) !important;
             padding: 10px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            outline: none;
-        }
-        .form-group input:focus, .form-group textarea:focus {
-            border-color: #2563eb;
-        }
-        .btn-submit {
-            display: block;
-            width: 100%;
-            background: #2563eb;
-            color: #fff;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: 600;
             cursor: pointer;
-            transition: 0.3s;
-            margin-bottom: 10px;
-            text-align: center;
-            text-decoration: none;
         }
-        .btn-submit:hover {
-            background: #1d4ed8;
+
+        .btn-submit {
+            width: 100%; background: var(--active-text-blue); color: #ffffff;
+            border: none; padding: 14px; border-radius: 14px; font-weight: 700;
+            cursor: pointer; box-shadow: 0 6px 20px var(--glow-color);
+            transition: transform 0.2s ease;
         }
+        .btn-submit:hover { transform: translateY(-2px); }
         .btn-cancel {
-            display: block;
-            width: 100%;
-            background: #e2e8f0;
-            color: #475569;
-            text-decoration: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: 600;
-            text-align: center;
-            transition: 0.3s;
-        }
-        .btn-cancel:hover {
-            background: #cbd5e1;
+            display: block; width: 100%; background: var(--input-bg);
+            border: 1px solid var(--border-color); color: var(--text-muted);
+            text-decoration: none; padding: 14px; border-radius: 14px;
+            text-align: center; margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
     <div class="profile-card">
-        <h2>Profilni Tahrirlash</h2>
+        <h2>Profil Ma'lumotlari</h2>
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            
+
             <div class="form-group">
-                <label for="id_username">Ismingiz (Username):</label>
-                {{ form.username }}
+                <label><i class="fa-solid fa-phone"></i> Telefon:</label>
+                {{ form.phone }}
             </div>
-            
+
             <div class="form-group">
-                <label for="id_bio">O'zingiz haqingizda (Bio):</label>
+    <label for="id_city"><i class="fa-solid fa-location-dot"></i> Shahar / Viloyat:</label>
+    <div class="select-wrapper">
+        <select name="city" id="id_city">
+            {% for code, name in form.fields.city.choices %}
+                <option value="{{ code }}" {% if form.instance.city == code %}selected{% endif %}>{{ name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+
+            <div class="form-group">
+                <label><i class="fa-solid fa-address-card"></i> Ma'lumot (Bio):</label>
                 {{ form.bio }}
             </div>
-            
+
             <div class="form-group">
-                <label for="id_avatar">Profil rasmi (Avatar):</label>
+                <label><i class="fa-solid fa-image"></i> Avatar:</label>
                 {{ form.avatar }}
             </div>
-            
-            <button type="submit" class="btn-submit">Saqlash</button>
+
+            <button type="submit" class="btn-submit">O'zgarishlarni saqlash</button>
             <a href="{% url 'build:profile' %}" class="btn-cancel">Bekor qilish</a>
         </form>
     </div>
-
 </body>
 </html>
