@@ -1,72 +1,74 @@
 <!DOCTYPE html>
-<html lang="uz">
+<html lang="uz" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EasyBuild - Premium Cyber Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         /* —————————————————————————————————————————————————————————
-           PREMIUM VARIABLE-TIZIMI (CYBER ORANGE & DEEP GLASS)
+           PREMIUM VARIABLE SYSTEM (CYBER ORANGE & ULTRA GLASS)
            ————————————————————————————————————————————————————————— */
         :root {
-            /* Light Mode */
-            --bg-body: #f4f6f9;
-            --bg-panel: rgba(255, 255, 255, 0.9);
-            --border-color: #e4e9f2;
-            --text-main: #0b0f19;
-            --text-muted: #657795;
-            --text-label: #8da2be;
-            --link-color: #4a5d78;
-            --link-hover-bg: #f0f4fc;
-            --active-bg-light: rgba(255, 107, 0, 0.08);
-            --active-text-blue: #ff6b00; /* Light mode'da ham yorqin sabzirang */
-            --rail-item-color: #657795;
-            --rail-item-hover-bg: #eef2fa;
-            --shadow-rail: rgba(0, 0, 0, 0.04);
-            --shadow-menu: rgba(0, 0, 0, 0.08);
-            --divider-col: #eef2fa;
+            --bg-body: #f4f6fa;
+            --bg-panel: rgba(255, 255, 255, 0.75);
+            --border-color: rgba(0, 0, 0, 0.06);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --text-label: #94a3b8;
+            --link-color: #475569;
+            --link-hover-bg: rgba(255, 107, 0, 0.06);
+            --active-bg-light: rgba(255, 107, 0, 0.09);
+            --active-text-blue: #ff6b00;
+            --rail-item-color: #64748b;
+            --rail-item-hover-bg: #f1f5f9;
+            --shadow-rail: rgba(0, 0, 0, 0.03);
+            --shadow-menu: rgba(15, 23, 42, 0.08);
+            --divider-col: #e2e8f0;
+            --glow-color: rgba(255, 107, 0, 0.2);
+            --card-gradient: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
         }
 
         [data-theme="dark"] {
-            /* MUKAMMAL MODERN UI ULTRA-DARK PALITRA */
-            --bg-body: #06070b;         /* Haqiqiy chuqur qorong'ulik (Glossy Black) */
-            --bg-panel: rgba(13, 16, 24, 0.75); /* Shaffof oyna effekti uchun panel foni */
-            --border-color: rgba(255, 255, 255, 0.04); /* O'ta nafis nozik chegara */
+            --bg-body: #05070c;
+            --bg-panel: rgba(10, 14, 23, 0.7);
+            --border-color: rgba(255, 255, 255, 0.05);
 
-            --text-main: #f8fafc;        /* Silliq oq matn */
-            --text-muted: #79869c;       /* Gradient va orqa fon matni */
-            --text-label: #475369;       /* Kichik sarlavhalar */
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-label: #475569;
 
-            --link-color: #8fa0bc;
-            --link-hover-bg: rgba(255, 255, 255, 0.03);
+            --link-color: #94a3b8;
+            --link-hover-bg: rgba(255, 107, 0, 0.04);
 
-            /* PREMIUM ELECTRIC CYBER ORANGE */
-            --active-bg-light: rgba(255, 107, 0, 0.08);  /* Mayin sabzirang yorug'lik konturi */
-            --active-text-blue: #ff6b00;                 /* Odamni tortadigan yorqin sabzirang */
+            --active-bg-light: rgba(255, 107, 0, 0.12);
+            --active-text-blue: #ff6b00;
 
-            --rail-item-color: #79869c;
-            --rail-item-hover-bg: rgba(255, 255, 255, 0.02);
+            --rail-item-color: #64748b;
+            --rail-item-hover-bg: rgba(255, 255, 255, 0.03);
 
-            --shadow-rail: rgba(0, 0, 0, 0.5);
-            --shadow-menu: rgba(0, 0, 0, 0.7);
-            --divider-col: rgba(255, 255, 255, 0.03);
+            --shadow-rail: rgba(0, 0, 0, 0.4);
+            --shadow-menu: rgba(0, 0, 0, 0.6);
+            --divider-col: rgba(255, 255, 255, 0.04);
+            --glow-color: rgba(255, 107, 0, 0.4);
+            --card-gradient: linear-gradient(135deg, rgba(13, 18, 30, 0.85), rgba(8, 11, 20, 0.6));
         }
 
         /* —————————————————————————————————————————————————————————
-           UMUMIY STILLAR & ANIMATSIYALAR
+           UMUMIY STILLAR & LUXURY RESETS
            ————————————————————————————————————————————————————————— */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-            transition: background-color 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-                        border-color 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-                        color 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-                        box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         body {
@@ -74,29 +76,40 @@
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
+            color: var(--text-main);
         }
 
-        /* Orqa fondagi jiddiy UI kiber-yorug'lik gibridi */
-        body::before {
+        /* Ambient Cyber-Glow Orqa Fon Chiroqlari */
+        body::before, body::after {
             content: '';
             position: absolute;
-            width: 350px;
-            height: 350px;
-            top: -100px;
-            right: -50px;
-            background: radial-gradient(circle, rgba(255, 107, 0, 0.07) 0%, rgba(0,0,0,0) 70%);
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
             z-index: -1;
             pointer-events: none;
+            filter: blur(140px);
+            opacity: 0.6;
+        }
+        body::before {
+            top: -150px;
+            right: -100px;
+            background: radial-gradient(circle, var(--glow-color) 0%, rgba(0,0,0,0) 70%);
+        }
+        body::after {
+            bottom: -100px;
+            left: -150px;
+            background: radial-gradient(circle, rgba(255, 107, 0, 0.1) 0%, rgba(0,0,0,0) 70%);
         }
 
         /* —————————————————————————————————————————————————————————
-           HEADER (GLASSMORPHISM NAV)
+           HEADER (FUTURISTIC GHOST GLASS)
            ————————————————————————————————————————————————————————— */
         header {
             background: var(--bg-panel);
             position: fixed;
             width: 100%;
-            height: 72px;
+            height: 76px;
             top: 0;
             left: 0;
             z-index: 1000;
@@ -104,8 +117,9 @@
             padding: 0 40px;
             display: flex;
             align-items: center;
-            backdrop-filter: blur(20px); /* UI trendidagi mukammal shaffoflik */
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .header-container {
@@ -115,127 +129,170 @@
             align-items: center;
         }
 
-        .header-left {
-            display: flex;
-            justify-content: flex-start;
-        }
+        .header-left { display: flex; justify-content: flex-start; }
 
         .menu-hamburger {
-            font-size: 18px;
+            font-size: 20px;
             cursor: pointer;
             color: var(--link-color);
-            padding: 8px;
-            border-radius: 8px;
-            transition: all 0.2s ease;
+            padding: 10px;
+            border-radius: 12px;
+            background: transparent;
         }
         .menu-hamburger:hover {
-            color: var(--text-main);
+            color: var(--active-text-blue);
             background: var(--link-hover-bg);
+            transform: scale(1.05);
         }
+        .menu-hamburger:active { transform: scale(0.95); }
 
-        .header-center {
-            display: flex;
-            justify-content: center;
-        }
+        .header-center { display: flex; justify-content: center; }
 
         .logo {
-            font-size: 22px;
-            font-weight: 700;
+            font-size: 24px;
+            font-weight: 800;
             color: var(--active-text-blue);
             text-decoration: none;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.8px;
             cursor: pointer;
             user-select: none;
             display: flex;
             align-items: center;
-            gap: 5px;
-            text-shadow: 0 0 20px rgba(255, 107, 0, 0.2); /* Neon sabzirang nur */
+            gap: 6px;
+            position: relative;
         }
         .logo span {
             color: var(--text-main);
-            font-weight: 400;
+            font-weight: 500;
+        }
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--active-text-blue);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+        .logo:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
         }
 
-        .header-right {
-            display: flex;
-            justify-content: flex-end;
-        }
+        .header-right { display: flex; justify-content: flex-end; }
 
+        .profile-wrapper {
+            position: relative;
+            display: inline-block;
+        }
         .profile-avatar {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
             object-fit: cover;
-            border: 1px solid var(--border-color);
+            border: 2px solid var(--border-color);
             background: var(--bg-body);
-            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            cursor: pointer;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-        .profile-avatar:hover {
+        .profile-wrapper:hover .profile-avatar {
             border-color: var(--active-text-blue);
-            box-shadow: 0 0 12px rgba(255, 107, 0, 0.3);
-            transform: translateY(-1px);
+            box-shadow: 0 0 16px var(--glow-color);
+            transform: translateY(-2px) scale(1.02);
         }
 
         /* —————————————————————————————————————————————————————————
-           SIDEBAR (MODERN SIDE-MENU)
+           SIDEBAR (EXPANDABLE SMART RAIL)
            ————————————————————————————————————————————————————————— */
         .sidebar-container {
             position: fixed;
-            top: 96px;
+            top: 100px;
             left: 24px;
             display: flex;
             z-index: 999;
-            height: calc(100vh - 120px);
+            height: calc(100vh - 130px);
+            animation: slideRight 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .icon-rail {
-            width: 64px;
+            width: 68px;
             height: 100%;
             background: var(--bg-panel);
-            border-radius: 14px;
+            border-radius: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px 0;
-            box-shadow: 0 15px 35px var(--shadow-rail);
+            padding: 24px 0;
+            box-shadow: 0 20px 40px var(--shadow-rail);
             border: 1px solid var(--border-color);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             z-index: 10;
         }
 
         .rail-item {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
             display: flex;
             justify-content: center;
             align-items: center;
             color: var(--rail-item-color);
-            font-size: 16px;
-            margin-bottom: 8px;
+            font-size: 18px;
+            margin-bottom: 10px;
             cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative;
         }
 
         .rail-item.active {
             background: var(--active-text-blue);
             color: #ffffff;
-            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.35);
+            box-shadow: 0 8px 20px var(--glow-color);
         }
         [data-theme="dark"] .rail-item.active {
-            background: rgba(255, 107, 0, 0.12);
+            background: rgba(255, 107, 0, 0.14);
             color: var(--active-text-blue);
-            border: 1px solid rgba(255, 107, 0, 0.25);
-            box-shadow: inset 0 0 8px rgba(255, 107, 0, 0.1);
+            border: 1px solid rgba(255, 107, 0, 0.3);
+            box-shadow: inset 0 0 12px rgba(255, 107, 0, 0.15), 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .rail-item:hover:not(.active) {
+            background: var(--rail-item-hover-bg);
+            color: var(--text-main);
+            transform: scale(1.05);
+        }
+
+        /* Rail Tooltip */
+        .rail-item::after {
+            content: attr(title);
+            position: absolute;
+            left: 80px;
+            background: var(--text-main);
+            color: var(--bg-body);
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 8px;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(-10px);
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .rail-item:hover::after {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .rail-divider {
-            width: 20px;
+            width: 24px;
             height: 1px;
             background: var(--border-color);
-            margin: 12px 0;
+            margin: 14px 0;
         }
 
         .expanded-menu {
@@ -243,175 +300,190 @@
             opacity: 0;
             overflow: hidden;
             background: var(--bg-panel);
-            border-radius: 14px;
+            border-radius: 20px;
             box-shadow: 0 30px 60px var(--shadow-menu);
             border: 1px solid var(--border-color);
-            margin-left: -10px;
-            padding-left: 10px;
+            margin-left: -20px;
+            padding-left: 20px;
             display: flex;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             pointer-events: none;
+            transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, margin 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .sidebar-container:hover .expanded-menu {
-            width: 500px;
+            width: 520px;
             opacity: 1;
-            margin-left: 12px;
+            margin-left: 16px;
             pointer-events: auto;
         }
 
-        .rail-item:hover:not(.active) {
-            background: var(--rail-item-hover-bg);
-            color: var(--text-main);
-        }
-
         .menu-col {
-            min-width: 245px;
+            min-width: 250px;
             height: 100%;
-            padding: 24px 18px;
+            padding: 28px 20px;
             display: flex;
             flex-direction: column;
         }
         .menu-col:first-child { border-right: 1px solid var(--divider-col); }
 
         .menu-title {
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 17px;
+            font-weight: 700;
             color: var(--text-main);
-            margin-bottom: 18px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            letter-spacing: -0.3px;
+            gap: 12px;
+            letter-spacing: -0.4px;
         }
 
         .section-label {
-            font-size: 10.5px;
-            font-weight: 600;
+            font-size: 11px;
+            font-weight: 700;
             color: var(--text-label);
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin: 18px 0 6px 8px;
+            letter-spacing: 1.2px;
+            margin: 22px 0 8px 10px;
         }
 
         .menu-list {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 2px;
+            gap: 4px;
         }
 
         .menu-list li a {
             display: flex;
             align-items: center;
-            padding: 9px 12px;
+            padding: 11px 14px;
             color: var(--link-color);
-            font-size: 13.5px;
-            font-weight: 500;
+            font-size: 14px;
+            font-weight: 600;
             text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.2s ease;
+            border-radius: 10px;
         }
 
         .menu-list li a:hover {
             background: var(--link-hover-bg);
             color: var(--text-main);
-            transform: translateX(3px);
+            transform: translateX(5px);
         }
 
         .menu-list li a i.main-icon {
-            font-size: 15px;
-            margin-right: 10px;
-            color: var(--text-label);
-            width: 18px;
+            font-size: 16px;
+            margin-right: 12px;
+            color: var(--text-muted);
+            width: 20px;
             text-align: center;
         }
 
         .menu-list li a:hover i.main-icon {
             color: var(--active-text-blue);
+            transform: scale(1.1);
         }
 
         .menu-list li a.active-link {
             background: var(--active-bg-light);
             color: var(--active-text-blue);
-            font-weight: 500;
-            position: relative;
         }
-        /* UI chiziqli indikatorli faol havola */
         .menu-list li a.active-link::before {
             content: '';
             position: absolute;
             left: 0;
-            top: 25%;
-            height: 50%;
-            width: 3px;
+            top: 30%;
+            height: 40%;
+            width: 4px;
             background: var(--active-text-blue);
             border-radius: 0 4px 4px 0;
+            box-shadow: 0 0 10px var(--active-text-blue);
         }
 
         .badge {
-            background: rgba(255, 107, 0, 0.1);
-            color: var(--active-text-blue);
+            background: linear-gradient(135deg, #ff6b00, #ff8c33);
+            color: #ffffff;
             font-size: 10px;
-            font-weight: 600;
-            padding: 2px 7px;
-            border-radius: 6px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
             margin-left: auto;
-            border: 1px solid rgba(255, 107, 0, 0.15);
+            box-shadow: 0 4px 10px rgba(255, 107, 0, 0.25);
         }
 
         /* —————————————————————————————————————————————————————————
-           MAIN WORKSPACE
+           WORKSPACE (CENTRAL DASHBOARD CARD)
            ————————————————————————————————————————————————————————— */
         .main-content {
-            margin-left: 100px;
-            padding: 112px 40px 40px 40px;
-            transition: margin-left 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            margin-left: 120px;
+            padding: 120px 40px 40px 40px;
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .dashboard-card {
-            background: var(--bg-panel);
-            border-radius: 14px;
-            padding: 35px;
+            background: var(--card-gradient);
+            border-radius: 24px;
+            padding: 45px;
             border: 1px solid var(--border-color);
-            max-width: 850px;
-            box-shadow: 0 15px 35px var(--shadow-rail);
+            max-width: 900px;
+            box-shadow: 0 25px 50px var(--shadow-rail);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             position: relative;
             overflow: hidden;
         }
+        .dashboard-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 35px 60px rgba(0,0,0,0.12);
+        }
 
-        /* Premium UI chiziqli dekoratsiyasi */
-        .dashboard-card::after {
+        .dashboard-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, var(--active-text-blue), rgba(0,0,0,0));
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--active-text-blue), transparent);
         }
 
         .dashboard-card h1 {
-            font-size: 24px;
-            font-weight: 600;
+            font-size: 28px;
+            font-weight: 800;
             color: var(--text-main);
-            margin-bottom: 10px;
-            letter-spacing: -0.5px;
+            margin-bottom: 14px;
+            letter-spacing: -0.8px;
         }
         .dashboard-card p {
             color: var(--text-muted);
-            font-size: 14px;
-            line-height: 1.6;
+            font-size: 15px;
+            line-height: 1.7;
         }
 
+        /* —————————————————————————————————————————————————————————
+           ANIMATION KEYFRAMES
+           ————————————————————————————————————————————————————————— */
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes slideRight {
+            from { transform: translateX(-30px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* RESPONSIVE DESIGN */
         @media (max-width: 768px) {
-            .sidebar-container:hover .expanded-menu { width: 245px; }
+            .sidebar-container:hover .expanded-menu { width: 250px; }
             .menu-col:last-child { display: none; }
-            .main-content { margin-left: 85px; padding: 95px 15px 20px 15px; }
+            .main-content { margin-left: 95px; padding: 100px 16px 20px 16px; }
+            header { padding: 0 20px; }
+            .dashboard-card { padding: 30px; }
         }
     </style>
 </head>
@@ -420,19 +492,23 @@
     <header>
         <div class="header-container">
             <div class="header-left">
-                <i class="fa-solid fa-bars menu-hamburger"></i>
+                <i class="fa-solid fa-bars menu-hamburger" title="Menyuni boshqarish"></i>
             </div>
             <div class="header-center">
-                <div class="logo" id="themeToggleBtn">Easy<span>Build</span></div>
+                <div class="logo" id="themeToggleBtn" title="Mavzuni o'zgartirish (Dark/Light)">
+                    Easy<span>Build</span>
+                </div>
             </div>
             <div class="header-right">
-                <a href="/profile/edit/">
-                    {% if user.is_authenticated and user.profile.avatar %}
-                        <img src="{{ user.profile.avatar.url }}" alt="Profil" class="profile-avatar">
-                    {% else %}
-                        <img src="https://via.placeholder.com/38?text=UI" alt="Profil" class="profile-avatar">
-                    {% endif %}
-                </a>
+                <div class="profile-wrapper">
+                    <a href="/profile/edit/">
+                        {% if user.is_authenticated and user.profile.avatar %}
+                            <img src="{{ user.profile.avatar.url }}" alt="Profil" class="profile-avatar">
+                        {% else %}
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop" alt="Profil" class="profile-avatar">
+                        {% endif %}
+                    </a>
+                </div>
             </div>
         </div>
     </header>
@@ -440,15 +516,18 @@
     <div class="sidebar-container">
         <div class="icon-rail">
             <div class="rail-item active" title="Bosh sahifa"><i class="fa-solid fa-house"></i></div>
-            <div class="rail-item" title="Chat"><i class="fa-regular fa-comment-dots"></i></div>
+            <div class="rail-item" title="Chatlar"><i class="fa-regular fa-comment-dots"></i></div>
             <div class="rail-item" title="Saqlanganlar"><i class="fa-regular fa-star"></i></div>
             <div class="rail-divider"></div>
-            <div class="rail-item" title="Profil"><i class="fa-regular fa-user"></i></div>
+            <div class="rail-item" title="Profil Sozlamalari"><i class="fa-regular fa-user"></i></div>
         </div>
 
         <div class="expanded-menu">
             <div class="menu-col">
-                <div class="menu-title"><i class="fa-solid fa-compass" style="color: var(--active-text-blue);"></i> Navigator</div>
+                <div class="menu-title">
+                    <i class="fa-solid fa-compass" style="color: var(--active-text-blue); transform: rotate(15deg);"></i>
+                    Navigator
+                </div>
                 <ul class="menu-list">
                     <li><a href="#" class="active-link"><i class="fa-solid fa-house main-icon"></i> Bosh sahifa</a></li>
                     <li><a href="#"><i class="fa-regular fa-comment-dots main-icon"></i> Xabarlar <span class="badge">3</span></a></li>
@@ -463,7 +542,7 @@
             </div>
 
             <div class="menu-col">
-                <div class="section-label" style="margin-top: 44px;">Hujjatlar</div>
+                <div class="section-label" style="margin-top: 48px;">Hujjatlar</div>
                 <ul class="menu-list">
                     <li><a href="#"><i class="fa-regular fa-bookmark main-icon"></i> Arxivlanganlar</a></li>
                     <li><a href="#"><i class="fa-regular fa-star main-icon"></i> Saralanganlar</a></li>
@@ -472,7 +551,12 @@
         </div>
     </div>
 
-    
+    <div class="main-content">
+        <div class="dashboard-card">
+            <h1>Premium Kiber Dashboardga Xush Kelibsiz!</h1>
+            <p>EasyBuild boshqaruv paneli to'liq yangilandi. Chap paneldagi piktogrammalar (icons) ustiga sichqonchani olib borib, kengaytirilgan aqlli menyuni silliq animatsiya bilan ishlatishingiz mumkin. Logotip ustiga bosish orqali UI rejimini (Dark/Light) o'zgartiring.</p>
+        </div>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -481,9 +565,11 @@
             const sidebar = document.querySelector('.sidebar-container');
             const mainContent = document.querySelector('.main-content');
 
+            // Brauzer xotirasidan temani aniqlash (Default: dark)
             const currentTheme = localStorage.getItem('theme') || 'dark';
             document.documentElement.setAttribute('data-theme', currentTheme);
 
+            // Tema almashtirish logikasi + Silliq animatsiya effekti
             themeToggleBtn.addEventListener('click', () => {
                 let theme = document.documentElement.getAttribute('data-theme');
                 if (theme === 'dark') {
@@ -495,17 +581,30 @@
                 }
             });
 
+            // Hamburger tugmasi yordamida sidebar'ni yopish/ochish va kontentni surish
             if (hamburgerBtn && sidebar && mainContent) {
                 hamburgerBtn.addEventListener('click', function() {
-                    if (sidebar.style.display !== 'none' && sidebar.style.display !== '') {
-                        sidebar.style.display = 'none';
-                        mainContent.style.marginLeft = '0';
+                    const isHidden = sidebar.style.transform === 'translateX(-150%)';
+                    if (!isHidden) {
+                        sidebar.style.transform = 'translateX(-150%)';
+                        sidebar.style.opacity = '0';
+                        mainContent.style.marginLeft = '40px';
                     } else {
-                        sidebar.style.display = 'flex';
-                        mainContent.style.marginLeft = '100px';
+                        sidebar.style.transform = 'translateX(0)';
+                        sidebar.style.opacity = '1';
+                        mainContent.style.marginLeft = '120px';
                     }
                 });
             }
+
+            // Rail elementlarini bosganda aktivlik klassini boshqarish
+            const railItems = document.querySelectorAll('.rail-item');
+            railItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    railItems.forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+                });
+            });
         });
     </script>
 </body>
