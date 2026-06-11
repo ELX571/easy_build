@@ -1,81 +1,86 @@
-from django.contrib import auth, messages
-from django.contrib.auth import logout as auth_logout
+from django.contrib.auth import logout as auth_logout, login
 from django.shortcuts import render, redirect
-from accounts.form import RegisterForm, LoginForm, SecondRegisterForm
+from rest_framework import viewsets, status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated, AllowAny
+
 from accounts.models import Profile
-from build.models import BuilderProfile # 👈 Xatolik chiqmasligi uchun shu yerga import qo'shildi
-
-# 1. BIRINCHI BOSQICH: Standart ro'yxatdan o'tish
-def register(request):
-    if request.user.is_authenticated:
-        return redirect('build:home')
-
-    if request.method == "POST":
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            auth.login(request, user)
-            return redirect('accounts:second_register')
-    else:
-        form = RegisterForm()
-
-    return render(request, 'accounts/register.html', {'form': form})
+from accounts.serializers import (
+    UserLoginSerializer,
+    UserRegisterSerializer,
+    UserSecondRegisterSerializer,
+)
+from build.models import BuilderProfile
 
 
-# 2. IKKINCHI BOSQICH: Rol tanlash va Profil ma'lumotlarini to'ldirish
-def second_register(request):
-    if not request.user.is_authenticated:
-        return redirect('accounts:login')
+class AuthViewSet(viewsets.GenericViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = UserLoginSerializer
 
-    profile, created = Profile.objects.get_or_create(user=request.user)
+    def get_permissions(self):
+        return [AllowAny()]
 
-    if request.method == "POST":
-        form = SecondRegisterForm(request.POST, request.FILES, instance=profile)
-        if form.is_valid():
-            updated_profile = form.save()
+    # ── LOGIN: GET → sahifa, POST → API ───────────────────────────────────────
+    @action(methods=['get', 'post'], detail=False, url_path='login', url_name='login')
+    def login_user(self, request):
+        if request.method == 'GET':
+            if request.user.is_authenticated:
+                return redirect('/')
+            return render(request, 'accounts/login.html')
 
-            # 🔥 ROLLAR LOGIKASI:
-            if updated_profile.role == 'builder':
-                BuilderProfile.objects.get_or_create(
-                    profile=updated_profile,
-                    defaults={'profession': 'Usta', 'experience_years': 0}
-                )
-                messages.success(request, "Profil muvaffaqiyatli yaratildi! Endi ustalik ma'lumotlaringizni to'ldirishingiz mumkin.")
-            else:
-                messages.success(request, "Xush kelibsiz! Profilingiz muvaffaqiyatli faollashtirildi.")
+        # POST
+        serializer = UserLoginSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        login(request, user)
+        return Response({'detail': 'Muvaffaqiyatli kirdingiz!'}, status=status.HTTP_200_OK)
 
-            return redirect('build:home')
-    else:
-        form = SecondRegisterForm(instance=profile)
+    # ── REGISTER: GET → sahifa, POST → API ────────────────────────────────────
+    @action(methods=['get', 'post'], detail=False, url_path='register', url_name='register')
+    def register_user(self, request):
+        if request.method == 'GET':
+            if request.user.is_authenticated:
+                return redirect('/')
+            return render(request, 'accounts/register.html')
 
-    return render(request, 'accounts/second_register.html', {'form': form})
+        # POST
+        serializer = UserRegisterSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        login(request, user)
+        return Response(
+            {'detail': "Ro'yxatdan o'tdingiz! Endi profilingizni to'ldiring."},
+            status=status.HTTP_201_CREATED
+        )
 
+    # ── SECOND REGISTER: GET → sahifa, POST → API ─────────────────────────────
+    @action(methods=['get', 'post'], detail=False, url_path='second-register', url_name='second-register')
+    def register_second_user(self, request):
+        if request.method == 'GET':
+            if not request.user.is_authenticated:
+                return redirect('/accounts/auth/login/')
+            return render(request, 'accounts/second_register.html')
 
-# 3. TIZIMGA KIRISH (Login)
-def login(request):
-    if request.user.is_authenticated:
-        return redirect('build:home')
+        # POST
+        if not request.user.is_authenticated:
+            return Response({'detail': "Avval ro'yxatdan o'ting."}, status=status.HTTP_401_UNAUTHORIZED)
 
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
+        profile, _ = Profile.objects.get_or_create(user=request.user)
+        serializer = UserSecondRegisterSerializer(instance=profile, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        updated_profile = serializer.save()
 
-            user = auth.authenticate(username=username, password=password)
+        if updated_profile.role == 'builder':
+            BuilderProfile.objects.get_or_create(
+                profile=updated_profile,
+                defaults={'profession': 'Usta', 'experience_years': 0}
+            )
 
-            if user is not None:
-                auth.login(request, user)
-                return redirect('build:home')
-            else:
-                messages.error(request, 'Foydalanuvchi nomi yoki parol noto\'g\'ri!')
-    else:
-        form = LoginForm()
+        return Response({'detail': "Profil muvaffaqiyatli to'ldirildi!"}, status=status.HTTP_200_OK)
 
-    return render(request, 'accounts/login.html', {'form': form})
-
-
-# 4. TIZIMDAN CHIQISH (Logout)
-def logout(request):
-    auth_logout(request)
-    return redirect('accounts:login')
+    # ── LOGOUT: POST ──────
+    @action(methods=['post'], detail=False, url_path='logout', url_name='logout')
+    def logout_user(self, request):
+        auth_logout(request)
+        return Response({'detail': 'Tizimdan chiqdingiz.'}, status=status.HTTP_200_OK)

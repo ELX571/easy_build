@@ -81,7 +81,7 @@ def profile_edit_view(request):
 
 # build/views.py fayliga qo'shing:
 from django.contrib.auth.decorators import login_required
-from .form import PostCreateForm
+# from .form import PostCreateForm
 
 
 @login_required

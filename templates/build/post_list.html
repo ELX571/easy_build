@@ -190,18 +190,19 @@
             </div>
             <div class="header-right" style="display: flex; align-items: center; gap: 20px;">
                 {% if user.is_authenticated %}
-                    <a href="{% url 'accounts:logout' %}" title="Tizimdan chiqish" style="color: var(--active-text-blue); font-size: 18px;">
+                    <a href="#" onclick="logoutUser()" title="Tizimdan chiqish" style="color: var(--active-text-blue); font-size: 18px;">
                         <i class="fa-solid fa-right-from-bracket"></i>
                     </a>
                     <a href="{% url 'build:profile' %}">
                         {% if user.profile.avatar %}
-                            <img src="{{ user.profile.avatar.url }}" alt="Profil" class="profile-avatar">
+                            <img src="{{ user.profile.avatar.url }}" alt="Profil" class="profile-avatar"
+                                 onerror="this.src='/media/avatars/default.jpg'">
                         {% else %}
-                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop" alt="Profil" class="profile-avatar">
+                            <img src="/media/avatars/default.jpg" alt="Profil" class="profile-avatar">
                         {% endif %}
                     </a>
                 {% else %}
-                    <a href="{% url 'accounts:login' %}" style="text-decoration: none; color: var(--active-text-blue); font-weight: 700;">
+                    <a href="{% url 'accounts:auth-login' %}" style="text-decoration: none; color: var(--active-text-blue); font-weight: 700;">
                         <i class="fa-solid fa-right-to-bracket"></i> Kirish
                     </a>
                 {% endif %}
@@ -213,7 +214,7 @@
         <div class="icon-rail">
             <a href="{% url 'build:home' %}" class="rail-item" title="Bosh sahifa"><i class="fa-solid fa-house"></i></a>
             <a href="{% url 'build:post_list' %}" class="rail-item active" title="Market Pro"><i class="fa-solid fa-store"></i></a>
-            <div class="rail-item" title="Chatlar"><i class="fa-regular fa-comment-dots"></i></div>
+            <a href="{% url 'chat:chat' %}" class="rail-item" title="Chatlar"><i class="fa-regular fa-comment-dots"></i></a>
             <div class="rail-item" id="themeToggleBtn" title="Rejimni o'zgartirish"><i class="fa-solid fa-moon"></i></div>
             <div class="rail-divider"></div>
             <a href="{% url 'build:profile' %}" class="rail-item" title="Profil Sozlamalari"><i class="fa-regular fa-user"></i></a>
@@ -228,7 +229,7 @@
                 <ul class="menu-list">
                     <li><a href="{% url 'build:home' %}"><i class="fa-solid fa-house main-icon"></i> Usta Qidirish</a></li>
                     <li><a href="{% url 'build:post_list' %}" class="active-link"><i class="fa-solid fa-store main-icon"></i> Market Pro (B2B)</a></li>
-                    <li><a href="#"><i class="fa-regular fa-comment-dots main-icon"></i> Xabarlar <span class="badge">3</span></a></li>
+                    <li><a href="{% url 'chat:chat' %}"><i class="fa-regular fa-comment-dots main-icon"></i> Xabarlar <span class="badge">3</span></a></li>
                 </ul>
                 <div class="section-label">Tizim</div>
                 <ul class="menu-list">
@@ -347,6 +348,21 @@
                 });
             }
         });
+
+        // Logout — POST so'rov yuborish (ViewSet POST talab qiladi)
+        function logoutUser() {
+            const csrf = document.cookie.split(';')
+                .find(c => c.trim().startsWith('csrftoken='))
+                ?.split('=')[1] || '';
+            fetch('/accounts/auth/logout/', {
+                method: 'POST',
+                headers: { 'X-CSRFToken': csrf },
+            }).then(() => {
+                window.location.href = '/accounts/auth/login/';
+            }).catch(() => {
+                window.location.href = '/accounts/auth/login/';
+            });
+        }
     </script>
 </body>
 </html>
