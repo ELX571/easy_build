@@ -1,0 +1,110 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Easy Build{% endblock %}</title>
+    {% tailwind_css %}
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+
+        /* Premium Form Styles */
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="number"],
+        input[type="file"],
+        select,
+        textarea {
+            width: 100%;
+            background-color: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: #f8fafc;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(12px);
+            margin-top: 0.25rem;
+            margin-bottom: 1rem;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+            background-color: rgba(30, 41, 59, 0.8);
+        }
+
+        label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #cbd5e1;
+            margin-bottom: 0.25rem;
+            display: block;
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            width: 100%;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.4);
+        }
+
+        /* Help text & error styles from Django forms */
+        .helptext {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-top: -0.75rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        ul.errorlist {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            list-style: none;
+            padding: 0;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 0.5rem;
+            padding: 0.5rem 0.75rem;
+        }
+    </style>
+</head>
+
+<body class="antialiased min-h-screen relative overflow-x-hidden selection:bg-purple-500/30">
+    {% block content %}
+    {% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ro'yxatdan o'tish — EasyBuild</title>
+    <meta name="description" content="EasyBuild platformasida ro'yxatdan o'ting.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-body: #f4f6fa;
+            --bg-panel: rgba(255, 255, 255, 0.82);
+            --bg-card: rgba(255, 255, 255, 0.97);
+            --border-color: rgba(0, 0, 0, 0.06);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --text-label: #94a3b8;
+            --orange: #ff6b00;
+            --orange-hover: #e85e00;
+            --orange-light: rgba(255, 107, 0, 0.09);
+            --orange-glow: rgba(255, 107, 0, 0.22);
+            --divider: #e2e8f0;
+            --input-bg: #ffffff;
+            --input-border: rgba(0, 0, 0, 0.1);
+            --shadow-card: 0 20px 60px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.04);
+            --shadow-btn: 0 6px 18px rgba(255, 107, 0, 0.35);
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #05070c;
+            --bg-panel: rgba(10, 14, 23, 0.82);
+            --bg-card: rgba(12, 17, 29, 0.95);
+            --border-color: rgba(255, 255, 255, 0.06);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-label: #475569;
+            --divider: rgba(255, 255, 255, 0.05);
+            --input-bg: rgba(255, 255, 255, 0.04);
+            --input-border: rgba(255, 255, 255, 0.08);
+            --shadow-card: 0 30px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-body);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            transition: background 0.4s ease, color 0.4s ease;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -150px;
+            right: -150px;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--orange-glow) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── WRAPPER ─────────────────────────────────────────────── */
+        .page-wrap {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            width: 100%;
+            max-width: 1060px;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-color);
+            animation: appear 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(28px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* ── BRANDING ────────────────────────────────────────────── */
+        .branding {
+            width: 40%;
+            background: linear-gradient(145deg, #312e81 0%, #1201ff 55%, #2200ff 100%);
+            padding: 56px 44px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .branding::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            right: -80px;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.12);
+            filter: blur(40px);
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #fff;
+        }
+
+        .brand-logo span {
+            font-size: 22px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .brand-logo span em {
+            color: rgba(255, 255, 255, 0.7);
+            font-style: normal;
+            font-weight: 500;
+        }
+
+        .brand-body {
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand-body h2 {
+            font-size: 28px;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.2;
+            margin-bottom: 14px;
+        }
+
+        .brand-body p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.65;
+        }
+
+        .brand-steps {
+            position: relative;
+            z-index: 1;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .brand-steps li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 600;
+        }
+
+        .step-num {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.22);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 800;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .step-num.done {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        /* ── FORM PANEL ──────────────────────────────────────────── */
+        .form-panel {
+            flex: 1;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 48px 52px;
+            border-left: 1px solid var(--border-color);
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-panel);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 15px;
+            transition: all 0.2s;
+        }
+
+        .theme-toggle:hover {
+            color: var(--orange);
+            border-color: var(--orange);
+        }
+
+        .form-header {
+            margin-bottom: 26px;
+        }
+
+        .form-header h1 {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 5px;
+        }
+
+        .form-header p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* Google */
+        .btn-google {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1.5px solid var(--border-color);
+            background: var(--input-bg);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.22s;
+            margin-bottom: 20px;
+        }
+
+        .btn-google:hover {
+            border-color: var(--orange);
+            box-shadow: 0 0 0 3px var(--orange-light);
+            transform: translateY(-1px);
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-label);
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--divider);
+        }
+
+        /* Alert */
+        .alert {
+            display: none;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .alert-error {
+            background: #fff1f1;
+            border: 1.5px solid #fca5a5;
+            color: #dc2626;
+        }
+
+        .alert-success {
+            background: #f0fdf4;
+            border: 1.5px solid #86efac;
+            color: #16a34a;
+        }
+
+        [data-theme="dark"] .alert-error {
+            background: rgba(220, 38, 38, 0.1);
+            border-color: rgba(220, 38, 38, 0.3);
+            color: #f87171;
+        }
+
+        [data-theme="dark"] .alert-success {
+            background: rgba(22, 163, 74, 0.1);
+            border-color: rgba(22, 163, 74, 0.3);
+            color: #4ade80;
+        }
+
+        /* Role toggle */
+        .role-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .role-btn {
+            flex: 1;
+            padding: 12px 8px;
+            background: var(--input-bg);
+            border: 1.5px solid var(--input-border);
+            border-radius: 12px;
+            color: var(--text-muted);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+        }
+
+        .role-btn:hover {
+            border-color: rgba(255, 107, 0, 0.4);
+            color: var(--text-main);
+        }
+
+        .role-btn.active {
+            background: var(--orange-light);
+            border-color: var(--orange);
+            color: var(--orange);
+        }
+
+        /* Form rows */
+        .form-row {
+            display: flex;
+            gap: 14px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 7px;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-label);
+            font-size: 14px;
+            pointer-events: none;
+        }
+
+        .input-wrap input {
+            width: 100%;
+            padding: 12px 13px 12px 40px;
+            background: var(--input-bg);
+            border: 1.5px solid var(--input-border);
+            border-radius: 12px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            color: var(--text-main);
+            outline: none;
+            transition: all 0.22s;
+        }
+
+        .input-wrap input::placeholder {
+            color: var(--text-label);
+        }
+
+        .input-wrap input:hover {
+            border-color: rgba(255, 107, 0, 0.3);
+        }
+
+        .input-wrap input:focus {
+            border-color: var(--orange);
+            box-shadow: 0 0 0 3px var(--orange-light);
+        }
+
+        .toggle-pass {
+            position: absolute;
+            right: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-label);
+            cursor: pointer;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .toggle-pass:hover {
+            color: var(--orange);
+        }
+
+        /* Password rules */
+        .pw-rules {
+            list-style: none;
+            margin-top: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .pw-rules li {
+            font-size: 12px;
+            color: var(--text-label);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+
+        .pw-rules li i {
+            font-size: 11px;
+        }
+
+        .pw-rules li.ok {
+            color: #16a34a;
+        }
+
+        [data-theme="dark"] .pw-rules li.ok {
+            color: #4ade80;
+        }
+
+        /* Submit */
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: var(--orange);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.22s;
+            margin-top: 6px;
+        }
+
+        .btn-submit:hover {
+            background: var(--orange-hover);
+            box-shadow: var(--shadow-btn);
+            transform: translateY(-2px);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .spinner {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 2.5px solid rgba(255, 255, 255, 0.35);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.65s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .card-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .card-footer a {
+            color: var(--orange);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .card-footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 900px) {
+            .page-wrap {
+                flex-direction: column;
+                max-width: 520px;
+            }
+
+            .branding {
+                width: 100%;
+                padding: 36px;
+            }
+
+            .form-panel {
+                padding: 36px 28px;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .form-panel {
+                padding: 28px 20px;
+            }
+
+            body {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page-wrap">
+
+        <!-- LEFT: Branding -->
+        <div class="branding">
+            <div class="brand-logo">
+                <div class="brand-logo-icon"><i class="fa-solid fa-layer-group"></i></div>
+                <span>Easy<em>Build</em></span>
+            </div>
+            <div class="brand-body">
+                <h2>Qurilish platformasiga qo'shiling</h2>
+                <p>Usta yoki mijoz — ikki bosqichda ro'yxatdan o'ting va darhol ishni boshlang.</p>
+            </div>
+            <ul class="brand-steps">
+                <li>
+                    <div class="step-num done"><i class="fa-solid fa-check" style="font-size:10px"></i></div> Asosiy
+                    ma'lumotlarni kiriting
+                </li>
+                <li>
+                    <div class="step-num">2</div> Profilingizni to'ldiring
+                </li>
+            </ul>
+        </div>
+
+        <!-- RIGHT: Form -->
+        <div class="form-panel">
+            <button class="theme-toggle" id="themeBtn" title="Rejimni o'zgartirish">
+                <i class="fa-solid fa-moon" id="themeIcon"></i>
+            </button>
+
+            <div class="form-header">
+                <h1>Hisob yaratish ✨</h1>
+                <p>Bir necha daqiqada ro'yxatdan o'ting</p>
+            </div>
+
+            <a href="{% url 'google_login' %}?process=signup" class="btn-google">
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20" alt="Google">
+                Google bilan ro'yxatdan o'ting
+            </a>
+
+            <div class="divider">yoki email orqali</div>
+
+            <div class="alert alert-error" id="errorBox"></div>
+            <div class="alert alert-success" id="successBox"></div>
+
+            <form id="registerForm">
+                {% csrf_token %}
+
+                <!-- Role -->
+                <div style="margin-bottom:16px;">
+                    <label>Siz kimсiz?</label>
+                    <div class="role-group">
+                        <button type="button" class="role-btn active" id="roleClient" onclick="setRole('client')">
+                            <i class="fa-regular fa-user"></i> Mijoz (Buyurtmachi)
+                        </button>
+                        <button type="button" class="role-btn" id="roleBuilder" onclick="setRole('builder')">
+                            <i class="fa-solid fa-hard-hat"></i> Usta (Quruvchi)
+                        </button>
+                    </div>
+                    <input type="hidden" id="roleInput" value="client">
+                </div>
+
+                <!-- Name row -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Ism</label>
+                        <div class="input-wrap">
+                            <i class="fa-regular fa-id-card input-icon"></i>
+                            <input type="text" id="first_name" placeholder="Ismingiz">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Familiya</label>
+                        <div class="input-wrap">
+                            <i class="fa-regular fa-id-card input-icon"></i>
+                            <input type="text" id="last_name" placeholder="Familiyangiz">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Username -->
+                <div class="form-group">
+                    <label>Username</label>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-at input-icon"></i>
+                        <input type="text" id="username" placeholder="username kiriting" required
+                            autocomplete="username">
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label>Parol</label>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input type="password" id="password" placeholder="Kuchli parol o'ylab toping" required>
+                        <i class="fa-regular fa-eye toggle-pass" id="tp1"></i>
+                    </div>
+                    <ul class="pw-rules" id="pwRules">
+                        <li id="r1"><i class="fa-solid fa-circle-dot"></i> Kamida 8 belgi</li>
+                        <li id="r2"><i class="fa-solid fa-circle-dot"></i> Raqam mavjud</li>
+                        <li id="r3"><i class="fa-solid fa-circle-dot"></i> Maxsus belgi (!, @, # ...)</li>
+                    </ul>
+                </div>
+
+                <!-- Re-password -->
+                <div class="form-group">
+                    <label>Parolni tasdiqlang</label>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-shield-halved input-icon"></i>
+                        <input type="password" id="re_password" placeholder="Parolni qayta kiriting" required>
+                        <i class="fa-regular fa-eye toggle-pass" id="tp2"></i>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    <span id="btnText">Ro'yxatdan o'tish →</span>
+                    <div class="spinner" id="spinner"></div>
+                </button>
+            </form>
+
+            <div class="card-footer">
+                Allaqachon akkauntingiz bormi? <a href="{% url 'accounts:auth-login' %}">Tizimga kirish</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme
+        const html = document.documentElement;
+        const themeBtn = document.getElementById('themeBtn');
+        const themeIcon = document.getElementById('themeIcon');
+        const saved = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', saved);
+        themeIcon.className = saved === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        themeBtn.addEventListener('click', () => {
+            const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            themeIcon.className = next === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        });
+
+        // Role toggle
+        function setRole(role) {
+            document.getElementById('roleInput').value = role;
+            document.getElementById('roleClient').classList.toggle('active', role === 'client');
+            document.getElementById('roleBuilder').classList.toggle('active', role === 'builder');
+        }
+
+        // Password toggles
+        [['tp1', 'password'], ['tp2', 're_password']].forEach(([btnId, inputId]) => {
+            document.getElementById(btnId).addEventListener('click', function () {
+                const inp = document.getElementById(inputId);
+                const isP = inp.type === 'password';
+                inp.type = isP ? 'text' : 'password';
+                this.className = (isP ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye') + ' toggle-pass';
+            });
+        });
+
+        // Password strength
+        document.getElementById('password').addEventListener('input', function () {
+            const v = this.value;
+            rule('r1', v.length >= 8);
+            rule('r2', /\d/.test(v));
+            rule('r3', /[!@#$%^&*]/.test(v));
+        });
+        function rule(id, ok) {
+            const el = document.getElementById(id);
+            el.classList.toggle('ok', ok);
+            el.querySelector('i').className = ok ? 'fa-solid fa-circle-check' : 'fa-solid fa-circle-dot';
+        }
+
+        function getCsrf() { return document.querySelector('[name=csrfmiddlewaretoken]').value; }
+        function showAlert(type, msg) {
+            const b = document.getElementById(type === 'error' ? 'errorBox' : 'successBox');
+            const o = document.getElementById(type === 'error' ? 'successBox' : 'errorBox');
+            o.style.display = 'none'; b.textContent = msg; b.style.display = 'block';
+        }
+        function setLoading(on) {
+            document.getElementById('submitBtn').disabled = on;
+            document.getElementById('btnText').style.display = on ? 'none' : 'inline';
+            document.getElementById('spinner').style.display = on ? 'block' : 'none';
+        }
+
+        document.getElementById('registerForm').addEventListener('submit', async function (e) {
+            e.preventDefault(); setLoading(true);
+            try {
+                const res = await fetch('/accounts/auth/register/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCsrf() },
+                    body: JSON.stringify({
+                        role: document.getElementById('roleInput').value,
+                        username: document.getElementById('username').value.trim(),
+                        first_name: document.getElementById('first_name').value.trim(),
+                        last_name: document.getElementById('last_name').value.trim(),
+                        password: document.getElementById('password').value,
+                        re_password: document.getElementById('re_password').value,
+                    }),
+                });
+                const json = await res.json();
+                if (res.ok) {
+                    showAlert('success', json.detail || "Ro'yxatdan o'tdingiz!");
+                    setTimeout(() => { window.location.href = '/accounts/auth/second-register/'; }, 900);
+                } else {
+                    showAlert('error', Object.values(json).flat().join(' '));
+                }
+            } catch { showAlert('error', "Serverga ulanib bo'lmadi."); }
+            finally { setLoading(false); }
+        });
+    </script>
+</body>
+
+</html>

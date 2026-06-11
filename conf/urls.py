@@ -18,16 +18,20 @@ from django.contrib import admin
 from django.urls import path, include
 
 from conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("", include("build.urls")),
+    path('accounts/', include('accounts.urls')),
+    path('accounts/', include('allauth.urls')),
+    path('chat/', include('chat.urls')),
 ]
 
 if settings.DEBUG:
     # Include django_browser_reload URLs only in DEBUG mode
     urlpatterns += [
         path("__reload__/", include("django_browser_reload.urls")),
-        path("", include("build.urls")),
-        path('account/', include('account.urls'))
-
     ]
+    # Rasm va fayllarni yuklash uchun
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
