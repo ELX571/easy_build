@@ -88,7 +88,7 @@ from .form import PostCreateForm
 def post_create_view(request):
     # Roli 'builder' bo'lmagan foydalanuvchilarni qaytarib yuboramiz
     if request.user.profile.role != 'builder':
-        messages.error(request, "Xatolik! Eʼlon joylashtirish faqat Quruvchilar (Ustalar) uchun ruxsat etilgan.")
+        messages.error(request, "Xatolik!! Eʼlon joylashtirish faqat Quruvchilar (Ustalar) uchun ruxsat etilgan.")
         return redirect('build:post_list')
 
     if request.method == 'POST':
