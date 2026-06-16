@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     # Local Apps
     'accounts.apps.AccountConfig',
     'build',
+    "rest_framework",
 ]
 
 # DEBUG rejimida brauzerni avtomatik yangilash (Live Reload) ilovasini qo'shish

@@ -1,12 +1,13 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 
 from accounts import views
 
 app_name = 'accounts'
 
+router = DefaultRouter()
+router.register(r'auth', views.AuthViewSet, basename='auth')
+
 urlpatterns = [
-    path('register/', views.register, name='register'),
-    path('second-register/', views.second_register, name='second_register'),
-    path('login/', views.login, name='login'),
-    path('logout/', views.logout, name='logout'),
+    path('', include(router.urls)),
 ]
