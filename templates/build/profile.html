@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
+    <!-- NARXLAR FORMATI UCHUN DJANGO HUMANIZENI INTEGRATSIYA QILAMIZ -->
+    {% load humanize %}
+
     <style>
         /* —————————————————————————————————————————————————————————
            PREMIUM VARIABLE SYSTEM (CYBER ORANGE & ULTRA GLASS)
@@ -29,6 +32,7 @@
             --divider-col: #e2e8f0;
             --glow-color: rgba(255, 107, 0, 0.2);
             --card-gradient: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+            --input-bg: #ffffff;
         }
 
         [data-theme="dark"] {
@@ -49,6 +53,7 @@
             --divider-col: rgba(255, 255, 255, 0.04);
             --glow-color: rgba(255, 107, 0, 0.4);
             --card-gradient: linear-gradient(135deg, rgba(13, 18, 30, 0.85), rgba(8, 11, 20, 0.6));
+            --input-bg: rgba(255, 255, 255, 0.03);
         }
 
         /* —————————————————————————————————————————————————————————
@@ -112,7 +117,7 @@
         .menu-list li a i.main-icon { font-size: 16px; margin-right: 12px; color: var(--text-muted); width: 20px; text-align: center; }
 
         /* MAIN CONTENT WORKSPACE */
-        .main-content { margin-left: 120px; padding: 120px 40px 40px 40px; display: flex; justify-content: center; }
+        .main-content { margin-left: 120px; padding: 120px 40px 40px 40px; display: flex; flex-direction: column; align-items: center; gap: 40px; }
 
         /* KIBER PROFILE CARD */
         .profile-container {
@@ -157,11 +162,62 @@
         .btn-cyber.secondary { background: var(--bg-panel); border: 1px solid var(--border-color); color: var(--text-main); }
         .btn-cyber.secondary:hover { background: var(--text-main); color: var(--bg-body); transform: translateY(-2px); }
 
+        /* —————————————————————————————————————————————————————————
+           🔥 SUPER-APP TRANSITION SPLASH SCREEN CSS
+           ————————————————————————————————————————————————————————— */
+        .super-app-loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #05070c; z-index: 99999;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .super-app-loader.active { opacity: 1; pointer-events: auto; }
+        .loader-content { text-align: center; animation: zoomInLoader 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .loader-logo { font-size: 42px; font-weight: 800; color: #ff6b00; letter-spacing: -1px; margin-bottom: 8px; text-shadow: 0 0 30px rgba(255, 107, 0, 0.4); }
+        .loader-logo span { color: #ffffff; font-weight: 500; }
+        .loader-subtext { font-size: 16px; font-weight: 700; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 35px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .loader-progress-track { width: 220px; height: 4px; background: rgba(255, 255, 255, 0.05); border-radius: 20px; margin: 0 auto; overflow: hidden; position: relative; border: 1px solid rgba(255, 255, 255, 0.02); }
+        .loader-progress-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #ff6b00, #ff9e54); border-radius: 20px; box-shadow: 0 0 12px #ff6b00; transition: width 0.1s linear; }
+
+        /* —————————————————————————————————————————————————————————
+           🔥 EXCLUSIVE CRUD PROFILE MANAGEMENT STYLES
+           ————————————————————————————————————————————————————————— */
+        .my-listings-section { width: 100%; max-width: 1200px; margin-top: 20px; }
+        .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 30px; width: 100%; }
+        .management-post-card { background: var(--card-gradient); border-radius: 24px; border: 1px solid var(--border-color); overflow: hidden; display: flex; flex-direction: column; position: relative; backdrop-filter: blur(20px); }
+        .management-post-card:hover { transform: translateY(-4px); box-shadow: 0 15px 35px var(--shadow-rail); }
+        .post-thumbnail-wrapper { width: 100%; height: 170px; background: #0f172a; display: flex; align-items: center; justify-content: center; overflow: hidden; border-bottom: 1px solid var(--border-color); position: relative; }
+        .post-img-src { width: 100%; height: 100%; object-fit: cover; }
+        .post-no-img-icon { font-size: 36px; color: rgba(255, 255, 255, 0.04); }
+        .category-badge-floating { position: absolute; top: 12px; right: 12px; background: rgba(5, 7, 12, 0.7); backdrop-filter: blur(8px); color: var(--active-text-blue); font-size: 10px; font-weight: 800; padding: 4px 12px; border-radius: 20px; border: 1px solid var(--border-color); text-transform: uppercase; }
+        .post-management-body { padding: 24px; display: flex; flex-direction: column; gap: 8px; flex-grow: 1; text-align: left; }
+        .crud-management-actions { display: flex; gap: 10px; border-top: 1px solid var(--border-color); padding-top: 16px; margin-top: auto; }
+
+        /* Modals Common styles */
+        .cyber-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3, 5, 10, 0.6); backdrop-filter: blur(14px); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        .cyber-modal-overlay.open { opacity: 1; pointer-events: auto; }
+        .cyber-modal-container { background: var(--card-gradient); border: 1px solid var(--border-color); width: 100%; border-radius: 26px; overflow: hidden; transform: scale(0.9) translateY(20px); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
+        .cyber-modal-overlay.open .cyber-modal-container { transform: scale(1) translateY(0); }
+        .modal-content-body { padding: 28px; display: flex; flex-direction: column; }
+
+        @keyframes zoomInLoader { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
+
+    <!-- 🔥 SUPER-APP TRANSITION LOADING ANIMATION (4 SEKUNDLIK REJIM) -->
+    <div id="superAppLoader" class="super-app-loader">
+        <div class="loader-content">
+            <div class="loader-logo">Easy<span>Build</span></div>
+            <div class="loader-subtext"><i class="fa-solid fa-store"></i> Market Pro B2B</div>
+            <div class="loader-progress-track">
+                <div class="loader-progress-bar"></div>
+            </div>
+        </div>
+    </div>
 
     <header>
         <div class="header-container">
@@ -202,8 +258,8 @@
     </div>
 
     <div class="main-content">
+        <!-- SHAXSIY PROFIL CARD PANEL -->
         <div class="profile-container">
-
             <div class="avatar-wrapper">
                 {% if profile and profile.avatar %}
                     <img src="{{ profile.avatar.url }}" alt="Avatar" class="profile-img">
@@ -260,12 +316,250 @@
                     <i class="fa-solid fa-pen-to-square"></i> Tahrirlash
                 </a>
             </div>
+        </div>
 
+        <!-- 🔥 MENING E'LONLARIM - CLEAN CRUD HUB (FAQAT SHU YERDA EDIT & DELETE MUMKIN) -->
+        <div class="my-listings-section">
+            <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; text-align: left; width: 100%;">
+                <i class="fa-solid fa-folder-open" style="color: var(--active-text-blue);"></i> Mening B2B E'lonlarim
+            </h2>
+
+            <div class="posts-grid">
+                {% for post in my_posts %}
+                    <div class="management-post-card">
+                        <div class="post-thumbnail-wrapper">
+                            {% if post.image %}
+                                <img src="{{ post.image.url }}" class="post-img-src" alt="{{ post.title }}">
+                            {% else %}
+                                <div class="post-no-img-icon"><i class="fa-solid fa-trowel-bricks"></i></div>
+                            {% endif %}
+                            <span class="category-badge-floating">{{ post.get_category_display }}</span>
+                        </div>
+
+                        <div class="post-management-body">
+                            <span style="font-size: 12px; color: var(--text-muted);">Joylashtirildi: {{ post.created_time|date:"d.m.Y" }}</span>
+                            <h3 style="font-size: 16px; font-weight: 800; letter-spacing: -0.3px; line-height: 1.4;">{{ post.title|default:"Sarlavhasiz e'lon" }}</h3>
+                            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; min-height: 40px;">{{ post.description|truncatewords:10 }}</p>
+
+                            <div style="font-size: 16px; color: var(--active-text-blue); font-weight: 800; margin-top: 4px;">
+                                {% if post.price %}{{ post.price|intcomma }} <span style="font-size: 11px; font-weight: 600;">UZS</span>{% else %}Kelishilgan narx{% endif %}
+                            </div>
+
+                            <!-- ⚡️ MANAGEMENT CONTROLS -->
+                            <div class="crud-management-actions">
+                                <button class="btn-cyber secondary edit-btn-node" style="padding: 8px 14px; border-radius: 10px; font-size: 13px;"
+                                        data-id="{{ post.id }}"
+                                        data-title="{{ post.title }}"
+                                        data-price="{{ post.price|default:'' }}"
+                                        data-category="{{ post.category }}"
+                                        data-desc="{{ post.description }}">
+                                    <i class="fa-solid fa-pen-to-square" style="color: var(--active-text-blue);"></i> Tahrirlash
+                                </button>
+                                <button class="btn-cyber secondary delete-btn-node" style="padding: 8px 14px; border-radius: 10px; font-size: 13px; border-color: rgba(239,68,68,0.2); color: #ef4444;"
+                                        data-id="{{ post.id }}"
+                                        data-title="{{ post.title|default:"Sarlavhasiz" }}">
+                                    <i class="fa-solid fa-trash-can"></i> O'chirish
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div style="background: var(--card-gradient); border: 1px solid var(--border-color); padding: 35px; border-radius: 20px; text-align: center; grid-column: 1 / -1; width: 100%;">
+                        <p style="color: var(--text-muted); font-size: 14px; font-weight: 500;">Siz tomonidan Market Pro platformasiga hali hech qanday B2B e'lon joylashtirilmagan.</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- —————————————————————————————————————————————————————————
+       🔥 PROFILE EXCLUSIVE CRUD APIS HIGH-SECURITY MODALS HTML
+       ————————————————————————————————————————————————————————— -->
+    <!-- 1. EDIT MODAL COMPONENT -->
+    <div class="cyber-modal-overlay" id="editPostModal" onclick="closeEditModal()">
+        <div class="cyber-modal-container" onclick="event.stopPropagation()" style="max-width: 540px;">
+            <div class="modal-content-body">
+                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 20px;"><i class="fa-solid fa-pen-to-square" style="color: var(--active-text-blue);"></i> E'lonni tahrirlash</h3>
+                <form id="editPostForm">
+                    {% csrf_token %}
+                    <input type="hidden" id="edit_post_id">
+                    <div style="display: flex; flex-direction: column; gap: 14px;">
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <label style="font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px;">SARLAVHA</label>
+                            <input type="text" id="edit_title" style="border: 1px solid var(--border-color); padding: 11px 14px; border-radius: 10px; width: 100%; background: rgba(0,0,0,0.15); color: var(--text-main); font-weight: 600; outline: none;">
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                            <div style="display: flex; flex-direction: column; gap: 6px;">
+                                <label style="font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px;">BO'LIM</label>
+                                <select id="edit_category" style="border: 1px solid var(--border-color); padding: 11px 14px; border-radius: 10px; background: #0f172a; color: white; outline: none; font-weight: 600; cursor: pointer;">
+                                    <option value="material">Materiallar bozori</option>
+                                    <option value="equipment">Texnika ijarasi</option>
+                                    <option value="job">Vakansiyalar</option>
+                                    <option value="service">Xizmatlar</option>
+                                </select>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 6px;">
+                                <label style="font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px;">NARX (UZS)</label>
+                                <input type="number" id="edit_price" style="border: 1px solid var(--border-color); padding: 11px 14px; border-radius: 10px; background: rgba(0,0,0,0.15); color: var(--text-main); font-weight: 600; outline: none;">
+                            </div>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <label style="font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px;">BATAFSIL TAVSIF</label>
+                            <textarea id="edit_description" rows="4" style="border: 1px solid var(--border-color); padding: 11px 14px; border-radius: 10px; background: rgba(0,0,0,0.15); color: var(--text-main); resize: none; outline: none; font-weight: 500; font-size: 14px; line-height: 1.5;"></textarea>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 12px; margin-top: 24px;">
+                        <button type="button" class="btn-cyber primary" style="flex: 1; border: none; height: 44px;" onclick="submitEditForm()"><i class="fa-solid fa-square-check"></i> Saqlash</button>
+                        <button type="button" class="btn-cyber secondary" style="flex: 1; height: 44px;" onclick="closeEditModal()">Bekor qilish</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. HIGH-SECURITY DELETE CONFIRM MODAL (GITHUB STYLE) -->
+    <div class="cyber-modal-overlay" id="deletePostModal" onclick="closeDeleteModal()">
+        <div class="cyber-modal-container" onclick="event.stopPropagation()" style="max-width: 460px;">
+            <div class="modal-content-body" style="border-top: 4px solid #ef4444;">
+                <h3 style="font-size: 17px; color: #ef4444; font-weight: 800;"><i class="fa-solid fa-triangle-exclamation"></i> Kritik xavfsizlik tekshiruvi!</h3>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 8px; line-height: 1.5;">
+                    Ushbu harakat ortga qaytarilmaydi. Buyurtma yoki e'lonni bazadan butunlay o'chirish uchun pastdagi qutiga sarlavhani xuddi o'zidek takrorlab yozing:
+                </p>
+                <div id="deleteTargetText" style="background: rgba(239,68,68,0.06); border: 1px dashed rgba(239,68,68,0.2); color: #ef4444; padding: 12px; border-radius: 10px; text-align: center; font-weight: 800; font-size: 14px; margin: 16px 0; user-select: none;"></div>
+
+                <input type="hidden" id="delete_post_id">
+                <input type="text" id="deleteConfirmInput" style="border: 1px solid #ef4444; padding: 12px; border-radius: 10px; width: 100%; background: rgba(0,0,0,0.3); color: white; text-align: center; font-weight: 700; outline: none; font-size: 14px;" placeholder="Sarlavhani kiriting..." autocomplete="off">
+
+                <div style="display: flex; gap: 12px; margin-top: 24px;">
+                    <button type="button" id="finalDeleteBtn" style="background: #ef4444; color: white; border: none; flex: 1; justify-content: center; height: 44px; border-radius: 12px; font-weight: 700; opacity: 0.4; pointer-events: none; cursor: not-allowed; display: flex; align-items: center; gap: 8px;" onclick="submitDeleteRequest()"><i class="fa-solid fa-trash-can"></i> O'chirilsin</button>
+                    <button type="button" class="btn-cyber secondary" style="flex: 1; height: 44px;" onclick="closeDeleteModal()">Bekor qilish</button>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+
+            // —————————————————————————————————————————————————————————
+            // 🔥 SUPER-APP TRANSITION LOGIC (ROOPA-ROSA 4 SEKUND)
+            // —————————————————————————————————————————————————————————
+            const loader = document.getElementById('superAppLoader');
+            const progressBar = document.querySelector('.loader-progress-bar');
+            const marketLinks = document.querySelectorAll('a[href*="posts"]');
+
+            marketLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetUrl = this.getAttribute('href');
+                    loader.classList.add('active');
+
+                    let width = 0;
+                    const interval = setInterval(() => {
+                        if (width >= 100) {
+                            clearInterval(interval);
+                            setTimeout(() => {
+                                window.location.href = targetUrl;
+                            }, 400); // 100% holatida biroz ushlab turish pauzasi
+                        } else {
+                            if (width < 50) { width += 2; }
+                            else if (width < 85) { width += 1; }
+                            else { width += 0.5; }
+
+                            if (width > 100) width = 100;
+                            progressBar.style.width = width + '%';
+                        }
+                    }, 40); // 4000ms ga chotki sozlangan matematik interval
+                });
+            });
+
+            // —————————————————————————————————————————————————————————
+            // 🔥 PROFILE INTERACTIVE CRUD LOGICS (EDIT & SECURITY DELETE)
+            // —————————————————————————————————————————————————————————
+            const editModal = document.getElementById('editPostModal');
+            const deleteModal = document.getElementById('deletePostModal');
+            const deleteTargetTextDiv = document.getElementById('deleteTargetText');
+            const deleteConfirmInput = document.getElementById('deleteConfirmInput');
+            const finalDeleteBtn = document.getElementById('finalDeleteBtn');
+
+            // Edit oynasini ochish
+            document.querySelectorAll('.edit-btn-node').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.getElementById('edit_post_id').value = btn.getAttribute('data-id');
+                    document.getElementById('edit_title').value = btn.getAttribute('data-title');
+                    document.getElementById('edit_category').value = btn.getAttribute('data-category');
+                    document.getElementById('edit_price').value = btn.getAttribute('data-price');
+                    document.getElementById('edit_description').value = btn.getAttribute('data-desc');
+                    editModal.classList.add('open');
+                });
+            });
+
+            // Safe-Delete oynasini ochish
+            document.querySelectorAll('.delete-btn-node').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.getElementById('delete_post_id').value = btn.getAttribute('data-id');
+                    deleteTargetTextDiv.innerText = btn.getAttribute('data-title').trim();
+
+                    deleteConfirmInput.value = '';
+                    finalDeleteBtn.style.opacity = '0.4';
+                    finalDeleteBtn.style.pointerEvents = 'none';
+                    finalDeleteBtn.style.cursor = 'not-allowed';
+
+                    deleteModal.classList.add('open');
+                });
+            });
+
+            // GitHub real-time input nazorati
+            deleteConfirmInput.addEventListener('input', () => {
+                if (deleteTargetTextDiv.innerText.trim() === deleteConfirmInput.value.trim()) {
+                    finalDeleteBtn.style.opacity = '1';
+                    finalDeleteBtn.style.pointerEvents = 'auto';
+                    finalDeleteBtn.style.cursor = 'pointer';
+                } else {
+                    finalDeleteBtn.style.opacity = '0.4';
+                    finalDeleteBtn.style.pointerEvents = 'none';
+                    finalDeleteBtn.style.cursor = 'not-allowed';
+                }
+            });
+
+            window.closeEditModal = function() { editModal.classList.remove('open'); }
+            window.closeDeleteModal = function() { deleteModal.classList.remove('open'); }
+
+            // Tahrirlashni Fetch API orqali yuborish
+            window.submitEditForm = function() {
+                const postId = document.getElementById('edit_post_id').value;
+                const formData = new FormData();
+                formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+                formData.append('title', document.getElementById('edit_title').value);
+                formData.append('category', document.getElementById('edit_category').value);
+                formData.append('price', document.getElementById('edit_price').value);
+                formData.append('description', document.getElementById('edit_description').value);
+
+                fetch(`/market/post/${postId}/edit/`, { method: 'POST', body: formData })
+                .then(res => res.json())
+                .then(data => {
+                    if(data.success) { location.reload(); }
+                    else { alert(data.message); }
+                });
+            }
+
+            // O'chirishni Fetch API orqali yuborish
+            window.submitDeleteRequest = function() {
+                const postId = document.getElementById('delete_post_id').value;
+                const token = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                fetch(`/market/post/${postId}/delete/`, {
+                    method: 'POST',
+                    headers: { 'X-CSRFToken': token }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if(data.success) { location.reload(); }
+                    else { alert(data.message); }
+                });
+            }
+
+            // SIDEBAR & THEME LOGIKASI
             const themeToggleBtn = document.getElementById('themeToggleBtn');
             const hamburgerBtn = document.querySelector('.menu-hamburger');
             const sidebar = document.querySelector('.sidebar-container');
@@ -290,11 +584,8 @@
 
             function updateToggleIcon(theme) {
                 const icon = themeToggleBtn.querySelector('i');
-                if (theme === 'dark') {
-                    icon.className = 'fa-solid fa-sun';
-                } else {
-                    icon.className = 'fa-solid fa-moon';
-                }
+                if (theme === 'dark') { icon.className = 'fa-solid fa-sun'; }
+                else { icon.className = 'fa-solid fa-moon'; }
             }
 
             if (hamburgerBtn && sidebar && mainContent) {

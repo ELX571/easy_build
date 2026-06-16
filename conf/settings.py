@@ -42,6 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
+
+'django.contrib.humanize',
+
+
     # Third Party Apps
     'allauth',
     'allauth.account',
@@ -190,3 +194,4 @@ MEDIA_ROOT = BASE_DIR / 'media'
 TAILWIND_APP_NAME = "templates"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
