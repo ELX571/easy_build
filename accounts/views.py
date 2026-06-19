@@ -84,3 +84,16 @@ class AuthViewSet(viewsets.GenericViewSet):
     def logout_user(self, request):
         auth_logout(request)
         return Response({'detail': 'Tizimdan chiqdingiz.'}, status=status.HTTP_200_OK)
+
+
+# ── Oddiy sahifa view'lari (template {% url %} uchun) ──────────────────────────
+
+def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('/')
+    return render(request, 'accounts/login.html')
+
+
+def logout_view(request):
+    auth_logout(request)
+    return redirect('/')

@@ -106,8 +106,4 @@ def post_create_view(request):
     return render(request, 'build/post_create.html', {'form': form})
 
 
-#-def password_reset_view(request):
-    if request.method == 'POST':
-        form = PasswordResetForm(request.POST)
-        if form.is_valid():
-            form.save()
+

@@ -213,7 +213,7 @@
         <div class="icon-rail">
             <a href="{% url 'build:home' %}" class="rail-item" title="Bosh sahifa"><i class="fa-solid fa-house"></i></a>
             <a href="{% url 'build:post_list' %}" class="rail-item active" title="Market Pro"><i class="fa-solid fa-store"></i></a>
-            <div class="rail-item" title="Chatlar"><i class="fa-regular fa-comment-dots"></i></div>
+            <a href="{% url 'chat:chat' %}" class="rail-item" title="Chatlar"><i class="fa-regular fa-comment-dots"></i></a>
             <div class="rail-item" id="themeToggleBtn" title="Rejimni o'zgartirish"><i class="fa-solid fa-moon"></i></div>
             <div class="rail-divider"></div>
             <a href="{% url 'build:profile' %}" class="rail-item" title="Profil Sozlamalari"><i class="fa-regular fa-user"></i></a>
@@ -228,7 +228,7 @@
                 <ul class="menu-list">
                     <li><a href="{% url 'build:home' %}"><i class="fa-solid fa-house main-icon"></i> Usta Qidirish</a></li>
                     <li><a href="{% url 'build:post_list' %}" class="active-link"><i class="fa-solid fa-store main-icon"></i> Market Pro (B2B)</a></li>
-                    <li><a href="#"><i class="fa-regular fa-comment-dots main-icon"></i> Xabarlar <span class="badge">3</span></a></li>
+                    <li><a href="{% url 'chat:chat' %}"><i class="fa-regular fa-comment-dots main-icon"></i> Xabarlar</a></li>
                 </ul>
                 <div class="section-label">Tizim</div>
                 <ul class="menu-list">

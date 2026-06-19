@@ -208,156 +208,266 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);height:100v
 </div>
 
 <script>
-// ── CONFIG: Backend tayyor bo'lgandan keyin bu yerlarni o'zgartiring ──
-// const WS_URL  = `ws://${location.host}/ws/chat/{room_id}/`;
-// const API_URL = '/api/chat/messages/?room={room_id}';
-// const ME_ID   = {{ request.user.id }};
+// ── REAL BACKEND CONFIG ──
+const ME_ID = {{ request.user.id }};
+const ME_NAME = '{{ request.user.get_full_name|default:request.user.username }}';
+const CSRF_TOKEN = '{{ csrf_token }}';
 
-// ── DEMO DATA (backend ulanganda o'chiring) ──
-const ME = { id: 1, name: '{{ request.user.username|default:"Siz" }}' };
+const AVATAR_COLORS = ['#6366f1','#f59e0b','#10b981','#ec4899','#8b5cf6','#06b6d4','#f97316','#84cc16'];
+function colorFor(id) { return AVATAR_COLORS[id % AVATAR_COLORS.length]; }
+function initials(name) { return name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase(); }
 
-const CONTACTS = [
-  { id: 2, name: 'Alisher Karimov', role: 'Usta', color: '#6366f1', unread: 3, lastMsg: 'Xayrli kun! Loyiha haqida...', time: '14:32', online: true, room: 'room_2' },
-  { id: 3, name: 'Dilnoza Yusupova', role: 'Mijoz', color: '#f59e0b', unread: 0, lastMsg: 'Rahmat, ko\'rib chiqaman', time: '13:15', online: false, room: 'room_3' },
-  { id: 4, name: 'Bobur Toshmatov', role: 'Usta', color: '#10b981', unread: 1, lastMsg: 'Narx bo\'yicha kelishamiz', time: 'Kecha', online: true, room: 'room_4' },
-  { id: 5, name: 'Kamola Nazarova', role: 'Mijoz', color: '#ec4899', unread: 0, lastMsg: 'Qachon boshlaymiz?', time: 'Dush', online: false, room: 'room_5' },
-  { id: 6, name: 'Sardor Rakhimov', role: 'Usta', color: '#8b5cf6', unread: 0, lastMsg: 'OK, bo\'ladi', time: 'Yak', online: false, room: 'room_6' },
-];
-
-const DEMO_MSGS = {
-  room_2: [
-    { id:1, from:2, text:"Assalomu alaykum! Siz loyiha haqida so'ragandingiz?", time:'13:50', read:true },
-    { id:2, from:1, text:"Wa alaykum assalom! Ha, 3 xonali uy qurishni rejalashtirmoqdaman.", time:'13:52', read:true },
-    { id:3, from:2, text:"Juda yaxshi. Qaysi hududda? Va taxminiy byudjet qancha?", time:'13:53', read:true },
-    { id:4, from:1, text:"Toshkent shahri, Yunusobod tumani. Byudjet 80-100 mln so'm atrofida.", time:'13:55', read:true },
-    { id:5, from:2, text:"Tushunarli. Men bu narxda sifatli ish bajargan loyihalarim bor. Ertaga uchrashuvga vaqtingiz bormi?", time:'14:20', read:true },
-    { id:6, from:1, text:"Ha, ertaga soat 10:00 da bo'ladi.", time:'14:25', read:true },
-    { id:7, from:2, text:"Xayrli kun! Loyiha haqida batafsilroq gaplashsak bo'ladimi?", time:'14:32', read:false },
-  ],
-  room_3: [
-    { id:1, from:3, text:"Salom, men uyimni ta'mirlashni xohlayman.", time:'12:00', read:true },
-    { id:2, from:1, text:"Xush kelibsiz! Qanday ishlar kerak?", time:'12:05', read:true },
-    { id:3, from:3, text:"Rahmat, ko'rib chiqaman", time:'13:15', read:true },
-  ],
-};
-
-let activeRoom = null;
+let activeRoomId = null;
+let activeContact = null;
 let socket = null;
-let allContacts = [...CONTACTS];
+let allContacts = [];
+let newChatMode = false;
+let newChatUsers = [];
+
+// ── FETCH CONTACTS ──
+async function loadContacts() {
+  try {
+    const r = await fetch('/chat/api/contacts/');
+    const data = await r.json();
+    allContacts = data.contacts || [];
+    renderContacts(allContacts);
+  } catch(e) {
+    console.error('Contacts yuklanmadi:', e);
+  }
+}
 
 // ── RENDER CONTACTS ──
 function renderContacts(list) {
   const el = document.getElementById('contactsList');
-  el.innerHTML = '<div class="section-lbl">So\'nggi xabarlar</div>';
+  if (!list.length) {
+    el.innerHTML = '<div class="section-lbl">Suhbatlar</div><div style="text-align:center;padding:40px 16px;color:var(--muted);font-size:13px;">Hali suhbat yo\'q.<br>Yangi chat boshlang 👆</div>';
+    return;
+  }
+  el.innerHTML = '<div class="section-lbl">Suhbatlar</div>';
   list.forEach(c => {
-    const initials = c.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    const color = colorFor(c.user_id);
+    const ini = initials(c.name);
+    const isActive = activeRoomId === c.room_id;
     el.innerHTML += `
-    <div class="contact-item ${activeRoom===c.room?'active':''}" onclick="openChat(${JSON.stringify(c).replace(/"/g,'&quot;')})" id="contact_${c.room}">
-      <div class="avatar-placeholder" style="background:${c.color}">${initials}</div>
+    <div class="contact-item ${isActive?'active':''}" onclick="openRoom(${c.room_id})" id="contact_${c.room_id}">
+      <div class="avatar-placeholder" style="background:${color}">${ini}</div>
       ${c.online?'<div class="online-dot"></div>':''}
       <div class="contact-info">
         <div class="contact-top">
-          <span class="contact-name">${c.name}</span>
-          <span class="contact-time">${c.time}</span>
+          <span class="contact-name">${escHtml(c.name)}</span>
+          <span class="contact-time">${c.last_time||''}</span>
         </div>
-        <div class="contact-preview">${c.lastMsg}</div>
+        <div class="contact-preview">${escHtml(c.last_message||'')}</div>
       </div>
       ${c.unread>0?`<div class="badge">${c.unread}</div>`:''}
     </div>`;
   });
 }
 
-// ── OPEN CHAT ──
-function openChat(c) {
-  activeRoom = c.room;
+// ── OPEN ROOM ──
+async function openRoom(roomId) {
+  newChatMode = false;
+  document.getElementById('newChatPanel')?.remove();
+
+  activeRoomId = roomId;
+  activeContact = allContacts.find(c => c.room_id === roomId);
   renderContacts(allContacts);
-  document.getElementById('chatHeader').style.display = 'flex';
-  document.getElementById('inputArea').style.display = 'block';
-  document.getElementById('chatName').textContent = c.name;
-  document.getElementById('chatStatus').textContent = c.online ? 'online' : 'offline';
-  document.getElementById('chatStatus').style.color = c.online ? '#22c55e' : 'var(--muted)';
 
-  const fa = document.getElementById('chatAvatarFallback');
-  fa.style.display = 'flex';
-  fa.style.background = c.color;
-  fa.textContent = c.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  if (activeContact) {
+    const color = colorFor(activeContact.user_id);
+    const ini = initials(activeContact.name);
+    document.getElementById('chatHeader').style.display = 'flex';
+    document.getElementById('inputArea').style.display = 'block';
+    document.getElementById('chatName').textContent = activeContact.name;
+    document.getElementById('chatStatus').textContent = activeContact.online ? 'online' : 'offline';
+    document.getElementById('chatStatus').style.color = activeContact.online ? '#22c55e' : 'var(--muted)';
+    const fa = document.getElementById('chatAvatarFallback');
+    fa.style.display = 'flex';
+    fa.style.background = color;
+    fa.textContent = ini;
+    document.getElementById('chatAvatar').style.display = 'none';
+  }
 
-  // Mark unread = 0
-  const contact = allContacts.find(x=>x.room===c.room);
-  if (contact) contact.unread = 0;
-
-  renderMessages(c.room);
+  await fetchMessages(roomId);
+  connectWS(roomId);
   document.getElementById('msgInput').focus();
+}
 
-  // 🔌 WebSocket — backend tayyor bo'lgandan keyin uncommit qiling:
-  // if (socket) socket.close();
-  // socket = new WebSocket(`ws://${location.host}/ws/chat/${c.room}/`);
-  // socket.onmessage = e => appendMessage(JSON.parse(e.data), true);
+// ── FETCH MESSAGES ──
+async function fetchMessages(roomId) {
+  const wrap = document.getElementById('messagesWrap');
+  wrap.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">Yuklanmoqda...</div>';
+  try {
+    const r = await fetch(`/chat/api/room/${roomId}/messages/?limit=100`);
+    const data = await r.json();
+    renderMessages(data.messages || []);
+  } catch(e) {
+    wrap.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">Xabarlar yuklanmadi.</div>';
+  }
 }
 
 // ── RENDER MESSAGES ──
-function renderMessages(room) {
+function renderMessages(msgs) {
   const wrap = document.getElementById('messagesWrap');
-  const msgs = DEMO_MSGS[room] || [];
   wrap.innerHTML = '';
-
   if (!msgs.length) {
-    wrap.innerHTML = '<div style="text-align:center;margin-top:40px;color:var(--muted);font-size:14px;">Hali xabar yo\'q. Birinchi xabarni yuboring! 👋</div>';
+    wrap.innerHTML = '<div style="text-align:center;margin-top:60px;color:var(--muted);font-size:14px;">Hali xabar yo\'q. Birinchi xabarni yuboring! 👋</div>';
     return;
   }
-
-  wrap.innerHTML = '<div class="date-sep"><span>Bugun</span></div>';
-  msgs.forEach(m => appendMessage(m, false));
+  wrap.innerHTML = '<div class="date-sep"><span>Xabarlar</span></div>';
+  msgs.forEach(m => appendMessageEl(m, false));
   wrap.scrollTop = wrap.scrollHeight;
 }
 
-function appendMessage(m, scroll=true) {
+function appendMessageEl(m, scroll=true) {
   const wrap = document.getElementById('messagesWrap');
-  const isOut = m.from === ME.id;
-  const c = allContacts.find(x=>x.id===m.from);
-  const color = c ? c.color : '#64748b';
-  const initials = c ? c.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase() : '?';
+  // Support both WS format and REST format
+  const senderId = m.sender_id !== undefined ? m.sender_id : m.from;
+  const text = m.content !== undefined ? m.content : m.message || m.text || '';
+  const time = m.time || '';
+  const isRead = m.is_read !== undefined ? m.is_read : true;
+  const isOut = senderId === ME_ID;
+
+  let senderName = m.sender_name || '';
+  let color = colorFor(senderId);
+  if (!senderName && activeContact && senderId !== ME_ID) senderName = activeContact.name;
+  const ini = senderName ? initials(senderName) : '?';
 
   const row = document.createElement('div');
   row.className = `msg-row ${isOut?'out':'in'}`;
   row.innerHTML = `
-    ${!isOut?`<div class="msg-avatar-placeholder" style="background:${color}">${initials}</div>`:''}
+    ${!isOut?`<div class="msg-avatar-placeholder" style="background:${color}">${ini}</div>`:''}
     <div class="bubble ${isOut?'out':'in'}">
-      ${m.text}
+      ${escHtml(text)}
       <div class="bubble-meta">
-        <span class="bubble-time">${m.time}</span>
-        ${isOut?`<i class="fa-solid fa-check-double bubble-check" style="color:${m.read?'rgba(255,255,255,0.9)':'rgba(255,255,255,0.5)'}"></i>`:''}
+        <span class="bubble-time">${time}</span>
+        ${isOut?`<i class="fa-solid fa-check-double bubble-check" style="color:${isRead?'rgba(255,255,255,0.9)':'rgba(255,255,255,0.5)'}"></i>`:''}
       </div>
     </div>`;
   wrap.appendChild(row);
   if (scroll) wrap.scrollTop = wrap.scrollHeight;
 }
 
+// ── WEBSOCKET ──
+function connectWS(roomId) {
+  if (socket) { socket.onclose = null; socket.close(); }
+  const proto = location.protocol === 'https:' ? 'wss' : 'ws';
+  socket = new WebSocket(`${proto}://${location.host}/ws/chat/${roomId}/`);
+
+  socket.onopen = () => console.log('WS ulandi:', roomId);
+
+  socket.onmessage = e => {
+    const data = JSON.parse(e.data);
+    if (data.type === 'message') {
+      appendMessageEl(data, true);
+      // Sidebar preview yangilash
+      const c = allContacts.find(x => x.room_id === activeRoomId);
+      if (c) { c.last_message = data.message; c.last_time = data.time; }
+      renderContacts(allContacts);
+      // O'qildi belgisi
+      if (data.sender_id !== ME_ID) {
+        socket.send(JSON.stringify({ type: 'read_receipt' }));
+      }
+    } else if (data.type === 'read_receipt') {
+      // O'qildi: checkmark rangini yangilash mumkin
+    }
+  };
+
+  socket.onerror = err => console.error('WS xatosi:', err);
+  socket.onclose = () => console.log('WS yopildi');
+}
+
 // ── SEND MESSAGE ──
 function sendMessage() {
   const inp = document.getElementById('msgInput');
   const text = inp.value.trim();
-  if (!text || !activeRoom) return;
-
-  const msg = { id: Date.now(), from: ME.id, text, time: new Date().toLocaleTimeString('uz-UZ',{hour:'2-digit',minute:'2-digit'}), read: false };
-
-  if (!DEMO_MSGS[activeRoom]) DEMO_MSGS[activeRoom] = [];
-  DEMO_MSGS[activeRoom].push(msg);
-  appendMessage(msg);
-
-  // Update sidebar preview
-  const c = allContacts.find(x=>x.room===activeRoom);
-  if (c) { c.lastMsg = text; c.time = msg.time; }
-  renderContacts(allContacts);
-
+  if (!text || !activeRoomId) return;
+  if (!socket || socket.readyState !== WebSocket.OPEN) {
+    alert('Ulanish yo\'q. Sahifani yangilang.');
+    return;
+  }
+  socket.send(JSON.stringify({ type: 'message', message: text }));
   inp.value = '';
   inp.style.height = 'auto';
-
-  // 🔌 WebSocket send — backend tayyor bo'lgandan keyin:
-  // if (socket && socket.readyState === WebSocket.OPEN)
-  //   socket.send(JSON.stringify({ message: text }));
 }
 
+// ── NEW CHAT — foydalanuvchi qidirish ──
+async function openNewChat() {
+  newChatMode = true;
+  activeRoomId = null;
+  if (socket) { socket.onclose = null; socket.close(); socket = null; }
+  document.getElementById('chatHeader').style.display = 'none';
+  document.getElementById('inputArea').style.display = 'none';
+
+  // Eski panel bo'lsa o'chir
+  document.getElementById('newChatPanel')?.remove();
+
+  const wrap = document.getElementById('messagesWrap');
+  wrap.innerHTML = '';
+
+  const panel = document.createElement('div');
+  panel.id = 'newChatPanel';
+  panel.style.cssText = 'padding:32px 24px;display:flex;flex-direction:column;gap:16px;';
+  panel.innerHTML = `
+    <h3 style="font-size:18px;font-weight:700;color:var(--text);">Yangi suhbat</h3>
+    <div class="search-inner" style="border-radius:12px;">
+      <i class="fa-solid fa-magnifying-glass" style="color:var(--label)"></i>
+      <input type="text" id="newChatSearch" placeholder="Foydalanuvchi qidirish..." oninput="searchUsers(this.value)"
+        style="border:none;background:transparent;outline:none;font-family:inherit;font-size:14px;color:var(--text);width:100%;">
+    </div>
+    <div id="userResults" style="display:flex;flex-direction:column;gap:4px;"></div>`;
+  wrap.appendChild(panel);
+  setTimeout(() => document.getElementById('newChatSearch')?.focus(), 50);
+  await searchUsers('');
+}
+
+async function searchUsers(q) {
+  try {
+    const r = await fetch(`/chat/api/users/?q=${encodeURIComponent(q)}`);
+    const data = await r.json();
+    const el = document.getElementById('userResults');
+    if (!el) return;
+    el.innerHTML = '';
+    (data.users || []).forEach(u => {
+      const color = colorFor(u.id);
+      const ini = initials(u.name);
+      const div = document.createElement('div');
+      div.className = 'contact-item';
+      div.style.borderRadius = '12px';
+      div.innerHTML = `
+        <div class="avatar-placeholder" style="background:${color}">${ini}</div>
+        <div class="contact-info">
+          <div class="contact-name">${escHtml(u.name)}</div>
+          <div class="contact-preview" style="font-size:12px;">@${escHtml(u.username)}</div>
+        </div>`;
+      div.onclick = () => startChatWith(u.id);
+      el.appendChild(div);
+    });
+    if (!data.users?.length) {
+      el.innerHTML = '<div style="text-align:center;color:var(--muted);font-size:13px;padding:20px 0;">Topilmadi</div>';
+    }
+  } catch(e) { console.error(e); }
+}
+
+async function startChatWith(userId) {
+  try {
+    const r = await fetch('/chat/api/start/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-CSRFToken': CSRF_TOKEN },
+      body: JSON.stringify({ user_id: userId }),
+    });
+    const data = await r.json();
+    if (data.room_id) {
+      await loadContacts();
+      openRoom(data.room_id);
+    }
+  } catch(e) { console.error(e); }
+}
+
+// ── HELPERS ──
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 function handleKey(e) {
   if (e.key==='Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
 }
@@ -366,10 +476,13 @@ function autoResize(el) {
   el.style.height = Math.min(el.scrollHeight, 120) + 'px';
 }
 function closeChat() {
-  activeRoom = null;
+  activeRoomId = null;
+  activeContact = null;
+  if (socket) { socket.onclose = null; socket.close(); socket = null; }
   document.getElementById('chatHeader').style.display='none';
   document.getElementById('inputArea').style.display='none';
   document.getElementById('messagesWrap').innerHTML='<div class="empty-state"><div class="no-chat-icon"><i class="fa-solid fa-comments"></i></div><h3>Chatni tanlang</h3><p>Chap tomondagi ro\'yxatdan suhbat tanlang</p></div>';
+  document.getElementById('newChatPanel')?.remove();
   renderContacts(allContacts);
 }
 function filterContacts(q) {
@@ -383,11 +496,14 @@ function toggleTheme() {
   document.getElementById('themeIcon').className = next==='dark'?'fa-solid fa-sun':'fa-solid fa-moon';
 }
 
-// Init
+// ── INIT ──
 const saved = localStorage.getItem('theme')||'light';
 document.documentElement.setAttribute('data-theme',saved);
 document.getElementById('themeIcon').className = saved==='dark'?'fa-solid fa-sun':'fa-solid fa-moon';
-renderContacts(allContacts);
+loadContacts();
+
+// Yangi chat tugmasini haqiqiy ishlashga ulash
+document.querySelector('.header-actions .icon-btn[title="Yangi chat"]')?.addEventListener('click', openNewChat);
 </script>
 </body>
 </html>

@@ -34,6 +34,7 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',                          # Channels ASGI server (birinchi bo'lishi shart)
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,12 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-
-
-'django.contrib.humanize',
-
+    'django.contrib.humanize',
 
     # Third Party Apps
+    'channels',                        # Django Channels (WebSocket)
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -56,7 +55,8 @@ INSTALLED_APPS = [
     # Local Apps
     'accounts.apps.AccountConfig',
     'build',
-    "rest_framework",
+    'chat',                            # Chat ilovasi
+    'rest_framework',
 ]
 
 # DEBUG rejimida brauzerni avtomatik yangilash (Live Reload) ilovasini qo'shish
@@ -101,6 +101,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'conf.wsgi.application'
+ASGI_APPLICATION = 'conf.asgi.application'
 
 
 # Database
@@ -115,6 +116,24 @@ DATABASES = {
         'HOST': os.getenv('DB_HOST', '127.0.0.1'),
         'PORT': os.getenv('DB_PORT', '5432'),
     }
+}
+
+# ── Django Channels — InMemory (development) / Redis (production) ──
+REDIS_URL = os.getenv('REDIS_URL', 'redis://127.0.0.1:6379')
+
+CHANNEL_LAYERS = {
+    'default': {
+        # Production uchun: channels_redis.core.RedisChannelLayer
+        # Development uchun: channels.layers.InMemoryChannelLayer
+        'BACKEND': os.getenv(
+            'CHANNEL_LAYER_BACKEND',
+            'channels.layers.InMemoryChannelLayer'
+        ),
+        # Redis ishlatganda quyidagi CONFIG ni aktivlashtiring:
+        # 'CONFIG': {
+        #     'hosts': [REDIS_URL],
+        # },
+    },
 }
 
 
