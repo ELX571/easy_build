@@ -1,375 +1,949 @@
 <!DOCTYPE html>
 <html lang="uz" data-theme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil to'ldirish — EasyBuild</title>
     <meta name="description" content="EasyBuild profilingizni to'ldiring.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <style>
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         :root {
-            --bg-body:      #f4f6fa;
-            --bg-card:      rgba(255,255,255,0.97);
-            --border-color: rgba(0,0,0,0.06);
-            --text-main:    #0f172a;
-            --text-muted:   #64748b;
-            --text-label:   #94a3b8;
-            --orange:       #ff6b00;
+            --bg-body: #f4f6fa;
+            --bg-card: rgba(255, 255, 255, 0.97);
+            --border-color: rgba(0, 0, 0, 0.06);
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --text-label: #64748b;
+            --orange: #ff6b00;
             --orange-hover: #e85e00;
-            --orange-light: rgba(255,107,0,0.09);
-            --orange-glow:  rgba(255,107,0,0.22);
-            --divider:      #e2e8f0;
-            --input-bg:     #ffffff;
-            --input-border: rgba(0,0,0,0.10);
-            --shadow-card:  0 20px 60px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.04);
-            --shadow-btn:   0 6px 18px rgba(255,107,0,0.35);
+            --orange-light: rgba(255, 107, 0, 0.09);
+            --orange-glow: rgba(255, 107, 0, 0.22);
+            --divider: #e2e8f0;
+            --input-bg: #f1f5f9;
+            --input-border: rgba(0, 0, 0, 0.2);
+            --shadow-card: 0 20px 60px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.04);
+            --shadow-btn: 0 6px 18px rgba(255, 107, 0, 0.35);
         }
+
         [data-theme="dark"] {
-            --bg-body:      #05070c;
-            --bg-card:      rgba(12,17,29,0.95);
-            --border-color: rgba(255,255,255,0.06);
-            --text-main:    #f8fafc;
-            --text-muted:   #94a3b8;
-            --text-label:   #475569;
-            --divider:      rgba(255,255,255,0.05);
-            --input-bg:     rgba(255,255,255,0.04);
-            --input-border: rgba(255,255,255,0.08);
-            --shadow-card:  0 30px 80px rgba(0,0,0,0.5);
+            --bg-body: #05070c;
+            --bg-card: rgba(12, 17, 29, 0.95);
+            --border-color: rgba(255, 255, 255, 0.06);
+            --text-main: #ffffff;
+            --text-muted: #cbd5e1;
+            --text-label: #94a3b8;
+            --divider: rgba(255, 255, 255, 0.12);
+            --input-bg: rgba(255, 255, 255, 0.05);
+            --input-border: rgba(255, 255, 255, 0.18);
+            --shadow-card: 0 30px 80px rgba(0, 0, 0, 0.5);
         }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background: var(--bg-body);
             min-height: 100vh;
-            display: flex; align-items: center; justify-content: center;
-            padding: 24px; transition: background 0.4s ease, color 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            transition: background 0.4s ease, color 0.4s ease;
         }
+
         body::before {
-            content: ''; position: fixed; top: -120px; right: -120px;
-            width: 450px; height: 450px; border-radius: 50%;
+            content: '';
+            position: fixed;
+            top: -120px;
+            right: -120px;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
             background: radial-gradient(circle, var(--orange-glow) 0%, transparent 70%);
-            pointer-events: none; z-index: 0;
+            pointer-events: none;
+            z-index: 0;
         }
 
         /* ── CARD ────────────────────────────────────────────────── */
         .card {
-            position: relative; z-index: 1;
-            width: 100%; max-width: 560px;
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 560px;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 28px; padding: 52px 48px;
+            border-radius: 28px;
+            padding: 52px 48px;
             box-shadow: var(--shadow-card);
-            animation: appear 0.5s cubic-bezier(0.16,1,0.3,1) both;
+            animation: appear 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
+
         @keyframes appear {
-            from { opacity: 0; transform: translateY(28px) scale(0.98); }
-            to   { opacity: 1; transform: translateY(0) scale(1); }
+            from {
+                opacity: 0;
+                transform: translateY(28px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         /* Theme toggle */
         .theme-toggle {
-            position: absolute; top: 20px; right: 24px;
-            width: 36px; height: 36px; border-radius: 10px;
-            border: 1px solid var(--border-color); background: transparent;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; color: var(--text-muted); font-size: 15px; transition: all 0.2s;
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 15px;
+            transition: all 0.2s;
         }
-        .theme-toggle:hover { color: var(--orange); border-color: var(--orange); }
+
+        .theme-toggle:hover {
+            color: var(--orange);
+            border-color: var(--orange);
+        }
 
         /* ── STEPPER ─────────────────────────────────────────────── */
         .stepper {
-            display: flex; align-items: center; gap: 0;
-            margin-bottom: 36px;
+            display: flex;
+            align-items: center;
+            gap: 0;
+            margin-bottom: 40px;
+            justify-content: center;
         }
+
         .step-node {
-            display: flex; flex-direction: column; align-items: center; gap: 6px;
-            min-width: 56px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            min-width: 60px;
+            position: relative;
+            z-index: 2;
         }
+
         .step-circle {
-            width: 36px; height: 36px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 13px; font-weight: 700; transition: all 0.3s;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .step-circle.done   { background: var(--orange); color: #fff; box-shadow: 0 4px 12px var(--orange-light); }
-        .step-circle.active { background: var(--orange-light); color: var(--orange); border: 2px solid var(--orange); }
-        .step-circle.idle   { background: var(--divider); color: var(--text-label); }
-        .step-lbl { font-size: 11px; font-weight: 600; color: var(--text-muted); white-space: nowrap; }
-        .step-lbl.active { color: var(--orange); }
-        .step-line { flex: 1; height: 2px; background: var(--divider); margin: 0 4px; position: relative; top: -10px; }
-        .step-line.done { background: var(--orange); }
+
+        .step-circle.done {
+            background: var(--orange);
+            color: #fff;
+            box-shadow: var(--shadow-btn);
+        }
+
+        .step-circle.active {
+            background: var(--orange-light);
+            color: var(--orange);
+            border: 2px solid var(--orange);
+            box-shadow: 0 0 0 5px rgba(255, 107, 0, 0.15);
+        }
+
+        .step-circle.idle {
+            background: var(--input-bg);
+            color: var(--text-label);
+            border: 2px solid var(--divider);
+        }
+
+        .step-lbl {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            white-space: nowrap;
+            transition: color 0.3s;
+        }
+
+        .step-lbl.active {
+            color: var(--orange);
+        }
+
+        .step-lbl.done {
+            color: var(--text-main);
+        }
+
+        .step-line {
+            flex: 1;
+            height: 3px;
+            background: var(--divider);
+            margin: 0 8px;
+            position: relative;
+            top: -14px;
+            border-radius: 3px;
+            z-index: 1;
+            transition: background 0.4s;
+        }
+
+        .step-line.done {
+            background: var(--orange);
+            box-shadow: 0 0 8px var(--orange-glow);
+        }
 
         /* ── LOGO ────────────────────────────────────────────────── */
-        .logo { display: flex; align-items: center; gap: 9px; margin-bottom: 28px; }
-        .logo-icon { width: 36px; height: 36px; background: var(--orange); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #fff; }
-        .logo-text { font-size: 18px; font-weight: 800; color: var(--text-main); }
-        .logo-text em { color: var(--orange); font-style: normal; }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 28px;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--orange);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #fff;
+        }
+
+        .logo-text {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .logo-text em {
+            color: var(--orange);
+            font-style: normal;
+        }
 
         /* Header */
-        .card-header { margin-bottom: 28px; }
-        .card-header h1 { font-size: 22px; font-weight: 800; color: var(--text-main); margin-bottom: 5px; }
-        .card-header p  { font-size: 14px; color: var(--text-muted); }
+        .card-header {
+            margin-bottom: 28px;
+        }
+
+        .card-header h1 {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 5px;
+        }
+
+        .card-header p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
 
         /* Alert */
-        .alert { display: none; padding: 12px 16px; border-radius: 12px; font-size: 14px; font-weight: 500; margin-bottom: 16px; }
-        .alert-error   { background: #fff1f1; border: 1.5px solid #fca5a5; color: #dc2626; }
-        .alert-success { background: #f0fdf4; border: 1.5px solid #86efac; color: #16a34a; }
-        [data-theme="dark"] .alert-error   { background: rgba(220,38,38,0.1);  border-color: rgba(220,38,38,0.3);  color: #f87171; }
-        [data-theme="dark"] .alert-success { background: rgba(22,163,74,0.1);  border-color: rgba(22,163,74,0.3);  color: #4ade80; }
+        .alert {
+            display: none;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .alert-error {
+            background: #fff1f1;
+            border: 1.5px solid #fca5a5;
+            color: #dc2626;
+        }
+
+        .alert-success {
+            background: #f0fdf4;
+            border: 1.5px solid #86efac;
+            color: #16a34a;
+        }
+
+        [data-theme="dark"] .alert-error {
+            background: rgba(220, 38, 38, 0.1);
+            border-color: rgba(220, 38, 38, 0.3);
+            color: #f87171;
+        }
+
+        [data-theme="dark"] .alert-success {
+            background: rgba(22, 163, 74, 0.1);
+            border-color: rgba(22, 163, 74, 0.3);
+            color: #4ade80;
+        }
 
         /* Form */
-        .form-row { display: flex; gap: 14px; }
-        .form-row .form-group { flex: 1; }
-        .form-group { margin-bottom: 18px; }
-        label { display: block; font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 7px; }
+        .form-row {
+            display: flex;
+            gap: 14px;
+        }
 
-        .input-wrap { position: relative; }
-        .input-icon { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--text-label); font-size: 14px; pointer-events: none; }
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 7px;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-label);
+            font-size: 15px;
+            pointer-events: none;
+            transition: color 0.25s;
+        }
+
+        .input-wrap:focus-within .input-icon,
+        .textarea-wrap:focus-within .input-icon {
+            color: var(--orange);
+        }
+
         .input-wrap input,
         .input-wrap select {
-            width: 100%; padding: 13px 13px 13px 40px;
-            background: var(--input-bg); border: 1.5px solid var(--input-border);
-            border-radius: 12px; font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 14px; color: var(--text-main); outline: none; transition: all 0.22s;
-            -webkit-appearance: none; appearance: none;
+            width: 100%;
+            padding: 14px 16px 14px 44px;
+            background: var(--input-bg);
+            border: 1.5px solid var(--input-border);
+            border-radius: 14px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            color: var(--text-main);
+            outline: none;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.03);
+            transition: all 0.25s;
+            -webkit-appearance: none;
+            appearance: none;
         }
-        .input-wrap input::placeholder { color: var(--text-label); }
+
+        .input-wrap input::placeholder {
+            color: var(--text-label);
+        }
+
         .input-wrap input:hover,
-        .input-wrap select:hover { border-color: rgba(255,107,0,0.3); }
+        .input-wrap select:hover {
+            border-color: rgba(255, 107, 0, 0.3);
+            background: #fff;
+        }
+
+        [data-theme="dark"] .input-wrap input:hover,
+        [data-theme="dark"] .input-wrap select:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
         .input-wrap input:focus,
-        .input-wrap select:focus { border-color: var(--orange); box-shadow: 0 0 0 3px var(--orange-light); }
-        .input-wrap select option { background: #fff; color: #0f172a; }
-        [data-theme="dark"] .input-wrap select option { background: #1e293b; color: #f8fafc; }
-        .select-arrow { position: absolute; right: 13px; top: 50%; transform: translateY(-50%); color: var(--text-label); font-size: 12px; pointer-events: none; }
+        .input-wrap select:focus {
+            border-color: var(--orange);
+            box-shadow: 0 0 0 4px rgba(255, 107, 0, 0.25);
+            background: #fff;
+        }
+
+        [data-theme="dark"] .input-wrap input:focus,
+        [data-theme="dark"] .input-wrap select:focus {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .input-wrap select option {
+            background: #fff;
+            color: #0f172a;
+        }
+
+        [data-theme="dark"] .input-wrap select option {
+            background: #1e293b;
+            color: #f8fafc;
+        }
+
+        .select-arrow {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-label);
+            font-size: 12px;
+            pointer-events: none;
+            transition: transform 0.25s;
+        }
+
+        .input-wrap:focus-within .select-arrow {
+            transform: translateY(-50%) rotate(180deg);
+            color: var(--orange);
+        }
+
+        /* Custom Select */
+        .custom-select-wrap {
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+        }
+
+        .custom-select-trigger {
+            width: 100%;
+            padding: 14px 16px 14px 44px;
+            background: var(--input-bg);
+            border: 1.5px solid var(--input-border);
+            border-radius: 14px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            color: var(--text-main);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.03);
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            min-height: 48px;
+        }
+
+        .custom-select-wrap:hover .custom-select-trigger {
+            border-color: rgba(255, 107, 0, 0.3);
+            background: #fff;
+        }
+
+        [data-theme="dark"] .custom-select-wrap:hover .custom-select-trigger {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .custom-select-wrap.open .custom-select-trigger {
+            border-color: var(--orange);
+            box-shadow: 0 0 0 4px rgba(255, 107, 0, 0.25);
+            background: #fff;
+        }
+
+        [data-theme="dark"] .custom-select-wrap.open .custom-select-trigger {
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 0 4px rgba(255, 107, 0, 0.25);
+        }
+
+        .custom-select-wrap.open .select-arrow {
+            transform: translateY(-50%) rotate(180deg);
+            color: var(--orange);
+        }
+
+        .custom-select-wrap.open .input-icon {
+            color: var(--orange);
+        }
+
+        .custom-options {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            background: var(--bg-card);
+            border: 1.5px solid var(--border-color);
+            border-radius: 14px;
+            box-shadow: var(--shadow-card);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 100;
+            max-height: 240px;
+            overflow-y: auto;
+            padding: 8px 0;
+        }
+
+        .custom-select-wrap.open .custom-options {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .custom-option {
+            padding: 12px 20px 12px 44px;
+            font-size: 14px;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            position: relative;
+        }
+
+        .custom-option::before {
+            content: '\f041';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 12px;
+            opacity: 0.5;
+        }
+
+        .custom-option:hover {
+            background: var(--orange-light);
+            color: var(--orange);
+        }
+
+        .custom-option:hover::before {
+            color: var(--orange);
+            opacity: 1;
+        }
+
+        .custom-option.selected {
+            background: var(--orange-light);
+            color: var(--orange);
+            font-weight: 700;
+        }
+
+        .custom-option.selected::before {
+            color: var(--orange);
+            opacity: 1;
+        }
+
+        .custom-options::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-options::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-options::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
 
         /* Textarea */
-        .textarea-wrap { position: relative; }
-        .textarea-wrap .input-icon { top: 16px; transform: none; }
-        .textarea-wrap textarea {
-            width: 100%; padding: 13px 13px 13px 40px;
-            background: var(--input-bg); border: 1.5px solid var(--input-border);
-            border-radius: 12px; font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 14px; color: var(--text-main); outline: none;
-            resize: vertical; min-height: 90px; transition: all 0.22s;
+        .textarea-wrap {
+            position: relative;
         }
-        .textarea-wrap textarea::placeholder { color: var(--text-label); }
-        .textarea-wrap textarea:hover { border-color: rgba(255,107,0,0.3); }
-        .textarea-wrap textarea:focus { border-color: var(--orange); box-shadow: 0 0 0 3px var(--orange-light); }
+
+        .textarea-wrap .input-icon {
+            top: 16px;
+            transform: none;
+        }
+
+        .textarea-wrap textarea {
+            width: 100%;
+            padding: 14px 16px 14px 44px;
+            background: var(--input-bg);
+            border: 1.5px solid var(--input-border);
+            border-radius: 14px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            color: var(--text-main);
+            outline: none;
+            resize: vertical;
+            min-height: 100px;
+            transition: all 0.25s;
+        }
+
+        .textarea-wrap textarea::placeholder {
+            color: var(--text-label);
+        }
+
+        .textarea-wrap textarea:hover {
+            border-color: rgba(255, 107, 0, 0.3);
+            background: #fff;
+        }
+
+        [data-theme="dark"] .textarea-wrap textarea:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .textarea-wrap textarea:focus {
+            border-color: var(--orange);
+            box-shadow: 0 0 0 4px rgba(255, 107, 0, 0.25);
+            background: #fff;
+        }
+
+        [data-theme="dark"] .textarea-wrap textarea:focus {
+            background: rgba(255, 255, 255, 0.06);
+        }
 
         /* Avatar upload */
-        .avatar-file-input { display: none; }
+        .avatar-file-input {
+            display: none;
+        }
+
+        .upload-box-wrapper {
+            display: flex;
+            justify-content: center;
+        }
+
         .upload-box {
-            display: flex; flex-direction: column; align-items: center;
-            justify-content: center; padding: 24px 20px;
-            border: 2px dashed var(--divider); border-radius: 16px;
-            background: var(--input-bg); cursor: pointer; transition: all 0.25s; text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 130px;
+            height: 130px;
+            border: 3px solid var(--orange);
+            border-radius: 50%;
+            background: var(--orange-light);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            margin: 10px 0;
+            box-shadow: var(--shadow-btn);
         }
-        .upload-box:hover { border-color: var(--orange); background: var(--orange-light); }
+
+        .upload-box:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 28px rgba(255, 107, 0, 0.45);
+        }
+
         .upload-icon-wrap {
-            width: 48px; height: 48px;
-            background: var(--orange-light); color: var(--orange);
-            border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; font-size: 20px;
-            margin-bottom: 10px; transition: transform 0.25s;
+            color: var(--orange);
+            font-size: 40px;
+            margin-bottom: 0;
+            transition: transform 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .upload-box:hover .upload-icon-wrap { transform: translateY(-4px); }
-        .upload-title { font-size: 14px; font-weight: 700; color: var(--orange); margin-bottom: 3px; }
-        .upload-title span { color: var(--text-main); font-weight: 500; }
-        .upload-desc { font-size: 12px; color: var(--text-muted); }
-        #avatarPreview { display: none; width: 72px; height: 72px; border-radius: 50%; object-fit: cover; margin: 0 auto 10px; border: 2.5px solid var(--orange); }
+
+        .upload-box:hover .upload-icon-wrap {
+            transform: scale(1.1);
+        }
+
+        .upload-title {
+            display: none;
+        }
+
+        .upload-desc {
+            display: none;
+        }
+
+        #avatarPreview {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            z-index: 5;
+        }
 
         /* Submit */
         .btn-submit {
-            width: 100%; padding: 14px;
-            background: var(--orange); border: none; border-radius: 12px;
-            color: #fff; font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.22s; margin-top: 6px;
+            width: 100%;
+            padding: 14px;
+            background: var(--orange);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.22s;
+            margin-top: 6px;
         }
-        .btn-submit:hover { background: var(--orange-hover); box-shadow: var(--shadow-btn); transform: translateY(-2px); }
-        .btn-submit:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
-        .spinner { display: none; width: 18px; height: 18px; border: 2.5px solid rgba(255,255,255,0.35); border-top-color: #fff; border-radius: 50%; animation: spin 0.65s linear infinite; margin: 0 auto; }
-        @keyframes spin { to { transform: rotate(360deg); } }
 
-        .skip-link { text-align: center; margin-top: 18px; }
-        .skip-link a { font-size: 13px; color: var(--text-muted); font-weight: 500; text-decoration: none; }
-        .skip-link a:hover { color: var(--text-main); }
+        .btn-submit:hover {
+            background: var(--orange-hover);
+            box-shadow: var(--shadow-btn);
+            transform: translateY(-2px);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .spinner {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 2.5px solid rgba(255, 255, 255, 0.35);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.65s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .skip-link {
+            text-align: center;
+            margin-top: 18px;
+        }
+
+        .skip-link a {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .skip-link a:hover {
+            color: var(--text-main);
+        }
 
         @media (max-width: 480px) {
-            .card { padding: 32px 20px; }
-            .form-row { flex-direction: column; gap: 0; }
-            body { padding: 16px; }
+            .card {
+                padding: 32px 20px;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            body {
+                padding: 16px;
+            }
         }
     </style>
 </head>
+
 <body>
 
-<div class="card">
+    <div class="card">
 
-    <button class="theme-toggle" id="themeBtn" title="Rejimni o'zgartirish">
-        <i class="fa-solid fa-moon" id="themeIcon"></i>
-    </button>
-
-    <!-- Logo -->
-    <div class="logo">
-        <div class="logo-icon"><i class="fa-solid fa-layer-group"></i></div>
-        <span class="logo-text">Easy<em>Build</em></span>
-    </div>
-
-    <!-- Stepper -->
-    <div class="stepper">
-        <div class="step-node">
-            <div class="step-circle done"><i class="fa-solid fa-check" style="font-size:12px;"></i></div>
-            <span class="step-lbl">Hisob</span>
-        </div>
-        <div class="step-line done"></div>
-        <div class="step-node">
-            <div class="step-circle active">2</div>
-            <span class="step-lbl active">Profil</span>
-        </div>
-    </div>
-
-    <div class="card-header">
-        <h1>Profilingizni to'ldiring 🎯</h1>
-        <p>Bu ma'lumotlar boshqa foydalanuvchilarga sizni tanishga yordam beradi</p>
-    </div>
-
-    <div class="alert alert-error"   id="errorBox"></div>
-    <div class="alert alert-success" id="successBox"></div>
-
-    <form id="secondRegisterForm">
-        {% csrf_token %}
-
-        <!-- City + Phone -->
-        <div class="form-row">
-            <div class="form-group">
-                <label>Shahar / Viloyat</label>
-                <div class="input-wrap">
-                    <i class="fa-solid fa-location-dot input-icon"></i>
-                    <select id="city" name="city">
-                        <option value="tashkent_sh">Toshkent shahri</option>
-                        <option value="tashkent_v">Toshkent viloyati</option>
-                        <option value="andijan">Andijon viloyati</option>
-                        <option value="bukhara">Buxoro viloyati</option>
-                        <option value="fergana">Farg'ona viloyati</option>
-                        <option value="jizzakh">Jizzax viloyati</option>
-                        <option value="namangan">Namangan viloyati</option>
-                        <option value="navoiy">Navoiy viloyati</option>
-                        <option value="kashkadarya">Qashqadaryo viloyati</option>
-                        <option value="samarkand">Samarkand viloyati</option>
-                        <option value="sirdaryo">Sirdaryo viloyati</option>
-                        <option value="surxondaryo">Surxondaryo viloyati</option>
-                        <option value="khorezm">Xorazm viloyati</option>
-                        <option value="karakalpakstan">Qoraqalpog'iston</option>
-                    </select>
-                    <i class="fa-solid fa-chevron-down select-arrow"></i>
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Telefon raqami</label>
-                <div class="input-wrap">
-                    <i class="fa-solid fa-phone input-icon"></i>
-                    <input type="text" id="phone" placeholder="+998 90 123 45 67">
-                </div>
-            </div>
-        </div>
-
-        <!-- Bio -->
-        <div class="form-group">
-            <label>Bio — o'zingiz haqida</label>
-            <div class="textarea-wrap">
-                <i class="fa-solid fa-pen-to-square input-icon"></i>
-                <textarea id="bio" placeholder="Qisqacha o'zingiz, tajribangiz yoki qiziqishlaringiz haqida yozing..."></textarea>
-            </div>
-        </div>
-
-        <!-- Avatar -->
-        <div class="form-group">
-            <label>Profil rasmi</label>
-            <input type="file" id="avatarInput" class="avatar-file-input" accept="image/*">
-            <label for="avatarInput" class="upload-box" id="uploadBox">
-                <img id="avatarPreview" alt="Preview">
-                <div class="upload-icon-wrap"><i class="fa-solid fa-cloud-arrow-up"></i></div>
-                <div class="upload-title">Rasmni yuklash uchun <span>bosing</span></div>
-                <div class="upload-desc">PNG, JPG yoki GIF (max. 5MB)</div>
-            </label>
-        </div>
-
-        <button type="submit" class="btn-submit" id="submitBtn">
-            <span id="btnText">Saqlash va Yakunlash 🚀</span>
-            <div class="spinner" id="spinner"></div>
+        <button class="theme-toggle" id="themeBtn" title="Rejimni o'zgartirish">
+            <i class="fa-solid fa-moon" id="themeIcon"></i>
         </button>
-    </form>
 
-    <div class="skip-link">
-        <a href="/"><i class="fa-solid fa-arrow-right-long"></i> Hozircha o'tkazib yuborish</a>
+        <!-- Logo -->
+        <div class="logo">
+            <div class="logo-icon"><i class="fa-solid fa-layer-group"></i></div>
+            <span class="logo-text">Easy<em>Build</em></span>
+        </div>
+
+        <!-- Stepper -->
+        <div class="stepper">
+            <div class="step-node">
+                <div class="step-circle done"><i class="fa-solid fa-check" style="font-size:12px;"></i></div>
+                <span class="step-lbl done">Yo'nalish</span>
+            </div>
+            <div class="step-line done"></div>
+            <div class="step-node">
+                <div class="step-circle done"><i class="fa-solid fa-check" style="font-size:12px;"></i></div>
+                <span class="step-lbl done">Hisob</span>
+            </div>
+            <div class="step-line done"></div>
+            <div class="step-node">
+                <div class="step-circle active">3</div>
+                <span class="step-lbl active">Profil</span>
+            </div>
+        </div>
+
+
+
+        <div class="alert alert-error" id="errorBox"></div>
+        <div class="alert alert-success" id="successBox"></div>
+
+        <form id="secondRegisterForm">
+            {% csrf_token %}
+
+            <!-- Avatar -->
+            <div class="form-group" style="text-align: center; margin-bottom: 24px;">
+                <input type="file" id="avatarInput" class="avatar-file-input" accept="image/*">
+                <div class="upload-box-wrapper">
+                    <label for="avatarInput" class="upload-box" id="uploadBox" style="margin: 0 auto;">
+                        <img id="avatarPreview" alt="Preview">
+                        <div class="upload-icon-wrap"><i class="fa-solid fa-camera"></i></div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- City + Phone -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Shahar / Viloyat</label>
+                    <div class="input-wrap custom-select-wrap" id="customCitySelect">
+                        <i class="fa-solid fa-location-dot input-icon"></i>
+                        <input type="hidden" id="city" name="city" value="tashkent_sh">
+                        <div class="custom-select-trigger">
+                            <span class="custom-select-text">Toshkent shahri</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down select-arrow"></i>
+                        <div class="custom-options">
+                            <div class="custom-option selected" data-value="tashkent_sh">Toshkent shahri</div>
+                            <div class="custom-option" data-value="tashkent_v">Toshkent viloyati</div>
+                            <div class="custom-option" data-value="andijan">Andijon viloyati</div>
+                            <div class="custom-option" data-value="bukhara">Buxoro viloyati</div>
+                            <div class="custom-option" data-value="fergana">Farg'ona viloyati</div>
+                            <div class="custom-option" data-value="jizzakh">Jizzax viloyati</div>
+                            <div class="custom-option" data-value="namangan">Namangan viloyati</div>
+                            <div class="custom-option" data-value="navoiy">Navoiy viloyati</div>
+                            <div class="custom-option" data-value="kashkadarya">Qashqadaryo viloyati</div>
+                            <div class="custom-option" data-value="samarkand">Samarkand viloyati</div>
+                            <div class="custom-option" data-value="sirdaryo">Sirdaryo viloyati</div>
+                            <div class="custom-option" data-value="surxondaryo">Surxondaryo viloyati</div>
+                            <div class="custom-option" data-value="khorezm">Xorazm viloyati</div>
+                            <div class="custom-option" data-value="karakalpakstan">Qoraqalpog'iston</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Telefon raqami</label>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-phone input-icon"></i>
+                        <input type="text" id="phone" placeholder="+998 90 123 45 67" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group" style="margin-top: 16px;">
+                <label>Email manzil (ixtiyoriy)</label>
+                <div class="input-wrap">
+                    <i class="fa-regular fa-envelope input-icon"></i>
+                    <input type="email" id="email" placeholder="Siz bilan bog'lanish uchun email...">
+                </div>
+            </div>
+
+            <!-- Bio -->
+            <div class="form-group">
+                <label>Bio — o'zingiz haqida</label>
+                <div class="textarea-wrap">
+                    <i class="fa-solid fa-pen-to-square input-icon"></i>
+                    <textarea id="bio"
+                        placeholder="Qisqacha o'zingiz, tajribangiz yoki qiziqishlaringiz haqida yozing..."></textarea>
+                </div>
+            </div>
+
+
+
+            <button type="submit" class="btn-submit" id="submitBtn">
+                <span id="btnText">Saqlash va Yakunlash 🚀</span>
+                <div class="spinner" id="spinner"></div>
+            </button>
+        </form>
+
+
+
     </div>
 
-</div>
+    <script>
+        // Theme
+        const html = document.documentElement;
+        const themeBtn = document.getElementById('themeBtn');
+        const themeIcon = document.getElementById('themeIcon');
+        const saved = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', saved);
+        themeIcon.className = saved === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        themeBtn.addEventListener('click', () => {
+            const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', next); localStorage.setItem('theme', next);
+            themeIcon.className = next === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        });
 
-<script>
-    // Theme
-    const html = document.documentElement;
-    const themeBtn = document.getElementById('themeBtn');
-    const themeIcon = document.getElementById('themeIcon');
-    const saved = localStorage.getItem('theme') || 'light';
-    html.setAttribute('data-theme', saved);
-    themeIcon.className = saved === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-    themeBtn.addEventListener('click', () => {
-        const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-        html.setAttribute('data-theme', next); localStorage.setItem('theme', next);
-        themeIcon.className = next === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-    });
+        // Custom Select logic
+        const citySelectWrap = document.getElementById('customCitySelect');
+        const citySelectText = citySelectWrap.querySelector('.custom-select-text');
+        const cityOptions = citySelectWrap.querySelectorAll('.custom-option');
+        const cityInput = document.getElementById('city');
 
-    // Avatar preview
-    document.getElementById('avatarInput').addEventListener('change', function () {
-        const file = this.files[0]; if (!file) return;
-        const reader = new FileReader();
-        reader.onload = e => {
-            const prev = document.getElementById('avatarPreview');
-            prev.src = e.target.result; prev.style.display = 'block';
-            document.querySelector('.upload-icon-wrap').style.display = 'none';
-            document.querySelector('.upload-title').innerHTML =
-                `<span style="color:var(--orange)"><i class="fa-solid fa-check-circle"></i> ${file.name}</span>`;
-        };
-        reader.readAsDataURL(file);
-    });
+        citySelectWrap.addEventListener('click', (e) => {
+            citySelectWrap.classList.toggle('open');
+        });
 
-    function getCsrf() { return document.querySelector('[name=csrfmiddlewaretoken]').value; }
-    function showAlert(type, msg) {
-        const b = document.getElementById(type === 'error' ? 'errorBox' : 'successBox');
-        const o = document.getElementById(type === 'error' ? 'successBox' : 'errorBox');
-        o.style.display = 'none'; b.textContent = msg; b.style.display = 'block';
-    }
-    function setLoading(on) {
-        document.getElementById('submitBtn').disabled = on;
-        document.getElementById('btnText').style.display = on ? 'none' : 'inline';
-        document.getElementById('spinner').style.display = on ? 'block' : 'none';
-    }
-
-    document.getElementById('secondRegisterForm').addEventListener('submit', async function (e) {
-        e.preventDefault(); setLoading(true);
-        const fd = new FormData();
-        fd.append('city',  document.getElementById('city').value);
-        fd.append('phone', document.getElementById('phone').value.trim());
-        fd.append('bio',   document.getElementById('bio').value.trim());
-        const file = document.getElementById('avatarInput').files[0];
-        if (file) fd.append('avatar', file);
-        try {
-            const res  = await fetch('/accounts/auth/second-register/', {
-                method: 'POST', headers: { 'X-CSRFToken': getCsrf() }, body: fd,
+        cityOptions.forEach(opt => {
+            opt.addEventListener('click', function (e) {
+                e.stopPropagation();
+                cityOptions.forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+                citySelectText.textContent = this.textContent;
+                cityInput.value = this.getAttribute('data-value');
+                citySelectWrap.classList.remove('open');
             });
-            const json = await res.json();
-            if (res.ok) {
-                showAlert('success', json.detail || 'Profil saqlandi!');
-                setTimeout(() => { window.location.href = '/'; }, 900);
-            } else {
-                showAlert('error', Object.values(json).flat().join(' '));
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!citySelectWrap.contains(e.target)) {
+                citySelectWrap.classList.remove('open');
             }
-        } catch { showAlert('error', "Serverga ulanib bo'lmadi."); }
-        finally  { setLoading(false); }
-    });
-</script>
+        });
+
+        // Avatar preview
+        document.getElementById('avatarInput').addEventListener('change', function () {
+            const file = this.files[0]; if (!file) return;
+            const reader = new FileReader();
+            reader.onload = e => {
+                const prev = document.getElementById('avatarPreview');
+                prev.src = e.target.result; prev.style.display = 'block';
+                document.querySelector('.upload-icon-wrap').style.display = 'none';
+                document.querySelector('.upload-title').style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function getCsrf() { return document.querySelector('[name=csrfmiddlewaretoken]').value; }
+        function showAlert(type, msg) {
+            const b = document.getElementById(type === 'error' ? 'errorBox' : 'successBox');
+            const o = document.getElementById(type === 'error' ? 'successBox' : 'errorBox');
+            o.style.display = 'none'; b.textContent = msg; b.style.display = 'block';
+        }
+        function setLoading(on) {
+            document.getElementById('submitBtn').disabled = on;
+            document.getElementById('btnText').style.display = on ? 'none' : 'inline';
+            document.getElementById('spinner').style.display = on ? 'block' : 'none';
+        }
+
+        document.getElementById('secondRegisterForm').addEventListener('submit', async function (e) {
+            e.preventDefault(); 
+            
+            const phone = document.getElementById('phone').value.trim();
+            if (!phone) {
+                showAlert('error', 'Iltimos, telefon raqamingizni kiriting!');
+                return;
+            }
+            
+            setLoading(true);
+            const fd = new FormData();
+            fd.append('city', document.getElementById('city').value);
+            fd.append('phone', document.getElementById('phone').value.trim());
+            fd.append('bio', document.getElementById('bio').value.trim());
+            fd.append('email', document.getElementById('email').value.trim());
+            const file = document.getElementById('avatarInput').files[0];
+            if (file) fd.append('avatar', file);
+            try {
+                const res = await fetch('/accounts/api/second-register/', {
+                    method: 'POST', headers: { 'X-CSRFToken': getCsrf() }, body: fd,
+                });
+                const json = await res.json();
+                if (res.ok) {
+                    showAlert('success', json.detail || 'Profil saqlandi!');
+                    setTimeout(() => { window.location.href = '/'; }, 900);
+                } else {
+                    showAlert('error', Object.values(json).flat().join(' '));
+                }
+            } catch { showAlert('error', "Serverga ulanib bo'lmadi."); }
+            finally { setLoading(false); }
+        });
+    </script>
 </body>
+
 </html>

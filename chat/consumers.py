@@ -18,38 +18,29 @@ class ChatConsumer(AsyncWebsocketConsumer):
         self.room_group_name = f'chat_{self.room_id}'
         self.user = self.scope['user']
 
-        # Autentifikatsiya tekshiruvi
         if not self.user.is_authenticated:
             await self.close(code=4001)
             return
 
-        # Foydalanuvchi ushbu xonaga ruxsat bor-yo'qligini tekshirish
-        if not await self.user_has_access(self.room_id, self.user):
+        has_access = await self.user_has_access(self.room_id, self.user)
+        if not has_access:
             await self.close(code=4003)
             return
 
-        # Channel group'ga qo'shish
-        await self.channel_layer.group_add(
-            self.room_group_name,
-            self.channel_name,
-        )
+        await self.channel_layer.group_add(self.room_group_name, self.channel_name)
         await self.accept()
 
-        # Ulanish muvaffaqiyatli ekanini xabar qilish
         await self.send(text_data=json.dumps({
             'type': 'connection_established',
-            'room_id': self.room_id,
+            'room_id': int(self.room_id),
+            'user_id': self.user.id,
         }))
 
     async def disconnect(self, close_code):
         if hasattr(self, 'room_group_name'):
-            await self.channel_layer.group_discard(
-                self.room_group_name,
-                self.channel_name,
-            )
+            await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
 
     async def receive(self, text_data):
-        """Clientdan xabar kelganda."""
         try:
             data = json.loads(text_data)
         except json.JSONDecodeError:
@@ -62,10 +53,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
             if not content:
                 return
 
-            # DB ga saqlash
             message = await self.save_message(self.room_id, self.user, content)
+            sender_name, sender_avatar = await self.get_sender_info(self.user)
 
-            # Guruhga broadcast
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
@@ -73,45 +63,65 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     'message_id': message.id,
                     'message': content,
                     'sender_id': self.user.id,
-                    'sender_name': self.user.get_full_name() or self.user.username,
+                    'sender_name': sender_name,
+                    'sender_avatar': sender_avatar,
                     'time': message.time_str(),
                     'is_read': False,
                 }
             )
 
         elif msg_type == 'read_receipt':
-            # O'qilgan xabarlarni belgilash
-            await self.mark_messages_read(self.room_id, self.user)
+            count = await self.mark_messages_read(self.room_id, self.user)
+            if count > 0:
+                await self.channel_layer.group_send(
+                    self.room_group_name,
+                    {
+                        'type': 'messages_read',
+                        'reader_id': self.user.id,
+                        'room_id': int(self.room_id),
+                    }
+                )
+
+        elif msg_type == 'typing':
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
-                    'type': 'messages_read',
-                    'reader_id': self.user.id,
+                    'type': 'user_typing',
+                    'user_id': self.user.id,
+                    'is_typing': data.get('is_typing', False),
                 }
             )
 
-    # ── Group event handlers ──
+    # ── Group event handlers ──────────────────────────────────────────────────
 
     async def chat_message(self, event):
-        """Guruhdan xabar kelib, clientga yuborish."""
         await self.send(text_data=json.dumps({
             'type': 'message',
             'message_id': event['message_id'],
             'message': event['message'],
             'sender_id': event['sender_id'],
             'sender_name': event['sender_name'],
+            'sender_avatar': event.get('sender_avatar'),
             'time': event['time'],
             'is_read': event['is_read'],
         }))
 
     async def messages_read(self, event):
-        """O'qildi signalini clientga yuborish."""
         await self.send(text_data=json.dumps({
             'type': 'read_receipt',
             'reader_id': event['reader_id'],
+            'room_id': event['room_id'],
         }))
 
-    # ── DB helpers (sync → async) ──
+    async def user_typing(self, event):
+        if event['user_id'] != self.user.id:
+            await self.send(text_data=json.dumps({
+                'type': 'typing',
+                'user_id': event['user_id'],
+                'is_typing': event['is_typing'],
+            }))
+
+    # ── DB helpers ───────────────────────────────────────────────────────────
 
     @database_sync_to_async
     def user_has_access(self, room_id, user):
@@ -128,7 +138,19 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def mark_messages_read(self, room_id, user):
-        Message.objects.filter(
+        updated = Message.objects.filter(
             room_id=room_id,
             is_read=False,
         ).exclude(sender=user).update(is_read=True)
+        return updated
+
+    @database_sync_to_async
+    def get_sender_info(self, user):
+        name = user.get_full_name() or user.username
+        avatar = None
+        try:
+            if user.profile.avatar:
+                avatar = user.profile.avatar.url
+        except Exception:
+            pass
+        return name, avatar

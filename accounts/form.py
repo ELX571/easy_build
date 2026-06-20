@@ -1,90 +1,73 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from accounts.models import Profile
 
-# 1. BIRINCHI BOSQICH FORMASI: Ro'yxatdan o'tish va Rol tanlash
-class RegisterForm(UserCreationForm):
+
+class RegisterForm(forms.Form):
     ROLE_CHOICES = (
         ('client', 'Buyurtmachi (Mijoz)'),
         ('builder', 'Quruvchi (Usta)'),
     )
 
-    role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
+    first_name = forms.CharField(
+        max_length=150, required=False,
+        widget=forms.TextInput(attrs={'placeholder': 'Ismingiz'})
+    )
+    last_name = forms.CharField(
+        max_length=150, required=False,
+        widget=forms.TextInput(attrs={'placeholder': 'Familiyangiz'})
+    )
+    username = forms.CharField(
+        max_length=150,
+        widget=forms.TextInput(attrs={'placeholder': 'Foydalanuvchi nomi'})
+    )
+    email = forms.EmailField(
+        required=False,
+        widget=forms.EmailInput(attrs={'placeholder': 'Email (ixtiyoriy)'})
+    )
+    password = forms.CharField(
+        min_length=6,
+        widget=forms.PasswordInput(attrs={'placeholder': 'Parol (kamida 6 belgi)'})
+    )
+    re_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': 'Parolni takrorlang'})
+    )
+    role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.Select())
 
-    class Meta:
-        model = User
-        fields = (
-            'username',
-            'first_name',
-            'last_name',
-        )
-        widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ismingiz'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Familiyangiz'}),
-        }
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError("Bu username allaqachon band!")
+        return username
 
-    def save(self, commit=True):
-        role = self.cleaned_data.pop('role')
-        user = super().save(commit=False)
-        user.first_name = self.cleaned_data.get('first_name', '')
-        user.last_name = self.cleaned_data.get('last_name', '')
-
-        if commit:
-            user.save()
-            # Yangilangan Profile modeliga rolni yozamiz
-            Profile.objects.update_or_create(
-                user=user,
-                defaults={'role': role}
-            )
-        return user
-
-
-# 2. IKKINCHI BOSQICH FORMASI: Profilni to'ldirish (Xatoliksiz toza versiya)
-class SecondRegisterForm(forms.ModelForm):
-    class Meta:
-        model = Profile
-        fields = (
-            'phone',
-            'city',
-            'avatar',
-        )
-        widgets = {
-            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '+998901234567'}),
-            'city': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Masalan: Toshkent, Samarqand'}),
-        }
+    def clean(self):
+        cleaned = super().clean()
+        p1 = cleaned.get('password')
+        p2 = cleaned.get('re_password')
+        if p1 and p2 and p1 != p2:
+            self.add_error('re_password', "Parollar mos emas!")
+        return cleaned
 
 
-# 3. TIZIMGA KIRISH FORMASI
 class LoginForm(forms.Form):
-    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Foydalanuvchi nomi'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Parol'}))
-
-# accounts/forms.py (yoki profilingiz formasi qayerda bo'lsa o'sha fayl):
-
-
-# accounts/forms.py
-
-# accounts/forms.py
-
-# accounts/forms.py
-# accounts/forms.py
-from django import forms
-from .models import Profile
-
-class ProfileEditForm(forms.ModelForm):
-    # Bu yerda biz explicitly (aniq) qilib select qilyapmiz
-    city = forms.ChoiceField(
-        choices=Profile.REGION_CHOICES,
-        widget=forms.Select(attrs={'class': 'form-select'})
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={'placeholder': 'Foydalanuvchi nomi'})
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': 'Parol'})
     )
 
+
+class ProfileEditForm(forms.ModelForm):
+    city = forms.ChoiceField(choices=Profile.REGION_CHOICES, widget=forms.Select())
+
     class Meta:
         model = Profile
-        fields = ['phone', 'city', 'bio', 'avatar']
-        # Qolgan maydonlar uchun widgetlar
+        fields = ['phone', 'city', 'bio', 'avatar', 'telegram', 'whatsapp']
         widgets = {
-            'bio': forms.Textarea(attrs={'rows': 3}),
+            'phone': forms.TextInput(attrs={'placeholder': '+998 90 123 45 67'}),
+            'bio': forms.Textarea(attrs={'rows': 3, 'placeholder': 'O\'zingiz haqingizda...'}),
             'avatar': forms.FileInput(),
-            'phone': forms.TextInput(),
+            'telegram': forms.TextInput(attrs={'placeholder': '@username'}),
+            'whatsapp': forms.TextInput(attrs={'placeholder': '+998 90 123 45 67'}),
         }

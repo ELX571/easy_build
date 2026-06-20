@@ -332,7 +332,7 @@
         </form>
 
         <div class="card-footer">
-            Akkauntingiz yo'qmi? <a href="{% url 'accounts:auth-register' %}">Ro'yxatdan o'ting</a>
+            Akkauntingiz yo'qmi? <a href="{% url 'accounts:register' %}">Ro'yxatdan o'ting</a>
         </div>
     </div>
 </div>
@@ -382,7 +382,7 @@
         e.preventDefault();
         setLoading(true);
         try {
-            const res  = await fetch('/accounts/auth/login/', {
+            const res  = await fetch('/accounts/api/login/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCsrf() },
                 body: JSON.stringify({

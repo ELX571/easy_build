@@ -24,15 +24,15 @@
             --bg-card: rgba(255, 255, 255, 0.97);
             --border-color: rgba(0, 0, 0, 0.06);
             --text-main: #0f172a;
-            --text-muted: #64748b;
-            --text-label: #94a3b8;
+            --text-muted: #475569;
+            --text-label: #64748b;
             --orange: #ff6b00;
             --orange-hover: #e85e00;
             --orange-light: rgba(255, 107, 0, 0.09);
             --orange-glow: rgba(255, 107, 0, 0.22);
             --divider: #e2e8f0;
-            --input-bg: #ffffff;
-            --input-border: rgba(0, 0, 0, 0.1);
+            --input-bg: #f1f5f9;
+            --input-border: rgba(0, 0, 0, 0.2);
             --shadow-card: 0 20px 60px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.04);
             --shadow-btn: 0 6px 18px rgba(255, 107, 0, 0.35);
         }
@@ -42,12 +42,12 @@
             --bg-panel: rgba(10, 14, 23, 0.82);
             --bg-card: rgba(12, 17, 29, 0.95);
             --border-color: rgba(255, 255, 255, 0.06);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --text-label: #475569;
-            --divider: rgba(255, 255, 255, 0.05);
-            --input-bg: rgba(255, 255, 255, 0.04);
-            --input-border: rgba(255, 255, 255, 0.08);
+            --text-main: #ffffff;
+            --text-muted: #cbd5e1;
+            --text-label: #94a3b8;
+            --divider: rgba(255, 255, 255, 0.12);
+            --input-bg: rgba(255, 255, 255, 0.05);
+            --input-border: rgba(255, 255, 255, 0.18);
             --shadow-card: 0 30px 80px rgba(0, 0, 0, 0.5);
         }
 
@@ -408,25 +408,31 @@
 
         .input-icon {
             position: absolute;
-            left: 13px;
+            left: 16px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-label);
-            font-size: 14px;
+            font-size: 15px;
             pointer-events: none;
+            transition: color 0.25s;
+        }
+
+        .input-wrap:focus-within .input-icon {
+            color: var(--orange);
         }
 
         .input-wrap input {
             width: 100%;
-            padding: 12px 13px 12px 40px;
+            padding: 14px 16px 14px 44px;
             background: var(--input-bg);
             border: 1.5px solid var(--input-border);
-            border-radius: 12px;
+            border-radius: 14px;
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 14px;
             color: var(--text-main);
             outline: none;
-            transition: all 0.22s;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.03);
+            transition: all 0.25s;
         }
 
         .input-wrap input::placeholder {
@@ -435,26 +441,81 @@
 
         .input-wrap input:hover {
             border-color: rgba(255, 107, 0, 0.3);
+            background: #fff;
+        }
+
+        [data-theme="dark"] .input-wrap input:hover {
+            background: rgba(255, 255, 255, 0.06);
         }
 
         .input-wrap input:focus {
             border-color: var(--orange);
-            box-shadow: 0 0 0 3px var(--orange-light);
+            box-shadow: 0 0 0 4px rgba(255, 107, 0, 0.25);
+            background: #fff;
+        }
+
+        [data-theme="dark"] .input-wrap input:focus {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        /* Autofill fix */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active {
+            transition: background-color 5000s ease-in-out 0s;
+            -webkit-text-fill-color: var(--text-main) !important;
         }
 
         .toggle-pass {
             position: absolute;
-            right: 13px;
+            right: 16px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-label);
             cursor: pointer;
-            font-size: 14px;
+            font-size: 15px;
             transition: color 0.2s;
+        }
+
+        .input-wrap:focus-within .toggle-pass {
+            color: var(--orange);
         }
 
         .toggle-pass:hover {
             color: var(--orange);
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0.9); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Segmented Password Meter */
+        .pw-segments {
+            display: flex;
+            gap: 6px;
+            margin-top: 12px;
+        }
+        .pw-segment {
+            flex: 1;
+            height: 5px;
+            background: var(--divider);
+            border-radius: 3px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .pw-segment.active-1 { background: #ef4444; } /* Red */
+        .pw-segment.active-2 { background: #f59e0b; } /* Yellow */
+        .pw-segment.active-3 { background: #10b981; } /* Green */
+        .pw-text {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-top: 6px;
+            text-align: right;
+            transition: color 0.3s;
+            min-height: 14px;
         }
 
         /* Password rules */
@@ -614,17 +675,9 @@
                 <i class="fa-solid fa-moon" id="themeIcon"></i>
             </button>
 
-            <div class="form-header">
-                <h1>Hisob yaratish ✨</h1>
-                <p>Bir necha daqiqada ro'yxatdan o'ting</p>
-            </div>
 
-            <a href="{% url 'google_login' %}?process=signup" class="btn-google">
-                <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20" alt="Google">
-                Google bilan ro'yxatdan o'ting
-            </a>
 
-            <div class="divider">yoki email orqali</div>
+
 
             <div class="alert alert-error" id="errorBox"></div>
             <div class="alert alert-success" id="successBox"></div>
@@ -632,20 +685,10 @@
             <form id="registerForm">
                 {% csrf_token %}
 
-                <!-- Role -->
-                <div style="margin-bottom:16px;">
-                    <label>Siz kimсiz?</label>
-                    <div class="role-group">
-                        <button type="button" class="role-btn active" id="roleClient" onclick="setRole('client')">
-                            <i class="fa-regular fa-user"></i> Mijoz (Buyurtmachi)
-                        </button>
-                        <button type="button" class="role-btn" id="roleBuilder" onclick="setRole('builder')">
-                            <i class="fa-solid fa-hard-hat"></i> Usta (Quruvchi)
-                        </button>
-                    </div>
-                    <input type="hidden" id="roleInput" value="client">
+                <!-- Step indicator -->
+                <div style="margin-bottom: 24px; text-align: center;">
+                    <span style="background: rgba(255, 107, 0, 0.1); color: var(--orange); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 800;">Qadam 2 / 3: Shaxsiy ma'lumotlar</span>
                 </div>
-
                 <!-- Name row -->
                 <div class="form-row">
                     <div class="form-group">
@@ -674,6 +717,7 @@
                     </div>
                 </div>
 
+
                 <!-- Password -->
                 <div class="form-group">
                     <label>Parol</label>
@@ -682,10 +726,16 @@
                         <input type="password" id="password" placeholder="Kuchli parol o'ylab toping" required>
                         <i class="fa-regular fa-eye toggle-pass" id="tp1"></i>
                     </div>
+                    <!-- Segmented Password Strength Meter -->
+                    <div class="pw-segments" id="pwSegments">
+                        <div class="pw-segment"></div>
+                        <div class="pw-segment"></div>
+                        <div class="pw-segment"></div>
+                    </div>
+                    <div class="pw-text" id="pwText"></div>
+
                     <ul class="pw-rules" id="pwRules">
-                        <li id="r1"><i class="fa-solid fa-circle-dot"></i> Kamida 8 belgi</li>
-                        <li id="r2"><i class="fa-solid fa-circle-dot"></i> Raqam mavjud</li>
-                        <li id="r3"><i class="fa-solid fa-circle-dot"></i> Maxsus belgi (!, @, # ...)</li>
+                        <li id="r1"><i class="fa-solid fa-circle-dot"></i> 8-30 tagacha belgi kiritilishi kerak</li>
                     </ul>
                 </div>
 
@@ -706,7 +756,7 @@
             </form>
 
             <div class="card-footer">
-                Allaqachon akkauntingiz bormi? <a href="{% url 'accounts:auth-login' %}">Tizimga kirish</a>
+                Allaqachon akkauntingiz bormi? <a href="{% url 'accounts:login' %}">Tizimga kirish</a>
             </div>
         </div>
     </div>
@@ -726,12 +776,12 @@
             themeIcon.className = next === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
         });
 
-        // Role toggle
-        function setRole(role) {
-            document.getElementById('roleInput').value = role;
-            document.getElementById('roleClient').classList.toggle('active', role === 'client');
-            document.getElementById('roleBuilder').classList.toggle('active', role === 'builder');
-        }
+        // Username restriction
+        const usernameInput = document.getElementById('username');
+        usernameInput.addEventListener('input', function() {
+            let val = this.value.toLowerCase();
+            this.value = val.replace(/[^a-z0-9_]/g, '');
+        });
 
         // Password toggles
         [['tp1', 'password'], ['tp2', 're_password']].forEach(([btnId, inputId]) => {
@@ -744,11 +794,59 @@
         });
 
         // Password strength
+        const pwText = document.getElementById('pwText');
+
         document.getElementById('password').addEventListener('input', function () {
             const v = this.value;
-            rule('r1', v.length >= 8);
-            rule('r2', /\d/.test(v));
-            rule('r3', /[!@#$%^&*]/.test(v));
+            rule('r1', v.length >= 8 && v.length <= 30);
+            
+            // Calculate Strength
+            let score = 0;
+            if (v.length > 0) score += 1;
+            if (v.length >= 8) score += 1;
+            if (v.length >= 12) score += 1;
+            if (/\d/.test(v)) score += 1;
+            if (/[a-z]/.test(v) && /[A-Z]/.test(v)) score += 1;
+            if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(v)) score += 1;
+            
+            const segments = document.querySelectorAll('#pwSegments .pw-segment');
+            segments.forEach(seg => seg.className = 'pw-segment');
+            
+            let color = '';
+            let text = '';
+            const pwInput = document.getElementById('password');
+            
+            if (v.length === 0) {
+                text = '';
+                pwInput.style.setProperty('border-color', '', 'important');
+                pwInput.style.setProperty('box-shadow', '', 'important');
+            } else if (score <= 2) {
+                segments[0].classList.add('active-1');
+                color = '#ef4444'; text = 'Kuchsiz';
+                pwInput.style.setProperty('border-color', color, 'important');
+                pwInput.style.setProperty('box-shadow', `0 0 0 4px ${color}40`, 'important');
+            } else if (score <= 4) {
+                segments[0].classList.add('active-2');
+                segments[1].classList.add('active-2');
+                color = '#f59e0b'; text = 'Yaxshi';
+                pwInput.style.setProperty('border-color', color, 'important');
+                pwInput.style.setProperty('box-shadow', `0 0 0 4px ${color}40`, 'important');
+            } else {
+                segments[0].classList.add('active-3');
+                segments[1].classList.add('active-3');
+                segments[2].classList.add('active-3');
+                color = '#10b981'; text = 'Kuchli';
+                pwInput.style.setProperty('border-color', color, 'important');
+                pwInput.style.setProperty('box-shadow', `0 0 0 4px ${color}40`, 'important');
+            }
+            
+            if (pwText.textContent !== text) {
+                pwText.style.animation = 'none';
+                pwText.offsetHeight; /* trigger reflow */
+                pwText.style.animation = 'pop 0.3s ease forwards';
+                pwText.textContent = text;
+            }
+            if(text) pwText.style.color = color;
         });
         function rule(id, ok) {
             const el = document.getElementById(id);
@@ -769,13 +867,29 @@
         }
 
         document.getElementById('registerForm').addEventListener('submit', async function (e) {
-            e.preventDefault(); setLoading(true);
+            e.preventDefault(); 
+            
+            const v = document.getElementById('password').value;
+            let score = 0;
+            if (v.length > 0) score += 1;
+            if (v.length >= 8) score += 1;
+            if (v.length >= 12) score += 1;
+            if (/\d/.test(v)) score += 1;
+            if (/[a-z]/.test(v) && /[A-Z]/.test(v)) score += 1;
+            if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(v)) score += 1;
+            
+            if (score <= 2) {
+                showAlert('error', "Parol kuchsiz! Iltimos, murakkabroq parol (raqam yoki belgi aralashtirib) kiriting.");
+                return;
+            }
+            
+            setLoading(true);
             try {
-                const res = await fetch('/accounts/auth/register/', {
+                const res = await fetch('/accounts/api/register/', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCsrf() },
                     body: JSON.stringify({
-                        role: document.getElementById('roleInput').value,
+                        role: '{{ request.session.register_role|default:"client" }}',
                         username: document.getElementById('username').value.trim(),
                         first_name: document.getElementById('first_name').value.trim(),
                         last_name: document.getElementById('last_name').value.trim(),
@@ -786,7 +900,7 @@
                 const json = await res.json();
                 if (res.ok) {
                     showAlert('success', json.detail || "Ro'yxatdan o'tdingiz!");
-                    setTimeout(() => { window.location.href = '/accounts/auth/second-register/'; }, 900);
+                    setTimeout(() => { window.location.href = '/accounts/register/step-2/'; }, 900);
                 } else {
                     showAlert('error', Object.values(json).flat().join(' '));
                 }

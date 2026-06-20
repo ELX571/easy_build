@@ -5,14 +5,20 @@ User = get_user_model()
 
 
 class ChatRoom(models.Model):
-    """
-    Ikki foydalanuvchi orasidagi yagona xususiy suhbat xonasi.
-    participants M2M orqali saqlanadi, lekin har doim 2 ta user bo'ladi.
-    """
     participants = models.ManyToManyField(
         User,
         related_name='chat_rooms',
         blank=True,
+    )
+    is_group = models.BooleanField(default=False)
+    group_name = models.CharField(max_length=255, blank=True, null=True)
+    group_avatar = models.ImageField(upload_to='group_avatars/', blank=True, null=True)
+    team_profile = models.OneToOneField(
+        'build.BuilderProfile', 
+        on_delete=models.CASCADE, 
+        null=True, 
+        blank=True, 
+        related_name='group_chat'
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -27,14 +33,11 @@ class ChatRoom(models.Model):
 
     @classmethod
     def get_or_create_for(cls, user1, user2):
-        """Ikki user uchun mavjud xonani topadi yoki yangi yaratadi."""
-        # user1 va user2 ikkisini ham o'z ichiga olgan xonalar
-        rooms = cls.objects.filter(participants=user1).filter(participants=user2)
-        # Faqat 2 ta ishtirokchisi bo'lgan xona
+        rooms = cls.objects.filter(is_group=False, participants=user1).filter(participants=user2)
         for room in rooms:
             if room.participants.count() == 2:
                 return room, False
-        room = cls.objects.create()
+        room = cls.objects.create(is_group=False)
         room.participants.add(user1, user2)
         return room, True
 
@@ -66,8 +69,42 @@ class Message(models.Model):
         ordering = ['created_at']
 
     def __str__(self):
-        return f"[{self.room_id}] {self.sender.username}: {self.content[:40]}"
+        return f"[Room#{self.room_id}] {self.sender.username}: {self.content[:50]}"
 
     def time_str(self):
-        """HH:MM formatida vaqt qaytaradi."""
-        return self.created_at.strftime('%H:%M')
+        from django.utils import timezone
+        import datetime
+        now = timezone.now()
+        created = self.created_at
+        if not timezone.is_aware(created):
+            created = timezone.make_aware(created)
+        delta = now.date() - created.date()
+        if delta.days == 0:
+            return created.strftime('%H:%M')
+        elif delta.days == 1:
+            return 'Kecha'
+        elif delta.days < 7:
+            days = ['Dush', 'Sesh', 'Chor', 'Pay', 'Jum', 'Shan', 'Yak']
+            return days[created.weekday()]
+        else:
+            return created.strftime('%d.%m')
+
+    def to_dict(self, request=None):
+        sender = self.sender
+        avatar_url = None
+        if hasattr(sender, 'profile') and sender.profile.avatar:
+            if request:
+                avatar_url = request.build_absolute_uri(sender.profile.avatar.url)
+            else:
+                avatar_url = sender.profile.avatar.url
+
+        return {
+            'id': self.pk,
+            'room_id': self.room_id,
+            'sender_id': sender.pk,
+            'sender_name': sender.get_full_name() or sender.username,
+            'sender_avatar': avatar_url,
+            'content': self.content,
+            'time': self.time_str(),
+            'is_read': self.is_read,
+        }

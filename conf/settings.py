@@ -176,6 +176,7 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
@@ -189,7 +190,6 @@ SOCIALACCOUNT_ADAPTER = 'accounts.adapters.SiteFallbackSocialAccountAdapter'
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         # client_id va secret DB da (socialaccount_socialapp jadvali) saqlanadi
-        # Django admin orqali ham boshqarish mumkin: /admin/socialaccount/socialapp/
         'SCOPE': [
             'profile',
             'email',
