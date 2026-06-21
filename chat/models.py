@@ -59,7 +59,9 @@ class Message(models.Model):
         on_delete=models.CASCADE,
         related_name='sent_messages',
     )
-    content = models.TextField()
+    content = models.TextField(blank=True, null=True)
+    file = models.FileField(upload_to='chat_files/', blank=True, null=True)
+    file_type = models.CharField(max_length=20, blank=True, null=True) # 'image', 'video', 'audio', 'document'
     is_read = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -92,11 +94,11 @@ class Message(models.Model):
     def to_dict(self, request=None):
         sender = self.sender
         avatar_url = None
-        if hasattr(sender, 'profile') and sender.profile.avatar:
+        if hasattr(sender, 'profile'):
             if request:
-                avatar_url = request.build_absolute_uri(sender.profile.avatar.url)
+                avatar_url = request.build_absolute_uri(sender.profile.get_avatar_url())
             else:
-                avatar_url = sender.profile.avatar.url
+                avatar_url = sender.profile.get_avatar_url()
 
         return {
             'id': self.pk,
@@ -104,7 +106,9 @@ class Message(models.Model):
             'sender_id': sender.pk,
             'sender_name': sender.get_full_name() or sender.username,
             'sender_avatar': avatar_url,
-            'content': self.content,
+            'content': self.content or '',
+            'file_url': request.build_absolute_uri(self.file.url) if (self.file and request) else (self.file.url if self.file else None),
+            'file_type': self.file_type,
             'time': self.time_str(),
             'is_read': self.is_read,
         }

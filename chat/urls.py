@@ -14,4 +14,5 @@ urlpatterns = [
     path('api/users/', views.api_users, name='api_users'),
     path('api/unread/', views.api_unread_total, name='api_unread'),
     path('api/group/<int:room_id>/update/', views.api_update_group, name='api_update_group'),
+    path('api/upload/<int:room_id>/', views.api_upload_file, name='api_upload_file'),
 ]

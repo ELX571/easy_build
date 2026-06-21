@@ -1,9 +1,10 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST, require_GET
-from django.db.models import Q, Max
+from django.db.models import Q, Count, Case, When, IntegerField
+from django.core.cache import cache
 import json
 
 from .models import ChatRoom, Message
@@ -11,54 +12,94 @@ from .models import ChatRoom, Message
 User = get_user_model()
 
 
-def _avatar_url(user, request):
+def _get_avatar_url(user, request):
+    """Helper method to safely fetch user avatar."""
     try:
-        if user.profile.avatar:
-            return request.build_absolute_uri(user.profile.avatar.url)
+        return request.build_absolute_uri(user.profile.get_avatar_url())
     except Exception:
-        pass
-    return None
+        return None
+
+
+def _format_contact_data(room, user, request, unread_count=None):
+    """Formats a single ChatRoom instance into a dictionary for API responses."""
+    last_msg = room.get_last_message()
+    unread = unread_count if unread_count is not None else room.unread_count_for(user)
+
+    if room.is_group:
+        group_avatar_url = None
+        if room.group_avatar:
+            group_avatar_url = request.build_absolute_uri(room.group_avatar.url)
+        elif room.team_profile:
+            group_avatar_url = request.build_absolute_uri(room.team_profile.profile.get_avatar_url())
+
+        participants = [
+            {
+                'id': p.pk,
+                'name': p.get_full_name() or p.username,
+                'avatar': _get_avatar_url(p, request)
+            } for p in room.participants.all()
+        ]
+
+        return {
+            'room_id': room.pk,
+            'user_id': None,
+            'name': room.group_name or f"Jamoa #{room.pk}",
+            'username': 'team',
+            'avatar': group_avatar_url,
+            'last_message': last_msg.content if last_msg else '',
+            'last_time': last_msg.time_str() if last_msg else '',
+            'sort_time': last_msg.created_at.timestamp() if last_msg else 0,
+            'unread': unread,
+            'online': False,
+            'is_group': True,
+            'participants': participants
+        }
+
+    # Direct Message Room
+    other = room.participants.exclude(pk=user.pk).first()
+    if not other:
+        return None
+
+    return {
+        'room_id': room.pk,
+        'user_id': other.pk,
+        'name': other.get_full_name() or other.username,
+        'username': other.username,
+        'avatar': _get_avatar_url(other, request),
+        'last_message': last_msg.content if last_msg else '',
+        'last_time': last_msg.time_str() if last_msg else '',
+        'sort_time': last_msg.created_at.timestamp() if last_msg else 0,
+        'unread': unread,
+        'online': bool(cache.get(f'user_online_{other.pk}')),
+        'is_group': False
+    }
 
 
 # =============================================================================
-# SAHIFA VIEW'LARI
+# HTML VIEWS
 # =============================================================================
 
 @login_required
 def chat_view(request):
+    """Renders the main chat application page."""
     my_rooms = (
         ChatRoom.objects
         .filter(participants=request.user)
-        .prefetch_related('participants', 'messages')
+        .prefetch_related('participants')
         .order_by('-created_at')
     )
 
     rooms_data = []
     for room in my_rooms:
-        last_msg = room.get_last_message()
-        if room.is_group:
-            rooms_data.append({
-                'room': room,
-                'other_user': None,
-                'name': room.group_name or f"Jamoa #{room.pk}",
-                'is_group': True,
-                'last_message': last_msg,
-                'unread_count': room.unread_count_for(request.user),
-            })
-        else:
-            other = room.participants.exclude(pk=request.user.pk).first()
-            if not other:
-                continue
-            rooms_data.append({
-                'room': room,
-                'other_user': other,
-                'name': other.get_full_name() or other.username,
-                'is_group': False,
-                'last_message': last_msg,
-                'unread_count': room.unread_count_for(request.user),
-            })
+        data = _format_contact_data(room, request.user, request)
+        if data:
+            # chat_view expects a slightly different structure for rendering
+            data['room'] = room
+            data['other_user'] = room.participants.exclude(pk=request.user.pk).first() if not room.is_group else None
+            data['unread_count'] = data['unread']
+            rooms_data.append(data)
 
-    all_users = User.objects.exclude(pk=request.user.pk).order_by('username')
+    all_users = User.objects.exclude(pk=request.user.pk).select_related('profile').order_by('username')
 
     context = {
         'rooms_data': rooms_data,
@@ -71,73 +112,44 @@ def chat_view(request):
 
 
 # =============================================================================
-# REST API
+# REST API ENDPOINTS
 # =============================================================================
 
 @login_required
 @require_GET
 def api_contacts(request):
+    """Returns a list of all active chat rooms/contacts for the current user."""
+    # Annotating unread count to prevent N+1 query issue
     my_rooms = (
         ChatRoom.objects
         .filter(participants=request.user)
-        .prefetch_related('participants', 'messages')
+        .annotate(
+            unread_count=Count(
+                Case(
+                    When(messages__is_read=False, messages__sender__isnull=False, then=1),
+                    output_field=IntegerField()
+                ),
+                filter=~Q(messages__sender=request.user)
+            )
+        )
+        .prefetch_related('participants__profile')
     )
 
     contacts = []
     for room in my_rooms:
-        last_msg = room.get_last_message()
-        if room.is_group:
-            group_avatar_url = None
-            if room.group_avatar:
-                group_avatar_url = request.build_absolute_uri(room.group_avatar.url)
-            elif room.team_profile and room.team_profile.profile.avatar:
-                group_avatar_url = request.build_absolute_uri(room.team_profile.profile.avatar.url)
-                
-            parts = []
-            for p in room.participants.all():
-                parts.append({
-                    'id': p.pk,
-                    'name': p.get_full_name() or p.username,
-                    'avatar': _avatar_url(p, request)
-                })
-                
-            contacts.append({
-                'room_id': room.pk,
-                'user_id': None,
-                'name': room.group_name or f"Jamoa #{room.pk}",
-                'username': 'team',
-                'avatar': group_avatar_url,
-                'last_message': last_msg.content if last_msg else '',
-                'last_time': last_msg.time_str() if last_msg else '',
-                'unread': room.unread_count_for(request.user),
-                'online': False,
-                'is_group': True,
-                'participants': parts
-            })
-        else:
-            other = room.participants.exclude(pk=request.user.pk).first()
-            if not other:
-                continue
-            contacts.append({
-                'room_id': room.pk,
-                'user_id': other.pk,
-                'name': other.get_full_name() or other.username,
-                'username': other.username,
-                'avatar': _avatar_url(other, request),
-                'last_message': last_msg.content if last_msg else '',
-                'last_time': last_msg.time_str() if last_msg else '',
-                'unread': room.unread_count_for(request.user),
-                'online': False,
-                'is_group': False
-            })
+        data = _format_contact_data(room, request.user, request, unread_count=room.unread_count)
+        if data:
+            contacts.append(data)
 
-    contacts.sort(key=lambda x: x['last_time'] or '', reverse=True)
+    # Sort contacts by the time of the last message
+    contacts.sort(key=lambda x: x['sort_time'], reverse=True)
     return JsonResponse({'contacts': contacts})
 
 
 @login_required
 @require_GET
 def api_messages(request, room_id):
+    """Fetches messages for a specific room and marks unread ones as read."""
     room = get_object_or_404(ChatRoom, pk=room_id)
 
     if not room.participants.filter(pk=request.user.pk).exists():
@@ -153,9 +165,23 @@ def api_messages(request, room_id):
         .order_by('created_at')[offset: offset + limit]
     )
 
-    Message.objects.filter(
+    # Mark unread messages sent by others as read
+    updated = Message.objects.filter(
         room=room, is_read=False
     ).exclude(sender=request.user).update(is_read=True)
+
+    if updated > 0:
+        from channels.layers import get_channel_layer
+        from asgiref.sync import async_to_sync
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            f'chat_{room.pk}',
+            {
+                'type': 'messages_read',
+                'reader_id': request.user.pk,
+                'room_id': room.pk,
+            }
+        )
 
     data = [m.to_dict(request) for m in msgs]
     return JsonResponse({'messages': data, 'room_id': room_id})
@@ -164,6 +190,7 @@ def api_messages(request, room_id):
 @login_required
 @require_POST
 def api_start_chat(request):
+    """Initiates a new direct chat room with another user."""
     try:
         body = json.loads(request.body)
         other_id = int(body.get('user_id', 0))
@@ -183,7 +210,7 @@ def api_start_chat(request):
             'id': other.pk,
             'name': other.get_full_name() or other.username,
             'username': other.username,
-            'avatar': _avatar_url(other, request),
+            'avatar': _get_avatar_url(other, request),
         }
     })
 
@@ -191,7 +218,11 @@ def api_start_chat(request):
 @login_required
 @require_GET
 def api_users(request):
+    """Searches for users by username or name to start a new chat."""
     q = request.GET.get('q', '').strip()
+    if q.startswith('@'):
+        q = q[1:]
+        
     users = User.objects.exclude(pk=request.user.pk).select_related('profile')
 
     if q:
@@ -201,15 +232,15 @@ def api_users(request):
             Q(last_name__icontains=q)
         )
 
-    data = []
-    for u in users[:30]:
-        data.append({
+    data = [
+        {
             'id': u.pk,
             'name': u.get_full_name() or u.username,
             'username': u.username,
-            'avatar': _avatar_url(u, request),
+            'avatar': _get_avatar_url(u, request),
             'role': getattr(getattr(u, 'profile', None), 'get_role_display', lambda: '')(),
-        })
+        } for u in users[:30]
+    ]
 
     return JsonResponse({'users': data})
 
@@ -217,24 +248,22 @@ def api_users(request):
 @login_required
 @require_GET
 def api_unread_total(request):
-    total = 0
-    rooms = ChatRoom.objects.filter(participants=request.user)
-    for room in rooms:
-        total += room.unread_count_for(request.user)
+    """Calculates the total number of unread messages across all rooms."""
+    total = sum(room.unread_count_for(request.user) for room in ChatRoom.objects.filter(participants=request.user))
     return JsonResponse({'total_unread': total})
+
 
 @login_required
 @require_POST
 def api_update_group(request, room_id):
+    """Updates group room details (name, avatar)."""
     room = get_object_or_404(ChatRoom, pk=room_id, is_group=True)
     
-    # Check if user is in the group
     if not room.participants.filter(pk=request.user.pk).exists():
         return JsonResponse({'error': 'Ruxsat yo\'q'}, status=403)
         
     new_name = request.POST.get('name', '').strip()
     avatar_file = request.FILES.get('avatar')
-    
     updated = False
     
     if new_name:
@@ -248,8 +277,58 @@ def api_update_group(request, room_id):
     if updated:
         room.save()
         
+    avatar_url = request.build_absolute_uri(room.group_avatar.url) if room.group_avatar else \
+                 (request.build_absolute_uri(room.team_profile.profile.get_avatar_url()) if room.team_profile else None)
+
     return JsonResponse({
         'success': True, 
         'new_name': room.group_name, 
-        'avatar_url': request.build_absolute_uri(room.group_avatar.url) if room.group_avatar else (request.build_absolute_uri(room.team_profile.profile.avatar.url) if room.team_profile and room.team_profile.profile.avatar else None)
+        'avatar_url': avatar_url
     })
+
+
+@login_required
+@require_POST
+def api_upload_file(request, room_id):
+    """Handles file uploads and broadcasts the new message via WebSocket."""
+    room = get_object_or_404(ChatRoom, pk=room_id)
+    if not room.participants.filter(pk=request.user.pk).exists():
+        return JsonResponse({'error': 'Forbidden'}, status=403)
+        
+    file = request.FILES.get('file')
+    if not file:
+        return JsonResponse({'error': 'No file uploaded'}, status=400)
+        
+    file_type = request.POST.get('file_type', 'document')
+    content = request.POST.get('content', '')
+    
+    message = Message.objects.create(
+        room=room,
+        sender=request.user,
+        content=content,
+        file=file,
+        file_type=file_type
+    )
+    
+    from channels.layers import get_channel_layer
+    from asgiref.sync import async_to_sync
+    
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)(
+        f'chat_{room.pk}',
+        {
+            'type': 'chat_message',
+            'message_id': message.id,
+            'message': message.content,
+            'sender_id': request.user.id,
+            'sender_name': request.user.get_full_name() or request.user.username,
+            'sender_avatar': _get_avatar_url(request.user, request),
+            'time': message.time_str(),
+            'is_read': False,
+            'file_url': request.build_absolute_uri(message.file.url) if message.file else None,
+            'file_type': message.file_type,
+            'room_id': room.pk,
+        }
+    )
+    
+    return JsonResponse({'success': True, 'message_id': message.id})

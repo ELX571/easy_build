@@ -299,19 +299,23 @@
                     
                     <div style="display:flex; flex-direction:column; align-items:center; margin-bottom:30px;">
                         <div id="avatar-preview-container" style="position:relative; width:120px; height:120px; border-radius:50%; cursor:pointer; overflow:hidden; border:3px solid transparent; background:linear-gradient(145deg, rgba(30, 35, 50, 0.95), rgba(15, 17, 26, 0.95)) padding-box, linear-gradient(45deg, var(--active-text-blue), #fb923c) border-box; box-shadow:0 10px 25px rgba(255, 107, 0, 0.2);" onclick="document.getElementById('id_avatar').click()" onmouseover="document.getElementById('av-overlay').style.opacity='1'" onmouseout="document.getElementById('av-overlay').style.opacity='0'">
-                            {% if form.instance.avatar %}
-                                <img id="avatar-preview" src="{{ form.instance.avatar.url }}" style="width:100%; height:100%; object-fit:cover; display:block;">
-                            {% else %}
-                                <div id="avatar-preview-placeholder" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:40px; color:var(--active-text-blue); background:rgba(0,0,0,0.3);">
-                                    <i class="fa-solid fa-user"></i>
-                                </div>
-                                <img id="avatar-preview" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
-                            {% endif %}
+                            <img id="avatar-preview" src="{{ form.instance.get_avatar_url }}" style="width:100%; height:100%; object-fit:cover; display:block; background: black;">
                             <div id="av-overlay" style="position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); border-radius:50%; display:flex; justify-content:center; align-items:center; color:#fff; font-size:28px; opacity:0; transition:0.2s;"><i class="fa-solid fa-camera"></i></div>
                         </div>
                         <p style="margin:10px 0 0 0; font-size:13px; color:var(--text-muted); font-weight:600;">Profil rasmini o'zgartirish</p>
                         <!-- To make the Django form happy, we hide the original form field and use this logic, but wait, the default field renders a clear checkbox and a link. We can just render the raw input. -->
                         <input type="file" name="avatar" id="id_avatar" style="display:none" accept="image/*" onchange="previewAvatar(this)">
+                    </div>
+
+                    <div class="form-group" style="display: flex; gap: 20px;">
+                        <div style="flex: 1;">
+                            <label><i class="fa-solid fa-user"></i> Ism:</label>
+                            {{ form.first_name }}
+                        </div>
+                        <div style="flex: 1;">
+                            <label><i class="fa-solid fa-user"></i> Familiya:</label>
+                            {{ form.last_name }}
+                        </div>
                     </div>
 
                     <div class="form-group">
@@ -407,9 +411,12 @@
                         <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(255, 107, 0, 0.1); color: var(--active-text-blue); display: flex; align-items: center; justify-content: center; font-size: 20px;">
                             <i class="fa-solid fa-users"></i>
                         </div>
-                        <div>
-                            <h2 style="font-size: 18px; font-weight: 800; margin: 0; background: linear-gradient(90deg, #fff, #fb923c); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Mening Jamoam</h2>
-                            <p style="font-size: 13px; color: var(--text-muted); margin: 2px 0 0 0;">Jamoangiz a'zolarini shu yerdan boshqaring</p>
+                        <div style="flex-grow: 1;">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+                                <input type="text" id="team-name-input" value="{{ profile.builder_info.group_chat_room.group_name|default:'Mening Jamoam' }}" style="font-size: 18px; font-weight: 800; background: transparent; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; padding: 4px 8px; outline: none; width: 100%; max-width: 250px; transition: 0.2s;" onfocus="this.style.borderColor='var(--active-text-blue)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+                                <button onclick="renameTeam({{ profile.builder_info.group_chat_room.id }})" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.3); padding: 6px 12px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s; font-size: 12px;" onmouseover="this.style.background='rgba(59, 130, 246, 0.2)'" onmouseout="this.style.background='rgba(59, 130, 246, 0.1)'">Saqlash</button>
+                            </div>
+                            <p style="font-size: 13px; color: var(--text-muted); margin: 2px 0 0 0;">Jamoangiz nomi va a'zolarini shu yerdan boshqaring</p>
                         </div>
                     </div>
                     <div style="display: flex; gap: 12px;">
@@ -425,17 +432,9 @@
                 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;">
                     {% for member in profile.builder_info.members.all %}
                         <div style="padding: 20px; display: flex; flex-direction: column; align-items: center; text-align: center; border-radius: 16px; border: 1px solid rgba(255, 107, 0, 0.15); background: linear-gradient(145deg, rgba(255, 107, 0, 0.05) 0%, rgba(0,0,0,0) 100%); transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.1); position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.15)'; this.style.borderColor='rgba(255, 107, 0, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'; this.style.borderColor='rgba(255, 107, 0, 0.15)'">
-                            {% if member.profile.avatar %}
-                                <div style="width: 70px; height: 70px; border-radius: 50%; padding: 3px; background: linear-gradient(45deg, var(--active-text-blue), #fb923c); margin-bottom: 12px;">
-                                    <img src="{{ member.profile.avatar.url }}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid var(--bg-main);">
-                                </div>
-                            {% else %}
-                                <div style="width: 70px; height: 70px; border-radius: 50%; padding: 3px; background: linear-gradient(45deg, rgba(255, 107, 0, 0.5), rgba(255, 107, 0, 0.1)); margin-bottom: 12px;">
-                                    <div style="width: 100%; height: 100%; border-radius: 50%; background: var(--input-bg); color: var(--active-text-blue); display: flex; align-items: center; justify-content: center; font-size: 28px; border: 2px solid var(--bg-main);">
-                                        <i class="fa-solid fa-user"></i>
-                                    </div>
-                                </div>
-                            {% endif %}
+                            <div style="width: 70px; height: 70px; border-radius: 50%; padding: 3px; background: linear-gradient(45deg, var(--active-text-blue), #fb923c); margin-bottom: 12px;">
+                                <img src="{{ member.profile.get_avatar_url }}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid var(--bg-main); background: black;">
+                            </div>
                             <h3 style="font-size: 15px; font-weight: 800; color: var(--text-main); margin-bottom: 4px;">{{ member.get_full_name|default:member.username }}</h3>
                             <p style="font-size: 12px; font-weight: 600; color: var(--active-text-blue); margin-bottom: 16px; background: rgba(255, 107, 0, 0.1); padding: 4px 10px; border-radius: 8px;">{{ member.profile.get_role_display }}</p>
                             <button onclick="removeTeamMember({{ member.id }}, '{{ member.username }}')" class="btn-submit" style="width: 100%; padding: 8px; font-size: 13px; font-weight: 700; margin-top: auto; background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); box-shadow: none; display: flex; justify-content: center; gap: 6px; align-items: center; transition: 0.2s;" onmouseover="this.style.background='#ef4444'; this.style.color='#fff'" onmouseout="this.style.background='rgba(239,68,68,0.1)'; this.style.color='#ef4444'">
@@ -457,7 +456,7 @@
                         <h3 style="font-size: 18px; margin-bottom: 8px;">Siz jamoa rahbari emassiz</h3>
                         <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">Siz 2 tagacha jamoaga a'zo bo'lishingiz yoki o'z jamoangizni yaratishingiz mumkin.</p>
                         {% if request.user.joined_teams.count < 2 %}
-                            <button onclick="alert('Jamoa yaratish API ga ulanadi')" class="btn-submit" style="width: auto; margin: 0 auto; display: inline-flex; align-items: center; gap: 8px;">
+                            <button onclick="showToast('Jamoa yaratish API ga ulanadi', 'error')" class="btn-submit" style="width: auto; margin: 0 auto; display: inline-flex; align-items: center; gap: 8px;">
                                 <i class="fa-solid fa-plus"></i> Jamoa Yaratish
                             </button>
                         {% endif %}
@@ -475,13 +474,7 @@
                             <div style="padding: 16px; display: flex; flex-direction: column; gap: 16px; border-radius: 16px; border: 1px solid rgba(59, 130, 246, 0.15); background: linear-gradient(145deg, rgba(59, 130, 246, 0.05) 0%, rgba(0,0,0,0) 100%); transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
                                 
                                 <div style="display: flex; align-items: center; gap: 14px;">
-                                    {% if team.profile.avatar %}
-                                        <img src="{{ team.profile.avatar.url }}" style="width: 54px; height: 54px; border-radius: 14px; object-fit: cover; border: 2px solid var(--active-text-blue);">
-                                    {% else %}
-                                        <div style="width: 54px; height: 54px; border-radius: 14px; background: rgba(59, 130, 246, 0.1); color: var(--active-text-blue); display: flex; align-items: center; justify-content: center; font-size: 22px; border: 2px solid rgba(59, 130, 246, 0.3);">
-                                            <i class="fa-solid fa-users"></i>
-                                        </div>
-                                    {% endif %}
+                                    <img src="{{ team.profile.get_avatar_url }}" style="width: 54px; height: 54px; border-radius: 14px; object-fit: cover; border: 2px solid var(--active-text-blue); background: black;">
                                     <div>
                                         <h3 style="font-size: 16px; font-weight: 800; color: var(--text-main); margin-bottom: 4px;">{{ team.profile.user.get_full_name|default:team.profile.user.username }}</h3>
                                         <div style="display: flex; align-items: center; gap: 6px;">
@@ -519,7 +512,7 @@
                     <label>Yangi parolni takrorlang:</label>
                     <input type="password" placeholder="••••••••">
                 </div>
-                <button type="button" class="btn-submit" onclick="alert('Parolni o\'zgartirish tizimi ishlab chiqilmoqda')">Parolni yangilash</button>
+                <button type="button" class="btn-submit" onclick="showToast('Parolni o\'zgartirish tizimi ishlab chiqilmoqda', 'error')">Parolni yangilash</button>
             </div>
 
         </div>
@@ -537,13 +530,76 @@
         </div>
     </div>
 
+    <!-- MODAL: MAXSUS TASDIQLASH (CONFIRM) -->
+    <div id="customConfirmModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); z-index: 1000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s;">
+        <div style="background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 20px; width: 90%; max-width: 360px; padding: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); text-align: center; transform: translateY(20px); transition: transform 0.2s;">
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(239, 68, 68, 0.1); color: #ef4444; font-size: 28px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px auto;">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 8px;">Tasdiqlang</h3>
+            <p id="customConfirmMessage" style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.5;"></p>
+            <div style="display: flex; gap: 12px;">
+                <button id="customConfirmCancelBtn" style="flex: 1; padding: 12px; border-radius: 12px; background: rgba(255,255,255,0.05); color: var(--text-main); border: 1px solid var(--border-color); font-weight: 700; cursor: pointer; transition: 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">Bekor qilish</button>
+                <button id="customConfirmOkBtn" style="flex: 1; padding: 12px; border-radius: 12px; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); font-weight: 700; cursor: pointer; transition: 0.2s;" onmouseover="this.style.background='#ef4444'; this.style.color='#fff'" onmouseout="this.style.background='rgba(239, 68, 68, 0.1)'; this.style.color='#ef4444'">Ha, o'chirish</button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        window.customConfirm = function(message, onConfirm) {
+            const modal = document.getElementById('customConfirmModal');
+            const msgEl = document.getElementById('customConfirmMessage');
+            const cancelBtn = document.getElementById('customConfirmCancelBtn');
+            const okBtn = document.getElementById('customConfirmOkBtn');
+            const modalContent = modal.querySelector('div');
+
+            msgEl.innerText = message;
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.style.opacity = '1';
+                modalContent.style.transform = 'translateY(0)';
+            }, 10);
+
+            const closeIt = () => {
+                modal.style.opacity = '0';
+                modalContent.style.transform = 'translateY(20px)';
+                setTimeout(() => { modal.style.display = 'none'; }, 200);
+                okBtn.onclick = null;
+                cancelBtn.onclick = null;
+            };
+
+            cancelBtn.onclick = closeIt;
+            okBtn.onclick = () => {
+                closeIt();
+                if(onConfirm) onConfirm();
+            };
+        };
+
         function openTab(tabId, btn) {
             document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
-            btn.classList.add('active');
+            if (btn) btn.classList.add('active');
+            else document.querySelector(`.tab-btn[onclick*="${tabId}"]`).classList.add('active');
+            window.history.replaceState(null, null, `#${tabId}`);
         }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const tabParam = urlParams.get('tab');
+            const hash = window.location.hash;
+            
+            let targetTab = null;
+            if (tabParam) {
+                targetTab = 'tab-' + tabParam;
+            } else if (hash) {
+                targetTab = hash.substring(1);
+            }
+            
+            if (targetTab && document.getElementById(targetTab)) {
+                openTab(targetTab, null);
+            }
+        });
 
         // TEAM MANAGEMENT LOGIC
         window.openTeamModal = function() {
@@ -560,6 +616,41 @@
             if(resBox) resBox.innerHTML = '';
             const searchInput = document.getElementById('teamSearchInput');
             if(searchInput) searchInput.value = '';
+        }
+
+        window.renameTeam = function(roomId) {
+            const newName = document.getElementById('team-name-input').value.trim();
+            if (!newName) return showToast("Nomi bo'sh bo'lishi mumkin emas", "error");
+            
+            const formData = new FormData();
+            formData.append('name', newName);
+            
+            fetch(`/chat/api/group/${roomId}/update/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: formData
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    showToast("Jamoa nomi muvaffaqiyatli saqlandi!", "success");
+                    const teamTitles = document.querySelectorAll('h3, h2');
+                    teamTitles.forEach(t => {
+                        // Update the text directly if we find the team title
+                        if (t.innerText.trim() === document.getElementById('team-name-input').defaultValue || t.innerText.trim() === "Mening Jamoam") {
+                            t.innerText = data.new_name;
+                        }
+                    });
+                    document.getElementById('team-name-input').defaultValue = data.new_name;
+                } else {
+                    showToast(data.error || "Xatolik yuz berdi", "error");
+                }
+            })
+            .catch(err => {
+                showToast("Tarmoq xatosi", "error");
+            });
         }
 
         window.searchTeamUsers = function() {
@@ -614,42 +705,41 @@
         }
 
         window.addTeamMember = function(userId) {
-            fetch('/api/team/add/', {
+            fetch('/api/team/add/' + userId + '/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRFToken': getCookie('csrftoken')
-                },
-                body: JSON.stringify({ user_id: userId })
+                }
             })
             .then(r => r.json())
             .then(d => {
-                if(d.status === 'success') {
-                    alert("Taklif yuborildi!");
+                if(d.success) {
+                    showToast(d.message || "Taklif yuborildi!", 'success');
                     closeTeamModal();
                 } else {
-                    alert(d.message || "Xatolik yuz berdi");
+                    showToast(d.error || d.message || "Xatolik yuz berdi", 'error');
                 }
             });
         }
 
         window.removeTeamMember = function(userId, username) {
-            if(!confirm(`Rostdan ham ${username} ni jamoadan o'chirmoqchimisiz?`)) return;
-            fetch('/api/team/remove/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCookie('csrftoken')
-                },
-                body: JSON.stringify({ user_id: userId })
-            })
-            .then(r => r.json())
-            .then(d => {
-                if(d.status === 'success') {
-                    location.reload();
-                } else {
-                    alert(d.message || "Xatolik yuz berdi");
-                }
+            customConfirm(`Rostdan ham ${username} ni jamoadan o'chirmoqchimisiz?`, () => {
+                fetch('/api/team/remove/' + userId + '/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    }
+                })
+                .then(r => r.json())
+                .then(d => {
+                    if(d.success) {
+                        location.reload();
+                    } else {
+                        showToast(d.error || d.message || "Xatolik yuz berdi", 'error');
+                    }
+                });
             });
         }
 
@@ -706,6 +796,46 @@
             }
             pricePro.style.transition = 'opacity 0.15s ease';
             priceVip.style.transition = 'opacity 0.15s ease';
+        }
+    </script>
+
+    <!-- CUSTOM TOAST NOTIFICATION -->
+    <style>
+        .custom-toast {
+            position: fixed; top: 20px; right: 20px;
+            background: var(--card-gradient); backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 107, 0, 0.3); color: #fff;
+            padding: 16px 24px; border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 9999; display: flex; align-items: center; gap: 12px;
+            transform: translateX(120%); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .custom-toast.show { transform: translateX(0); }
+        .custom-toast.error { border-color: rgba(239, 68, 68, 0.5); }
+        .custom-toast i { font-size: 20px; }
+        .custom-toast.error i { color: #ef4444; }
+        .custom-toast.success i { color: #10b981; }
+    </style>
+    <div id="custom-toast" class="custom-toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="custom-toast-msg">Xabar</span>
+    </div>
+    <script>
+        window.showToast = function(message, type = 'success') {
+            const toast = document.getElementById('custom-toast');
+            const msg = document.getElementById('custom-toast-msg');
+            const icon = toast.querySelector('i');
+            msg.innerText = message;
+            toast.className = 'custom-toast';
+            if (type === 'error') {
+                toast.classList.add('error');
+                icon.className = 'fa-solid fa-circle-exclamation';
+            } else {
+                toast.classList.add('success');
+                icon.className = 'fa-solid fa-circle-check';
+            }
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 3000);
         }
     </script>
 </body>

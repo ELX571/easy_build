@@ -59,15 +59,33 @@ class LoginForm(forms.Form):
 
 
 class ProfileEditForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=150, required=False, widget=forms.TextInput(attrs={'placeholder': 'Ismingiz'}))
+    last_name = forms.CharField(max_length=150, required=False, widget=forms.TextInput(attrs={'placeholder': 'Familiyangiz'}))
     city = forms.ChoiceField(choices=Profile.REGION_CHOICES, widget=forms.Select())
 
     class Meta:
         model = Profile
-        fields = ['phone', 'city', 'bio', 'avatar', 'telegram', 'whatsapp']
+        fields = ['first_name', 'last_name', 'phone', 'city', 'bio', 'avatar', 'telegram', 'whatsapp']
         widgets = {
-            'phone': forms.TextInput(attrs={'placeholder': '+998 90 123 45 67'}),
-            'bio': forms.Textarea(attrs={'rows': 3, 'placeholder': 'O\'zingiz haqingizda...'}),
+            'phone': forms.TextInput(attrs={'placeholder': '+998 90 123 45 67 (Masalan)'}),
+            'bio': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Masalan: Men 5 yillik tajribaga ega ustaman...'}),
             'avatar': forms.FileInput(),
-            'telegram': forms.TextInput(attrs={'placeholder': '@username'}),
-            'whatsapp': forms.TextInput(attrs={'placeholder': '+998 90 123 45 67'}),
+            'telegram': forms.TextInput(attrs={'placeholder': '@username (Masalan)'}),
+            'whatsapp': forms.TextInput(attrs={'placeholder': '+998 90 123 45 67 (Masalan)'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance and self.instance.user:
+            self.fields['first_name'].initial = self.instance.user.first_name
+            self.fields['last_name'].initial = self.instance.user.last_name
+
+    def save(self, commit=True):
+        profile = super().save(commit=False)
+        user = profile.user
+        user.first_name = self.cleaned_data.get('first_name', '')
+        user.last_name = self.cleaned_data.get('last_name', '')
+        if commit:
+            user.save()
+            profile.save()
+        return profile

@@ -9,8 +9,24 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Plus Jakarta Sans',sans-serif}
 :root{--bg:#0a0d14;--sb:#0d1117;--border:rgba(255,255,255,.06);--text:#f1f5f9;--muted:#94a3b8;--label:#475569;--orange:#ff6b00;--ora:rgba(255,107,0,.12);--in:#1e293b;--divider:rgba(255,255,255,.05);--shadow:0 2px 16px rgba(0,0,0,.4)}
-body{background:var(--bg);height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.shell{display:flex;width:100%;max-width:1300px;height:calc(100vh - 24px);margin:12px;border-radius:20px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.5);border:1px solid var(--border)}
+body{background:var(--bg);height:100vh;overflow:hidden;display:flex;align-items:center; padding-left: 100px;}
+.shell{display:flex;width:100%;max-width:1300px;height:calc(100vh - 24px);margin:12px auto; border-radius:20px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.5);border:1px solid var(--border)}
+
+/* SIDEBAR (SMART RAIL) */
+.sidebar-container { position: fixed; top: 12px; left: 12px; display: flex; z-index: 9999; height: calc(100vh - 24px); }
+.icon-rail { width: 68px; height: 100%; background: var(--sb); border-radius: 20px; display: flex; flex-direction: column; align-items: center; padding: 24px 0; box-shadow: var(--shadow); border: 1px solid var(--border); position: relative; z-index: 2; }
+.rail-item { width: 46px; height: 46px; border-radius: 14px; display: flex; justify-content: center; align-items: center; color: var(--muted); font-size: 18px; margin-bottom: 10px; cursor: pointer; text-decoration: none; transition: 0.2s;}
+.rail-item.active { background: var(--ora); color: var(--orange); border: 1px solid rgba(255,107,0,0.3); }
+.rail-item:hover:not(.active) { background: rgba(255,255,255,0.04); color: var(--text); }
+.rail-divider { width: 24px; height: 1px; background: var(--border); margin: 14px 0; }
+.expanded-menu { width: 0; opacity: 0; visibility: hidden; overflow: hidden; background: var(--sb); border-radius: 20px; box-shadow: var(--shadow); border: 1px solid var(--border); margin-left: -20px; padding-left: 20px; display: flex; transition: width 0.4s ease, opacity 0.3s ease, visibility 0.4s ease; }
+.sidebar-container:hover .expanded-menu { width: 280px; opacity: 1; visibility: visible; margin-left: 16px; }
+.menu-col { min-width: 250px; height: 100%; padding: 28px 20px; display: flex; flex-direction: column; }
+.menu-title { font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+.menu-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.menu-list li a { display: flex; align-items: center; padding: 11px 14px; color: var(--muted); font-size: 14px; font-weight: 600; text-decoration: none; border-radius: 10px; transition: 0.2s;}
+.menu-list li a:hover { background: rgba(255,107,0,0.06); color: var(--text); transform: translateX(5px); }
+.menu-list li a i.main-icon { font-size: 16px; margin-right: 12px; color: var(--label); width: 20px; text-align: center; }
 
 /* SIDEBAR */
 .sb{width:320px;flex-shrink:0;background:var(--sb);border-right:1px solid var(--border);display:flex;flex-direction:column}
@@ -42,7 +58,7 @@ body{background:var(--bg);height:100vh;overflow:hidden;display:flex;align-items:
 .ci-time{font-size:11px;color:var(--label);white-space:nowrap}
 .ci-prev{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .badge{background:var(--orange);color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 5px;flex-shrink:0}
-.odot{width:9px;height:9px;border-radius:50%;background:#22c55e;border:2px solid var(--sb);position:absolute;bottom:10px;left:46px}
+.odot{width:14px;height:14px;border-radius:50%;background:#22c55e;border:2.5px solid var(--sb);position:absolute;bottom:10px;left:42px;box-shadow:0 0 5px rgba(34,197,94,0.4)}
 
 /* MAIN */
 .main{flex:1;display:flex;flex-direction:column;background:var(--bg);min-width:0}
@@ -92,10 +108,86 @@ body{background:var(--bg);height:100vh;overflow:hidden;display:flex;align-items:
 .ui-info .ui-name{font-size:13px;font-weight:700;color:var(--text)}
 .ui-info .ui-un{font-size:11px;color:var(--muted)}
 
+/* MESSAGE ACTIONS */
+.mr { position: relative; }
+.msg-actions { display: flex; gap: 4px; align-items: center; opacity: 0; transition: opacity 0.2s; position: absolute; bottom: 0; padding-bottom: 2px; }
+.mr.out .msg-actions { right: calc(100% + 8px); flex-direction: row-reverse; }
+.mr.in .msg-actions { left: calc(100% + 8px); }
+.mr:hover .msg-actions { opacity: 1; }
+.msg-act-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--muted); width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 11px; cursor: pointer; transition: 0.2s; backdrop-filter: blur(4px); }
+.msg-act-btn:hover { background: rgba(255,255,255,0.1); color: var(--text); transform: translateY(-2px); }
+.msg-act-btn.reply:hover { color: #3b82f6; border-color: rgba(59,130,246,0.3); }
+.msg-act-btn.edit:hover { color: #10b981; border-color: rgba(16,185,129,0.3); }
+.msg-act-btn.delete:hover { color: #ef4444; border-color: rgba(239,68,68,0.3); }
+
+/* ATTACHMENT BUTTON */
+.attach-btn { width:42px; height:42px; border-radius:14px; display:flex; align-items:center; justify-content:center; color:var(--muted); cursor:pointer; font-size:18px; transition:0.2s; background:rgba(255,255,255,0.03); border:1.5px solid var(--border); flex-shrink:0; }
+.attach-btn:hover { color:var(--orange); background:var(--ora); border-color:var(--orange); transform: translateY(-2px); }
+
+/* MODAL TABS */
+.psm-media-tab { display:flex; justify-content:space-between; align-items:center; padding:10px 14px; border-radius:14px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04); cursor:pointer; transition:0.2s; }
+.psm-media-tab:hover { background:rgba(255,255,255,0.06); transform:translateX(4px); }
+
+/* INSTAGRAM RECORDING WAVE */
+.ig-wave { mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); display:flex; align-items:center; gap:4px; height:30px; flex:1; justify-content:center; }
+.ig-bar { width: 3.5px; background: linear-gradient(to top, #0088ff, #a113fa); border-radius: 4px; animation: ig-bounce 1s ease-in-out infinite; }
+@keyframes ig-bounce { 0%, 100% { height: 6px; opacity: 0.4; } 50% { height: 26px; opacity: 1; } }
+.ig-bar:nth-child(1) { animation-delay: 0.1s; }
+.ig-bar:nth-child(2) { animation-delay: 0.5s; }
+.ig-bar:nth-child(3) { animation-delay: 0.2s; }
+.ig-bar:nth-child(4) { animation-delay: 0.7s; }
+.ig-bar:nth-child(5) { animation-delay: 0.3s; }
+.ig-bar:nth-child(6) { animation-delay: 0.8s; }
+.ig-bar:nth-child(7) { animation-delay: 0.4s; }
+.ig-bar:nth-child(8) { animation-delay: 0.9s; }
+.ig-bar:nth-child(9) { animation-delay: 0.1s; }
+.ig-bar:nth-child(10) { animation-delay: 0.6s; }
+.ig-bar:nth-child(11) { animation-delay: 0.2s; }
+.ig-bar:nth-child(12) { animation-delay: 0.5s; }
+.ig-bar:nth-child(13) { animation-delay: 0.3s; }
+.ig-bar:nth-child(14) { animation-delay: 0.8s; }
+.ig-bar:nth-child(15) { animation-delay: 0.4s; }
+.ig-bar:nth-child(16) { animation-delay: 0.1s; }
+.ig-bar:nth-child(17) { animation-delay: 0.7s; }
+.ig-bar:nth-child(18) { animation-delay: 0.2s; }
+
 @media(max-width:768px){.sb{width:100%;position:absolute;z-index:10;height:100%}.sb.hide{display:none}.bk{display:flex!important}}
 </style>
 </head>
 <body>
+<div class="sidebar-container">
+    <div class="icon-rail">
+        <a href="{% url 'build:home' %}" class="rail-item" data-title="Bosh sahifa"><i class="fa-solid fa-house"></i></a>
+        <a href="{% url 'build:post_list' %}" class="rail-item" data-title="Market Pro"><i class="fa-solid fa-store"></i></a>
+        <a href="{% url 'build:profile_edit' %}" class="rail-item" data-title="Sozlamalar"><i class="fa-solid fa-gear"></i></a>
+        <a href="{% url 'build:post_create' %}" class="rail-item" data-title="Post yaratish"><i class="fa-solid fa-plus"></i></a>
+        <a href="{% url 'chat:chat' %}" class="rail-item active" data-title="Chatlar">
+            <i class="fa-regular fa-comment-dots"></i>
+            {% if unread_chat_count > 0 %}
+            <span style="position:absolute; top:8px; right:8px; background:var(--active-text-blue); color:white; font-size:10px; font-weight:800; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-panel);">{{ unread_chat_count }}</span>
+            {% endif %}
+        </a>
+        <div class="rail-divider"></div>
+        <a href="{% url 'build:profile' %}" class="rail-item" data-title="Mening Profilim"><i class="fa-regular fa-user"></i></a>
+    </div>
+
+    <div class="expanded-menu">
+        <div class="menu-col">
+            <div class="menu-title">
+                <i class="fa-solid fa-compass" style="color: var(--orange); transform: rotate(15deg);"></i>
+                Navigator
+            </div>
+            <ul class="menu-list">
+                <li><a href="{% url 'build:home' %}"><i class="fa-solid fa-house main-icon"></i> Home</a></li>
+                <li><a href="{% url 'build:post_list' %}"><i class="fa-solid fa-store main-icon"></i> Market Pro (B2B)</a></li>
+                <li><a href="{% url 'build:profile_edit' %}"><i class="fa-solid fa-gear main-icon"></i> Sozlamalar</a></li>
+                <li><a href="{% url 'chat:chat' %}"><i class="fa-regular fa-comment-dots main-icon"></i> Xabarlar {% if unread_chat_count > 0 %}<span class="badge" style="background:var(--orange); color:white; font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; margin-left:auto;">{{ unread_chat_count }}</span>{% endif %}</a></li>
+                <li><a href="{% url 'build:profile' %}"><i class="fa-regular fa-user main-icon"></i> Mening Profilim</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 <div class="shell">
 
 <!-- SIDEBAR -->
@@ -152,11 +244,57 @@ body{background:var(--bg);height:100vh;overflow:hidden;display:flex;align-items:
   <div class="typing" id="typing">✍️ yozmoqda...</div>
 
   <div class="input-area" id="ia" style="display:none">
+    <!-- Action Banner for Edit / Reply -->
+    <div id="action-banner" style="display:none; align-items:center; gap:12px; margin-bottom:10px; padding:10px 14px; background:rgba(255,255,255,0.03); border-radius:12px; border:1px solid var(--border); position:relative;">
+        <div id="action-icon-banner" style="color:var(--orange); font-size:18px;"></div>
+        <div style="flex:1; min-width:0;">
+            <div id="action-title" style="font-size:12px; font-weight:700; color:var(--orange); margin-bottom:2px;"></div>
+            <div id="action-text" style="font-size:13px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></div>
+        </div>
+        <button onclick="clearAction()" style="background:none; border:none; color:var(--muted); cursor:pointer; font-size:16px; transition:0.2s;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='var(--muted)'"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    
+    <!-- Media Preview Banner -->
+    <div id="media-preview" style="display:none; align-items:center; gap:12px; margin-bottom:10px; padding:10px 14px; background:rgba(16, 185, 129, 0.05); border-radius:12px; border:1px solid rgba(16, 185, 129, 0.2); position:relative;">
+        <div id="preview-icon" style="font-size:24px;"></div>
+        <div style="flex:1; min-width:0;">
+            <div style="font-size:12px; font-weight:700; color:#10b981; margin-bottom:2px;">Tayyor</div>
+            <div id="preview-name" style="font-size:13px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></div>
+        </div>
+        <button onclick="clearMedia()" style="background:none; border:none; color:var(--muted); cursor:pointer; font-size:16px; transition:0.2s;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='var(--muted)'"><i class="fa-solid fa-trash"></i></button>
+    </div>
+
     <div class="ir">
-      <div class="ib">
-        <textarea id="inp" rows="1" placeholder="Xabar yozing..." onkeydown="onKey(event)" oninput="resize(this);onType()"></textarea>
+      <label class="attach-btn" id="attach-btn" title="Fayl, rasm yoki video jo'natish">
+         <input type="file" id="file-input" style="display:none" accept="image/*,video/*,audio/*,.pdf,.doc,.docx" onchange="if(this.files[0]) { window.uploadFile(this.files[0]); this.value=''; }">
+         <i class="fa-solid fa-paperclip"></i>
+      </label>
+      <div class="ib" id="input-box" style="position:relative;">
+        <textarea id="inp" rows="1" placeholder="Xabar yozing..." onkeydown="onKey(event)" oninput="resize(this);onType();updateActionBtn()"></textarea>
       </div>
-      <button class="send" onclick="send()"><i class="fa-solid fa-paper-plane"></i></button>
+      
+      <!-- Gorgeous Instagram Style Recording UI -->
+      <div id="recording-ui" style="display:none; flex:1; align-items:center; background:rgba(0, 0, 0, 0.25); border-radius:24px; padding:0 16px; justify-content:space-between; height:48px; border:1px solid rgba(255,255,255,0.03);">
+          
+          <button onclick="cancelRecording(event)" style="background:rgba(239, 68, 68, 0.1); border:none; color:#ef4444; cursor:pointer; font-size:15px; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; transition:0.2s;" onmouseover="this.style.background='#ef4444'; this.style.color='#fff';" title="Bekor qilish">
+              <i class="fa-solid fa-trash"></i>
+          </button>
+          
+          <div class="ig-wave" style="margin: 0 16px;">
+              <div class="ig-bar"></div><div class="ig-bar"></div><div class="ig-bar"></div>
+              <div class="ig-bar"></div><div class="ig-bar"></div><div class="ig-bar"></div>
+              <div class="ig-bar"></div><div class="ig-bar"></div><div class="ig-bar"></div>
+              <div class="ig-bar"></div><div class="ig-bar"></div><div class="ig-bar"></div>
+              <div class="ig-bar"></div><div class="ig-bar"></div><div class="ig-bar"></div>
+              <div class="ig-bar"></div><div class="ig-bar"></div><div class="ig-bar"></div>
+          </div>
+          
+          <div style="display:flex; align-items:center; gap:8px;">
+              <div style="width:8px; height:8px; background:#ef4444; border-radius:50%; animation:pulse 1s infinite; box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);"></div>
+              <span style="font-size:15px; font-weight:600; color:var(--text); letter-spacing:0.5px; font-variant-numeric: tabular-nums; min-width:38px; text-align:right;" id="rec-time">0:00</span>
+          </div>
+      </div>
+      <button class="send" id="action-btn" onclick="handleAction()"><i class="fa-solid fa-microphone" id="action-icon"></i></button>
     </div>
   </div>
 </div>
@@ -194,11 +332,69 @@ body{background:var(--bg);height:100vh;overflow:hidden;display:flex;align-items:
         <!-- Actions -->
         <div style="padding:20px 24px; border-top:1px solid rgba(255,255,255,0.05); background:rgba(0,0,0,0.2); display:flex; gap:12px;">
             <button onclick="document.getElementById('chat-settings-modal').style.display='none'; renameGroup()" style="flex:1; padding:12px; background:rgba(255,255,255,0.03); color:#fff; border:1px solid rgba(255,255,255,0.1); border-radius:14px; cursor:pointer; font-weight:600; font-size:13px; display:flex; flex-direction:column; align-items:center; gap:6px; transition:0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.03)'"><i class="fa-solid fa-pen" style="font-size:16px; color:#94a3b8;"></i> Nomni o'zgartirish</button>
-            
-            <a href="{% url 'build:profile_edit' %}#tab-team" style="flex:1; display:inline-flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; padding:12px; background:linear-gradient(45deg, var(--active-text-blue), #fb923c); color:#fff; text-decoration:none; border-radius:14px; font-size:13px; font-weight:700; box-shadow:0 4px 15px rgba(255, 107, 0, 0.3); transition:0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(255, 107, 0, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(255, 107, 0, 0.3)'"><i class="fa-solid fa-users-gear" style="font-size:16px;"></i> To'liq sozlamalar</a>
+            <button onclick="leaveGroup()" style="flex:1; padding:12px; background:rgba(239, 68, 68, 0.1); color:#ef4444; border:1px solid rgba(239, 68, 68, 0.2); border-radius:14px; cursor:pointer; font-weight:600; font-size:13px; display:flex; flex-direction:column; align-items:center; gap:6px; transition:0.2s;" onmouseover="this.style.background='rgba(239, 68, 68, 0.2)'" onmouseout="this.style.background='rgba(239, 68, 68, 0.1)'"><i class="fa-solid fa-arrow-right-from-bracket" style="font-size:16px;"></i> Guruhni tark etish</button>
         </div>
     </div>
 </div>
+
+<!-- PERSONAL SETTINGS MODAL -->
+<div id="personal-settings-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; z-index:9999; background:rgba(0,0,0,0.6); backdrop-filter:blur(8px); justify-content:center; align-items:center;">
+    <div style="background:linear-gradient(145deg, rgba(30, 35, 50, 0.95), rgba(15, 17, 26, 0.95)); width:90%; max-width:380px; border-radius:24px; border:1px solid rgba(255, 107, 0, 0.2); box-shadow:0 15px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1); overflow:hidden; display:flex; flex-direction:column; animation: fadeScale 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+        
+        <!-- Header -->
+        <div style="padding:20px 24px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.05); background:rgba(255,255,255,0.02);">
+            <h3 style="margin:0; font-size:16px; font-weight:800; color:#fff; display:flex; align-items:center; gap:8px;"><i class="fa-solid fa-user" style="color:var(--active-text-blue);"></i> Foydalanuvchi Ma'lumotlari</h3>
+            <button onclick="document.getElementById('personal-settings-modal').style.display='none'" style="background:rgba(255,255,255,0.05); border:none; color:#a1a1aa; cursor:pointer; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; transition:0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'; this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.color='#a1a1aa'"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        
+        <!-- Profile Info -->
+        <div style="padding:30px 24px 20px 24px; text-align:center;">
+            <div id="psm-av-container" style="position:relative; width:100px; height:100px; margin:0 auto 16px auto;">
+                <div id="psm-av" style="width:100px; height:100px; border-radius:50%; display:flex; justify-content:center; align-items:center; overflow:hidden; border:3px solid transparent; background:linear-gradient(var(--bg-main), var(--bg-main)) padding-box, linear-gradient(45deg, var(--active-text-blue), #fb923c) border-box; box-shadow:0 8px 24px rgba(255, 107, 0, 0.2);"></div>
+            </div>
+            
+            <h2 id="psm-name" style="margin:0 0 4px 0; font-size:22px; font-weight:800; color:#fff; text-shadow:0 2px 4px rgba(0,0,0,0.3);"></h2>
+            <div id="psm-username" style="font-size:13px; color:var(--muted); margin-bottom:12px;"></div>
+            <p style="margin:0; font-size:13px; font-weight:500; color:#22c55e; background:rgba(34, 197, 94, 0.1); padding:4px 12px; border-radius:12px; display:inline-block;" id="psm-status"></p>
+        </div>
+        
+        <!-- Media Links -->
+        <div style="padding:0 24px 20px 24px;">
+            <div style="display:flex; flex-direction:column; gap:8px;">
+                <div class="psm-media-tab" onclick="alert('Tez kunda!')">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <div style="width:36px; height:36px; border-radius:10px; background:rgba(59, 130, 246, 0.1); color:#3b82f6; display:flex; align-items:center; justify-content:center; font-size:16px;"><i class="fa-solid fa-image"></i></div>
+                        <div style="font-size:14px; font-weight:600; color:#fff;">Media (Rasm / Video)</div>
+                    </div>
+                    <div style="color:var(--muted); font-size:13px; display:flex; align-items:center; gap:6px;"><span id="psm-count-media">0</span> <i class="fa-solid fa-chevron-right" style="font-size:10px;"></i></div>
+                </div>
+                
+                <div class="psm-media-tab" onclick="alert('Tez kunda!')">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <div style="width:36px; height:36px; border-radius:10px; background:rgba(245, 158, 11, 0.1); color:#f59e0b; display:flex; align-items:center; justify-content:center; font-size:16px;"><i class="fa-solid fa-file-lines"></i></div>
+                        <div style="font-size:14px; font-weight:600; color:#fff;">Fayllar</div>
+                    </div>
+                    <div style="color:var(--muted); font-size:13px; display:flex; align-items:center; gap:6px;"><span id="psm-count-files">0</span> <i class="fa-solid fa-chevron-right" style="font-size:10px;"></i></div>
+                </div>
+                
+                <div class="psm-media-tab" onclick="alert('Tez kunda!')">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <div style="width:36px; height:36px; border-radius:10px; background:rgba(16, 185, 129, 0.1); color:#10b981; display:flex; align-items:center; justify-content:center; font-size:16px;"><i class="fa-solid fa-microphone"></i></div>
+                        <div style="font-size:14px; font-weight:600; color:#fff;">Ovozli xabarlar</div>
+                    </div>
+                    <div style="color:var(--muted); font-size:13px; display:flex; align-items:center; gap:6px;"><span id="psm-count-audio">0</span> <i class="fa-solid fa-chevron-right" style="font-size:10px;"></i></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Actions -->
+        <div style="padding:20px 24px; border-top:1px solid rgba(255,255,255,0.05); background:rgba(0,0,0,0.2); display:flex; gap:12px;">
+            <button onclick="document.getElementById('personal-settings-modal').style.display='none';" style="flex:1; padding:12px; background:rgba(255,255,255,0.03); color:#fff; border:1px solid rgba(255,255,255,0.1); border-radius:14px; cursor:pointer; font-weight:600; font-size:13px; display:flex; flex-direction:column; align-items:center; gap:6px; transition:0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.03)'"><i class="fa-solid fa-message" style="font-size:16px; color:#94a3b8;"></i> Xabar yozish</button>
+            <button onclick="alert('Tez kunda!')" style="flex:1; padding:12px; background:rgba(239, 68, 68, 0.1); color:#ef4444; border:1px solid rgba(239, 68, 68, 0.2); border-radius:14px; cursor:pointer; font-weight:600; font-size:13px; display:flex; flex-direction:column; align-items:center; gap:6px; transition:0.2s;" onmouseover="this.style.background='rgba(239, 68, 68, 0.2)'" onmouseout="this.style.background='rgba(239, 68, 68, 0.1)'"><i class="fa-solid fa-ban" style="font-size:16px;"></i> Bloklash</button>
+        </div>
+    </div>
+</div>
+
 <style>
 @keyframes fadeScale { 0% { opacity: 0; transform: scale(0.95) translateY(10px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
 @keyframes toastSlide { 0% { opacity: 0; transform: translateX(50px); } 100% { opacity: 1; transform: translateX(0); } }
@@ -229,7 +425,102 @@ body{background:var(--bg);height:100vh;overflow:hidden;display:flex;align-items:
 <div id="toast-container" style="position:fixed; bottom:20px; right:20px; display:flex; flex-direction:column; gap:10px; z-index:10001; pointer-events:none;"></div>
 
 </div>
+
+<!-- CALL OVERLAY -->
+<div id="call-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(10,13,20,0.85); z-index:999999; backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); flex-direction:column; align-items:center; justify-content:center; color:#fff;">
+  <div style="position:absolute; top:40px; text-align:center;">
+      <div id="call-status" style="font-size:22px; font-weight:800; margin-bottom:8px; color:var(--orange);">Qo'ng'iroq...</div>
+      <div id="call-user-name" style="font-size:16px; color:rgba(255,255,255,0.7); font-weight:600;">—</div>
+  </div>
+  <div style="position:relative; width:90%; max-width:900px; height:70vh; background:rgba(0,0,0,0.4); border-radius:32px; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,0.6); display:flex; justify-content:center; align-items:center; border: 1px solid rgba(255,255,255,0.05);">
+      <div class="ei" id="audio-avatar" style="position:absolute; display:flex; width:120px; height:120px; font-size:48px;"><i class="fa-solid fa-user"></i></div>
+      <video id="remote-video" autoplay playsinline style="width:100%; height:100%; object-fit:cover; z-index:2;"></video>
+      <video id="local-video" autoplay playsinline muted style="position:absolute; bottom:24px; right:24px; width:140px; height:200px; object-fit:cover; border-radius:20px; border:2px solid rgba(255,255,255,0.15); box-shadow:0 15px 40px rgba(0,0,0,0.6); transform:scaleX(-1); z-index:3;"></video>
+  </div>
+  <div style="display:flex; gap:24px; margin-top:40px;">
+     <button id="call-accept-btn" onclick="acceptCall()" style="display:none; width:68px; height:68px; border-radius:50%; background:#22c55e; border:none; color:#fff; font-size:24px; cursor:pointer; box-shadow:0 12px 30px rgba(34,197,94,0.3); transition:0.3s; align-items:center; justify-content:center;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'"><i class="fa-solid fa-phone"></i></button>
+     <button id="call-reject-btn" onclick="rejectCall()" style="display:none; width:68px; height:68px; border-radius:50%; background:#ef4444; border:none; color:#fff; font-size:24px; cursor:pointer; box-shadow:0 12px 30px rgba(239,68,68,0.3); transition:0.3s; align-items:center; justify-content:center;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'"><i class="fa-solid fa-phone-slash"></i></button>
+     <button id="call-end-btn" onclick="endCall()" style="display:none; width:68px; height:68px; border-radius:50%; background:#ef4444; border:none; color:#fff; font-size:24px; cursor:pointer; box-shadow:0 12px 30px rgba(239,68,68,0.3); transition:0.3s; align-items:center; justify-content:center;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'"><i class="fa-solid fa-phone-slash"></i></button>
+  </div>
+</div>
+
 <script>
+// --- AUDIO SYNTHESIZER FOR RINGTONES ---
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+let audioCtx = null;
+let ringtoneInterval = null;
+let dialtoneInterval = null;
+let activeOscillators = [];
+
+function initAudioCtx() {
+    if (!audioCtx) audioCtx = new AudioContext();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+function stopAllAudio() {
+    if (ringtoneInterval) clearInterval(ringtoneInterval);
+    if (dialtoneInterval) clearInterval(dialtoneInterval);
+    ringtoneInterval = null;
+    dialtoneInterval = null;
+    activeOscillators.forEach(osc => {
+        try { osc.stop(); osc.disconnect(); } catch(e){}
+    });
+    activeOscillators = [];
+}
+
+function playRingtone() {
+    initAudioCtx();
+    stopAllAudio();
+    const playChime = () => {
+        const t = audioCtx.currentTime;
+        const notes = [659.25, 523.25, 659.25, 783.99]; // E5, C5, E5, G5
+        notes.forEach((freq, i) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, t + i * 0.15);
+            gain.gain.setValueAtTime(0, t + i * 0.15);
+            gain.gain.linearRampToValueAtTime(0.5, t + i * 0.15 + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + i * 0.15 + 0.4);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(t + i * 0.15);
+            osc.stop(t + i * 0.15 + 0.4);
+            activeOscillators.push(osc);
+        });
+    };
+    playChime();
+    ringtoneInterval = setInterval(playChime, 2000);
+}
+
+function playDialtone() {
+    initAudioCtx();
+    stopAllAudio();
+    const playRing = () => {
+        const t = audioCtx.currentTime;
+        const osc1 = audioCtx.createOscillator();
+        const osc2 = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc1.type = 'sine';
+        osc2.type = 'sine';
+        osc1.frequency.value = 400;
+        osc2.frequency.value = 450;
+        gain.gain.setValueAtTime(0.2, t);
+        gain.gain.setValueAtTime(0.2, t + 1.2);
+        gain.gain.linearRampToValueAtTime(0, t + 1.25);
+        osc1.connect(gain);
+        osc2.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc1.start(t);
+        osc2.start(t);
+        osc1.stop(t + 1.25);
+        osc2.stop(t + 1.25);
+        activeOscillators.push(osc1, osc2);
+    };
+    playRing();
+    dialtoneInterval = setInterval(playRing, 4000);
+}
+
 window.showToast = function(msg, isError=false) {
     const container = document.getElementById('toast-container');
     const toast = document.createElement('div');
@@ -253,7 +544,7 @@ const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'
 const col=id=>COLORS[id%COLORS.length];
 const ini=n=>n.split(' ').map(w=>w[0]||'').join('').slice(0,2).toUpperCase();
 
-let roomId=null,contact=null,ws=null,allContacts=[],typingTimer=null;
+let roomId=null,contact=null,ws=null,allContacts=[],typingTimer=null,currentRoomMessages=[];
 
 // ── CONTACTS ──
 async function loadContacts(){
@@ -293,7 +584,22 @@ function renderContacts(list){
     const d=document.createElement('div');
     d.className='ci'+(ac?' active':'');
     d.id='ci_'+c.room_id;
-    const prevText = c.last_message?.startsWith('__TEAM_INVITE__') ? '🤝 Jamoaga taklif' : esc(c.last_message||'');
+    let prevText = "";
+    if (c.last_message?.startsWith('__TEAM_INVITE__')) {
+        prevText = '🤝 Jamoaga taklif';
+    } else if (c.last_message?.startsWith('SYSTEM_CALL:')) {
+        const parts = c.last_message.split(':');
+        const type = parts[1];
+        const reason = parts[2];
+        const icon = type === 'video' ? 'fa-video' : 'fa-phone';
+        let lbl = '';
+        if (reason === 'ended') lbl = 'Qo\'ng\'iroq yakunlandi';
+        else if (reason === 'declined') lbl = 'Rad etildi';
+        else lbl = 'O\'tkazib yuborilgan';
+        prevText = `<i class="fa-solid ${icon}"></i> ${lbl}`;
+    } else {
+        prevText = esc(c.last_message||'');
+    }
     d.innerHTML=`${av}${(c.online && !c.is_group)?'<div class="odot"></div>':''}<div class="ci-info"><div class="ci-top"><span class="ci-name">${esc(c.name)}</span><span class="ci-time">${c.last_time||''}</span></div><div class="ci-prev">${prevText}</div></div>${c.unread>0?`<div class="badge">${c.unread}</div>`:''}`;
     d.onclick=()=>openRoom(c.room_id);
     el.appendChild(d);
@@ -304,6 +610,9 @@ function renderContacts(list){
 async function openRoom(id){
   roomId=id;
   contact=allContacts.find(c=>c.room_id===id);
+  if(contact){
+      contact.unread = 0;
+  }
   renderContacts(allContacts);
   document.getElementById('empty')?.remove();
   document.getElementById('nc')?.remove();
@@ -340,7 +649,7 @@ async function openRoom(id){
     }
   }
   await loadMessages(id);
-  connectWS(id);
+  initGlobalWS();
   document.getElementById('inp').focus();
 }
 
@@ -370,8 +679,48 @@ function goToSettings() {
         });
         
         mod.style.display = 'flex';
-    } else {
-        showToast("Shaxsiy chatlar uchun sozlamalar mavjud emas.", true);
+    } else if (contact && !contact.is_group) {
+        const mod = document.getElementById('personal-settings-modal');
+        const mAv = document.getElementById('psm-av');
+        const mName = document.getElementById('psm-name');
+        const mUsername = document.getElementById('psm-username');
+        const mStatus = document.getElementById('psm-status');
+        
+        mName.textContent = contact.name;
+        mUsername.textContent = '@' + contact.username;
+        
+        if (contact.avatar) {
+            mAv.innerHTML = `<img src="${contact.avatar}" style="width:100%; height:100%; object-fit:cover;">`;
+        } else {
+            mAv.innerHTML = `<div style="width:100%; height:100%; background:${col(contact.user_id)}; display:flex; justify-content:center; align-items:center; color:#fff; font-size:36px;">${ini(contact.name)}</div>`;
+        }
+        
+        if (contact.online) {
+            mStatus.textContent = 'Onlayn';
+            mStatus.style.color = '#22c55e';
+            mStatus.style.background = 'rgba(34, 197, 94, 0.1)';
+        } else {
+            mStatus.textContent = 'Oflayn';
+            mStatus.style.color = 'var(--muted)';
+            mStatus.style.background = 'rgba(255, 255, 255, 0.05)';
+        }
+        
+        let countMedia = 0;
+        let countFiles = 0;
+        let countAudio = 0;
+        currentRoomMessages.forEach(m => {
+            if (m.file_url) {
+                if (m.file_type === 'image' || m.file_type === 'video') countMedia++;
+                else if (m.file_type === 'audio') countAudio++;
+                else countFiles++;
+            }
+        });
+        
+        document.getElementById('psm-count-media').textContent = countMedia;
+        document.getElementById('psm-count-files').textContent = countFiles;
+        document.getElementById('psm-count-audio').textContent = countAudio;
+        
+        mod.style.display = 'flex';
     }
 }
 
@@ -382,7 +731,8 @@ async function loadMessages(id){
   try{
     const r=await fetch(`/chat/api/messages/${id}/?limit=100`);
     const d=await r.json();
-    renderMessages(d.messages||[]);
+    currentRoomMessages = d.messages||[];
+    renderMessages(currentRoomMessages);
   }catch(e){w.innerHTML='<div style="text-align:center;padding:40px;color:var(--muted)">Xabarlar yuklanmadi</div>';}
 }
 
@@ -394,17 +744,23 @@ function renderMessages(msgs){
   w.scrollTop=w.scrollHeight;
 }
 
-function appendMsg(m,scroll=true){
+function appendMsg(m,scroll=true,isNew=false){
+  if(isNew) currentRoomMessages.push(m);
   const w=document.getElementById('msgs');
   const sid=m.sender_id??m.from;
   const txt=m.content??m.message??m.text??'';
   const isOut=sid===ME;
   const cl=col(sid);
   const in2=m.sender_name?ini(m.sender_name):(contact?ini(contact.name):'?');
+  const senderName=m.sender_name??(contact?contact.name:'?');
   const read=m.is_read??true;
+  const mid=m.id??m.message_id??Math.floor(Math.random()*1000000);
   
   let displayHtml = '';
+  let bubStyle = '';
+  
   if (txt.startsWith('__TEAM_INVITE__:')) {
+    // ... invite logic ...
     const inviteId = txt.split(':')[1];
     if (isOut) {
       displayHtml = `
@@ -426,54 +782,302 @@ function appendMsg(m,scroll=true){
           </div>
           <p style="font-size: 14px; margin-bottom: 16px; color: var(--muted); line-height: 1.5;">Sizni nufuzli qurilish jamoasiga taklif qilishmoqda.</p>
           <div style="display: flex; gap: 10px;">
-            <button onclick="respondInvite(${inviteId}, 'accept')" style="flex: 1; padding: 10px; background: #22c55e; color: #fff; border: none; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 700; transition: 0.2s; box-shadow: 0 4px 12px rgba(34,197,94,0.3); display: flex; align-items: center; justify-content: center; gap: 6px;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'"><i class="fa-solid fa-check"></i> Qabul qilish</button>
+            <button onclick="respondInvite(${inviteId}, 'accept')" style="flex: 1; padding: 10px; background: #10b981; color: #fff; border: none; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 700; transition: 0.2s; box-shadow: 0 4px 12px rgba(16,185,129,0.3); display: flex; align-items: center; justify-content: center; gap: 6px;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'"><i class="fa-solid fa-check"></i> Qabul qilish</button>
             <button onclick="respondInvite(${inviteId}, 'reject')" style="flex: 1; padding: 10px; background: #ef4444; color: #fff; border: none; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 700; transition: 0.2s; box-shadow: 0 4px 12px rgba(239,68,68,0.3); display: flex; align-items: center; justify-content: center; gap: 6px;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'"><i class="fa-solid fa-xmark"></i> Rad etish</button>
           </div>
         </div>
       `;
     }
   } else if (txt.startsWith('__TEAM_INVITE_ACCEPTED__:')) {
-    if (isOut) {
-        displayHtml = `
-          <div style="background: rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.2); padding: 12px 16px; border-radius: 12px; margin-top: 4px; display: flex; align-items: center; gap: 10px;">
-            <div style="background: #22c55e; color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px;"><i class="fa-solid fa-check"></i></div>
-            <div style="font-weight: 700; font-size: 14px; color: #fff;">Taklif qabul qilindi</div>
-          </div>
-        `;
-    } else {
-        displayHtml = `
-          <div style="background: rgba(34,197,94,0.1); border: 1px solid #22c55e; padding: 12px 16px; border-radius: 12px; margin-top: 4px; display: flex; align-items: center; gap: 10px;">
-            <div style="background: #22c55e; color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px;"><i class="fa-solid fa-check"></i></div>
-            <div style="font-weight: 700; font-size: 14px; color: #22c55e;">Siz taklifni qabul qildingiz</div>
-          </div>
-        `;
-    }
+    bubStyle = 'background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #fff; border: none; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);';
+    const textMsg = isOut ? "Taklif qabul qilindi" : "Siz taklifni qabul qildingiz";
+    displayHtml = `
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <div style="background: rgba(255,255,255,0.2); color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px;"><i class="fa-solid fa-check"></i></div>
+        <div style="font-weight: 600; font-size: 14px; color: #fff;">${textMsg}</div>
+      </div>
+    `;
   } else if (txt.startsWith('__TEAM_INVITE_REJECTED__:')) {
-    if (isOut) {
-        displayHtml = `
-          <div style="background: rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.2); padding: 12px 16px; border-radius: 12px; margin-top: 4px; display: flex; align-items: center; gap: 10px;">
-            <div style="background: #ef4444; color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px;"><i class="fa-solid fa-xmark"></i></div>
-            <div style="font-weight: 700; font-size: 14px; color: #fff;">Taklif rad etildi</div>
-          </div>
-        `;
-    } else {
-        displayHtml = `
-          <div style="background: rgba(239,68,68,0.1); border: 1px solid #ef4444; padding: 12px 16px; border-radius: 12px; margin-top: 4px; display: flex; align-items: center; gap: 10px;">
-            <div style="background: #ef4444; color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px;"><i class="fa-solid fa-xmark"></i></div>
-            <div style="font-weight: 700; font-size: 14px; color: #ef4444;">Siz taklifni rad etdingiz</div>
-          </div>
-        `;
+    bubStyle = 'background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: #fff; border: none; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);';
+    const textMsg = isOut ? "Taklif rad etildi" : "Siz taklifni rad etdingiz";
+    displayHtml = `
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <div style="background: rgba(255,255,255,0.2); color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px;"><i class="fa-solid fa-xmark"></i></div>
+        <div style="font-weight: 600; font-size: 14px; color: #fff;">${textMsg}</div>
+      </div>
+    `;
+  } else if (txt.startsWith('SYSTEM_CALL:')) {
+    const parts = txt.split(':');
+    const type = parts[1]; // video | audio
+    const reason = parts[2]; // ended | declined | missed
+    const duration = parseInt(parts[3]) || 0;
+    
+    let title = type === 'video' ? "Video qo'ng'iroq" : "Ovozli qo'ng'iroq";
+    let subtitle = "";
+    let icon = "";
+    let iconBg = "";
+    
+    if (reason === 'ended') {
+        let mins = Math.floor(duration / 60);
+        let secs = duration % 60;
+        subtitle = `${mins > 0 ? mins + ' daq ' : ''}${secs} soniya`;
+        icon = type === 'video' ? '<i class="fa-solid fa-video"></i>' : '<i class="fa-solid fa-phone"></i>';
+        bubStyle = isOut 
+            ? 'background: linear-gradient(135deg, rgba(255, 107, 0, 0.15), rgba(255, 69, 0, 0.05)); border: 1px solid rgba(255, 107, 0, 0.3); color: #fff; box-shadow: 0 8px 24px rgba(0,0,0,0.15); backdrop-filter: blur(10px);' 
+            : 'background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.05); color: #fff; box-shadow: 0 8px 24px rgba(0,0,0,0.1); backdrop-filter: blur(10px);';
+        iconBg = 'linear-gradient(135deg, var(--orange), #ff4500)';
+    } else if (reason === 'declined') {
+        subtitle = isOut ? "Siz rad etdingiz" : "Rad etildi";
+        icon = type === 'video' ? '<i class="fa-solid fa-video-slash"></i>' : '<i class="fa-solid fa-phone-slash"></i>';
+        bubStyle = isOut 
+            ? 'background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.05)); border: 1px solid rgba(239, 68, 68, 0.3); color: #fff; box-shadow: 0 8px 24px rgba(0,0,0,0.15); backdrop-filter: blur(10px);' 
+            : 'background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); color: #fff; box-shadow: 0 8px 24px rgba(0,0,0,0.1); backdrop-filter: blur(10px);';
+        iconBg = 'linear-gradient(135deg, #ef4444, #dc2626)';
+    } else if (reason === 'missed') {
+        subtitle = "O'tkazib yuborilgan";
+        icon = type === 'video' ? '<i class="fa-solid fa-video-slash"></i>' : '<i class="fa-solid fa-phone-slash"></i>';
+        bubStyle = isOut 
+            ? 'background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.05)); border: 1px solid rgba(239, 68, 68, 0.3); color: #fff; box-shadow: 0 8px 24px rgba(0,0,0,0.15); backdrop-filter: blur(10px);' 
+            : 'background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); color: #fff; box-shadow: 0 8px 24px rgba(0,0,0,0.1); backdrop-filter: blur(10px);';
+        iconBg = 'linear-gradient(135deg, #ef4444, #dc2626)';
     }
+    
+    displayHtml = `
+      <div style="display: flex; align-items: center; gap: 14px; padding: 2px;">
+        <div style="background: ${iconBg}; color: #fff; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.25); flex-shrink: 0;">
+           ${icon}
+        </div>
+        <div style="display: flex; flex-direction: column; justify-content: center; line-height: 1.3;">
+           <div style="font-weight: 700; font-size: 15px; letter-spacing: 0.3px; text-shadow: 0 1px 2px rgba(0,0,0,0.2);">${title}</div>
+           <div style="font-size: 13px; color: rgba(255,255,255,0.7); font-weight: 500;">${subtitle}</div>
+        </div>
+      </div>
+    `;
   } else {
-    displayHtml = esc(txt);
+    // Handling reply format parsing for display
+    let finalText = esc(txt);
+    if (txt.includes('ga javob:\n>')) {
+        const parts = txt.split('\n\n');
+        if(parts.length > 1) {
+            const replyBlock = parts[0];
+            const msgBody = parts.slice(1).join('\n\n');
+            const cleanReply = esc(replyBlock.replace('>', '').replace('ga javob:', '').trim());
+            finalText = `<div style="background:rgba(255,255,255,0.1); padding:6px 10px; border-left:3px solid ${isOut ? '#fff' : 'var(--orange)'}; border-radius:6px; font-size:12px; color:${isOut ? 'rgba(255,255,255,0.8)' : 'var(--muted)'}; margin-bottom:6px; font-style:italic;">${cleanReply}</div>` + esc(msgBody);
+        }
+    }
+    displayHtml = finalText;
+  }
+  
+  if (m.file_url) {
+      if (m.file_type === 'image') {
+          displayHtml = `<a href="${m.file_url}" target="_blank"><img src="${m.file_url}" style="max-width:100%; max-height:200px; border-radius:8px; margin-bottom:6px; display:block; object-fit:cover;"></a>` + displayHtml;
+      } else if (m.file_type === 'video') {
+          displayHtml = `<video src="${m.file_url}" controls style="max-width:100%; max-height:200px; border-radius:8px; margin-bottom:6px; display:block;"></video>` + displayHtml;
+      } else if (m.file_type === 'audio') {
+          const aid = 'aud_' + Math.random().toString(36).substr(2, 9);
+          const isOutMsg = (m.sender_id ?? m.from) === ME;
+          const btnBg = isOutMsg ? '#ffffff' : 'linear-gradient(135deg, var(--orange), #ff4500)';
+          const iconColor = isOutMsg ? 'var(--orange)' : '#ffffff';
+          const progTrack = isOutMsg ? 'rgba(255,255,255,0.3)' : 'rgba(255,255,255,0.15)';
+          const progFill = isOutMsg ? '#ffffff' : 'var(--orange)';
+          const timeColor = isOutMsg ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.6)';
+          const speedBg = isOutMsg ? 'rgba(255,255,255,0.2)' : 'rgba(255,107,0,0.1)';
+          const speedColor = isOutMsg ? '#ffffff' : 'var(--orange)';
+          
+          const waveData = [20, 30, 45, 60, 80, 50, 30, 50, 75, 95, 80, 45, 30, 20, 35, 60, 85, 65, 40, 25, 45, 75, 90, 60, 35, 20];
+
+          displayHtml = `
+            <div class="custom-audio" style="display:flex; align-items:center; gap:10px; padding:2px 4px 2px 0;">
+              <div style="position:relative; flex-shrink:0;">
+                  <button id="pbtn_${aid}" onclick="toggleAudio('${aid}', this)" style="width:36px; height:36px; border-radius:50%; background:${btnBg}; border:none; color:${iconColor}; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(0,0,0,0.1); transition:all 0.2s ease; z-index:2; position:relative;">
+                    <i class="fa-solid fa-play" style="margin-left:2px; font-size:14px;"></i>
+                  </button>
+                  <div id="pulse_${aid}" style="position:absolute; top:0; left:0; width:100%; height:100%; border-radius:50%; background:${btnBg}; z-index:1; opacity:0; transform:scale(1); pointer-events:none;"></div>
+              </div>
+              
+              <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:2px;">
+                <div style="display:flex; gap:2px; height:18px; align-items:center; cursor:pointer;" onclick="seekAudioWave(event, '${aid}')" id="wave_${aid}">
+                  ${waveData.map((h, i) => `<div class="wbar_${aid}" style="width:3px; height:${h}%; background:${progTrack}; border-radius:3px; transition:background 0.1s linear;"></div>`).join('')}
+                </div>
+                <div style="display:flex; align-items:center; gap:4px; font-size:11px; color:${timeColor}; font-weight:600; font-variant-numeric:tabular-nums;">
+                  <span id="time_${aid}">0:00</span>
+                  <span style="opacity:0.5; font-size:10px;">&middot;</span>
+                  <span id="dur_${aid}">--:--</span>
+                </div>
+              </div>
+              
+              <div onclick="toggleSpeed('${aid}', this)" style="flex-shrink:0; width:24px; height:24px; background:${speedBg}; color:${speedColor}; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; cursor:pointer; transition:0.2s; font-weight:800; user-select:none; margin-top:-14px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);" title="Tezlik">
+                1x
+              </div>
+              
+              <audio id="${aid}" src="${m.file_url}" ontimeupdate="updateAudioWave('${aid}', '${progTrack}', '${progFill}')" onloadedmetadata="initAudio('${aid}')" onended="endAudioWave('${aid}', '${progTrack}')" style="display:none;"></audio>
+            </div>
+          ` + displayHtml;
+      } else {
+          displayHtml = `<a href="${m.file_url}" target="_blank" style="display:inline-flex; align-items:center; gap:8px; padding:10px 14px; background:rgba(255,255,255,0.1); border-radius:8px; color:#fff; text-decoration:none; margin-bottom:6px;"><i class="fa-solid fa-file"></i> Faylni yuklab olish</a>` + displayHtml;
+      }
   }
   
   const row=document.createElement('div');
   row.className='mr '+(isOut?'out':'in');
-  row.innerHTML=`${!isOut?`<div class="mavp" style="background:${cl}">${in2}</div>`:''}<div class="bub ${isOut?'out':'in'}">${displayHtml}<div class="bm"><span class="bt">${m.time||''}</span>${isOut?`<i class="fa-solid fa-check-double bc" style="color:${read?'rgba(255,255,255,.9)':'rgba(255,255,255,.4)'}"></i>`:''}</div></div>`;
+  row.id = 'msg_' + mid;
+  row.dataset.txt = txt;
+  row.dataset.name = senderName;
+  
+  const avHtml = m.sender_avatar ? `<img src="${m.sender_avatar}" class="mavp" style="object-fit:cover;">` : `<div class="mavp" style="background:${cl}">${in2}</div>`;
+  
+  const actHtml = `
+    <div class="msg-actions">
+      <button class="msg-act-btn reply" title="Javob berish" onclick="startReply('${mid}')"><i class="fa-solid fa-reply"></i></button>
+      ${isOut && !m.file_url ? `<button class="msg-act-btn edit" title="Tahrirlash" onclick="startEdit('${mid}')"><i class="fa-solid fa-pen"></i></button>` : ''}
+      <button class="msg-act-btn" title="Ulashish" onclick="shareMessage('${mid}')"><i class="fa-solid fa-share-nodes"></i></button>
+      ${isOut ? `<button class="msg-act-btn delete" title="O'chirish" onclick="deleteMessage('${mid}')"><i class="fa-solid fa-trash"></i></button>` : ''}
+    </div>
+  `;
+  
+  if (isOut) {
+      row.innerHTML=`${actHtml}<div class="bub out" style="${bubStyle}"><div class="msg-txt">${displayHtml}</div><div class="bm"><span class="bt">${m.time||''}</span><i class="fa-solid fa-check-double bc" style="color:${read?'#38bdf8':'rgba(255,255,255,.4)'}"></i></div></div>`;
+  } else {
+      row.innerHTML=`${avHtml}<div class="bub in" style="${bubStyle}"><div class="msg-txt">${displayHtml}</div><div class="bm"><span class="bt">${m.time||''}</span></div></div>${actHtml}`;
+  }
+
   w.appendChild(row);
   if(scroll)w.scrollTop=w.scrollHeight;
 }
+
+// ── CUSTOM AUDIO PLAYER LOGIC ──
+if (!document.getElementById('audio-styles')) {
+    const style = document.createElement('style');
+    style.id = 'audio-styles';
+    style.innerHTML = `
+        @keyframes audioPulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+        .playing-pulse {
+            animation: audioPulse 1.5s infinite cubic-bezier(0.215, 0.610, 0.355, 1);
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+window.toggleSpeed = function(aid, btn) {
+    const aud = document.getElementById(aid);
+    if (!aud) return;
+    
+    let speed = aud.playbackRate;
+    if (speed === 1) speed = 1.5;
+    else if (speed === 1.5) speed = 2;
+    else speed = 1;
+    
+    aud.playbackRate = speed;
+    btn.innerText = speed + 'x';
+    
+    btn.style.transform = 'scale(1.2)';
+    setTimeout(() => btn.style.transform = 'scale(1)', 150);
+};
+
+window.toggleAudio = function(aid, btn) {
+    const aud = document.getElementById(aid);
+    if (!aud) return;
+    const icon = btn.querySelector('i');
+    const pulse = document.getElementById('pulse_' + aid);
+    
+    document.querySelectorAll('audio').forEach(a => {
+        if(a.id !== aid && !a.paused) {
+            a.pause();
+            const obtn = document.getElementById('pbtn_' + a.id);
+            if(obtn) {
+                const oi = obtn.querySelector('i');
+                if (oi) {
+                    oi.className = 'fa-solid fa-play';
+                    oi.style.marginLeft = '3px';
+                }
+            }
+            const opulse = document.getElementById('pulse_' + a.id);
+            if (opulse) opulse.classList.remove('playing-pulse');
+        }
+    });
+
+    if (aud.paused) {
+        aud.play();
+        icon.className = 'fa-solid fa-pause';
+        icon.style.marginLeft = '0';
+        btn.style.transform = 'scale(0.9)';
+        setTimeout(() => btn.style.transform = 'scale(1)', 150);
+        if (pulse) pulse.classList.add('playing-pulse');
+    } else {
+        aud.pause();
+        icon.className = 'fa-solid fa-play';
+        icon.style.marginLeft = '3px';
+        if (pulse) pulse.classList.remove('playing-pulse');
+    }
+};
+
+window.initAudio = function(aid) {
+    const aud = document.getElementById(aid);
+    const dur = document.getElementById('dur_' + aid);
+    if (aud && dur && aud.duration && aud.duration !== Infinity) {
+        dur.innerText = formatRecTime(Math.floor(aud.duration));
+    }
+};
+
+window.updateAudioWave = function(aid, trackC, fillC) {
+    const aud = document.getElementById(aid);
+    const time = document.getElementById('time_' + aid);
+    const durEl = document.getElementById('dur_' + aid);
+    if (!aud) return;
+    
+    if (aud.duration && aud.duration !== Infinity && durEl.innerText === '--:--') {
+        durEl.innerText = formatRecTime(Math.floor(aud.duration));
+    }
+    
+    if (aud.duration && aud.duration !== Infinity) {
+        const pct = aud.currentTime / aud.duration;
+        const bars = document.querySelectorAll(`.wbar_${aid}`);
+        const activeCount = Math.floor(pct * bars.length);
+        
+        bars.forEach((bar, idx) => {
+            if (idx <= activeCount) {
+                bar.style.background = fillC;
+            } else {
+                bar.style.background = trackC;
+            }
+        });
+    }
+    if (time) time.innerText = formatRecTime(Math.floor(aud.currentTime));
+};
+
+window.endAudioWave = function(aid, trackC) {
+    const aud = document.getElementById(aid);
+    if (!aud) return;
+    const btn = document.getElementById('pbtn_' + aid);
+    if (btn) {
+        const icon = btn.querySelector('i');
+        if (icon) {
+            icon.className = 'fa-solid fa-play';
+            icon.style.marginLeft = '3px';
+        }
+    }
+    const pulse = document.getElementById('pulse_' + aid);
+    if (pulse) pulse.classList.remove('playing-pulse');
+    
+    const bars = document.querySelectorAll(`.wbar_${aid}`);
+    bars.forEach(bar => bar.style.background = trackC);
+    
+    const time = document.getElementById('time_' + aid);
+    if (time) time.innerText = '0:00';
+    aud.currentTime = 0;
+};
+
+window.seekAudioWave = function(e, aid) {
+    const aud = document.getElementById(aid);
+    if (!aud || !aud.duration || aud.duration === Infinity) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const pct = clickX / rect.width;
+    aud.currentTime = pct * aud.duration;
+};
 
 window.respondInvite = async function(id, action) {
     try {
@@ -487,9 +1091,9 @@ window.respondInvite = async function(id, action) {
             const box = document.getElementById(`invite_box_${id}`);
             if (box) {
                 if (action === 'accept') {
-                    box.outerHTML = '<div style="background: rgba(34,197,94,0.1); border: 1px solid #22c55e; padding: 12px 16px; border-radius: 12px; margin-top: 4px; display: flex; align-items: center; gap: 10px;"><div style="background: #22c55e; color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px;"><i class="fa-solid fa-check"></i></div><div style="font-weight: 700; font-size: 14px; color: #22c55e;">Siz taklifni qabul qildingiz</div></div>';
+                    box.outerHTML = '<div style="display: flex; align-items: center; gap: 8px;"><div style="background: #22c55e; color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; box-shadow: 0 2px 8px rgba(34,197,94,0.4);"><i class="fa-solid fa-check"></i></div><div style="font-weight: 600; font-size: 14px; color: #22c55e;">Siz taklifni qabul qildingiz</div></div>';
                 } else {
-                    box.outerHTML = '<div style="background: rgba(239,68,68,0.1); border: 1px solid #ef4444; padding: 12px 16px; border-radius: 12px; margin-top: 4px; display: flex; align-items: center; gap: 10px;"><div style="background: #ef4444; color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px;"><i class="fa-solid fa-xmark"></i></div><div style="font-weight: 700; font-size: 14px; color: #ef4444;">Siz taklifni rad etdingiz</div></div>';
+                    box.outerHTML = '<div style="display: flex; align-items: center; gap: 8px;"><div style="background: #ef4444; color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; box-shadow: 0 2px 8px rgba(239,68,68,0.4);"><i class="fa-solid fa-xmark"></i></div><div style="font-weight: 600; font-size: 14px; color: #ef4444;">Siz taklifni rad etdingiz</div></div>';
                 }
             }
         } else {
@@ -499,52 +1103,468 @@ window.respondInvite = async function(id, action) {
 }
 
 // ── WEBSOCKET ──
-function connectWS(id){
-  if(ws){ws.onclose=null;ws.close();}
+let globalWsInitialized = false;
+
+function initGlobalWS(){
+  if(globalWsInitialized) return;
+  globalWsInitialized = true;
   const proto=location.protocol==='https:'?'wss':'ws';
-  ws=new WebSocket(`${proto}://${location.host}/ws/chat/${id}/`);
-  ws.onopen=()=>console.log('WS OK',id);
+  ws=new WebSocket(`${proto}://${location.host}/ws/chat/0/`);
+  ws.onopen=()=>console.log('Global WS connected');
+  ws.onclose=()=> {
+      globalWsInitialized = false;
+      setTimeout(initGlobalWS, 3000);
+  };
+  ws.onerror=e=>console.log('WS Xato',e);
   ws.onmessage=e=>{
     const d=JSON.parse(e.data);
     if(d.type==='message'){
-      appendMsg(d,true);
-      const c=allContacts.find(x=>x.room_id===roomId);
-      if(c){c.last_message=d.message;c.last_time=d.time;}
-      renderContacts(allContacts);
-      if(d.sender_id!==ME)ws.send(JSON.stringify({type:'read_receipt'}));
+      if (roomId == d.room_id) {
+          appendMsg(d,true);
+          if(d.sender_id!==ME) ws.send(JSON.stringify({type:'read_receipt', room_id: d.room_id}));
+      }
+      const cIndex=allContacts.findIndex(x=>x.room_id===d.room_id);
+      if(cIndex > -1){
+          const c = allContacts[cIndex];
+          c.last_message=d.message;
+          c.last_time=d.time;
+          if (roomId != d.room_id && d.sender_id !== ME) {
+              c.unread = (c.unread || 0) + 1;
+          }
+          allContacts.splice(cIndex, 1);
+          allContacts.unshift(c);
+          renderContacts(allContacts);
+      } else {
+          fetchRooms();
+      }
     }else if(d.type==='read_receipt'){
-      // checkmarks update
+      if (roomId == d.room_id) {
+          const msgs = document.querySelectorAll('.mr .bc');
+          msgs.forEach(el => el.style.color = '#38bdf8');
+      }
+    }else if(d.type==='message_deleted'){
+        const el = document.getElementById('msg_' + d.message_id);
+        if (el) el.remove();
+        showToast("Xabar o'chirildi", true);
+    }else if(d.type==='message_edited'){
+        const el = document.getElementById('msg_' + d.message_id);
+        if (el) {
+            const txtNode = el.querySelector('.msg-txt');
+            if (txtNode) {
+                let finalText = esc(d.new_content);
+                if (d.new_content.includes('ga javob:\n>')) {
+                    const parts = d.new_content.split('\n\n');
+                    if(parts.length > 1) {
+                        const replyBlock = parts[0];
+                        const msgBody = parts.slice(1).join('\n\n');
+                        const cleanReply = esc(replyBlock.replace('>', '').replace('ga javob:', '').trim());
+                        finalText = `<div style="background:rgba(255,255,255,0.1); padding:6px 10px; border-left:3px solid var(--orange); border-radius:6px; font-size:12px; color:var(--muted); margin-bottom:6px; font-style:italic;">${cleanReply}</div>` + esc(msgBody);
+                    }
+                }
+                txtNode.innerHTML = finalText;
+            }
+            el.dataset.txt = d.new_content;
+        }
     }else if(d.type==='typing'){
-      const t=document.getElementById('typing');
-      t.style.display=d.is_typing?'block':'none';
+      if (roomId == d.room_id) {
+          const t=document.getElementById('typing');
+          t.style.display=d.is_typing?'block':'none';
+      }
+    }else if (d.type === 'user_status') {
+        const c = allContacts.find(x => x.user_id === d.user_id);
+        if (c) {
+            c.online = d.is_online;
+            renderContacts(allContacts);
+            if (contact && contact.user_id === d.user_id) {
+                contact.online = d.is_online;
+                if (d.is_online) {
+                    document.getElementById('cdot').style.display='block';
+                    document.getElementById('cst').textContent='online';
+                    document.getElementById('cst').style.color='';
+                } else {
+                    document.getElementById('cdot').style.display='none';
+                    document.getElementById('cst').textContent='offline';
+                    document.getElementById('cst').style.color='var(--muted)';
+                }
+            }
+        }
+    }else if(d.type==='call_incoming'){
+      handleIncomingCall(d);
+    }else if(d.type==='call_answer'){
+      if(currentCallRoom == d.room_id && amICaller){
+        document.getElementById('call-status').innerText="Ulanmoqda...";
+        stopAllAudio();
+        createPeerConnection(d.user_id, true);
+      }
+    }else if(d.type==='call_reject' || d.type==='call_end'){
+      if(currentCallRoom == d.room_id){
+        if (amICaller) {
+            let duration = 0;
+            if (callStartTime) {
+                duration = Math.floor((new Date() - callStartTime) / 1000);
+                ws.send(JSON.stringify({
+                    'type': 'message',
+                    'message': `SYSTEM_CALL:${isVideoCall ? 'video' : 'audio'}:ended:${duration}`,
+                    'room_id': currentCallRoom
+                }));
+            } else {
+                ws.send(JSON.stringify({
+                    'type': 'message',
+                    'message': `SYSTEM_CALL:${isVideoCall ? 'video' : 'audio'}:${d.type === 'call_reject' ? 'declined' : 'missed'}:0`,
+                    'room_id': currentCallRoom
+                }));
+            }
+        }
+        
+        if(peerConnections[d.user_id]){
+          peerConnections[d.user_id].close();
+          delete peerConnections[d.user_id];
+        }
+        if(Object.keys(peerConnections).length===0){
+          closeCallUI();
+        }
+      }
+    }else if(d.type==='webrtc_offer'){
+      if(currentCallRoom){
+        createPeerConnection(d.sender_id, false).then(async pc => {
+          await pc.setRemoteDescription(new RTCSessionDescription(d.sdp));
+          
+          if (iceCandidatesQueue[d.sender_id]) {
+            iceCandidatesQueue[d.sender_id].forEach(c => pc.addIceCandidate(new RTCIceCandidate(c)));
+            delete iceCandidatesQueue[d.sender_id];
+          }
+          
+          const answer = await pc.createAnswer();
+          await pc.setLocalDescription(answer);
+          ws.send(JSON.stringify({
+            'type': 'webrtc_answer',
+            'target_id': d.sender_id,
+            'sdp': pc.localDescription,
+            'room_id': currentCallRoom
+          }));
+        });
+      }
+    }else if(d.type==='webrtc_answer'){
+      const pc = peerConnections[d.sender_id];
+      if(pc) {
+        pc.setRemoteDescription(new RTCSessionDescription(d.sdp)).then(() => {
+          if (iceCandidatesQueue[d.sender_id]) {
+            iceCandidatesQueue[d.sender_id].forEach(c => pc.addIceCandidate(new RTCIceCandidate(c)));
+            delete iceCandidatesQueue[d.sender_id];
+          }
+        });
+      }
+    }else if(d.type==='webrtc_ice'){
+      const pc = peerConnections[d.sender_id];
+      if(pc && pc.remoteDescription) {
+        pc.addIceCandidate(new RTCIceCandidate(d.candidate));
+      } else {
+        if (!iceCandidatesQueue[d.sender_id]) iceCandidatesQueue[d.sender_id] = [];
+        iceCandidatesQueue[d.sender_id].push(d.candidate);
+      }
     }
   };
-  ws.onerror=()=>console.error('WS error');
-  ws.onclose=()=>console.log('WS closed');
 }
 
 // ── SEND ──
-function send(){
-  const inp=document.getElementById('inp');
-  const txt=inp.value.trim();
-  if(!txt||!roomId)return;
+let selectedFile = null;
+let mediaRecorder = null;
+let audioChunks = [];
+let isRecording = false;
+let mediaStream = null;
+
+function handleFileSelect(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  selectedFile = file;
+  
+  const icon = document.getElementById('preview-icon');
+  if (file.type.startsWith('image/')) icon.innerHTML = '<i class="fa-regular fa-image"></i>';
+  else if (file.type.startsWith('video/')) icon.innerHTML = '<i class="fa-solid fa-video"></i>';
+  else icon.innerHTML = '<i class="fa-solid fa-file-lines"></i>';
+  
+  document.getElementById('preview-name').innerText = file.name;
+  document.getElementById('media-preview').style.display = 'flex';
+  updateActionBtn();
+}
+
+function clearMedia() {
+  selectedFile = null;
+  document.getElementById('file-input').value = '';
+  document.getElementById('media-preview').style.display = 'none';
+  updateActionBtn();
+}
+
+function updateActionBtn() {
+    if (isRecording) return;
+    const txt = document.getElementById('inp')?.value.trim();
+    const actionIcon = document.getElementById('action-icon');
+    if (!actionIcon) return;
+    
+    if (txt || selectedFile) {
+        actionIcon.className = 'fa-solid fa-paper-plane';
+        actionIcon.style.marginLeft = '-2px';
+        actionIcon.style.marginTop = '2px';
+    } else {
+        actionIcon.className = 'fa-solid fa-microphone';
+        actionIcon.style.marginLeft = '0';
+        actionIcon.style.marginTop = '0';
+    }
+}
+
+function handleAction() {
+    if (isRecording) {
+        toggleRecording();
+    } else {
+        const txt = document.getElementById('inp').value.trim();
+        if (txt || selectedFile) {
+            send();
+        } else {
+            toggleRecording();
+        }
+    }
+}
+
+let recTimerInterval = null;
+let recTimeSeconds = 0;
+
+function formatRecTime(sec) {
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return m + ':' + (s < 10 ? '0' : '') + s;
+}
+
+async function toggleRecording() {
+  const inp = document.getElementById('inp');
+  const attachBtn = document.getElementById('attach-btn');
+  const recUi = document.getElementById('recording-ui');
+  const timeEl = document.getElementById('rec-time');
+  const actionBtn = document.getElementById('action-btn');
+  const actionIcon = document.getElementById('action-icon');
+
+  if (isRecording) {
+      mediaRecorder.stop();
+      isRecording = false;
+      clearInterval(recTimerInterval);
+      
+      document.getElementById('input-box').style.display = 'flex';
+      attachBtn.style.display = 'flex';
+      recUi.style.display = 'none';
+      
+      actionBtn.style.background = 'linear-gradient(135deg, var(--orange), #ff4500)';
+      actionBtn.style.boxShadow = '0 4px 12px rgba(255,107,0,0.3)';
+      return;
+  }
+  
+  try {
+      mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorder = new MediaRecorder(mediaStream);
+      audioChunks = [];
+      
+      mediaRecorder.ondataavailable = e => {
+          if (e.data.size > 0) audioChunks.push(e.data);
+      };
+      
+      mediaRecorder.onstop = () => {
+          const mime = mediaRecorder.mimeType || 'audio/webm';
+          const audioBlob = new Blob(audioChunks, { type: mime });
+          const ext = mime.includes('mp4') ? 'mp4' : mime.includes('ogg') ? 'ogg' : 'webm';
+          selectedFile = new File([audioBlob], `Ovozli_xabar.${ext}`, { type: mime });
+          
+          if(mediaStream) mediaStream.getTracks().forEach(track => track.stop());
+          
+          // Send immediately!
+          send();
+      };
+      
+      mediaRecorder.start();
+      isRecording = true;
+      
+      recTimeSeconds = 0;
+      timeEl.innerText = '0:00';
+      recTimerInterval = setInterval(() => {
+          recTimeSeconds++;
+          timeEl.innerText = formatRecTime(recTimeSeconds);
+      }, 1000);
+      
+      document.getElementById('input-box').style.display = 'none';
+      attachBtn.style.display = 'none';
+      recUi.style.display = 'flex';
+      
+      actionBtn.style.background = 'linear-gradient(135deg, #0088ff, #a113fa)';
+      actionBtn.style.boxShadow = '0 4px 15px rgba(161, 19, 250, 0.4)';
+      actionBtn.style.transform = 'scale(1.1)';
+      actionIcon.className = 'fa-solid fa-arrow-up';
+      actionIcon.style.marginLeft = '0';
+      actionIcon.style.marginTop = '0';
+      actionIcon.style.fontSize = '18px';
+  } catch (err) {
+      showToast('Mikrofondan foydalanishga ruxsat yo\'q!', true);
+  }
+}
+
+window.cancelRecording = function(e) {
+    if (e) e.stopPropagation();
+    if (isRecording) {
+        mediaRecorder.onstop = null; // Prevent sending
+        mediaRecorder.stop();
+        if(mediaStream) mediaStream.getTracks().forEach(track => track.stop());
+        isRecording = false;
+        clearInterval(recTimerInterval);
+        
+        document.getElementById('input-box').style.display = 'flex';
+        document.getElementById('attach-btn').style.display = 'flex';
+        document.getElementById('recording-ui').style.display = 'none';
+        
+        const actionBtn = document.getElementById('action-btn');
+        const actionIcon = document.getElementById('action-icon');
+        actionBtn.style.background = 'linear-gradient(135deg, var(--orange), #ff4500)';
+        actionBtn.style.boxShadow = '0 4px 12px rgba(255,107,0,0.3)';
+        actionBtn.style.transform = 'scale(1)';
+        actionIcon.style.fontSize = '16px';
+        updateActionBtn();
+    }
+};
+
+async function sendMediaFile(file, txt) {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('content', txt);
+    
+    let type = 'document';
+    if (file.type.startsWith('image/')) type = 'image';
+    else if (file.type.startsWith('video/')) type = 'video';
+    else if (file.type.startsWith('audio/') || file.name.includes('Ovozli_xabar')) type = 'audio';
+    formData.append('file_type', type);
+    
+    clearMedia();
+    const inp = document.getElementById('inp');
+    inp.value = '';
+    inp.style.height = 'auto';
+    updateActionBtn();
+    
+    try {
+        const r = await fetch(`/chat/api/upload/${roomId}/`, {
+            method: 'POST',
+            headers: { 'X-CSRFToken': CSRF },
+            body: formData
+        });
+        const d = await r.json();
+        if (d.error) showToast(d.error, true);
+    } catch (e) {
+        console.error(e);
+        showToast('Fayl yuborishda xatolik', true);
+    }
+}
+
+let editMsgId = null;
+let replyMsgId = null;
+
+window.clearAction = function() {
+    editMsgId = null;
+    replyMsgId = null;
+    document.getElementById('action-banner').style.display = 'none';
+    const inp = document.getElementById('inp');
+    inp.value = '';
+    inp.focus();
+};
+
+window.startEdit = function(id) {
+    const row = document.getElementById('msg_' + id);
+    if (!row) return;
+    editMsgId = id;
+    replyMsgId = null;
+    document.getElementById('action-icon-banner').innerHTML = '<i class="fa-solid fa-pen"></i>';
+    document.getElementById('action-title').innerText = 'Xabarni tahrirlash';
+    document.getElementById('action-text').innerText = row.dataset.txt;
+    document.getElementById('action-banner').style.display = 'flex';
+    
+    const inp = document.getElementById('inp');
+    let pureTxt = row.dataset.txt;
+    if (pureTxt.includes('ga javob:\n>')) {
+        const parts = pureTxt.split('\n\n');
+        pureTxt = parts.slice(1).join('\n\n');
+    }
+    inp.value = pureTxt;
+    inp.focus();
+    updateActionBtn();
+};
+
+window.startReply = function(id) {
+    const row = document.getElementById('msg_' + id);
+    if (!row) return;
+    replyMsgId = id;
+    editMsgId = null;
+    document.getElementById('action-icon-banner').innerHTML = '<i class="fa-solid fa-reply"></i>';
+    document.getElementById('action-title').innerText = row.dataset.name + ' ga javob qaytarish';
+    document.getElementById('action-text').innerText = row.dataset.txt;
+    document.getElementById('action-banner').style.display = 'flex';
+    
+    const inp = document.getElementById('inp');
+    inp.focus();
+};
+
+window.deleteMessage = function(id) {
+    if(!ws||ws.readyState!==WebSocket.OPEN){showToast("Ulanish yo'q", true);return;}
+    ws.send(JSON.stringify({type:'delete_message', message_id: id, room_id: roomId}));
+};
+
+window.shareMessage = function(id) {
+    const row = document.getElementById('msg_' + id);
+    if (!row) return;
+    navigator.clipboard.writeText(row.dataset.txt).then(() => {
+        showToast('Xabar nusxalandi!');
+    });
+};
+
+async function send(){
+  const inp = document.getElementById('inp');
+  const txt = inp.value.trim();
+  if(!roomId) return;
+  
+  if (selectedFile) {
+      await sendMediaFile(selectedFile, txt);
+      return;
+  }
+  
+  if(!txt) return;
   if(!ws||ws.readyState!==WebSocket.OPEN){showToast('Ulanish yo\'q. Sahifani yangilang.', true);return;}
-  ws.send(JSON.stringify({type:'message',message:txt}));
+  
+  if (editMsgId) {
+      ws.send(JSON.stringify({type:'edit_message', message_id: editMsgId, new_content: txt, room_id: roomId}));
+      clearAction();
+      inp.value='';inp.style.height='auto';
+      updateActionBtn();
+      return;
+  }
+  
+  let finalTxt = txt;
+  if (replyMsgId) {
+      const row = document.getElementById('msg_' + replyMsgId);
+      if (row) {
+          finalTxt = `🗣️ *${row.dataset.name}* ga javob:\n> ${row.dataset.txt}\n\n${txt}`;
+      }
+      clearAction();
+  }
+  
+  ws.send(JSON.stringify({type:'message',message:finalTxt, room_id: roomId}));
   inp.value='';inp.style.height='auto';
+  clearMedia();
+  updateActionBtn();
 }
 
 // ── TYPING ──
 function onType(){
-  if(!ws||ws.readyState!==WebSocket.OPEN)return;
-  ws.send(JSON.stringify({type:'typing',is_typing:true}));
+  updateActionBtn();
+  if(!ws||ws.readyState!==WebSocket.OPEN||!roomId) return;
+  ws.send(JSON.stringify({type:'typing',is_typing:true, room_id: roomId}));
   clearTimeout(typingTimer);
-  typingTimer=setTimeout(()=>ws.readyState===WebSocket.OPEN&&ws.send(JSON.stringify({type:'typing',is_typing:false})),2000);
+  typingTimer=setTimeout(()=>ws.readyState===WebSocket.OPEN&&ws.send(JSON.stringify({type:'typing',is_typing:false, room_id: roomId})),2000);
 }
 
 // ── NEW CHAT ──
 async function openNewChat(){
   roomId=null;contact=null;
-  if(ws){ws.onclose=null;ws.close();ws=null;}
   document.getElementById('ch').style.display='none';
   document.getElementById('ia').style.display='none';
   document.getElementById('empty')?.remove();
@@ -559,36 +1579,174 @@ async function openNewChat(){
   searchU('');
 }
 
-async function searchU(q){
-  try{
-    const r=await fetch(`/chat/api/users/?q=${encodeURIComponent(q)}`);
-    const d=await r.json();
-    const el=document.getElementById('ur');if(!el)return;
-    el.innerHTML='';
-    (d.users||[]).forEach(u=>{
-      const cl=col(u.id),in2=ini(u.name);
-      const div=document.createElement('div');
-      div.className='ui';
-      div.innerHTML=`<div class="avp" style="background:${cl};width:38px;height:38px;border-radius:50%;font-size:13px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0">${in2}</div><div class="ui-info"><div class="ui-name">${esc(u.name)}</div><div class="ui-un">@${esc(u.username)}${u.role?' · '+esc(u.role):''}</div></div>`;
-      div.onclick=()=>startChat(u.id);
+async function searchU(q) {
+  try {
+    let query = q.toLowerCase().trim();
+    if (query.startsWith('@')) query = query.substring(1);
+    
+    const r = await fetch(`/chat/api/users/?q=${encodeURIComponent(query)}`);
+    const d = await r.json();
+    const el = document.getElementById('ur');
+    if (!el) return;
+    el.innerHTML = '';
+    
+    let scored = (d.users || []).map(u => {
+        let score = 0;
+        const uname = (u.username || '').toLowerCase();
+        const fname = (u.name || '').toLowerCase();
+        
+        if (uname === query) score += 1000;
+        else if (uname.startsWith(query)) score += 500;
+        else if (uname.includes(query)) score += 200;
+        
+        if (fname === query) score += 400;
+        else if (fname.startsWith(query)) score += 200;
+        else if (fname.includes(query)) score += 100;
+        
+        const parts = fname.split(/\s+/);
+        if (parts.some(p => p.startsWith(query))) score += 150;
+        
+        // Agar bo'sh qidiruv bo'lsa hammaga bir xil ball
+        if (!query) score = 1;
+        
+        return { user: u, score: score };
+    });
+    
+    let results = scored.filter(item => item.score > 0);
+    results.sort((a, b) => b.score - a.score);
+    
+    results.forEach(item => {
+      const u = item.user;
+      const cl = col(u.id), in2 = ini(u.name);
+      const div = document.createElement('div');
+      div.className = 'ui';
+      div.innerHTML = `<div class="avp" style="background:${cl};width:38px;height:38px;border-radius:50%;font-size:13px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0">${in2}</div><div class="ui-info"><div class="ui-name">${esc(u.name)}</div><div class="ui-un" style="color:var(--active-text-blue)">@${esc(u.username)}${u.role?' · '+esc(u.role):''}</div></div>`;
+      div.onclick = () => startChat(u.id);
       el.appendChild(div);
     });
-    if(!d.users?.length)el.innerHTML='<div style="text-align:center;color:var(--muted);font-size:12px;padding:16px 0">Topilmadi</div>';
-  }catch(e){console.error(e);}
+    if (!results.length) el.innerHTML = '<div style="text-align:center;color:var(--muted);font-size:12px;padding:16px 0">Topilmadi</div>';
+  } catch(e) { console.error(e); }
 }
 
-async function startChat(uid){
-  try{
-    const r=await fetch('/chat/api/start/',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':CSRF},body:JSON.stringify({user_id:uid})});
-    const d=await r.json();
+async function startChat(uid) {
+  try {
+    const r = await fetch('/chat/api/start/', {method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':CSRF},body:JSON.stringify({user_id:uid})});
+    const d = await r.json();
     if(d.room_id){await loadContacts();openRoom(d.room_id);}
-  }catch(e){console.error(e);}
+  } catch(e) { console.error(e); }
 }
 
 // ── FILTER ──
-function filterContacts(q){
-  const f=q?allContacts.filter(c=>c.name.toLowerCase().includes(q.toLowerCase())):allContacts;
-  renderContacts(f);
+async function filterContacts(q) {
+  let query = q ? q.toLowerCase().trim() : '';
+  if (query.startsWith('@')) query = query.substring(1);
+  
+  if (!query) {
+      renderContacts(allContacts);
+      return;
+  }
+  
+  // 1. Mahalliy (allaqachon gaplashgan) foydalanuvchilarni qidirish
+  let scored = allContacts.map(c => {
+      let score = 0;
+      const uname = (c.username || '').toLowerCase();
+      const fname = (c.name || '').toLowerCase();
+      
+      if (uname === query) score += 1000;
+      else if (uname.startsWith(query)) score += 500;
+      else if (uname.includes(query)) score += 200;
+      
+      if (fname === query) score += 400;
+      else if (fname.startsWith(query)) score += 200;
+      else if (fname.includes(query)) score += 100;
+      
+      const parts = fname.split(/\s+/);
+      if (parts.some(p => p.startsWith(query))) score += 150;
+      
+      return { contact: c, score: score };
+  });
+  
+  let results = scored.filter(item => item.score > 0);
+  results.sort((a, b) => b.score - a.score);
+  
+  // Mahalliy natijalarni chizish
+  renderContacts(results.map(item => item.contact));
+  
+  // 2. Global (barcha saytdagi) foydalanuvchilarni qidirish
+  try {
+      const r = await fetch(`/chat/api/users/?q=${encodeURIComponent(query)}`);
+      const d = await r.json();
+      const globalUsers = d.users || [];
+      
+      // O'zimizning mahalliy ro'yxatimizda bo'lmaganlarni ajratib olamiz
+      const newUsers = globalUsers.filter(gu => !allContacts.some(lc => lc.user_id === gu.id));
+      
+      if (newUsers.length > 0) {
+          // Ularni ham xuddi shunday ballab chiqamiz
+          let scoredGlobal = newUsers.map(u => {
+              let score = 0;
+              const uname = (u.username || '').toLowerCase();
+              const fname = (u.name || '').toLowerCase();
+              
+              if (uname === query) score += 1000;
+              else if (uname.startsWith(query)) score += 500;
+              else if (uname.includes(query)) score += 200;
+              
+              if (fname === query) score += 400;
+              else if (fname.startsWith(query)) score += 200;
+              else if (fname.includes(query)) score += 100;
+              
+              const parts = fname.split(/\s+/);
+              if (parts.some(p => p.startsWith(query))) score += 150;
+              
+              return { user: u, score: score };
+          });
+          
+          let globalResults = scoredGlobal.filter(item => item.score > 0);
+          globalResults.sort((a, b) => b.score - a.score);
+          
+          if (globalResults.length > 0) {
+              const el = document.getElementById('contacts');
+              
+              // Bo'lim sarlavhasi
+              const sec = document.createElement('div');
+              sec.className = 'sec';
+              sec.textContent = 'Global qidiruv (Boshqa foydalanuvchilar)';
+              el.appendChild(sec);
+              
+              // Natijalarni qo'shish
+              globalResults.forEach(item => {
+                  const u = item.user;
+                  const cl = col(u.id), in2 = ini(u.name);
+                  
+                  let av = '';
+                  if (u.avatar) {
+                      av = `<img src="${u.avatar}" class="av">`;
+                  } else {
+                      av = `<div class="avp" style="background:${cl}">${in2}</div>`;
+                  }
+                  
+                  const dDiv = document.createElement('div');
+                  dDiv.className = 'ci';
+                  
+                  dDiv.innerHTML = `${av}
+                  <div class="ci-info">
+                    <div class="ci-top">
+                      <div class="ci-name">${esc(u.name)}</div>
+                    </div>
+                    <div class="ci-prev" style="color: var(--active-text-blue)">@${esc(u.username)}</div>
+                  </div>`;
+                  
+                  // Bosilganda yangi chat ochiladi
+                  dDiv.onclick = () => startChat(u.id);
+                  
+                  el.appendChild(dDiv);
+              });
+          }
+      }
+  } catch (e) {
+      console.error("Global qidiruv xatosi: ", e);
+  }
 }
 
 // ── HELPERS ──
@@ -665,7 +1823,250 @@ async function updateGroupData(data) {
 }
 
 // ── INIT ──
+initGlobalWS();
 loadContacts();
+
+// ── WebRTC Call Logic ──
+let localStream = null;
+let peerConnections = {}; // { user_id: RTCPeerConnection }
+let iceCandidatesQueue = {}; // { user_id: Array }
+let currentCallRoom = null;
+let isVideoCall = true;
+let amICaller = false;
+let callStartTime = null;
+let callTimerInterval = null;
+
+const rtcConfig = {
+    'iceServers': [
+        {'urls': 'stun:stun.l.google.com:19302'},
+        {'urls': 'stun:stun1.l.google.com:19302'}
+    ]
+};
+
+async function startCall(type) {
+    if (!roomId) return;
+    isVideoCall = (type === 'video');
+    currentCallRoom = roomId;
+    amICaller = true;
+    
+    const overlay = document.getElementById('call-overlay');
+    overlay.style.display = 'flex';
+    document.getElementById('call-status').innerText = "Qo'ng'iroq qilinmoqda...";
+    document.getElementById('call-user-name').innerText = contact ? contact.name : "Guruh";
+    document.getElementById('call-accept-btn').style.display = 'none';
+    document.getElementById('call-reject-btn').style.display = 'none';
+    document.getElementById('call-end-btn').style.display = 'flex';
+    document.getElementById('local-video').style.opacity = isVideoCall ? '1' : '0';
+    document.getElementById('remote-video').style.opacity = isVideoCall ? '1' : '0.01';
+    document.getElementById('local-video').style.display = 'block';
+    document.getElementById('remote-video').style.display = 'block';
+    try { playDialtone(); } catch(e) { console.log(e); }
+    
+    try {
+        localStream = await navigator.mediaDevices.getUserMedia({ video: isVideoCall, audio: true });
+        if (isVideoCall) document.getElementById('local-video').srcObject = localStream;
+        
+        ws.send(JSON.stringify({
+            'type': 'call_start',
+            'call_type': type,
+            'room_id': currentCallRoom
+        }));
+    } catch(e) {
+        alert("Kamera yoki mikrofon ruxsati berilmadi yoki qurilma topilmadi. (" + e.message + ")");
+        closeCallUI();
+    }
+}
+
+function handleIncomingCall(data) {
+    if (currentCallRoom) return;
+    
+    currentCallRoom = data.room_id;
+    isVideoCall = (data.call_type === 'video');
+    amICaller = false;
+    
+    const overlay = document.getElementById('call-overlay');
+    overlay.style.display = 'flex';
+    document.getElementById('call-status').innerText = "Kiruvchi qo'ng'iroq...";
+    document.getElementById('call-user-name').innerText = data.caller_name;
+    document.getElementById('call-accept-btn').style.display = 'flex';
+    document.getElementById('call-reject-btn').style.display = 'flex';
+    document.getElementById('call-end-btn').style.display = 'none';
+    document.getElementById('local-video').style.opacity = isVideoCall ? '1' : '0';
+    document.getElementById('remote-video').style.opacity = isVideoCall ? '1' : '0.01';
+    document.getElementById('local-video').style.display = 'block';
+    document.getElementById('remote-video').style.display = 'block';
+    try { playRingtone(); } catch(e) { console.log(e); }
+}
+
+async function acceptCall() {
+    document.getElementById('call-status').innerText = "Ulanmoqda...";
+    document.getElementById('call-accept-btn').style.display = 'none';
+    document.getElementById('call-reject-btn').style.display = 'none';
+    document.getElementById('call-end-btn').style.display = 'flex';
+    stopAllAudio();
+    
+    try {
+        localStream = await navigator.mediaDevices.getUserMedia({ video: isVideoCall, audio: true });
+        if (isVideoCall) document.getElementById('local-video').srcObject = localStream;
+        
+        ws.send(JSON.stringify({ 'type': 'call_answer', 'room_id': currentCallRoom }));
+    } catch(e) {
+        alert("Kamera yoki mikrofon ruxsati berilmadi yoki qurilma topilmadi. (" + e.message + ")");
+        rejectCall();
+    }
+}
+
+function rejectCall() {
+    ws.send(JSON.stringify({ 'type': 'call_reject', 'room_id': currentCallRoom }));
+    closeCallUI();
+}
+
+function endCall() {
+    ws.send(JSON.stringify({ 'type': 'call_end', 'room_id': currentCallRoom }));
+    
+    if (amICaller) {
+        let duration = 0;
+        if (callStartTime) {
+            duration = Math.floor((new Date() - callStartTime) / 1000);
+            ws.send(JSON.stringify({
+                'type': 'message',
+                'message': `SYSTEM_CALL:${isVideoCall ? 'video' : 'audio'}:ended:${duration}`,
+                'room_id': currentCallRoom
+            }));
+        } else {
+            ws.send(JSON.stringify({
+                'type': 'message',
+                'message': `SYSTEM_CALL:${isVideoCall ? 'video' : 'audio'}:missed:0`,
+                'room_id': currentCallRoom
+            }));
+        }
+    }
+    
+    closeCallUI();
+}
+
+function closeCallUI() {
+    document.getElementById('call-overlay').style.display = 'none';
+    if (localStream) {
+        localStream.getTracks().forEach(t => t.stop());
+        localStream = null;
+    }
+    document.getElementById('local-video').srcObject = null;
+    document.getElementById('remote-video').srcObject = null;
+    stopAllAudio();
+    
+    Object.values(peerConnections).forEach(pc => pc.close());
+    peerConnections = {};
+    iceCandidatesQueue = {};
+    currentCallRoom = null;
+    amICaller = false;
+    if (callTimerInterval) {
+        clearInterval(callTimerInterval);
+        callTimerInterval = null;
+    }
+    callStartTime = null;
+    document.getElementById('audio-avatar').style.display = 'flex';
+}
+
+async function createPeerConnection(peerId, isInitiator) {
+    if (peerConnections[peerId]) return peerConnections[peerId];
+    
+    const pc = new RTCPeerConnection(rtcConfig);
+    peerConnections[peerId] = pc;
+    
+    if (localStream) {
+        localStream.getTracks().forEach(track => pc.addTrack(track, localStream));
+    }
+    
+    pc.onicecandidate = event => {
+        if (event.candidate) {
+            ws.send(JSON.stringify({
+                'type': 'webrtc_ice',
+                'target_id': peerId,
+                'candidate': event.candidate,
+                'room_id': currentCallRoom
+            }));
+        }
+    };
+    
+    pc.ontrack = event => {
+        const remoteVideo = document.getElementById('remote-video');
+        if (remoteVideo.srcObject !== event.streams[0]) {
+            remoteVideo.srcObject = event.streams[0];
+            remoteVideo.play().catch(e => console.error("Play xatosi:", e));
+        }
+        
+        if (!callStartTime) {
+            callStartTime = new Date();
+            callTimerInterval = setInterval(() => {
+                let diff = Math.floor((new Date() - callStartTime) / 1000);
+                let m = String(Math.floor(diff / 60)).padStart(2, '0');
+                let s = String(diff % 60).padStart(2, '0');
+                document.getElementById('call-status').innerText = `${m}:${s}`;
+            }, 1000);
+        }
+        
+        if (isVideoCall) {
+            document.getElementById('audio-avatar').style.display = 'none';
+        }
+    };
+    
+    if (isInitiator) {
+        const offer = await pc.createOffer();
+        await pc.setLocalDescription(offer);
+        ws.send(JSON.stringify({
+            'type': 'webrtc_offer',
+            'target_id': peerId,
+            'sdp': pc.localDescription,
+            'room_id': currentCallRoom
+        }));
+    }
+    
+    return pc;
+}
+
 </script>
+<script>
+function openGlobalSearch(e) {
+    e.preventDefault();
+    const modal = document.getElementById('global-search-modal');
+    const input = document.getElementById('gsm-input');
+    
+    modal.style.display = 'flex';
+    void modal.offsetWidth;
+    modal.classList.add('show');
+    modal.style.opacity = '1';
+    setTimeout(() => {
+        input.focus();
+    }, 100);
+}
+
+function closeGlobalSearch() {
+    const modal = document.getElementById('global-search-modal');
+    modal.classList.remove('show');
+    modal.style.opacity = '0';
+    setTimeout(() => {
+        modal.style.display = 'none';
+    }, 300);
+}
+
+document.getElementById('fs-close-btn').addEventListener('click', closeGlobalSearch);
+
+document.getElementById('global-search-modal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeGlobalSearch();
+    }
+});
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const modal = document.getElementById('global-search-modal');
+        if (modal.style.display === 'flex') {
+            closeGlobalSearch();
+        }
+    }
+});
+</script>
+
 </body>
 </html>

@@ -16,17 +16,48 @@ class PostListView(ListView):
     paginate_by = 6  # Har sahifada 6 ta post
 
     def get_queryset(self):
-        # Asosiy query: e'lonlar
-        queryset = Post.objects.all().order_by('-is_boosted', '-created_time')
+        from django.db.models import Count, Case, When, IntegerField, F
+        
+        # 1. Asosiy query: e'lonlar va like'larni sanash
+        queryset = Post.objects.select_related('author__profile').annotate(
+            likes_count=Count('likes', distinct=True)
+        )
 
-        # Filtrlar: Kategoriya va Shahar bo'yicha
+        # 2. Foydalanuvchi roliga qarab filtrlash (Kross-tavsiya)
+        if self.request.user.is_authenticated:
+            try:
+                user_role = self.request.user.profile.role
+                user_city = self.request.user.profile.city
+                
+                if user_role == 'client':
+                    # Oddiy userga faqat ustalar (builder/team) postlari ko'rinadi
+                    queryset = queryset.filter(author__profile__role__in=['builder', 'team'])
+                elif user_role in ['builder', 'team']:
+                    # Ustalarga faqat oddiy userlar (client) postlari ko'rinadi
+                    queryset = queryset.filter(author__profile__role='client')
+                    
+                # 3. Sun'iy Intellekt (AI) Tavsiya Algoritmi (AI Scoring)
+                # Score: Boosted (+1000), Bir xil shahar (+500), Har bir like (+10)
+                queryset = queryset.annotate(
+                    ai_score=Case(When(is_boosted=True, then=1000), default=0, output_field=IntegerField()) +
+                             Case(When(author__profile__city=user_city, then=500), default=0, output_field=IntegerField()) +
+                             (F('likes_count') * 10)
+                ).order_by('-ai_score', '-created_time')
+                
+            except Exception:
+                # Profil yo'q bo'lsa default tartib
+                queryset = queryset.order_by('-is_boosted', '-created_time')
+        else:
+            # Mehmonlar uchun barcha postlar AI score'siz
+            queryset = queryset.order_by('-is_boosted', '-created_time')
+
+        # 4. Foydalanuvchi qidiruv (qolda filtrlash)
         category = self.request.GET.get('category')
         city = self.request.GET.get('city')
 
         if category:
             queryset = queryset.filter(category=category)
         if city:
-            # Ustalar yoki postlar orqali shahar bo'yicha filter
             queryset = queryset.filter(author__profile__city=city)
 
         return queryset
@@ -86,10 +117,6 @@ from .form import PostCreateForm
 
 @login_required
 def post_create_view(request):
-    # Roli 'builder' bo'lmagan foydalanuvchilarni qaytarib yuboramiz
-    if request.user.profile.role != 'builder':
-        messages.error(request, "Xatolik!! Eʼlon joylashtirish faqat Quruvchilar (Ustalar) uchun ruxsat etilgan.")
-        return redirect('build:post_list')
 
     if request.method == 'POST':
         form = PostCreateForm(request.POST)
@@ -126,15 +153,37 @@ def builder_list_view(request):
     if city:
         builders = builders.filter(profile__city=city)
         
+    from django.db.models import Case, When, IntegerField, F
+    
     posts = Post.objects.select_related('author__profile').annotate(
         likes_count=Count('likes', distinct=True)
     )
     if request.user.is_authenticated:
-        posts = posts.annotate(
-            is_liked=Exists(PostLike.objects.filter(post=OuterRef('pk'), user=request.user)),
-            is_bookmarked=Exists(PostBookmark.objects.filter(post=OuterRef('pk'), user=request.user))
-        )
-    posts = posts.order_by('-created_time')
+        try:
+            user_role = request.user.profile.role
+            user_city = request.user.profile.city
+            
+            # Kross-tavsiya filtri
+            if user_role == 'client':
+                posts = posts.filter(author__profile__role__in=['builder', 'team'])
+            elif user_role in ['builder', 'team']:
+                posts = posts.filter(author__profile__role='client')
+                
+            # AI Scoring tizimi
+            posts = posts.annotate(
+                is_liked=Exists(PostLike.objects.filter(post=OuterRef('pk'), user=request.user)),
+                is_bookmarked=Exists(PostBookmark.objects.filter(post=OuterRef('pk'), user=request.user)),
+                ai_score=Case(When(is_boosted=True, then=1000), default=0, output_field=IntegerField()) +
+                         Case(When(author__profile__city=user_city, then=500), default=0, output_field=IntegerField()) +
+                         (F('likes_count') * 10)
+            ).order_by('-ai_score', '-created_time')
+        except Exception:
+            posts = posts.annotate(
+                is_liked=Exists(PostLike.objects.filter(post=OuterRef('pk'), user=request.user)),
+                is_bookmarked=Exists(PostBookmark.objects.filter(post=OuterRef('pk'), user=request.user))
+            ).order_by('-is_boosted', '-created_time')
+    else:
+        posts = posts.order_by('-is_boosted', '-created_time')
 
     context = {
         'builders': builders,
@@ -150,9 +199,6 @@ class PostCreateAPIView(APIView):
     parser_classes = [MultiPartParser, FormParser]
 
     def post(self, request):
-        if request.user.profile.role != 'builder':
-            return Response({'error': 'Faqat ustalar e\'lon joylashi mumkin!'}, status=status.HTTP_403_FORBIDDEN)
-            
         data = request.data
         try:
             post = Post.objects.create(
@@ -212,7 +258,7 @@ class UserContactInfoAPIView(APIView):
         
         try:
             profile = user.profile
-            avatar_url = request.build_absolute_uri(profile.avatar.url) if profile.avatar else None
+            avatar_url = request.build_absolute_uri(profile.get_avatar_url())
             telegram = profile.telegram or ''
             if telegram and not telegram.startswith('@') and not telegram.startswith('t.me'):
                 telegram = '@' + telegram
@@ -256,7 +302,7 @@ class SearchUsersAPIView(APIView):
             avatar = None
             role_display = ''
             if hasattr(u, 'profile'):
-                avatar = request.build_absolute_uri(u.profile.avatar.url) if u.profile.avatar else None
+                avatar = request.build_absolute_uri(u.profile.get_avatar_url())
                 role_display = u.profile.get_role_display()
             
             results.append({
