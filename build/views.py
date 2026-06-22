@@ -16,7 +16,7 @@ from build.models import Post, PostLike, PostBookmark, BuilderProfile
 
 class PostListView(ListView):
     model = Post
-    template_name = 'build/marketb2bpro.html'
+    template_name = 'build/post_list.html'
     context_object_name = 'posts'
     paginate_by = 12  # Har sahifada 12 ta post
 
@@ -264,7 +264,7 @@ def builder_list_view(request):
         'city': city,
         'region_choices': Profile.REGION_CHOICES,
     }
-    return render(request, 'build/home.html', context)
+    return render(request, 'build/builder_list.html', context)
 
 class PostCreateAPIView(APIView):
     permission_classes = [IsAuthenticated]
