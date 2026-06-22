@@ -67,6 +67,7 @@ if DEBUG:
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',  # <--- Shuni joylashtiring
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -160,13 +161,25 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'uz'
 
-TIME_ZONE = 'UTC'
+import os
+from django.utils.translation import gettext_lazy as _
 
+# Tillarni ro'yxatga olish
+LANGUAGES = [
+    ('uz', _("O'zbekcha")),
+    ('ru', _('Русский')),
+]
+
+TIME_ZONE = 'Asia/Tashkent'
 USE_I18N = True
+USE_L10N = True
+USE_TZ = True
 
-USE_TZ = False
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
 
 
 # Django Allauth & Sites Sozlamalari

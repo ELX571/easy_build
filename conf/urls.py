@@ -18,6 +18,8 @@ urlpatterns = [
 
     # ── Build (bosh sahifa) ────────────────────────────────────────────────────
     path('', include('build.urls')),
+
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
 
 if settings.DEBUG:
@@ -25,3 +27,4 @@ if settings.DEBUG:
         path('__reload__/', include('django_browser_reload.urls')),
     ]
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EasyBuild - Sozlamalar</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-body: #f4f6fa;
@@ -17,6 +17,7 @@
             --glow-color: rgba(255, 107, 0, 0.2);
             --card-gradient: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
             --input-bg: #ffffff;
+            --input-text: #0f172a;
         }
 
         [data-theme="dark"] {
@@ -29,6 +30,7 @@
             --glow-color: rgba(255, 107, 0, 0.4);
             --card-gradient: linear-gradient(135deg, rgba(13, 18, 30, 0.85), rgba(8, 11, 20, 0.6));
             --input-bg: rgba(255, 255, 255, 0.02);
+            --input-text: #ffffff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -36,6 +38,7 @@
         body {
             background-color: var(--bg-body); color: var(--text-main);
             display: flex; justify-content: center; min-height: 100vh;
+            transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         /* TEPADAGI HEADER */
@@ -43,10 +46,18 @@
             width: 100%; position: fixed; top: 0; left: 0; height: 70px;
             background: var(--bg-panel); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color);
             display: flex; align-items: center; justify-content: space-between; padding: 0 40px; z-index: 100;
+            transition: background 0.4s ease, border-color 0.4s ease;
         }
         .header-title { font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
         .back-btn { color: var(--text-muted); text-decoration: none; font-size: 15px; display: flex; align-items: center; gap: 8px; font-weight: 600; transition: 0.2s; }
         .back-btn:hover { color: var(--text-main); }
+
+        /* HEADER O'NG CONTROLS */
+        .header-controls-right { display: flex; align-items: center; gap: 12px; }
+
+        /* ⚡️ PREMIUM PROFILE THEME TOGGLE STILI */
+        .profile-theme-toggle { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: var(--text-main); height: 42px; padding: 0 16px; border-radius: 30px; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
+        .profile-theme-toggle:hover { border-color: var(--active-text-blue); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255,107,0,0.15); }
 
         /* ASOSIY LAYOUT */
         .layout-container {
@@ -73,8 +84,9 @@
             flex-grow: 1; background: var(--card-gradient); border-radius: 24px;
             border: 1px solid var(--border-color); padding: 40px;
             backdrop-filter: blur(24px); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            transition: background 0.4s ease, border-color 0.4s ease;
         }
-        
+
         .tab-pane { display: none; animation: fadeIn 0.4s ease; }
         .tab-pane.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -87,7 +99,7 @@
         .form-group input, .form-group textarea, .form-group select {
             width: 100%; padding: 14px 18px; background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px;
-            outline: none; color: #fff; font-size: 15px; transition: all 0.3s ease;
+            outline: none; color: var(--input-text); font-size: 15px; transition: all 0.3s ease;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
         }
         .select-wrapper { position: relative; }
@@ -102,11 +114,11 @@
             box-shadow: 0 0 0 4px rgba(251, 146, 60, 0.15), inset 0 2px 4px rgba(0,0,0,0.1);
         }
         .form-group select option { background: #1e293b; color: #f8fafc; }
-        
-        input[type="file"] { 
-            background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.05)) !important; 
-            border: 2px dashed rgba(251, 146, 60, 0.4) !important; 
-            padding: 16px !important; 
+
+        input[type="file"] {
+            background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.05)) !important;
+            border: 2px dashed rgba(251, 146, 60, 0.4) !important;
+            padding: 16px !important;
             border-radius: 16px !important;
             color: #94a3b8;
             transition: 0.3s;
@@ -115,7 +127,7 @@
         input[type="file"]:hover {
             border-color: var(--active-text-blue) !important;
             background: rgba(251, 146, 60, 0.05) !important;
-            color: #fff;
+            color: var(--input-text);
         }
         input[type="file"]::file-selector-button {
             border: none;
@@ -135,66 +147,72 @@
         }
 
         .btn-submit {
-            width: 100%; 
-            background: linear-gradient(45deg, var(--active-text-blue), #f97316); 
+            width: 100%;
+            background: linear-gradient(45deg, var(--active-text-blue), #f97316);
             color: #ffffff;
             border: none; padding: 16px; border-radius: 16px; font-weight: 800;
-            cursor: pointer; box-shadow: 0 8px 25px rgba(251, 146, 60, 0.4); 
+            cursor: pointer; box-shadow: 0 8px 25px rgba(251, 146, 60, 0.4);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             margin-top: 15px; font-size: 16px; display: flex; align-items: center; justify-content: center; gap: 10px;
             text-transform: uppercase; letter-spacing: 1px;
         }
-        .btn-submit:hover { 
-            transform: translateY(-3px); 
-            box-shadow: 0 12px 30px rgba(251, 146, 60, 0.5); 
-        }
-        .btn-submit:active {
-            transform: translateY(0);
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(251, 146, 60, 0.5);
         }
 
-        /* PRICING CARDS */
-        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 20px; }
+        /* PRICING SYSTEM */
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 25px; align-items: stretch; }
         .pricing-card {
             background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 20px; padding: 24px; position: relative; overflow: hidden;
-            display: flex; flex-direction: column; transition: all 0.3s ease;
+            border-radius: 24px; padding: 32px 24px; position: relative; overflow: hidden;
+            display: flex; flex-direction: column; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(10px);
         }
-        .pricing-card:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.04); box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
-        
-        .pricing-card.plan-blue { border-color: rgba(59, 130, 246, 0.3); }
-        .pricing-card.plan-blue .p-icon { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
-        .pricing-card.plan-blue .btn-plan { background: #3b82f6; color: #fff; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); }
 
-        .pricing-card.plan-green { border-color: rgba(16, 185, 129, 0.3); background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(16, 185, 129, 0.01)); }
+        .pricing-card.plan-blue { border-color: rgba(59, 130, 246, 0.2); }
+        .pricing-card.plan-blue .p-icon { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+        .pricing-card.plan-blue .btn-plan { background: rgba(255,255,255,0.05); color: #94a3b8; border: 1px solid var(--border-color); }
+
+        .pricing-card.plan-green {
+            border-color: var(--active-text-blue);
+            background: linear-gradient(135deg, rgba(255, 107, 0, 0.06), rgba(16, 185, 129, 0.01));
+            transform: scale(1.03);
+            box-shadow: 0 20px 40px var(--glow-color);
+            z-index: 2;
+        }
         .pricing-card.plan-green .p-icon { background: rgba(16, 185, 129, 0.15); color: #10b981; }
         .pricing-card.plan-green .btn-plan { background: #10b981; color: #fff; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); }
-        
-        .pricing-card.plan-gold { border-color: rgba(245, 158, 11, 0.4); background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(245, 158, 11, 0.02)); }
+        .pricing-card.plan-green .btn-plan:hover { background: #059669; }
+
+        .pricing-card.plan-gold { border-color: rgba(245, 158, 11, 0.3); background: linear-gradient(135deg, rgba(245, 158, 11, 0.05), rgba(245, 158, 11, 0.01)); }
         .pricing-card.plan-gold .p-icon { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
-        .pricing-card.plan-gold .btn-plan { background: linear-gradient(45deg, #f59e0b, #eab308); color: #000; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
+        .pricing-card.plan-gold .btn-plan { background: linear-gradient(45deg, #f59e0b, #eab308); color: #000; font-weight: 800; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
+        .pricing-card.plan-gold .btn-plan:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5); }
 
-        .p-icon { width: 54px; height: 54px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 16px; }
-        .p-title { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 8px; }
-        .p-price { font-size: 24px; font-weight: 900; color: #fff; margin-bottom: 6px; }
-        .p-price span { font-size: 14px; color: var(--text-muted); font-weight: 500; }
-        .p-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 20px; flex-grow: 1; }
-        .p-features { list-style: none; padding: 0; margin: 0 0 24px 0; display: flex; flex-direction: column; gap: 10px; }
-        .p-features li { font-size: 13px; color: #cbd5e1; display: flex; align-items: center; gap: 8px; }
-        
-        .btn-plan { width: 100%; border: none; padding: 12px; border-radius: 12px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; }
-        .btn-plan:hover { transform: translateY(-2px); }
-        .btn-plan.active-plan { background: rgba(255,255,255,0.05) !important; color: #94a3b8 !important; box-shadow: none !important; cursor: default; }
-        .btn-plan.active-plan:hover { transform: none; }
-        .plan-card {
-            background: linear-gradient(135deg, rgba(255, 107, 0, 0.1), rgba(255, 107, 0, 0.02));
-            border: 1px solid rgba(255, 107, 0, 0.3); border-radius: 16px; padding: 24px;
-            position: relative; overflow: hidden;
-        }
-        .plan-badge {
-            position: absolute; top: 16px; right: 16px; background: var(--active-text-blue); color: #fff;
-            padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; text-transform: uppercase;
+        .popular-tag {
+            position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
+            background: var(--active-text-blue); color: white; padding: 4px 16px;
+            border-radius: 20px; font-size: 11px; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
+        .p-icon { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px; }
+        .p-title { font-size: 19px; font-weight: 800; color: var(--text-main); margin-bottom: 8px; }
+        .p-price { font-size: 28px; font-weight: 900; color: var(--text-main); margin-bottom: 6px; }
+        .p-price span { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+        .p-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 24px; flex-grow: 1; }
+        .p-features { list-style: none; padding: 0; margin: 0 0 24px 0; display: flex; flex-direction: column; gap: 12px; border-top: 1px dashed var(--border-color); padding-top: 16px; }
+        .p-features li { font-size: 13px; color: var(--text-main); display: flex; align-items: center; gap: 10px; font-weight: 600; }
+        .p-features li.disabled-feature { color: var(--text-muted); opacity: 0.4; }
+
+        .btn-plan { width: 100%; border: none; padding: 14px; border-radius: 12px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; margin-top: auto; }
+        .btn-plan.active-plan { background: rgba(255,255,255,0.04) !important; color: #94a3b8 !important; box-shadow: none !important; cursor: default; }
+
+        @media (max-width: 992px) {
+            .pricing-grid { grid-template-columns: 1fr; gap: 30px; }
+            .pricing-card.plan-green { transform: none; }
+        }
         @media (max-width: 768px) {
             .layout-container { flex-direction: column; }
             .settings-sidebar { width: 100%; flex-direction: row; overflow-x: auto; padding-bottom: 10px; }
@@ -205,82 +223,65 @@
 </head>
 <body>
 
-    <!-- HEADER -->
     <header class="settings-header">
         <a href="{% url 'build:profile' %}" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Orqaga</a>
         <div class="header-title">
             <i class="fa-solid fa-sliders" style="color: var(--active-text-blue);"></i> Sozlamalar
         </div>
-        <div style="position: relative;">
-            <button id="lang-btn" onclick="document.getElementById('lang-menu').classList.toggle('show-lang')">
-                <img class="uz-flag-wave" src="https://upload.wikimedia.org/wikipedia/commons/8/84/Flag_of_Uzbekistan.svg" alt="uz" style="width: 24px; height: 24px; min-width: 24px; border-radius: 50%; object-fit: cover; object-position: 20% 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">
-                <span>O'zbekcha</span> <i class="fa-solid fa-chevron-down" style="font-size: 11px; margin-left: 2px;"></i>
+
+        <div class="header-controls-right">
+            <!-- ⚡️ YANGI INTEGRATSIYA: REJIM O'ZGARTIRISH TOGGLER TUGMASI -->
+            <button class="profile-theme-toggle" id="settingsThemeToggleBtn">
+                <i class="fa-solid fa-moon"></i> <span id="settings-theme-text">Kiber tun</span>
             </button>
-            <div id="lang-menu" style="position: absolute; right: 0; top: 120%; background: var(--card-gradient); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 10px; display: none; flex-direction: column; gap: 4px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); min-width: 150px; z-index: 100;">
-                <a href="#" style="color: #fff; text-decoration: none; padding: 10px 14px; border-radius: 10px; display: flex; align-items: center; gap: 12px; transition: 0.2s; background: rgba(255, 255, 255, 0.05); font-weight: 600;">
-                    <img class="uz-flag-wave" src="https://upload.wikimedia.org/wikipedia/commons/8/84/Flag_of_Uzbekistan.svg" alt="uz" style="width: 24px; height: 24px; min-width: 24px; border-radius: 50%; object-fit: cover; object-position: 20% 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"> O'zbekcha
-                </a>
-                <a href="#" style="color: #cbd5e1; text-decoration: none; padding: 10px 14px; border-radius: 10px; display: flex; align-items: center; gap: 12px; transition: 0.2s; font-weight: 500;">
-                    <img src="https://flagcdn.com/w80/ru.png" alt="ru" style="width: 24px; height: 24px; min-width: 24px; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"> Русский
-                </a>
-                <a href="#" style="color: #cbd5e1; text-decoration: none; padding: 10px 14px; border-radius: 10px; display: flex; align-items: center; gap: 12px; transition: 0.2s; font-weight: 500;">
-                    <img src="https://flagcdn.com/w80/us.png" alt="us" style="width: 24px; height: 24px; min-width: 24px; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"> English
-                </a>
+
+            <div style="position: relative;">
+                <button id="lang-btn" onclick="document.getElementById('lang-menu').classList.toggle('show-lang')">
+                    <img class="uz-flag-wave" src="https://upload.wikimedia.org/wikipedia/commons/8/84/Flag_of_Uzbekistan.svg" alt="uz" style="width: 24px; height: 24px; min-width: 24px; border-radius: 50%; object-fit: cover; object-position: 20% 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">
+                    <span>O'zbekcha</span> <i class="fa-solid fa-chevron-down" style="font-size: 11px; margin-left: 2px;"></i>
+                </button>
+                <div id="lang-menu" style="position: absolute; right: 0; top: 120%; background: var(--card-gradient); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 10px; display: none; flex-direction: column; gap: 4px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); min-width: 150px; z-index: 100;">
+                    <a href="#" style="color: #fff; text-decoration: none; padding: 10px 14px; border-radius: 10px; display: flex; align-items: center; gap: 12px; transition: 0.2s; background: rgba(255, 255, 255, 0.05); font-weight: 600;">
+                        <img class="uz-flag-wave" src="https://upload.wikimedia.org/wikipedia/commons/8/84/Flag_of_Uzbekistan.svg" alt="uz" style="width: 24px; height: 24px; min-width: 24px; border-radius: 50%; object-fit: cover; object-position: 20% 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"> O'zbekcha
+                    </a>
+                    <a href="#" style="color: #cbd5e1; text-decoration: none; padding: 10px 14px; border-radius: 10px; display: flex; align-items: center; gap: 12px; transition: 0.2s; font-weight: 500;">
+                        <img src="https://flagcdn.com/w80/ru.png" alt="ru" style="width: 24px; height: 24px; min-width: 24px; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"> Русский
+                    </a>
+                    <a href="#" style="color: #cbd5e1; text-decoration: none; padding: 10px 14px; border-radius: 10px; display: flex; align-items: center; gap: 12px; transition: 0.2s; font-weight: 500;">
+                        <img src="https://flagcdn.com/w80/us.png" alt="us" style="width: 24px; height: 24px; min-width: 24px; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"> English
+                    </a>
+                </div>
+                <style>
+                    #lang-btn {
+                        background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 30px;
+                        height: 42px; padding: 0 16px 0 10px; color: #e2e8f0; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 14px;
+                    }
+                    #lang-btn:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.15); transform: translateY(-2px); }
+                    .uz-flag-wave { animation: flag-flutter 2s ease-in-out infinite; }
+                    @keyframes flag-flutter {
+                        0%, 100% { transform: rotate(0deg) scale(1); }
+                        25% { transform: rotate(-3deg) scale(1.02); }
+                        75% { transform: rotate(3deg) scale(1.02); }
+                    }
+                    .show-lang { display: flex !important; animation: fadeIn 0.2s ease; }
+                    #lang-menu { top: 130% !important; }
+                    #lang-menu a:hover { background: rgba(255,255,255,0.08); color: #fff !important; transform: translateX(3px); }
+                </style>
             </div>
-            <style>
-                #lang-btn {
-                    background: rgba(255, 255, 255, 0.03);
-                    border: 1px solid rgba(255, 255, 255, 0.08);
-                    border-radius: 30px;
-                    height: 42px;
-                    padding: 0 16px 0 10px;
-                    color: #e2e8f0;
-                    font-weight: 600;
-                    cursor: pointer;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 10px;
-                    font-size: 14px;
-                    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                }
-                #lang-btn:hover {
-                    background: rgba(255, 255, 255, 0.08);
-                    border-color: rgba(255, 255, 255, 0.15);
-                    transform: translateY(-2px);
-                }
-                #lang-btn:active { transform: translateY(0); }
-                .uz-flag-wave {
-                    animation: flag-flutter 2s ease-in-out infinite;
-                }
-                @keyframes flag-flutter {
-                    0%   { transform: rotate(0deg) scale(1) skew(0deg); }
-                    25%  { transform: rotate(-3deg) scale(1.03) skew(2deg); }
-                    50%  { transform: rotate(0deg) scale(1) skew(0deg); }
-                    75%  { transform: rotate(3deg) scale(1.03) skew(-2deg); }
-                    100% { transform: rotate(0deg) scale(1) skew(0deg); }
-                }
-                .show-lang { display: flex !important; animation: fadeIn 0.2s ease; }
-                #lang-menu { top: 130% !important; }
-                #lang-menu a:hover { background: rgba(255,255,255,0.08); color: #fff !important; transform: translateX(3px); }
-            </style>
         </div>
     </header>
 
-    <!-- Klick tashqarisida yopilishi uchun -->
     <script>
         document.addEventListener('click', function(event) {
-            var isClickInside = event.target.closest('#lang-menu') || event.target.closest('button[onclick*="show-lang"]');
+            var isClickInside = event.target.closest('#lang-menu') || event.target.closest('#lang-btn');
             if (!isClickInside) {
                 document.getElementById('lang-menu').classList.remove('show-lang');
             }
         });
     </script>
 
-    <!-- LAYOUT -->
     <div class="layout-container">
-        
-        <!-- SIDEBAR -->
+
         <div class="settings-sidebar">
             <button class="tab-btn active" onclick="openTab('tab-profile', this)"><i class="fa-solid fa-user-pen"></i> Asosiy ma'lumotlar</button>
             <button class="tab-btn" onclick="openTab('tab-verify', this)"><i class="fa-solid fa-wallet"></i> Verifikatsiya & Obunalar</button>
@@ -288,22 +289,19 @@
             <button class="tab-btn" onclick="openTab('tab-security', this)"><i class="fa-solid fa-lock"></i> Xavfsizlik va Parol</button>
         </div>
 
-        <!-- CONTENT -->
         <div class="settings-content">
-            
-            <!-- 1. ASOSIY MA'LUMOTLAR PANE -->
+
             <div id="tab-profile" class="tab-pane active">
                 <div class="pane-title"><i class="fa-solid fa-user-pen" style="color: var(--active-text-blue);"></i> Shaxsiy ma'lumotlar</div>
                 <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
-                    
+
                     <div style="display:flex; flex-direction:column; align-items:center; margin-bottom:30px;">
                         <div id="avatar-preview-container" style="position:relative; width:120px; height:120px; border-radius:50%; cursor:pointer; overflow:hidden; border:3px solid transparent; background:linear-gradient(145deg, rgba(30, 35, 50, 0.95), rgba(15, 17, 26, 0.95)) padding-box, linear-gradient(45deg, var(--active-text-blue), #fb923c) border-box; box-shadow:0 10px 25px rgba(255, 107, 0, 0.2);" onclick="document.getElementById('id_avatar').click()" onmouseover="document.getElementById('av-overlay').style.opacity='1'" onmouseout="document.getElementById('av-overlay').style.opacity='0'">
                             <img id="avatar-preview" src="{{ form.instance.get_avatar_url }}" style="width:100%; height:100%; object-fit:cover; display:block; background: black;">
                             <div id="av-overlay" style="position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); border-radius:50%; display:flex; justify-content:center; align-items:center; color:#fff; font-size:28px; opacity:0; transition:0.2s;"><i class="fa-solid fa-camera"></i></div>
                         </div>
                         <p style="margin:10px 0 0 0; font-size:13px; color:var(--text-muted); font-weight:600;">Profil rasmini o'zgartirish</p>
-                        <!-- To make the Django form happy, we hide the original form field and use this logic, but wait, the default field renders a clear checkbox and a link. We can just render the raw input. -->
                         <input type="file" name="avatar" id="id_avatar" style="display:none" accept="image/*" onchange="previewAvatar(this)">
                     </div>
 
@@ -336,94 +334,90 @@
                         <label><i class="fa-solid fa-address-card"></i> Ma'lumot (Bio):</label>
                         {{ form.bio }}
                     </div>
-                    
+
                     <button type="submit" class="btn-submit"><i class="fa-solid fa-floppy-disk"></i> O'zgarishlarni saqlash</button>
                 </form>
             </div>
 
-            <!-- 2. VERIFIKATSIYA VA OBUNALAR -->
             <div id="tab-verify" class="tab-pane">
                 <div class="pane-title"><i class="fa-solid fa-wallet" style="color: var(--active-text-blue);"></i> Verifikatsiya & Obunalar</div>
-                
+
                 <div style="display:flex; justify-content:center; margin-bottom:10px; margin-top:20px;">
                     <div style="background:rgba(255,255,255,0.05); padding:6px; border-radius:100px; display:inline-flex; align-items:center; position:relative; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);">
                         <div id="plan-toggle-bg" style="position:absolute; width:120px; height:calc(100% - 12px); background:linear-gradient(45deg, var(--active-text-blue), #fb923c); border-radius:100px; transition:0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); left:6px;"></div>
                         <button id="btn-monthly" onclick="togglePlan('monthly')" style="position:relative; z-index:1; padding:10px 24px; border:none; background:transparent; color:#fff; font-weight:700; font-size:14px; cursor:pointer; width:120px; transition:0.3s;">Oylik</button>
-                        <button id="btn-yearly" onclick="togglePlan('yearly')" style="position:relative; z-index:1; padding:10px 24px; border:none; background:transparent; color:#94a3b8; font-weight:700; font-size:14px; cursor:pointer; width:120px; transition:0.3s;">Yillik <span style="position:absolute; top:-5px; right:-5px; background:#10b981; color:#fff; font-size:10px; padding:3px 8px; border-radius:12px; box-shadow:0 2px 6px rgba(16,185,129,0.3); font-weight:800;">-15%</span></button>
+                        <button id="btn-yearly" onclick="togglePlan('yearly')" style="position:relative; z-index:1; padding:10px 24px; border:none; background:transparent; color:#94a3b8; font-weight:700; font-size:14px; cursor:pointer; width:120px; transition:0.3s;">Yillik <span style="position:absolute; top:-5px; right:-5px; background:#10b981; color:#fff; font-size:10px; padding:3px 8px; border-radius:12px; font-weight:800;">-15%</span></button>
                     </div>
                 </div>
 
                 <div class="pricing-grid">
-                    
-                    <!-- BLUE TIER -->
+
                     <div class="pricing-card plan-blue">
-                        <div class="p-icon"><i class="fa-solid fa-circle-check"></i></div>
+                        <div class="p-icon"><i class="fa-solid fa-user"></i></div>
                         <div class="p-title">Boshlang'ich</div>
                         <div class="p-price">Bepul</div>
-                        <div class="p-desc">Tizimga kirgan barcha foydalanuvchilar uchun standart imkoniyatlar.</div>
+                        <div class="p-desc">Tizimga kirgan barcha foydalanuvchilar uchun standart tanishuv imkoniyatlari.</div>
                         <ul class="p-features">
                             <li><i class="fa-solid fa-check" style="color: #3b82f6;"></i> Ko'k tasdiq belgisi</li>
-                            <li><i class="fa-solid fa-check" style="color: #3b82f6;"></i> E'lonlarni ko'rish</li>
-                            <li><i class="fa-solid fa-check" style="color: #3b82f6;"></i> Chatdan foydalanish</li>
+                            <li><i class="fa-solid fa-check" style="color: #3b82f6;"></i> Kuniga 1 ta e'lon joylash</li>
+                            <li class="disabled-feature"><i class="fa-solid fa-xmark"></i> Kontaktlarni ko'rish</li>
                         </ul>
                         <button class="btn-plan active-plan"><i class="fa-solid fa-check"></i> Faol</button>
                     </div>
 
-                    <!-- GREEN TIER -->
                     <div class="pricing-card plan-green">
-                        <div class="p-icon"><i class="fa-solid fa-circle-check"></i></div>
+                        <div class="popular-tag">Eng ommabop</div>
+                        <div class="p-icon"><i class="fa-solid fa-bolt"></i></div>
                         <div class="p-title">PRO Obuna</div>
-                        <div class="p-price"><span id="price-pro" style="color:#fff; font-size:24px; font-weight:900;">30,000</span> <span id="period-pro">so'm / oy</span></div>
-                        <div class="p-desc">Jiddiy ishlaydigan ustalar uchun kengaytirilgan qulayliklar.</div>
+                        <div class="p-price"><span id="price-pro">99,000</span> <span id="period-pro">so'm / oy</span></div>
+                        <div class="p-desc">Doimiy va jiddiy buyurtmalar oqimiga ega bo'lishni xohlovchi ustalar uchun.</div>
                         <ul class="p-features">
-                            <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Yashil tasdiq belgisi</li>
-                            <li><i class="fa-solid fa-check" style="color: #10b981;"></i> O'z jamoasini yaratish</li>
-                            <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Mijozlarga aloqaga chiqish</li>
+                            <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Yashil premium belgi</li>
+                            <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Cheksiz e'lon joylash</li>
+                            <li><i class="fa-solid fa-check" style="color: #10b981;"></i> Mijozlar kontaktlarini ochish</li>
+                            <li><i class="fa-solid fa-check" style="color: #10b981;"></i> AI Scoring (+500 ball)</li>
                         </ul>
                         <button class="btn-plan">Sotib olish</button>
                     </div>
 
-                    <!-- GOLD TIER -->
                     <div class="pricing-card plan-gold">
-                        <div style="position: absolute; top: 16px; right: 16px; background: rgba(245, 158, 11, 0.2); color: #f59e0b; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 800;">VIP</div>
                         <div class="p-icon"><i class="fa-solid fa-crown"></i></div>
                         <div class="p-title">Premium VIP</div>
-                        <div class="p-price"><span id="price-vip" style="color:#fff; font-size:24px; font-weight:900;">50,000</span> <span id="period-vip">so'm / oy</span></div>
-                        <div class="p-desc">Eng yuqori darajadagi ustalar va yirik qurilish kompaniyalari uchun.</div>
+                        <div class="p-price"><span id="price-vip">199,000</span> <span id="period-vip">so'm / oy</span></div>
+                        <div class="p-desc">Yirik guruhlar, brigadirlar va B2B qurilish jamoalari uchun maxsus reja.</div>
                         <ul class="p-features">
                             <li><i class="fa-solid fa-check" style="color: #f59e0b;"></i> Oltin tasdiq belgisi</li>
-                            <li><i class="fa-solid fa-check" style="color: #f59e0b;"></i> Top ro'yxatlarda turish</li>
-                            <li><i class="fa-solid fa-check" style="color: #f59e0b;"></i> Cheksiz e'lon joylash</li>
-                            <li><i class="fa-solid fa-check" style="color: #f59e0b;"></i> Maxsus VIP yordam</li>
+                            <li><i class="fa-solid fa-check" style="color: #f59e0b;"></i> O'z jamoasini yaratish</li>
+                            <li><i class="fa-solid fa-check" style="color: #f59e0b;"></i> Neon ramkali e'lonlar</li>
+                            <li><i class="fa-solid fa-check" style="color: #f59e0b;"></i> AI Max Boost (+1500 ball)</li>
                         </ul>
                         <button class="btn-plan">Sotib olish</button>
                     </div>
                 </div>
             </div>
 
-            <!-- 3. JAMOA SOZLAMALARI -->
             <div id="tab-team" class="tab-pane">
                 <div class="pane-title"><i class="fa-solid fa-users-gear" style="color: var(--active-text-blue);"></i> Jamoa Sozlamalari</div>
-                
+
                 {% if profile.role == 'team' %}
-                <div style="margin-bottom: 24px; padding: 16px; border-radius: 16px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255, 107, 0, 0.1); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                <div style="margin-bottom: 24px; padding: 16px; border-radius: 16px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255, 107, 0, 0.1); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
                     <div style="display: flex; align-items: center; gap: 12px;">
                         <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(255, 107, 0, 0.1); color: var(--active-text-blue); display: flex; align-items: center; justify-content: center; font-size: 20px;">
                             <i class="fa-solid fa-users"></i>
                         </div>
                         <div style="flex-grow: 1;">
                             <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
-                                <input type="text" id="team-name-input" value="{{ profile.builder_info.group_chat_room.group_name|default:'Mening Jamoam' }}" style="font-size: 18px; font-weight: 800; background: transparent; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; padding: 4px 8px; outline: none; width: 100%; max-width: 250px; transition: 0.2s;" onfocus="this.style.borderColor='var(--active-text-blue)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
-                                <button onclick="renameTeam({{ profile.builder_info.group_chat_room.id }})" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.3); padding: 6px 12px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s; font-size: 12px;" onmouseover="this.style.background='rgba(59, 130, 246, 0.2)'" onmouseout="this.style.background='rgba(59, 130, 246, 0.1)'">Saqlash</button>
+                                <input type="text" id="team-name-input" value="{{ profile.builder_info.group_chat_room.group_name|default:'Mening Jamoam' }}" style="font-size: 18px; font-weight: 800; background: transparent; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: var(--input-text); padding: 4px 8px; outline: none; width: 100%; max-width: 250px;">
+                                <button onclick="renameTeam({{ profile.builder_info.group_chat_room.id }})" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.3); padding: 6px 12px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 12px;">Saqlash</button>
                             </div>
                             <p style="font-size: 13px; color: var(--text-muted); margin: 2px 0 0 0;">Jamoangiz nomi va a'zolarini shu yerdan boshqaring</p>
                         </div>
                     </div>
                     <div style="display: flex; gap: 12px;">
-                        <a href="{% url 'chat:chat' %}" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 18px; font-size: 13px; font-weight: 700; border-radius: 10px; background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.3); text-decoration: none; transition: all 0.2s ease;" onmouseover="this.style.background='rgba(59, 130, 246, 0.2)'; this.style.borderColor='rgba(59, 130, 246, 0.5)'" onmouseout="this.style.background='rgba(59, 130, 246, 0.1)'; this.style.borderColor='rgba(59, 130, 246, 0.3)'">
+                        <a href="{% url 'chat:chat' %}" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 18px; font-size: 13px; font-weight: 700; border-radius: 10px; background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.3); text-decoration: none;">
                             <i class="fa-solid fa-comments"></i> Guruhga o'tish
                         </a>
-                        <button onclick="openTeamModal()" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 18px; font-size: 13px; font-weight: 700; border-radius: 10px; background: linear-gradient(45deg, var(--active-text-blue), #fb923c); color: #fff; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3); transition: all 0.2s ease;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(255, 107, 0, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(255, 107, 0, 0.3)'">
+                        <button onclick="openTeamModal()" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 18px; font-size: 13px; font-weight: 700; border-radius: 10px; background: linear-gradient(45deg, var(--active-text-blue), #fb923c); border: none; cursor: pointer;">
                             <i class="fa-solid fa-user-plus"></i> A'zo qo'shish
                         </button>
                     </div>
@@ -431,18 +425,18 @@
 
                 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;">
                     {% for member in profile.builder_info.members.all %}
-                        <div style="padding: 20px; display: flex; flex-direction: column; align-items: center; text-align: center; border-radius: 16px; border: 1px solid rgba(255, 107, 0, 0.15); background: linear-gradient(145deg, rgba(255, 107, 0, 0.05) 0%, rgba(0,0,0,0) 100%); transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.1); position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.15)'; this.style.borderColor='rgba(255, 107, 0, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'; this.style.borderColor='rgba(255, 107, 0, 0.15)'">
+                        <div style="padding: 20px; display: flex; flex-direction: column; align-items: center; text-align: center; border-radius: 16px; border: 1px solid rgba(255, 107, 0, 0.15); background: linear-gradient(145deg, rgba(255, 107, 0, 0.05) 0%, rgba(0,0,0,0) 100%);">
                             <div style="width: 70px; height: 70px; border-radius: 50%; padding: 3px; background: linear-gradient(45deg, var(--active-text-blue), #fb923c); margin-bottom: 12px;">
-                                <img src="{{ member.profile.get_avatar_url }}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid var(--bg-main); background: black;">
+                                <img src="{{ member.profile.get_avatar_url }}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; background: black;">
                             </div>
                             <h3 style="font-size: 15px; font-weight: 800; color: var(--text-main); margin-bottom: 4px;">{{ member.get_full_name|default:member.username }}</h3>
                             <p style="font-size: 12px; font-weight: 600; color: var(--active-text-blue); margin-bottom: 16px; background: rgba(255, 107, 0, 0.1); padding: 4px 10px; border-radius: 8px;">{{ member.profile.get_role_display }}</p>
-                            <button onclick="removeTeamMember({{ member.id }}, '{{ member.username }}')" class="btn-submit" style="width: 100%; padding: 8px; font-size: 13px; font-weight: 700; margin-top: auto; background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); box-shadow: none; display: flex; justify-content: center; gap: 6px; align-items: center; transition: 0.2s;" onmouseover="this.style.background='#ef4444'; this.style.color='#fff'" onmouseout="this.style.background='rgba(239,68,68,0.1)'; this.style.color='#ef4444'">
+                            <button onclick="removeTeamMember({{ member.id }}, '{{ member.username }}')" class="btn-submit" style="width: 100%; padding: 8px; font-size: 13px; font-weight: 700; margin-top: auto; background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); box-shadow: none;">
                                 <i class="fa-solid fa-user-xmark"></i> Jamoadan o'chirish
                             </button>
                         </div>
                     {% empty %}
-                        <div style="grid-column: 1 / -1; padding: 40px 24px; text-align: center; background: rgba(255,255,255,0.02); border-radius: 16px; border: 1px dashed rgba(255, 107, 0, 0.3); color: var(--text-muted); font-size: 14px; font-weight: 500; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;">
+                        <div style="grid-column: 1 / -1; padding: 40px 24px; text-align: center; background: rgba(255,255,255,0.02); border-radius: 16px; border: 1px dashed rgba(255, 107, 0, 0.3); color: var(--text-muted); font-size: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;">
                             <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(255, 107, 0, 0.1); color: var(--active-text-blue); display: flex; align-items: center; justify-content: center; font-size: 24px;">
                                 <i class="fa-solid fa-users-slash"></i>
                             </div>
@@ -455,49 +449,10 @@
                         <i class="fa-solid fa-users" style="font-size: 40px; color: var(--text-muted); margin-bottom: 16px;"></i>
                         <h3 style="font-size: 18px; margin-bottom: 8px;">Siz jamoa rahbari emassiz</h3>
                         <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">Siz 2 tagacha jamoaga a'zo bo'lishingiz yoki o'z jamoangizni yaratishingiz mumkin.</p>
-                        {% if request.user.joined_teams.count < 2 %}
-                            <button onclick="showToast('Jamoa yaratish API ga ulanadi', 'error')" class="btn-submit" style="width: auto; margin: 0 auto; display: inline-flex; align-items: center; gap: 8px;">
-                                <i class="fa-solid fa-plus"></i> Jamoa Yaratish
-                            </button>
-                        {% endif %}
                     </div>
                 {% endif %}
-
-                <!-- 🏢 A'ZO BO'LGAN JAMOALARIM -->
-                <div style="margin-top: 20px; border-top: 1px dashed var(--border-color); padding-top: 30px;">
-                    <h2 style="font-size: 18px; font-weight: 800; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
-                        <i class="fa-solid fa-building-user" style="color: var(--active-text-blue);"></i> Men a'zo bo'lgan jamoalar
-                    </h2>
-
-                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">
-                        {% for team in request.user.joined_teams.all %}
-                            <div style="padding: 16px; display: flex; flex-direction: column; gap: 16px; border-radius: 16px; border: 1px solid rgba(59, 130, 246, 0.15); background: linear-gradient(145deg, rgba(59, 130, 246, 0.05) 0%, rgba(0,0,0,0) 100%); transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-                                
-                                <div style="display: flex; align-items: center; gap: 14px;">
-                                    <img src="{{ team.profile.get_avatar_url }}" style="width: 54px; height: 54px; border-radius: 14px; object-fit: cover; border: 2px solid var(--active-text-blue); background: black;">
-                                    <div>
-                                        <h3 style="font-size: 16px; font-weight: 800; color: var(--text-main); margin-bottom: 4px;">{{ team.profile.user.get_full_name|default:team.profile.user.username }}</h3>
-                                        <div style="display: flex; align-items: center; gap: 6px;">
-                                            <span style="background: rgba(59, 130, 246, 0.1); color: var(--active-text-blue); padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 700;"><i class="fa-solid fa-briefcase"></i> {{ team.profession }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <a href="{% url 'chat:chat' %}?room_id={{ team.group_chat_room.id }}" class="btn-submit" style="width: 100%; margin-top: 0; font-size: 13px; text-decoration: none; display: flex; justify-content: center; align-items: center; gap: 8px;">
-                                    <i class="fa-solid fa-comments"></i> Guruhga o'tish
-                                </a>
-                            </div>
-                        {% empty %}
-                            <div style="grid-column: 1 / -1; padding: 24px; text-align: center; background: var(--input-bg); border-radius: 16px; color: var(--text-muted); font-size: 14px; font-weight: 500; border: 1px dashed rgba(255,255,255,0.1);">
-                                Siz hali hech qanday jamoaga a'zo emassiz.
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-
             </div>
 
-            <!-- 4. XAVFSIZLIK -->
             <div id="tab-security" class="tab-pane">
                 <div class="pane-title"><i class="fa-solid fa-lock" style="color: var(--active-text-blue);"></i> Xavfsizlik</div>
                 <div class="form-group">
@@ -518,9 +473,8 @@
         </div>
     </div>
 
-    <!-- MODAL: TEAM QO'SHISH -->
     <div id="teamSearchModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); z-index: 1000; display: none; align-items: center; justify-content: center;">
-        <div style="background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 20px; width: 90%; max-width: 400px; padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
+        <div style="background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 20px; width: 90%; max-width: 400px; padding: 20px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <h3 style="font-size: 18px; font-weight: 800;">A'zo qo'shish</h3>
                 <button onclick="closeTeamModal()" style="background: transparent; border: none; color: var(--text-muted); font-size: 20px; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
@@ -530,22 +484,52 @@
         </div>
     </div>
 
-    <!-- MODAL: MAXSUS TASDIQLASH (CONFIRM) -->
     <div id="customConfirmModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); z-index: 1000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s;">
-        <div style="background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 20px; width: 90%; max-width: 360px; padding: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); text-align: center; transform: translateY(20px); transition: transform 0.2s;">
+        <div style="background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 20px; width: 90%; max-width: 360px; padding: 24px; text-align: center; transform: translateY(20px); transition: transform 0.2s;">
             <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(239, 68, 68, 0.1); color: #ef4444; font-size: 28px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px auto;">
                 <i class="fa-solid fa-triangle-exclamation"></i>
             </div>
             <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 8px;">Tasdiqlang</h3>
             <p id="customConfirmMessage" style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.5;"></p>
             <div style="display: flex; gap: 12px;">
-                <button id="customConfirmCancelBtn" style="flex: 1; padding: 12px; border-radius: 12px; background: rgba(255,255,255,0.05); color: var(--text-main); border: 1px solid var(--border-color); font-weight: 700; cursor: pointer; transition: 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">Bekor qilish</button>
-                <button id="customConfirmOkBtn" style="flex: 1; padding: 12px; border-radius: 12px; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); font-weight: 700; cursor: pointer; transition: 0.2s;" onmouseover="this.style.background='#ef4444'; this.style.color='#fff'" onmouseout="this.style.background='rgba(239, 68, 68, 0.1)'; this.style.color='#ef4444'">Ha, o'chirish</button>
+                <button id="customConfirmCancelBtn" style="flex: 1; padding: 12px; border-radius: 12px; background: rgba(255,255,255,0.05); color: var(--text-main); border: 1px solid var(--border-color); font-weight: 700; cursor: pointer;">Bekor qilish</button>
+                <button id="customConfirmOkBtn" style="flex: 1; padding: 12px; border-radius: 12px; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); font-weight: 700; cursor: pointer;">Ha, o'chirish</button>
             </div>
         </div>
     </div>
 
     <script>
+        // ⚡️ REJIM TO'LIQ INTEGRATSIYASI VA LOCALSTORAGE BILAN ISHLASH TIZIMI
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleBtn = document.getElementById('settingsThemeToggleBtn');
+            const statusText = document.getElementById('settings-theme-text');
+
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            syncSettingsThemeUI(currentTheme);
+
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', () => {
+                    let theme = document.documentElement.getAttribute('data-theme');
+                    let newTheme = theme === 'dark' ? 'light' : 'dark';
+                    document.documentElement.setAttribute('data-theme', newTheme);
+                    localStorage.setItem('theme', newTheme);
+                    syncSettingsThemeUI(newTheme);
+                });
+            }
+
+            function syncSettingsThemeUI(theme) {
+                const icon = toggleBtn.querySelector('i');
+                if (theme === 'dark') {
+                    icon.className = 'fa-solid fa-sun';
+                    statusText.innerText = 'Yorug\' kun';
+                } else {
+                    icon.className = 'fa-solid fa-moon';
+                    statusText.innerText = 'Kiber tun';
+                }
+            }
+        });
+
         window.customConfirm = function(message, onConfirm) {
             const modal = document.getElementById('customConfirmModal');
             const msgEl = document.getElementById('customConfirmMessage');
@@ -555,24 +539,14 @@
 
             msgEl.innerText = message;
             modal.style.display = 'flex';
-            setTimeout(() => {
-                modal.style.opacity = '1';
-                modalContent.style.transform = 'translateY(0)';
-            }, 10);
+            setTimeout(() => { modal.style.opacity = '1'; modalContent.style.transform = 'translateY(0)'; }, 10);
 
             const closeIt = () => {
-                modal.style.opacity = '0';
-                modalContent.style.transform = 'translateY(20px)';
+                modal.style.opacity = '0'; modalContent.style.transform = 'translateY(20px)';
                 setTimeout(() => { modal.style.display = 'none'; }, 200);
-                okBtn.onclick = null;
-                cancelBtn.onclick = null;
             };
-
             cancelBtn.onclick = closeIt;
-            okBtn.onclick = () => {
-                closeIt();
-                if(onConfirm) onConfirm();
-            };
+            okBtn.onclick = () => { closeIt(); if(onConfirm) onConfirm(); };
         };
 
         function openTab(tabId, btn) {
@@ -580,188 +554,22 @@
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             if (btn) btn.classList.add('active');
-            else document.querySelector(`.tab-btn[onclick*="${tabId}"]`).classList.add('active');
             window.history.replaceState(null, null, `#${tabId}`);
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const tabParam = urlParams.get('tab');
             const hash = window.location.hash;
-            
-            let targetTab = null;
-            if (tabParam) {
-                targetTab = 'tab-' + tabParam;
-            } else if (hash) {
-                targetTab = hash.substring(1);
-            }
-            
-            if (targetTab && document.getElementById(targetTab)) {
-                openTab(targetTab, null);
-            }
+            if (hash && document.getElementById(hash.substring(1))) { openTab(hash.substring(1), null); }
         });
 
-        // TEAM MANAGEMENT LOGIC
-        window.openTeamModal = function() {
-            document.getElementById('teamSearchModal').style.display = 'flex';
-            setTimeout(() => {
-                const searchInput = document.getElementById('teamSearchInput');
-                if(searchInput) searchInput.focus();
-            }, 100);
-        }
-
-        window.closeTeamModal = function() {
-            document.getElementById('teamSearchModal').style.display = 'none';
-            const resBox = document.getElementById('teamSearchResults');
-            if(resBox) resBox.innerHTML = '';
-            const searchInput = document.getElementById('teamSearchInput');
-            if(searchInput) searchInput.value = '';
-        }
-
-        window.renameTeam = function(roomId) {
-            const newName = document.getElementById('team-name-input').value.trim();
-            if (!newName) return showToast("Nomi bo'sh bo'lishi mumkin emas", "error");
-            
-            const formData = new FormData();
-            formData.append('name', newName);
-            
-            fetch(`/chat/api/group/${roomId}/update/`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}'
-                },
-                body: formData
-            })
-            .then(r => r.json())
-            .then(data => {
-                if (data.success) {
-                    showToast("Jamoa nomi muvaffaqiyatli saqlandi!", "success");
-                    const teamTitles = document.querySelectorAll('h3, h2');
-                    teamTitles.forEach(t => {
-                        // Update the text directly if we find the team title
-                        if (t.innerText.trim() === document.getElementById('team-name-input').defaultValue || t.innerText.trim() === "Mening Jamoam") {
-                            t.innerText = data.new_name;
-                        }
-                    });
-                    document.getElementById('team-name-input').defaultValue = data.new_name;
-                } else {
-                    showToast(data.error || "Xatolik yuz berdi", "error");
-                }
-            })
-            .catch(err => {
-                showToast("Tarmoq xatosi", "error");
-            });
-        }
-
-        window.searchTeamUsers = function() {
-            const q = document.getElementById('teamSearchInput').value.trim();
-            const resBox = document.getElementById('teamSearchResults');
-            if(q.length < 2) {
-                resBox.innerHTML = '';
-                return;
-            }
-            
-            fetch(`/api/team/search/?q=${encodeURIComponent(q)}`)
-            .then(r => r.json())
-            .then(data => {
-                if(data.length === 0) {
-                    resBox.innerHTML = '<div style="padding: 10px; color: var(--text-muted); text-align: center;">Foydalanuvchi topilmadi.</div>';
-                    return;
-                }
-                
-                resBox.innerHTML = data.map(u => `
-                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px; border-bottom: 1px solid var(--border-color);">
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            ${u.avatar 
-                                ? `<img src="${u.avatar}" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover;">` 
-                                : `<div style="width: 36px; height: 36px; border-radius: 50%; background: var(--input-bg); color: var(--text-muted); display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-user"></i></div>`
-                            }
-                            <div>
-                                <div style="font-weight: 700; font-size: 13px; color: var(--text-main);">${u.full_name}</div>
-                                <div style="font-size: 11px; color: var(--text-muted);">${u.username} • ${u.role}</div>
-                            </div>
-                        </div>
-                        <button onclick="addTeamMember(${u.id})" class="btn-submit" style="padding: 6px 12px; font-size: 12px; border-radius: 8px; width: auto; margin-top: 0;">
-                            Taklif qilish
-                        </button>
-                    </div>
-                `).join('');
-            });
-        }
-
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
-
-        window.addTeamMember = function(userId) {
-            fetch('/api/team/add/' + userId + '/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCookie('csrftoken')
-                }
-            })
-            .then(r => r.json())
-            .then(d => {
-                if(d.success) {
-                    showToast(d.message || "Taklif yuborildi!", 'success');
-                    closeTeamModal();
-                } else {
-                    showToast(d.error || d.message || "Xatolik yuz berdi", 'error');
-                }
-            });
-        }
-
-        window.removeTeamMember = function(userId, username) {
-            customConfirm(`Rostdan ham ${username} ni jamoadan o'chirmoqchimisiz?`, () => {
-                fetch('/api/team/remove/' + userId + '/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': getCookie('csrftoken')
-                    }
-                })
-                .then(r => r.json())
-                .then(d => {
-                    if(d.success) {
-                        location.reload();
-                    } else {
-                        showToast(d.error || d.message || "Xatolik yuz berdi", 'error');
-                    }
-                });
-            });
-        }
-
-        function previewAvatar(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    var preview = document.getElementById('avatar-preview');
-                    var placeholder = document.getElementById('avatar-preview-placeholder');
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                    if(placeholder) placeholder.style.display = 'none';
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
+        window.openTeamModal = function() { document.getElementById('teamSearchModal').style.display = 'flex'; }
+        window.closeTeamModal = function() { document.getElementById('teamSearchModal').style.display = 'none'; }
 
         function togglePlan(type) {
             const bg = document.getElementById('plan-toggle-bg');
             const bMonth = document.getElementById('btn-monthly');
             const bYear = document.getElementById('btn-yearly');
-            
+
             const pricePro = document.getElementById('price-pro');
             const priceVip = document.getElementById('price-vip');
             const periodPro = document.getElementById('period-pro');
@@ -769,57 +577,45 @@
 
             if (type === 'yearly') {
                 bg.style.left = 'calc(100% - 126px)';
-                bYear.style.color = '#fff';
-                bMonth.style.color = '#94a3b8';
-                
+                bYear.style.color = '#fff'; bMonth.style.color = '#94a3b8';
+
                 pricePro.style.opacity = 0; priceVip.style.opacity = 0;
                 setTimeout(() => {
-                    pricePro.innerText = '300,000';
-                    periodPro.innerText = "so'm / yil";
-                    priceVip.innerText = '500,000';
-                    periodVip.innerText = "so'm / yil";
+                    pricePro.innerText = '999,000'; periodPro.innerText = "so'm / yil";
+                    priceVip.innerText = '1,999,000'; periodVip.innerText = "so'm / yil";
                     pricePro.style.opacity = 1; priceVip.style.opacity = 1;
                 }, 150);
             } else {
                 bg.style.left = '6px';
-                bMonth.style.color = '#fff';
-                bYear.style.color = '#94a3b8';
-                
+                bMonth.style.color = '#fff'; bYear.style.color = '#94a3b8';
+
                 pricePro.style.opacity = 0; priceVip.style.opacity = 0;
                 setTimeout(() => {
-                    pricePro.innerText = '30,000';
-                    periodPro.innerText = "so'm / oy";
-                    priceVip.innerText = '50,000';
-                    periodVip.innerText = "so'm / oy";
+                    pricePro.innerText = '99,000'; periodPro.innerText = "so'm / oy";
+                    priceVip.innerText = '199,000'; periodVip.innerText = "so'm / oy";
                     pricePro.style.opacity = 1; priceVip.style.opacity = 1;
                 }, 150);
             }
-            pricePro.style.transition = 'opacity 0.15s ease';
-            priceVip.style.transition = 'opacity 0.15s ease';
+        }
+
+        function previewAvatar(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) { document.getElementById('avatar-preview').src = e.target.result; }
+                reader.readAsDataURL(input.files[0]);
+            }
         }
     </script>
 
-    <!-- CUSTOM TOAST NOTIFICATION -->
     <style>
-        .custom-toast {
-            position: fixed; top: 20px; right: 20px;
-            background: var(--card-gradient); backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 107, 0, 0.3); color: #fff;
-            padding: 16px 24px; border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            z-index: 9999; display: flex; align-items: center; gap: 12px;
-            transform: translateX(120%); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+        .custom-toast { position: fixed; top: 20px; right: 20px; background: var(--card-gradient); backdrop-filter: blur(24px); border: 1px solid rgba(255, 107, 0, 0.3); color: #fff; padding: 16px 24px; border-radius: 12px; z-index: 9999; display: flex; align-items: center; gap: 12px; transform: translateX(120%); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .custom-toast.show { transform: translateX(0); }
         .custom-toast.error { border-color: rgba(239, 68, 68, 0.5); }
         .custom-toast i { font-size: 20px; }
         .custom-toast.error i { color: #ef4444; }
         .custom-toast.success i { color: #10b981; }
     </style>
-    <div id="custom-toast" class="custom-toast">
-        <i class="fa-solid fa-circle-check"></i>
-        <span id="custom-toast-msg">Xabar</span>
-    </div>
+    <div id="custom-toast" class="custom-toast"><i class="fa-solid fa-circle-check"></i><span id="custom-toast-msg">Xabar</span></div>
     <script>
         window.showToast = function(message, type = 'success') {
             const toast = document.getElementById('custom-toast');
@@ -827,15 +623,9 @@
             const icon = toast.querySelector('i');
             msg.innerText = message;
             toast.className = 'custom-toast';
-            if (type === 'error') {
-                toast.classList.add('error');
-                icon.className = 'fa-solid fa-circle-exclamation';
-            } else {
-                toast.classList.add('success');
-                icon.className = 'fa-solid fa-circle-check';
-            }
-            toast.classList.add('show');
-            setTimeout(() => { toast.classList.remove('show'); }, 3000);
+            if (type === 'error') { toast.classList.add('error'); icon.className = 'fa-solid fa-circle-exclamation'; }
+            else { toast.classList.add('success'); icon.className = 'fa-solid fa-circle-check'; }
+            toast.classList.add('show'); setTimeout(() => { toast.classList.remove('show'); }, 3000);
         }
     </script>
 </body>
