@@ -11,6 +11,7 @@ Git'ga push QILMANG — u .gitignore orqali himoyalangan.
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+from django.utils.translation import gettext_lazy as _  # i18n uchun zarur import
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,7 +35,7 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 # Application definition
 
 INSTALLED_APPS = [
-    'daphne',                          # Channels ASGI server (birinchi bo'lishi shart)
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,17 +46,17 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
 
     # Third Party Apps
-    'channels',                        # Django Channels (WebSocket)
+    'channels',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'tailwind',
 
-    # Local Apps
+    # Local Apps ── TARTIBNI SHUNDAY O'ZGARTIRING:
+    'build',                           # <── 'build' tepaga chiqdi (chat'dan oldin yuklanadi)
     'accounts.apps.AccountConfig',
-    'build',
-    'chat',                            # Chat ilovasi
+    'chat',                            # <── 'chat' pastga tushdi
     'rest_framework',
 ]
 
@@ -67,7 +68,7 @@ if DEBUG:
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',  # <--- Shuni joylashtiring
+    'django.middleware.locale.LocaleMiddleware',  # Tillar uchun javobgar Middleware (Joylashuvi to'g'ri)
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -158,18 +159,15 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
+# Internationalization (Tillarni Sozlash)
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
 LANGUAGE_CODE = 'uz'
 
-import os
-from django.utils.translation import gettext_lazy as _
-
-# Tillarni ro'yxatga olish
 LANGUAGES = [
     ('uz', _("O'zbekcha")),
     ('ru', _('Русский')),
+    ('en', _('English')),
 ]
 
 TIME_ZONE = 'Asia/Tashkent'
@@ -177,9 +175,13 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-LOCALE_PATHS = (
+LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale'),
-)
+]
+
+# Tillar almashtirilganda xotirada saqlanib qolishi uchun Cookie nomi
+LANGUAGE_COOKIE_NAME = 'django_language'
+LANGUAGE_COOKIE_AGE = 31536000 # Cookie 1 yil davomida saqlanadi
 
 
 # Django Allauth & Sites Sozlamalari
@@ -229,4 +231,3 @@ MEDIA_ROOT = BASE_DIR / 'media'
 TAILWIND_APP_NAME = "templates"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-

@@ -88,7 +88,7 @@
     <div class="profile-container">
 
         <div class="profile-top-navigation">
-            <a href="{% url 'build:post_list' %}" class="back-market-btn">
+            <a href="{% url 'build:home' %}" class="back-market-btn">
                 <i class="fa-solid fa-arrow-left"></i> Orqaga qaytish
             </a>
 
@@ -105,6 +105,8 @@
                 <p style="font-size: 13px; margin-top: 6px; color: var(--active-text-blue); font-weight: 600;"><i class="fa-solid fa-location-dot"></i> {{ profile.get_city_display|default:"Shahar kiritilmagan" }}</p>
             </div>
             <a href="{% url 'build:profile_edit' %}" class="edit-p-btn"><i class="fa-regular fa-pen-to-square"></i> Tahrirlash</a>
+            <a href="{% url 'build:profile_edit' %}" class="edit-p-btn"><i class="fa-regular fa-pen-to-square"></i> Tahrirlash</a>
+
         </div>
 
         <div class="profile-tabs">

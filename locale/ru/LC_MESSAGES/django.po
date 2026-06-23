@@ -1,38 +1,155 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-22 14:50+0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2026-06-23 10:00+0500\n"
+"PO-Revision-Date: 2026-06-23 10:00+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language-Team: Russian <ru@li.org>\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
-"(n%100>=11 && n%100<=14)? 2 : 3);\n"
-#: conf/settings.py:171
-msgid "O'zbekcha"
-msgstr ""
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: conf/settings.py:172
-msgid "Русский"
-msgstr ""
+msgid "Usta Qidirish"
+msgstr "Поиск мастеров"
 
+msgid "Bosh sahifa"
+msgstr "Главная"
+
+msgid "Chatlar"
+msgstr "Чаты"
+
+msgid "Rejimni o'zgartirish"
+msgstr "Переключить тему"
+
+msgid "Profil Sozlamalari"
+msgstr "Настройки профиля"
+
+msgid "Navigator"
+msgstr "Навигатор"
+
+msgid "Xabarlar"
+msgstr "Сообщения"
+
+msgid "Tizim"
+msgstr "Система"
+
+msgid "Ish jarayonlari"
+msgstr "Рабочие процессы"
+
+msgid "Kalit so'z / Ism"
+msgstr "Ключевое слово / Имя"
+
+msgid "Usta ismi yoki kalit so'z..."
+msgstr "Имя мастера или ключевое слово..."
+
+msgid "Mutaxassislik"
+msgstr "Специальность"
+
+msgid "Barchasi"
+msgstr "Все"
+
+msgid "Shahar / Viloyat"
+msgstr "Город / Регион"
+
+msgid "Toshkent shahri"
+msgstr "Город Ташкент"
+
+msgid "Toshkent viloyati"
+msgstr "Ташкентская область"
+
+msgid "Andijon viloyati"
+msgstr "Андижанская область"
+
+msgid "Buxoro viloyati"
+msgstr "Бухарская область"
+
+msgid "Minimal Reyting"
+msgstr "Минимальный рейтинг"
+
+msgid "Premium"
+msgstr "Премиум"
+
+msgid "Yuqori"
+msgstr "Высокий"
+
+msgid "Yaxshi"
+msgstr "Хороший"
+
+msgid "Qidirish"
+msgstr "Поиск"
+
+msgid "Ish tajribasi"
+msgstr "Опыт работы"
+
+msgid "yil"
+msgstr "лет"
+
+msgid "Reyting"
+msgstr "Рейтинг"
+
+msgid "Bog'lanish"
+msgstr "Связаться"
+
+msgid "Hech qanday usta topilmadi"
+msgstr "Мастера не найдены"
+
+msgid "Qidiruv shartlariga mos keladigan Quruvchilar hozircha mavjud emas."
+msgstr "Строители, соответствующие условиям поиска, пока отсутствуют."
+
+msgid "Kirish"
+msgstr "Войти"
 
 msgid "Sozlamalar"
 msgstr "Настройки"
 
-msgid "Orqaga"
-msgstr "Назад"
+msgid "Tizimdan chiqish"
+msgstr "Выйти"
 
-msgid "Asosiy ma'lumotlar"
-msgstr "Основные данные"
+
+
+
+msgid "Toshkent shahri"
+msgstr "Город Ташкент"
+
+msgid "Toshkent viloyati"
+msgstr "Ташкентская область"
+
+msgid "Andijon viloyati"
+msgstr "Андижанская область"
+
+msgid "Buxoro viloyati"
+msgstr "Бухарская область"
+
+msgid "Farg'ona viloyati"
+msgstr "Ферганская область"
+
+msgid "Jizzax viloyati"
+msgstr "Джизакская область"
+
+msgid "Xorazm viloyati"
+msgstr "Хорезмская область"
+
+msgid "Namangan viloyati"
+msgstr "Наманганская область"
+
+msgid "Navoiy viloyati"
+msgstr "Навоийская область"
+
+msgid "Qashqadaryo viloyati"
+msgstr "Кашкадарьинская область"
+
+msgid "Samarqand viloyati"
+msgstr "Самаркандская область"
+
+msgid "Sirdaryo viloyati"
+msgstr "Сырдарьинская область"
+
+msgid "Surxondaryo viloyati"
+msgstr "Сурхандарьинская область"
+
+msgid "Qoraqalpog'iston Respublikasi"
+msgstr "Республика Каракалпакстан"

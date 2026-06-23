@@ -1,5 +1,6 @@
 from django.urls import path
 from build import views
+from build.views import workflow_list_view
 
 app_name = 'build'
 
@@ -9,6 +10,8 @@ urlpatterns = [
 
     # ── Market ─────────────────────────────────────────────────────────────────
     path('posts/', views.PostListView.as_view(), name='post_list'),
+
+    path('workflow', workflow_list_view, name='workflow'),
     
     path('post/create/', views.post_create_view, name='post_create'),
     path('api/post/create/', views.PostCreateAPIView.as_view(), name='api_post_create'),

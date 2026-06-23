@@ -1,0 +1,74 @@
+msgid "Usta Qidirish"
+msgstr "Find a Master"
+
+msgid "Bosh sahifa"
+msgstr "Home"
+
+msgid "Chatlar"
+msgstr "Chats"
+
+msgid "Rejimni o'zgartirish"
+msgstr "Toggle Theme"
+
+msgid "Profil Sozlamalari"
+msgstr "Profile Settings"
+
+msgid "Navigator"
+msgstr "Navigator"
+
+msgid "Xabarlar"
+msgstr "Messages"
+
+msgid "Tizim"
+msgstr "System"
+
+msgid "Ish jarayonlari"
+msgstr "Workflows"
+
+msgid "Kalit so'z / Ism"
+msgstr "Keyword / Name"
+
+msgid "Usta ismi yoki kalit so'z..."
+msgstr "Master's name or keyword..."
+
+msgid "Mutaxassislik"
+msgstr "Profession"
+
+msgid "Barchasi"
+msgstr "All"
+
+msgid "Shahar / Viloyat"
+msgstr "City / Region"
+
+msgid "Minimal Reyting"
+msgstr "Minimum Rating"
+
+msgid "Premium"
+msgstr "Premium"
+
+msgid "Yuqori"
+msgstr "High"
+
+msgid "Yaxshi"
+msgstr "Good"
+
+msgid "Qidirish"
+msgstr "Search"
+
+msgid "Ish tajribasi"
+msgstr "Experience"
+
+msgid "yil"
+msgstr "years"
+
+msgid "Reyting"
+msgstr "Rating"
+
+msgid "Bog'lanish"
+msgstr "Contact"
+
+msgid "Hech qanday usta topilmadi"
+msgstr "No masters found"
+
+msgid "Qidiruv shartlariga mos keladigan Quruvchilar hozircha mavjud emas."
+msgstr "No builders currently match your search criteria."

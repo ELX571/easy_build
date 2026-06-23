@@ -1,4 +1,5 @@
 from django.db import models
+from build.models import BuilderProfile  # Modelni to'g'ridan-to'g'ri import qilamiz
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -112,3 +113,12 @@ class Message(models.Model):
             'time': self.time_str(),
             'is_read': self.is_read,
         }
+
+
+# chat/models.py ichida
+team_profile = models.ForeignKey(
+    'build.BuilderProfile',  # <-- Aynan shu ko'rinishda (Katta 'B' va 'P' harflari bilan)
+    on_delete=models.SET_NULL,
+    null=True,
+    blank=True
+)
