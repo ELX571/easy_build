@@ -31,7 +31,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'whitenoise.runserver_nostatic',,
+    'whitenoise.runserver_nostatic',
     'django.contrib.sites',
     'django.contrib.humanize',
 
@@ -119,7 +119,6 @@ DATABASES = {
         default=f"postgres://{os.getenv('DB_USER', 'postgres')}:{os.getenv('DB_PASSWORD', '')}@{os.getenv('DB_HOST', '127.0.0.1')}:{os.getenv('DB_PORT', '5432')}/{os.getenv('DB_NAME', 'easy_build')}",
         conn_max_age=600
     )
-}
 }
 
 # ── Django Channels — InMemory (development) / Redis (production) ──
@@ -231,4 +230,5 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Tailwind va avtomatik yuklanish ilovasi nomi
 TAILWIND_APP_NAME = "templates"
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'STATIC_ROOT = BASE_DIR / 'staticfiles'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
