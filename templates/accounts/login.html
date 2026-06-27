@@ -382,7 +382,7 @@
         e.preventDefault();
         setLoading(true);
         try {
-            const res  = await fetch('/accounts/api/login/', {
+            const res  = await fetch('{% url "accounts:auth-login-api" %}', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCsrf() },
                 body: JSON.stringify({
@@ -393,7 +393,7 @@
             const json = await res.json();
             if (res.ok) {
                 showAlert('success', json.detail || 'Muvaffaqiyatli kirdingiz!');
-                setTimeout(() => { window.location.href = '/'; }, 800);
+                setTimeout(() => { window.location.href = '{% url "build:home" %}'; }, 800);
             } else {
                 const msgs = Object.values(json).flat().join(' ');
                 showAlert('error', msgs);

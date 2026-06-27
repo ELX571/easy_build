@@ -885,7 +885,7 @@
             
             setLoading(true);
             try {
-                const res = await fetch('/accounts/api/register/', {
+                const res = await fetch('{% url "accounts:auth-register-api" %}', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCsrf() },
                     body: JSON.stringify({
@@ -900,7 +900,7 @@
                 const json = await res.json();
                 if (res.ok) {
                     showAlert('success', json.detail || "Ro'yxatdan o'tdingiz!");
-                    setTimeout(() => { window.location.href = '/accounts/register/step-2/'; }, 900);
+                    setTimeout(() => { window.location.href = '{% url "accounts:second_register" %}'; }, 900);
                 } else {
                     showAlert('error', Object.values(json).flat().join(' '));
                 }

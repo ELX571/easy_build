@@ -1,23 +1,502 @@
-msgid "Usta Qidirish"
-msgstr "Find a Master"
+# English translations for EasyBuild
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
 
+# Navigation
 msgid "Bosh sahifa"
 msgstr "Home"
+
+msgid "Hamkasblar"
+msgstr "Colleagues"
+
+msgid "Market Pro"
+msgstr "Market Pro"
+
+msgid "Market Pro (B2B)"
+msgstr "Market Pro (B2B)"
+
+msgid "Usta Qidirish"
+msgstr "Find a Builder"
+
+msgid "Post yaratish"
+msgstr "Create Post"
 
 msgid "Chatlar"
 msgstr "Chats"
 
-msgid "Rejimni o'zgartirish"
-msgstr "Toggle Theme"
-
-msgid "Profil Sozlamalari"
-msgstr "Profile Settings"
+msgid "Xabarlar"
+msgstr "Messages"
 
 msgid "Navigator"
 msgstr "Navigator"
 
-msgid "Xabarlar"
-msgstr "Messages"
+msgid "Sozlamalar"
+msgstr "Settings"
+
+msgid "Orqaga"
+msgstr "Back"
+
+# Profile edit page
+msgid "Asosiy ma'lumotlar"
+msgstr "Basic Info"
+
+msgid "Verifikatsiya & Obunalar"
+msgstr "Verification & Subscriptions"
+
+msgid "Jamoa sozlamalari"
+msgstr "Team Settings"
+
+msgid "Xavfsizlik va Parol"
+msgstr "Security & Password"
+
+msgid "Tizimdan chiqish"
+msgstr "Sign Out"
+
+msgid "Shaxsiy ma'lumotlar"
+msgstr "Personal Information"
+
+msgid "Profil rasmini o'zgartirish"
+msgstr "Change Profile Photo"
+
+msgid "Ism:"
+msgstr "First Name:"
+
+msgid "Familiya:"
+msgstr "Last Name:"
+
+msgid "Telefon:"
+msgstr "Phone:"
+
+msgid "Shahar / Viloyat:"
+msgstr "City / Region:"
+
+msgid "Ma'lumot (Bio):"
+msgstr "About (Bio):"
+
+msgid "Ijtimoiy tarmoqlar (Ixtiyoriy)"
+msgstr "Social Networks (Optional)"
+
+msgid "O'zgarishlarni saqlash"
+msgstr "Save Changes"
+
+msgid "Profil muvaffaqiyatli yangilandi!"
+msgstr "Profile updated successfully!"
+
+msgid "Profilingiz muvaffaqiyatli yangilandi!"
+msgstr "Your profile has been updated successfully!"
+
+# Home page
+msgid "Qidirish..."
+msgstr "Search..."
+
+msgid "Barcha postlar"
+msgstr "All Posts"
+
+msgid "Ustalar"
+msgstr "Builders"
+
+msgid "Mijozlar"
+msgstr "Clients"
+
+msgid "Bog'lanish"
+msgstr "Contact"
+
+msgid "Saqlash"
+msgstr "Save"
+
+msgid "Like"
+msgstr "Like"
+
+msgid "Tahrirlash"
+msgstr "Edit"
+
+msgid "O'chirish"
+msgstr "Delete"
+
+msgid "Ko'proq ko'rish"
+msgstr "See More"
+
+msgid "Hech narsa topilmadi"
+msgstr "Nothing found"
+
+# Dashboard
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "E'lonlar"
+msgstr "Listings"
+
+msgid "Yangi e'lon"
+msgstr "New Listing"
+
+# Post list
+msgid "Market Pro - Qurilish E'lonlari"
+msgstr "Market Pro - Construction Listings"
+
+msgid "E'lon joylash"
+msgstr "Post Listing"
+
+msgid "Narxi:"
+msgstr "Price:"
+
+msgid "so'm"
+msgstr "UZS"
+
+msgid "Muallif:"
+msgstr "Author:"
+
+# Network
+msgid "Hamkasblar tarmog'i"
+msgstr "Colleagues Network"
+
+msgid "Qidirish"
+msgstr "Search"
+
+msgid "Taklif jo'natish"
+msgstr "Send Invitation"
+
+msgid "Xabar yozish"
+msgstr "Send Message"
+
+# Builder list
+msgid "Usta qidirish"
+msgstr "Find a Builder"
+
+msgid "Barcha ustalar"
+msgstr "All Builders"
+
+msgid "Mutaxassislik:"
+msgstr "Specialty:"
+
+msgid "Tajriba:"
+msgstr "Experience:"
+
+msgid "yil"
+msgstr "years"
+
+# Chat
+msgid "Yozing..."
+msgstr "Type a message..."
+
+msgid "Yuborish"
+msgstr "Send"
+
+msgid "Online"
+msgstr "Online"
+
+msgid "Offline"
+msgstr "Offline"
+
+# Auth pages
+msgid "Kirish"
+msgstr "Sign In"
+
+msgid "Ro'yxatdan o'tish"
+msgstr "Sign Up"
+
+msgid "Foydalanuvchi nomi"
+msgstr "Username"
+
+msgid "Parol"
+msgstr "Password"
+
+msgid "Parolni unutdingizmi?"
+msgstr "Forgot password?"
+
+msgid "Kirish / Ro'yxat"
+msgstr "Sign In / Sign Up"
+
+# Verification
+msgid "Oylik"
+msgstr "Monthly"
+
+msgid "Yillik"
+msgstr "Yearly"
+
+msgid "Bepul"
+msgstr "Free"
+
+msgid "Sotib olish"
+msgstr "Purchase"
+
+msgid "Joriy reja"
+msgstr "Current Plan"
+
+# Security
+msgid "Joriy parol:"
+msgstr "Current Password:"
+
+msgid "Yangi parol:"
+msgstr "New Password:"
+
+msgid "Parolni tasdiqlang:"
+msgstr "Confirm Password:"
+
+msgid "Parolni o'zgartirish"
+msgstr "Change Password"
+
+# Team
+msgid "Jamoa Sozlamalari"
+msgstr "Team Settings"
+
+msgid "Guruhga o'tish"
+msgstr "Go to Group"
+
+msgid "A'zo qo'shish"
+msgstr "Add Member"
+
+msgid "Mening Jamoam"
+msgstr "My Team"
+
+# Common
+msgid "Bekor qilish"
+msgstr "Cancel"
+
+msgid "Tasdiqlash"
+msgstr "Confirm"
+
+msgid "Ha"
+msgstr "Yes"
+
+msgid "Yo'q"
+msgstr "No"
+
+msgid "Xato yuz berdi"
+msgstr "An error occurred"
+
+msgid "Muvaffaqiyatli"
+msgstr "Success"
+
+msgid "Kiber tun"
+msgstr "Dark Mode"
+
+msgid "Yorug' kun"
+msgstr "Light Mode"
+
+msgid "O'zbekcha"
+msgstr "Uzbek"
+
+# Profile view
+msgid "Profil"
+msgstr "Profile"
+
+msgid "Postlar"
+msgstr "Posts"
+
+msgid "Yoqtirilganlar"
+msgstr "Liked"
+
+msgid "E'lon yo'q"
+msgstr "No listings"
+
+msgid "Hali hech qanday post qo'yilmagan"
+msgstr "No posts yet"
+
+msgid "Profil sozlamalari"
+msgstr "Profile Settings"
+
+# Regions
+msgid "Toshkent shahri"
+msgstr "Tashkent City"
+
+msgid "Toshkent viloyati"
+msgstr "Tashkent Region"
+
+msgid "Andijon viloyati"
+msgstr "Andijan Region"
+
+msgid "Buxoro viloyati"
+msgstr "Bukhara Region"
+
+msgid "Farg'ona viloyati"
+msgstr "Fergana Region"
+
+msgid "Jizzax viloyati"
+msgstr "Jizzakh Region"
+
+msgid "Namangan viloyati"
+msgstr "Namangan Region"
+
+msgid "Navoiy viloyati"
+msgstr "Navoiy Region"
+
+msgid "Qashqadaryo viloyati"
+msgstr "Kashkadarya Region"
+
+msgid "Samarkand viloyati"
+msgstr "Samarkand Region"
+
+msgid "Sirdaryo viloyati"
+msgstr "Sirdarya Region"
+
+msgid "Surxondaryo viloyati"
+msgstr "Surkhandarya Region"
+
+msgid "Xorazm viloyati"
+msgstr "Khorezm Region"
+
+msgid "Qoraqalpog'iston Respublikasi"
+msgstr "Republic of Karakalpakstan"
+
+# Role choices
+msgid "Buyurtmachi (Mijoz)"
+msgstr "Client"
+
+msgid "Quruvchi (Usta)"
+msgstr "Builder"
+
+msgid "Qurilish jamoasi"
+msgstr "Construction Team"
+
+# Form placeholders
+msgid "Ismingiz"
+msgstr "First Name"
+
+msgid "Familiyangiz"
+msgstr "Last Name"
+
+msgid "Email (ixtiyoriy)"
+msgstr "Email (Optional)"
+
+msgid "Parol (kamida 6 belgi)"
+msgstr "Password (min 6 characters)"
+
+msgid "Parolni takrorlang"
+msgstr "Repeat Password"
+
+msgid "+998 90 123 45 67"
+msgstr "+998 90 123 45 67"
+
+msgid "Masalan: Men 5 yillik tajribaga ega ustaman..."
+msgstr "E.g: I am a builder with 5 years of experience..."
+
+msgid "@username"
+msgstr "@username"
+
+msgid "Foydalanuvchi nomi yoki link"
+msgstr "Username or link"
+
+# Validation messages
+msgid "Bu username allaqachon band!"
+msgstr "This username is already taken!"
+
+msgid "Parollar mos emas!"
+msgstr "Passwords do not match!"
+
+# Verify tab
+msgid "Boshlang'ich"
+msgstr "Starter"
+
+msgid "Tizimga kirgan barcha foydalanuvchilar uchun standart tanishuv imkoniyatlari."
+msgstr "Standard introductory features for all logged-in users."
+
+msgid "Ko'k tasdiq belgisi"
+msgstr "Blue verification badge"
+
+msgid "Kuniga 1 ta e'lon joylash"
+msgstr "Post 1 listing per day"
+
+msgid "Kontaktlarni ko'rish"
+msgstr "View contacts"
+
+msgid "Faol"
+msgstr "Active"
+
+msgid "Eng ommabop"
+msgstr "Most Popular"
+
+msgid "so'm / oy"
+msgstr "UZS / month"
+
+msgid "so'm / yil"
+msgstr "UZS / year"
+
+msgid "Doimiy va jiddiy buyurtmalar oqimiga ega bo'lishni xohlovchi ustalar uchun."
+msgstr "For builders who want a steady and serious stream of orders."
+
+msgid "Yashil premium belgi"
+msgstr "Green premium badge"
+
+msgid "Cheksiz e'lon joylash"
+msgstr "Unlimited listings"
+
+msgid "Mijozlar kontaktlarini ochish"
+msgstr "Unlock client contacts"
+
+msgid "Yirik guruhlar, brigadirlar va B2B qurilish jamoalari uchun maxsus reja."
+msgstr "Special plan for large groups, foremen, and B2B construction teams."
+
+msgid "Oltin tasdiq belgisi"
+msgstr "Gold verification badge"
+
+msgid "O'z jamoasini yaratish"
+msgstr "Create your own team"
+
+msgid "Neon ramkali e'lonlar"
+msgstr "Neon framed listings"
+
+# Team tab
+msgid "Jamoangiz nomi va a'zolarini shu yerdan boshqaring"
+msgstr "Manage your team name and members from here"
+
+msgid "Jamoadan o'chirish"
+msgstr "Remove from team"
+
+msgid "Jamoangizga hali hech kim qo'shilmagan."
+msgstr "No one has been added to your team yet."
+
+msgid "Yuqoridagi 'A'zo qo'shish' tugmasini bosing!"
+msgstr "Click the 'Add Member' button above!"
+
+msgid "Siz jamoa rahbari emassiz"
+msgstr "You are not a team leader"
+
+msgid "Siz 2 tagacha jamoaga a'zo bo'lishingiz yoki o'z jamoangizni yaratishingiz mumkin."
+msgstr "You can join up to 2 teams or create your own."
+
+msgid "Parolni o'zgartirish tizimi ishlab chiqilmoqda"
+msgstr "Password change system is under development"
+
+# Modals
+msgid "Ism, username yoki telefon..."
+msgstr "Name, username or phone..."
+
+msgid "Tasdiqlang"
+msgstr "Confirm"
+
+msgid "Ha, o'chirish"
+msgstr "Yes, remove"
+
+# Home page additions
+msgid "Kerakli e'lonni qidiring..."
+msgstr "Search for listings..."
+
+msgid "Ustalar e'lonlari"
+msgstr "Builder listings"
+
+msgid "Mijozlar e'lonlari"
+msgstr "Client listings"
+
+msgid "Tasdiqlangan usta"
+msgstr "Verified builder"
+
+msgid "oldin"
+msgstr "ago"
+
+msgid "Iltimos, oldin tizimga kiring!"
+msgstr "Please sign in first!"
+
+msgid "Bu e'lonning muallifi mavjud emas."
+msgstr "The author of this listing does not exist."
+
+msgid "Bu sizning o'z e'loningiz!"
+msgstr "This is your own listing!"
+
+msgid "Xatolik yuz berdi!"
+msgstr "An error occurred!"
 
 msgid "Tizim"
 msgstr "System"
@@ -25,50 +504,15 @@ msgstr "System"
 msgid "Ish jarayonlari"
 msgstr "Workflows"
 
-msgid "Kalit so'z / Ism"
-msgstr "Keyword / Name"
+msgid "Rejimni o'zgartirish"
+msgstr "Toggle theme"
 
-msgid "Usta ismi yoki kalit so'z..."
-msgstr "Master's name or keyword..."
+# Network page additions
+msgid "Boshqa mijozlar e'lonlari"
+msgstr "Other client listings"
 
-msgid "Mutaxassislik"
-msgstr "Profession"
+msgid "Hamkasblar e'lonlari"
+msgstr "Colleague listings"
 
-msgid "Barchasi"
-msgstr "All"
-
-msgid "Shahar / Viloyat"
-msgstr "City / Region"
-
-msgid "Minimal Reyting"
-msgstr "Minimum Rating"
-
-msgid "Premium"
-msgstr "Premium"
-
-msgid "Yuqori"
-msgstr "High"
-
-msgid "Yaxshi"
-msgstr "Good"
-
-msgid "Qidirish"
-msgstr "Search"
-
-msgid "Ish tajribasi"
-msgstr "Experience"
-
-msgid "yil"
-msgstr "years"
-
-msgid "Reyting"
-msgstr "Rating"
-
-msgid "Bog'lanish"
-msgstr "Contact"
-
-msgid "Hech qanday usta topilmadi"
-msgstr "No masters found"
-
-msgid "Qidiruv shartlariga mos keladigan Quruvchilar hozircha mavjud emas."
-msgstr "No builders currently match your search criteria."
+msgid "Saqlashni bekor qilish"
+msgstr "Unsave"

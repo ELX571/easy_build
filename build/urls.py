@@ -6,7 +6,13 @@ app_name = 'build'
 
 urlpatterns = [
     # ── Bosh sahifa ────────────────────────────────────────────────────────────
-    path('', views.builder_list_view, name='home'),
+    path('', views.HomeView.as_view(), name='home'),
+    
+    # ── Tarmoq (Hamkasblar/O'xshash rollar) ──────────────────────────────────
+    path('network/', views.NetworkView.as_view(), name='network'),
+
+    # ── Usta Qidirish ──────────────────────────────────────────────────────────
+    path('builders/', views.builder_list_view, name='builder_list'),
 
     # ── Market ─────────────────────────────────────────────────────────────────
     path('posts/', views.PostListView.as_view(), name='post_list'),

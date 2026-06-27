@@ -930,13 +930,13 @@
             const file = document.getElementById('avatarInput').files[0];
             if (file) fd.append('avatar', file);
             try {
-                const res = await fetch('/accounts/api/second-register/', {
+                const res = await fetch('{% url "accounts:auth-second-register-api" %}', {
                     method: 'POST', headers: { 'X-CSRFToken': getCsrf() }, body: fd,
                 });
                 const json = await res.json();
                 if (res.ok) {
                     showAlert('success', json.detail || 'Profil saqlandi!');
-                    setTimeout(() => { window.location.href = '/'; }, 900);
+                    setTimeout(() => { window.location.href = '{% url "build:home" %}'; }, 900);
                 } else {
                     showAlert('error', Object.values(json).flat().join(' '));
                 }

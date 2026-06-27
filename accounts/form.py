@@ -1,43 +1,44 @@
 from django import forms
 from django.contrib.auth.models import User
 from accounts.models import Profile
+from django.utils.translation import gettext_lazy as _
 
 
 class RegisterForm(forms.Form):
     ROLE_CHOICES = (
-        ('client', 'Buyurtmachi (Mijoz)'),
-        ('builder', 'Quruvchi (Usta)'),
+        ('client', _('Buyurtmachi (Mijoz)')),
+        ('builder', _('Quruvchi (Usta)')),
     )
 
     first_name = forms.CharField(
         max_length=150, required=False,
-        widget=forms.TextInput(attrs={'placeholder': 'Ismingiz'})
+        widget=forms.TextInput(attrs={'placeholder': _('Ismingiz')})
     )
     last_name = forms.CharField(
         max_length=150, required=False,
-        widget=forms.TextInput(attrs={'placeholder': 'Familiyangiz'})
+        widget=forms.TextInput(attrs={'placeholder': _('Familiyangiz')})
     )
     username = forms.CharField(
         max_length=150,
-        widget=forms.TextInput(attrs={'placeholder': 'Foydalanuvchi nomi'})
+        widget=forms.TextInput(attrs={'placeholder': _('Foydalanuvchi nomi')})
     )
     email = forms.EmailField(
         required=False,
-        widget=forms.EmailInput(attrs={'placeholder': 'Email (ixtiyoriy)'})
+        widget=forms.EmailInput(attrs={'placeholder': _('Email (ixtiyoriy)')})
     )
     password = forms.CharField(
         min_length=6,
-        widget=forms.PasswordInput(attrs={'placeholder': 'Parol (kamida 6 belgi)'})
+        widget=forms.PasswordInput(attrs={'placeholder': _('Parol (kamida 6 belgi)')})
     )
     re_password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': 'Parolni takrorlang'})
+        widget=forms.PasswordInput(attrs={'placeholder': _('Parolni takrorlang')})
     )
     role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.Select())
 
     def clean_username(self):
         username = self.cleaned_data['username']
         if User.objects.filter(username=username).exists():
-            raise forms.ValidationError("Bu username allaqachon band!")
+            raise forms.ValidationError(_("Bu username allaqachon band!"))
         return username
 
     def clean(self):
@@ -45,33 +46,35 @@ class RegisterForm(forms.Form):
         p1 = cleaned.get('password')
         p2 = cleaned.get('re_password')
         if p1 and p2 and p1 != p2:
-            self.add_error('re_password', "Parollar mos emas!")
+            self.add_error('re_password', _("Parollar mos emas!"))
         return cleaned
 
 
 class LoginForm(forms.Form):
     username = forms.CharField(
-        widget=forms.TextInput(attrs={'placeholder': 'Foydalanuvchi nomi'})
+        widget=forms.TextInput(attrs={'placeholder': _('Foydalanuvchi nomi')})
     )
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': 'Parol'})
+        widget=forms.PasswordInput(attrs={'placeholder': _('Parol')})
     )
 
 
 class ProfileEditForm(forms.ModelForm):
-    first_name = forms.CharField(max_length=150, required=False, widget=forms.TextInput(attrs={'placeholder': 'Ismingiz'}))
-    last_name = forms.CharField(max_length=150, required=False, widget=forms.TextInput(attrs={'placeholder': 'Familiyangiz'}))
+    first_name = forms.CharField(max_length=150, required=False, widget=forms.TextInput(attrs={'placeholder': _('Ismingiz')}))
+    last_name = forms.CharField(max_length=150, required=False, widget=forms.TextInput(attrs={'placeholder': _('Familiyangiz')}))
     city = forms.ChoiceField(choices=Profile.REGION_CHOICES, widget=forms.Select())
 
     class Meta:
         model = Profile
-        fields = ['first_name', 'last_name', 'phone', 'city', 'bio', 'avatar', 'telegram', 'whatsapp']
+        fields = ['first_name', 'last_name', 'phone', 'city', 'bio', 'avatar', 'telegram', 'whatsapp', 'instagram', 'facebook']
         widgets = {
-            'phone': forms.TextInput(attrs={'placeholder': '+998 90 123 45 67 (Masalan)'}),
-            'bio': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Masalan: Men 5 yillik tajribaga ega ustaman...'}),
+            'phone': forms.TextInput(attrs={'placeholder': _('+998 90 123 45 67')}),
+            'bio': forms.Textarea(attrs={'rows': 3, 'placeholder': _('Masalan: Men 5 yillik tajribaga ega ustaman...')}),
             'avatar': forms.FileInput(),
-            'telegram': forms.TextInput(attrs={'placeholder': '@username (Masalan)'}),
-            'whatsapp': forms.TextInput(attrs={'placeholder': '+998 90 123 45 67 (Masalan)'}),
+            'telegram': forms.TextInput(attrs={'placeholder': _('@username')}),
+            'whatsapp': forms.TextInput(attrs={'placeholder': _('+998 90 123 45 67')}),
+            'instagram': forms.TextInput(attrs={'placeholder': _('@username')}),
+            'facebook': forms.TextInput(attrs={'placeholder': _('Foydalanuvchi nomi yoki link')}),
         }
 
     def __init__(self, *args, **kwargs):

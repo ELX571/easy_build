@@ -1,119 +1,294 @@
+# Russian translations for EasyBuild
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-23 10:00+0500\n"
-"PO-Revision-Date: 2026-06-23 10:00+0500\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Russian <ru@li.org>\n"
-"Language: ru\n"
-"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: ru\n"
 
-msgid "Usta Qidirish"
-msgstr "Поиск мастеров"
-
+# Navigation
 msgid "Bosh sahifa"
 msgstr "Главная"
+
+msgid "Hamkasblar"
+msgstr "Коллеги"
+
+msgid "Market Pro"
+msgstr "Market Pro"
+
+msgid "Market Pro (B2B)"
+msgstr "Market Pro (B2B)"
+
+msgid "Usta Qidirish"
+msgstr "Поиск мастера"
+
+msgid "Post yaratish"
+msgstr "Создать пост"
 
 msgid "Chatlar"
 msgstr "Чаты"
 
-msgid "Rejimni o'zgartirish"
-msgstr "Переключить тему"
-
-msgid "Profil Sozlamalari"
-msgstr "Настройки профиля"
+msgid "Xabarlar"
+msgstr "Сообщения"
 
 msgid "Navigator"
 msgstr "Навигатор"
 
-msgid "Xabarlar"
-msgstr "Сообщения"
-
-msgid "Tizim"
-msgstr "Система"
-
-msgid "Ish jarayonlari"
-msgstr "Рабочие процессы"
-
-msgid "Kalit so'z / Ism"
-msgstr "Ключевое слово / Имя"
-
-msgid "Usta ismi yoki kalit so'z..."
-msgstr "Имя мастера или ключевое слово..."
-
-msgid "Mutaxassislik"
-msgstr "Специальность"
-
-msgid "Barchasi"
-msgstr "Все"
-
-msgid "Shahar / Viloyat"
-msgstr "Город / Регион"
-
-msgid "Toshkent shahri"
-msgstr "Город Ташкент"
-
-msgid "Toshkent viloyati"
-msgstr "Ташкентская область"
-
-msgid "Andijon viloyati"
-msgstr "Андижанская область"
-
-msgid "Buxoro viloyati"
-msgstr "Бухарская область"
-
-msgid "Minimal Reyting"
-msgstr "Минимальный рейтинг"
-
-msgid "Premium"
-msgstr "Премиум"
-
-msgid "Yuqori"
-msgstr "Высокий"
-
-msgid "Yaxshi"
-msgstr "Хороший"
-
-msgid "Qidirish"
-msgstr "Поиск"
-
-msgid "Ish tajribasi"
-msgstr "Опыт работы"
-
-msgid "yil"
-msgstr "лет"
-
-msgid "Reyting"
-msgstr "Рейтинг"
-
-msgid "Bog'lanish"
-msgstr "Связаться"
-
-msgid "Hech qanday usta topilmadi"
-msgstr "Мастера не найдены"
-
-msgid "Qidiruv shartlariga mos keladigan Quruvchilar hozircha mavjud emas."
-msgstr "Строители, соответствующие условиям поиска, пока отсутствуют."
-
-msgid "Kirish"
-msgstr "Войти"
-
 msgid "Sozlamalar"
 msgstr "Настройки"
+
+msgid "Orqaga"
+msgstr "Назад"
+
+# Profile edit tabs
+msgid "Asosiy ma'lumotlar"
+msgstr "Основные данные"
+
+msgid "Verifikatsiya & Obunalar"
+msgstr "Верификация и подписки"
+
+msgid "Jamoa sozlamalari"
+msgstr "Настройки команды"
+
+msgid "Xavfsizlik va Parol"
+msgstr "Безопасность и пароль"
 
 msgid "Tizimdan chiqish"
 msgstr "Выйти"
 
+# Profile form
+msgid "Shaxsiy ma'lumotlar"
+msgstr "Личные данные"
 
+msgid "Profil rasmini o'zgartirish"
+msgstr "Изменить фото"
 
+msgid "Ism:"
+msgstr "Имя:"
 
+msgid "Familiya:"
+msgstr "Фамилия:"
+
+msgid "Telefon:"
+msgstr "Телефон:"
+
+msgid "Shahar / Viloyat:"
+msgstr "Город / Область:"
+
+msgid "Ma'lumot (Bio):"
+msgstr "О себе (Bio):"
+
+msgid "Ijtimoiy tarmoqlar (Ixtiyoriy)"
+msgstr "Социальные сети (Необязательно)"
+
+msgid "O'zgarishlarni saqlash"
+msgstr "Сохранить изменения"
+
+msgid "Profil muvaffaqiyatli yangilandi!"
+msgstr "Профиль успешно обновлён!"
+
+msgid "Profilingiz muvaffaqiyatli yangilandi!"
+msgstr "Ваш профиль успешно обновлён!"
+
+# Home page
+msgid "Qidirish..."
+msgstr "Поиск..."
+
+msgid "Barcha postlar"
+msgstr "Все посты"
+
+msgid "Ustalar"
+msgstr "Мастера"
+
+msgid "Mijozlar"
+msgstr "Клиенты"
+
+msgid "Bog'lanish"
+msgstr "Связаться"
+
+msgid "Saqlash"
+msgstr "Сохранить"
+
+msgid "Tahrirlash"
+msgstr "Редактировать"
+
+msgid "O'chirish"
+msgstr "Удалить"
+
+msgid "Ko'proq ko'rish"
+msgstr "Показать больше"
+
+msgid "Hech narsa topilmadi"
+msgstr "Ничего не найдено"
+
+# Dashboard
+msgid "E'lonlar"
+msgstr "Объявления"
+
+msgid "Yangi e'lon"
+msgstr "Новое объявление"
+
+msgid "Market Pro - Qurilish E'lonlari"
+msgstr "Market Pro - Строительные объявления"
+
+msgid "E'lon joylash"
+msgstr "Разместить объявление"
+
+msgid "Narxi:"
+msgstr "Цена:"
+
+msgid "so'm"
+msgstr "сум"
+
+msgid "Muallif:"
+msgstr "Автор:"
+
+# Network
+msgid "Hamkasblar tarmog'i"
+msgstr "Сеть коллег"
+
+msgid "Qidirish"
+msgstr "Поиск"
+
+msgid "Taklif jo'natish"
+msgstr "Отправить приглашение"
+
+msgid "Xabar yozish"
+msgstr "Написать сообщение"
+
+# Builder list
+msgid "Usta qidirish"
+msgstr "Поиск мастера"
+
+msgid "Barcha ustalar"
+msgstr "Все мастера"
+
+msgid "Mutaxassislik:"
+msgstr "Специализация:"
+
+msgid "Tajriba:"
+msgstr "Опыт:"
+
+msgid "yil"
+msgstr "лет"
+
+# Chat
+msgid "Yozing..."
+msgstr "Напишите..."
+
+msgid "Yuborish"
+msgstr "Отправить"
+
+msgid "Online"
+msgstr "В сети"
+
+msgid "Offline"
+msgstr "Не в сети"
+
+# Auth
+msgid "Kirish"
+msgstr "Войти"
+
+msgid "Ro'yxatdan o'tish"
+msgstr "Регистрация"
+
+msgid "Foydalanuvchi nomi"
+msgstr "Имя пользователя"
+
+msgid "Parol"
+msgstr "Пароль"
+
+msgid "Parolni unutdingizmi?"
+msgstr "Забыли пароль?"
+
+msgid "Kirish / Ro'yxat"
+msgstr "Войти / Регистрация"
+
+# Verification / Subscription
+msgid "Oylik"
+msgstr "Ежемесячно"
+
+msgid "Yillik"
+msgstr "Ежегодно"
+
+msgid "Bepul"
+msgstr "Бесплатно"
+
+msgid "Sotib olish"
+msgstr "Купить"
+
+msgid "Joriy reja"
+msgstr "Текущий план"
+
+# Security
+msgid "Joriy parol:"
+msgstr "Текущий пароль:"
+
+msgid "Yangi parol:"
+msgstr "Новый пароль:"
+
+msgid "Parolni tasdiqlang:"
+msgstr "Подтвердите пароль:"
+
+msgid "Parolni o'zgartirish"
+msgstr "Изменить пароль"
+
+# Team
+msgid "Jamoa Sozlamalari"
+msgstr "Настройки команды"
+
+msgid "Guruhga o'tish"
+msgstr "Перейти в группу"
+
+msgid "A'zo qo'shish"
+msgstr "Добавить участника"
+
+msgid "Mening Jamoam"
+msgstr "Моя команда"
+
+# Common
+msgid "Bekor qilish"
+msgstr "Отмена"
+
+msgid "Tasdiqlash"
+msgstr "Подтвердить"
+
+msgid "Xato yuz berdi"
+msgstr "Произошла ошибка"
+
+msgid "Muvaffaqiyatli"
+msgstr "Успешно"
+
+msgid "Kiber tun"
+msgstr "Тёмная тема"
+
+msgid "Yorug' kun"
+msgstr "Светлая тема"
+
+msgid "O'zbekcha"
+msgstr "Узбекский"
+
+# Profile page
+msgid "Profil"
+msgstr "Профиль"
+
+msgid "Postlar"
+msgstr "Посты"
+
+msgid "Yoqtirilganlar"
+msgstr "Понравившиеся"
+
+msgid "E'lon yo'q"
+msgstr "Нет объявлений"
+
+msgid "Hali hech qanday post qo'yilmagan"
+msgstr "Постов пока нет"
+
+msgid "Profil sozlamalari"
+msgstr "Настройки профиля"
+
+# Regions
 msgid "Toshkent shahri"
-msgstr "Город Ташкент"
+msgstr "Ташкент (город)"
 
 msgid "Toshkent viloyati"
 msgstr "Ташкентская область"
@@ -130,9 +305,6 @@ msgstr "Ферганская область"
 msgid "Jizzax viloyati"
 msgstr "Джизакская область"
 
-msgid "Xorazm viloyati"
-msgstr "Хорезмская область"
-
 msgid "Namangan viloyati"
 msgstr "Наманганская область"
 
@@ -142,7 +314,7 @@ msgstr "Навоийская область"
 msgid "Qashqadaryo viloyati"
 msgstr "Кашкадарьинская область"
 
-msgid "Samarqand viloyati"
+msgid "Samarkand viloyati"
 msgstr "Самаркандская область"
 
 msgid "Sirdaryo viloyati"
@@ -151,5 +323,184 @@ msgstr "Сырдарьинская область"
 msgid "Surxondaryo viloyati"
 msgstr "Сурхандарьинская область"
 
+msgid "Xorazm viloyati"
+msgstr "Хорезмская область"
+
 msgid "Qoraqalpog'iston Respublikasi"
 msgstr "Республика Каракалпакстан"
+
+# Role choices
+msgid "Buyurtmachi (Mijoz)"
+msgstr "Заказчик (Клиент)"
+
+msgid "Quruvchi (Usta)"
+msgstr "Строитель (Мастер)"
+
+msgid "Qurilish jamoasi"
+msgstr "Строительная команда"
+
+# Form placeholders
+msgid "Ismingiz"
+msgstr "Ваше имя"
+
+msgid "Familiyangiz"
+msgstr "Ваша фамилия"
+
+msgid "Email (ixtiyoriy)"
+msgstr "Email (необязательно)"
+
+msgid "Parol (kamida 6 belgi)"
+msgstr "Пароль (минимум 6 символов)"
+
+msgid "Parolni takrorlang"
+msgstr "Повторите пароль"
+
+msgid "+998 90 123 45 67"
+msgstr "+998 90 123 45 67"
+
+msgid "Masalan: Men 5 yillik tajribaga ega ustaman..."
+msgstr "Например: Я мастер с 5-летним опытом..."
+
+msgid "@username"
+msgstr "@username"
+
+msgid "Foydalanuvchi nomi yoki link"
+msgstr "Имя пользователя или ссылка"
+
+# Validation messages
+msgid "Bu username allaqachon band!"
+msgstr "Это имя пользователя уже занято!"
+
+msgid "Parollar mos emas!"
+msgstr "Пароли не совпадают!"
+
+# Verify tab
+msgid "Boshlang'ich"
+msgstr "Начальный"
+
+msgid "Tizimga kirgan barcha foydalanuvchilar uchun standart tanishuv imkoniyatlari."
+msgstr "Стандартные возможности для всех зарегистрированных пользователей."
+
+msgid "Ko'k tasdiq belgisi"
+msgstr "Синий знак подтверждения"
+
+msgid "Kuniga 1 ta e'lon joylash"
+msgstr "1 объявление в день"
+
+msgid "Kontaktlarni ko'rish"
+msgstr "Просмотр контактов"
+
+msgid "Faol"
+msgstr "Активен"
+
+msgid "Eng ommabop"
+msgstr "Самый популярный"
+
+msgid "so'm / oy"
+msgstr "сум / месяц"
+
+msgid "so'm / yil"
+msgstr "сум / год"
+
+msgid "Doimiy va jiddiy buyurtmalar oqimiga ega bo'lishni xohlovchi ustalar uchun."
+msgstr "Для мастеров, желающих получать стабильный и серьёзный поток заказов."
+
+msgid "Yashil premium belgi"
+msgstr "Зелёный премиум знак"
+
+msgid "Cheksiz e'lon joylash"
+msgstr "Неограниченные объявления"
+
+msgid "Mijozlar kontaktlarini ochish"
+msgstr "Открыть контакты клиентов"
+
+msgid "Yirik guruhlar, brigadirlar va B2B qurilish jamoalari uchun maxsus reja."
+msgstr "Специальный план для крупных групп, бригадиров и B2B строительных команд."
+
+msgid "Oltin tasdiq belgisi"
+msgstr "Золотой знак подтверждения"
+
+msgid "O'z jamoasini yaratish"
+msgstr "Создать свою команду"
+
+msgid "Neon ramkali e'lonlar"
+msgstr "Объявления с неоновой рамкой"
+
+# Team tab
+msgid "Jamoangiz nomi va a'zolarini shu yerdan boshqaring"
+msgstr "Управляйте названием и участниками своей команды здесь"
+
+msgid "Jamoadan o'chirish"
+msgstr "Исключить из команды"
+
+msgid "Jamoangizga hali hech kim qo'shilmagan."
+msgstr "В вашу команду ещё никто не добавлен."
+
+msgid "Yuqoridagi 'A'zo qo'shish' tugmasini bosing!"
+msgstr "Нажмите кнопку «Добавить участника» выше!"
+
+msgid "Siz jamoa rahbari emassiz"
+msgstr "Вы не являетесь руководителем команды"
+
+msgid "Siz 2 tagacha jamoaga a'zo bo'lishingiz yoki o'z jamoangizni yaratishingiz mumkin."
+msgstr "Вы можете вступить в до 2 команд или создать собственную."
+
+msgid "Parolni o'zgartirish tizimi ishlab chiqilmoqda"
+msgstr "Система смены пароля находится в разработке"
+
+# Modals
+msgid "Ism, username yoki telefon..."
+msgstr "Имя, имя пользователя или телефон..."
+
+msgid "Tasdiqlang"
+msgstr "Подтвердите"
+
+msgid "Ha, o'chirish"
+msgstr "Да, удалить"
+
+# Home page additions
+msgid "Kerakli e'lonni qidiring..."
+msgstr "Ищите нужные объявления..."
+
+msgid "Ustalar e'lonlari"
+msgstr "Объявления мастеров"
+
+msgid "Mijozlar e'lonlari"
+msgstr "Объявления клиентов"
+
+msgid "Tasdiqlangan usta"
+msgstr "Проверенный мастер"
+
+msgid "oldin"
+msgstr "назад"
+
+msgid "Iltimos, oldin tizimga kiring!"
+msgstr "Пожалуйста, сначала войдите в систему!"
+
+msgid "Bu e'lonning muallifi mavjud emas."
+msgstr "Автор этого объявления не существует."
+
+msgid "Bu sizning o'z e'loningiz!"
+msgstr "Это ваше собственное объявление!"
+
+msgid "Xatolik yuz berdi!"
+msgstr "Произошла ошибка!"
+
+msgid "Tizim"
+msgstr "Система"
+
+msgid "Ish jarayonlari"
+msgstr "Рабочие процессы"
+
+msgid "Rejimni o'zgartirish"
+msgstr "Переключить тему"
+
+# Network page additions
+msgid "Boshqa mijozlar e'lonlari"
+msgstr "Объявления других клиентов"
+
+msgid "Hamkasblar e'lonlari"
+msgstr "Объявления коллег"
+
+msgid "Saqlashni bekor qilish"
+msgstr "Отменить сохранение"

@@ -21,11 +21,119 @@ from .form import PostCreateForm
 
 
 # =========================================================================
+# ASOSIY BOSH SAHIFA: FEED
+# =========================================================================
+class HomeView(ListView):
+    model = Post
+    template_name = 'build/home.html'
+    context_object_name = 'posts'
+    paginate_by = 12
+
+    def get_queryset(self):
+        from django.db.models import Q
+        q = self.request.GET.get('q')
+        qs = Post.objects.select_related('author__profile').annotate(
+            likes_count=Count('likes', distinct=True)
+        )
+
+        # ── ROLE-BASED FEED FILTER ──
+        if self.request.user.is_authenticated:
+            try:
+                user_role = self.request.user.profile.role
+                if user_role == 'client':
+                    # Oddiy user: faqat ustalar qo'ygan postlar
+                    qs = qs.filter(author__profile__role__in=['builder', 'team'])
+                elif user_role in ['builder', 'team']:
+                    # Usta/Jamoa: faqat oddiy userlar qo'ygan postlar
+                    qs = qs.filter(author__profile__role='client')
+            except Exception:
+                pass
+
+        if q:
+            qs = qs.filter(Q(title__icontains=q) | Q(description__icontains=q))
+        return qs.order_by('-created_time')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            liked_ids = set(self.request.user.liked_posts.values_list('post_id', flat=True))
+            bookmarked_ids = set(self.request.user.bookmarked_posts.values_list('post_id', flat=True))
+            for post in context['posts']:
+                post.is_liked = post.id in liked_ids
+                post.is_bookmarked = post.id in bookmarked_ids
+
+            from chat.models import Message
+            unread_count = Message.objects.filter(
+                room__participants=self.request.user,
+                is_read=False
+            ).exclude(sender=self.request.user).count()
+            context['unread_chat_count'] = unread_count
+
+            # Rol context ga uzatiladi (sidebar va feed uchun)
+            try:
+                context['user_role'] = self.request.user.profile.role
+            except Exception:
+                context['user_role'] = None
+        return context
+
+# =========================================================================
+# ASOSIY BOSH SAHIFA: MARKET PRO & SMART FILTER
+# =========================================================================
+class NetworkView(ListView):
+    model = Post
+    template_name = 'build/network.html'
+    context_object_name = 'posts'
+    paginate_by = 12
+
+    def get_queryset(self):
+        from django.db.models import Q
+        q = self.request.GET.get('q')
+        qs = Post.objects.select_related('author__profile').annotate(
+            likes_count=Count('likes', distinct=True)
+        )
+
+        if self.request.user.is_authenticated:
+            try:
+                user_role = self.request.user.profile.role
+                if user_role in ['builder', 'team']:
+                    qs = qs.filter(author__profile__role__in=['builder', 'team'])
+                else:
+                    qs = qs.filter(author__profile__role='client')
+            except Exception:
+                pass
+
+        if q:
+            qs = qs.filter(Q(title__icontains=q) | Q(description__icontains=q))
+        return qs.order_by('-created_time')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            liked_ids = set(self.request.user.liked_posts.values_list('post_id', flat=True))
+            bookmarked_ids = set(self.request.user.bookmarked_posts.values_list('post_id', flat=True))
+            for post in context['posts']:
+                post.is_liked = post.id in liked_ids
+                post.is_bookmarked = post.id in bookmarked_ids
+
+            from chat.models import Message
+            unread_count = Message.objects.filter(
+                room__participants=self.request.user,
+                is_read=False
+            ).exclude(sender=self.request.user).count()
+            context['unread_chat_count'] = unread_count
+
+            try:
+                context['user_role'] = self.request.user.profile.role
+            except Exception:
+                context['user_role'] = None
+        return context
+
+# =========================================================================
 # ASOSIY BOSH SAHIFA: MARKET PRO & SMART FILTER
 # =========================================================================
 class PostListView(ListView):
     model = Post
-    template_name = 'build/marketb2bpro.html'
+    template_name = 'build/post_list.html'
     context_object_name = 'posts'
     paginate_by = 12
 
@@ -172,7 +280,7 @@ def post_create_view(request):
             print("🔥" * 20 + "\n")
 
             messages.success(request, _("Eʼloningiz muvaffaqiyatli joylashtirildi!"))
-            return redirect('build:post_list')
+            return redirect('build:profile')
         else:
             print("Forma xatoliklari:", form.errors)
             for field, errors in form.errors.items():
@@ -239,7 +347,6 @@ def builder_list_view(request):
         }
     }
 
-    # Agar boshqa til tanlangan bo'lsa, qidiruvdagi so'zni o'zbekchasiga aylantiramiz
     mapped_profession = profession_mapping.get(current_lang, {}).get(profession, profession)
     mapped_city = city_mapping.get(current_lang, {}).get(city, city)
 
@@ -247,6 +354,24 @@ def builder_list_view(request):
         builders = builders.filter(profession__icontains=mapped_profession)
     if mapped_city:
         builders = builders.filter(profile__city=mapped_city)
+
+    search_query = request.GET.get('search', '').strip()
+    if search_query:
+        from django.contrib.postgres.search import TrigramSimilarity
+        builders = builders.annotate(
+            similarity=TrigramSimilarity('profile__user__first_name', search_query) +
+                       TrigramSimilarity('profile__user__last_name', search_query) +
+                       TrigramSimilarity('profile__user__username', search_query) +
+                       TrigramSimilarity('bio', search_query)
+        ).filter(Q(similarity__gt=0.1) | Q(profile__user__first_name__icontains=search_query) | Q(profile__user__last_name__icontains=search_query) | Q(profile__user__username__icontains=search_query)).order_by('-similarity')
+
+    min_rating = request.GET.get('min_rating', '').strip()
+    if min_rating:
+        try:
+            rating_val = float(min_rating)
+            builders = builders.filter(rating_cache__gte=rating_val)
+        except ValueError:
+            pass
 
     posts = Post.objects.select_related('author__profile').annotate(
         likes_count=Count('likes', distinct=True)
@@ -256,10 +381,14 @@ def builder_list_view(request):
             user_role = request.user.profile.role
             user_city = request.user.profile.city
 
-            if user_role == 'client':
+            if user_role in ['builder', 'team']:
+                # Usta: boshqa ustalarning postlari (o'ziniki emas)
+                posts = posts.filter(
+                    author__profile__role__in=['builder', 'team']
+                ).exclude(author=request.user)
+            else:
+                # Oddiy user: ustalar postlari
                 posts = posts.filter(author__profile__role__in=['builder', 'team'])
-            elif user_role in ['builder', 'team']:
-                posts = posts.filter(author__profile__role='client')
 
             posts = posts.annotate(
                 is_liked=Exists(PostLike.objects.filter(post=OuterRef('pk'), user=request.user)),
@@ -283,7 +412,7 @@ def builder_list_view(request):
         'city': city,
         'region_choices': Profile.REGION_CHOICES,
     }
-    return render(request, 'build/home.html', context)
+    return render(request, 'build/builder_list.html', context)
 
 
 def workflow_list_view(request):
@@ -366,6 +495,10 @@ class UserContactInfoAPIView(APIView):
                 telegram = '@' + telegram
             whatsapp = profile.whatsapp or ''
             whatsapp_clean = ''.join(filter(str.isdigit, whatsapp))
+            instagram = profile.instagram or ''
+            instagram_url = instagram if instagram.startswith('http') else f"https://instagram.com/{instagram.lstrip('@')}" if instagram else ''
+            facebook = profile.facebook or ''
+            facebook_url = facebook if facebook.startswith('http') else f"https://facebook.com/{facebook.lstrip('@')}" if facebook else ''
 
             return Response({
                 'id': user.id,
@@ -377,6 +510,10 @@ class UserContactInfoAPIView(APIView):
                 'telegram_url': f"https://t.me/{telegram.lstrip('@')}" if telegram else '',
                 'whatsapp': whatsapp,
                 'whatsapp_url': f"https://wa.me/{whatsapp_clean}" if whatsapp_clean else '',
+                'instagram': instagram,
+                'instagram_url': instagram_url,
+                'facebook': facebook,
+                'facebook_url': facebook_url,
                 'role': profile.get_role_display(),
                 'city': profile.get_city_display() if profile.city else '',
             })

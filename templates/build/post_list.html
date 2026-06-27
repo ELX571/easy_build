@@ -1,5 +1,6 @@
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="uz" data-theme="dark">
+<html lang="{{ LANGUAGE_CODE|default:'uz' }}" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -189,7 +190,7 @@
         .tweet-options { color: var(--text-muted); cursor: pointer; padding: 8px; font-size: 18px; transition: color 0.2s; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; }
         .tweet-options:hover { background: var(--link-hover-bg); color: var(--text-main); }
 
-        .tweet-body { font-size: 16px; color: var(--text-main); line-height: 1.6; font-weight: 500; word-wrap: break-word; white-space: pre-wrap; letter-spacing: -0.1px; }
+        .tweet-body { font-size: 18px; color: var(--text-main); line-height: 1.6; font-weight: 500; word-wrap: break-word; white-space: pre-wrap; letter-spacing: -0.1px; }
         
         .tweet-price-badge { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; font-weight: 800; color: #10b981; font-size: 15px; background: rgba(16, 185, 129, 0.1); padding: 8px 16px; border-radius: 12px; }
         
@@ -333,10 +334,15 @@
     </div>
 
     <!-- ====== TOAST NOTIFICATION ====== -->
-    <div id="toastNotif" style="display:none;position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:99999;background:linear-gradient(135deg,#1e1e32,#2a2a45);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:14px 22px;align-items:center;gap:12px;box-shadow:0 16px 48px rgba(0,0,0,0.5);min-width:260px;max-width:380px;">
-        <div id="toastIcon" style="font-size:20px;"></div>
-        <div id="toastMsg" style="font-size:14px;font-weight:600;color:#fff;"></div>
+    <!-- ====== LUXURY PILL TOAST NOTIFICATION ====== -->
+    <div id="toastNotif" style="display:none;position:fixed;top:40px;left:50%;transform:translateX(-50%);z-index:99999;background:rgba(20, 25, 35, 0.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.08);border-radius:50px;padding:10px 24px 10px 10px;align-items:center;gap:14px;box-shadow:0 20px 40px rgba(0,0,0,0.5);min-width:max-content;max-width:90vw;">
+        <div id="toastIcon" style="width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;flex-shrink:0;box-shadow:0 4px 10px rgba(0,0,0,0.2);"></div>
+        <div id="toastMsg" style="font-size:14px;font-weight:600;color:#f8fafc;letter-spacing:-0.2px;padding-right:8px;"></div>
     </div>
+    <style>
+        @keyframes toastPopIn { 0% { opacity: 0; transform: translate(-50%, -20px) scale(0.9); } 60% { transform: translate(-50%, 5px) scale(1.02); } 100% { opacity: 1; transform: translate(-50%, 0) scale(1); } }
+        @keyframes toastPopOut { 0% { opacity: 1; transform: translate(-50%, 0) scale(1); } 100% { opacity: 0; transform: translate(-50%, -20px) scale(0.9); } }
+    </style>
 
     <style>
         @keyframes modalPop{from{opacity:0;transform:scale(0.9) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
@@ -347,7 +353,7 @@
     <header>
         <div class="header-container">
             <div class="header-left">
-                <a href="{% url 'build:post_create' %}" class="header-add-btn" data-title="Post yaratish">
+                <a href="{% url 'build:post_create' %}" class="header-add-btn" data-title="{% trans 'Post yaratish' %}">
                     <i class="fa-solid fa-plus"></i>
                 </a>
             </div>
@@ -372,35 +378,38 @@
 
     <div class="sidebar-container">
         <div class="icon-rail">
-            <a href="{% url 'build:home' %}" class="rail-item" data-title="Bosh sahifa"><i class="fa-solid fa-house"></i></a>
-            <a href="{% url 'build:post_list' %}" class="rail-item active" data-title="Market Pro"><i class="fa-solid fa-store"></i></a>
-            <a href="#" class="rail-item" data-title="Qidirish"><i class="fa-solid fa-magnifying-glass"></i></a>
-            <a href="{% url 'build:post_create' %}" class="rail-item" data-title="Post yaratish"><i class="fa-solid fa-plus"></i></a>
-            <a href="{% url 'chat:chat' %}" class="rail-item" data-title="Chatlar">
+            <a href="{% url 'build:home' %}" class="rail-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}" data-title="{% trans 'Bosh sahifa' %}"><i class="fa-solid fa-house"></i></a>
+            <a href="{% url 'build:network' %}" class="rail-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}" data-title="{% trans 'Hamkasblar' %}"><i class="fa-solid fa-users"></i></a>
+            <a href="{% url 'build:post_list' %}" class="rail-item {% if request.resolver_match.url_name == 'post_list' %}active{% endif %}" data-title="{% trans 'Market Pro' %}"><i class="fa-solid fa-store"></i></a>
+            <a href="{% url 'build:builder_list' %}" class="rail-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" data-title="{% trans 'Usta Qidirish' %}"><i class="fa-solid fa-helmet-safety"></i></a>
+            <a href="{% url 'build:post_create' %}" class="rail-item {% if request.resolver_match.url_name == 'post_create' %}active{% endif %}" data-title="{% trans 'Post yaratish' %}"><i class="fa-solid fa-plus"></i></a>
+            <a href="{% url 'chat:chat' %}" class="rail-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}" data-title="{% trans 'Chatlar' %}">
                 <i class="fa-regular fa-comment-dots"></i>
                 {% if unread_chat_count > 0 %}
                 <span style="position:absolute; top:8px; right:8px; background:var(--active-text-blue); color:white; font-size:10px; font-weight:800; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-panel);">{{ unread_chat_count }}</span>
                 {% endif %}
             </a>
-            <div class="rail-item" id="themeToggleBtn" data-title="Rejimni o'zgartirish"><i class="fa-solid fa-moon"></i></div>
+            <div class="rail-item" id="themeToggleBtn" data-title="{% trans 'Rejimni o\'zgartirish' %}"><i class="fa-solid fa-moon"></i></div>
             <div class="rail-divider"></div>
-            <a href="{% url 'build:profile' %}" class="rail-item" data-title="Profil Sozlamalari"><i class="fa-regular fa-user"></i></a>
+            <a href="{% url 'build:profile' %}" class="rail-item {% if request.resolver_match.url_name == 'profile' %}active{% endif %}" data-title="{% trans 'Profil sozlamalari' %}"><i class="fa-regular fa-user"></i></a>
         </div>
 
         <div class="expanded-menu">
             <div class="menu-col">
                 <div class="menu-title">
                     <i class="fa-solid fa-compass" style="color: var(--active-text-blue); transform: rotate(15deg);"></i>
-                    Navigator
+                    {% trans "Navigator" %}
                 </div>
                 <ul class="menu-list">
-                    <li><a href="{% url 'build:home' %}"><i class="fa-solid fa-house main-icon"></i> Home</a></li>
-                    <li><a href="{% url 'build:post_list' %}" class="active-link"><i class="fa-solid fa-store main-icon"></i> Market Pro (B2B)</a></li>
-                    <li><a href="{% url 'chat:chat' %}"><i class="fa-regular fa-comment-dots main-icon"></i> Xabarlar {% if unread_chat_count > 0 %}<span class="badge" style="background:linear-gradient(135deg, #ff6b00, #ff8c33); color:#ffffff; font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; margin-left:auto;">{{ unread_chat_count }}</span>{% endif %}</a></li>
+                    <li><a href="{% url 'build:home' %}" class="{% if request.resolver_match.url_name == 'home' %}active-link{% endif %}"><i class="fa-solid fa-house main-icon"></i> {% trans "Bosh sahifa" %}</a></li>
+                    <li><a href="{% url 'build:network' %}" class="{% if request.resolver_match.url_name == 'network' %}active-link{% endif %}"><i class="fa-solid fa-users main-icon"></i> {% trans "Hamkasblar" %}</a></li>
+                    <li><a href="{% url 'build:post_list' %}" class="{% if request.resolver_match.url_name == 'post_list' %}active-link{% endif %}"><i class="fa-solid fa-store main-icon"></i> {% trans "Market Pro (B2B)" %}</a></li>
+                    <li><a href="{% url 'build:builder_list' %}" class="{% if request.resolver_match.url_name == 'builder_list' %}active-link{% endif %}"><i class="fa-solid fa-helmet-safety main-icon"></i> {% trans "Usta Qidirish" %}</a></li>
+                    <li><a href="{% url 'chat:chat' %}" class="{% if request.resolver_match.namespace == 'chat' %}active-link{% endif %}"><i class="fa-regular fa-comment-dots main-icon"></i> {% trans "Xabarlar" %} {% if unread_chat_count > 0 %}<span class="badge" style="background:linear-gradient(135deg, #ff6b00, #ff8c33); color:#ffffff; font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; margin-left:auto;">{{ unread_chat_count }}</span>{% endif %}</a></li>
                 </ul>
-                <div class="section-label">Tizim</div>
+                <div class="section-label">{% trans "Tizim" %}</div>
                 <ul class="menu-list">
-                    <li><a href="#"><i class="fa-solid fa-layer-group main-icon"></i> Ish jarayonlari</a></li>
+                    <li><a href="#"><i class="fa-solid fa-layer-group main-icon"></i> {% trans "Ish jarayonlari" %}</a></li>
                 </ul>
             </div>
         </div>
@@ -420,7 +429,7 @@
                 </a>
             </div>
 
-            {% if user.is_authenticated and user.profile.role == 'builder' %}
+            {% if user.is_authenticated and user.profile.role in 'builder,team' %}
                 <a href="{% url 'build:post_create' %}" class="filter-btn" style="background: var(--active-text-blue); color: white; border-color: var(--active-text-blue); text-decoration: none;">
                     <i class="fa-solid fa-plus"></i> Post yaratish
                 </a>
@@ -486,7 +495,7 @@
             document.documentElement.setAttribute('data-theme', currentTheme);
             updateToggleIcon(currentTheme);
 
-            function toggleTheme() {
+            window.toggleTheme = function() {
                 let theme = document.documentElement.getAttribute('data-theme');
                 if (theme === 'dark') {
                     document.documentElement.setAttribute('data-theme', 'light');
@@ -527,7 +536,7 @@
 async function toggleLike(event, postId, element) {
     event.preventDefault();
     try {
-        const response = await fetch(`/api/post/${postId}/like/`, {
+        const response = await fetch(`/${window.location.pathname.split('/')[1]}/api/post/${postId}/like/`, {
             method: 'POST',
             headers: {
                 'X-CSRFToken': '{{ csrf_token }}',
@@ -550,8 +559,8 @@ async function toggleLike(event, postId, element) {
             }
             countSpan.textContent = data.likes_count;
         } else if (response.status === 401 || response.status === 403) {
-            alert("Iltimos, oldin tizimga kiring!");
-            window.location.href = "{% url 'accounts:login' %}";
+            showToast('warning', `{% trans 'Iltimos, oldin tizimga kiring!'|escapejs %}`);
+            setTimeout(()=>{ window.location.href = "{% url 'accounts:login' %}"; }, 1500);
         }
     } catch (error) {
         console.error('Error toggling like:', error);
@@ -562,7 +571,7 @@ async function toggleBookmark(event, postId, element) {
     event.preventDefault();
     event.stopPropagation();
     try {
-        const response = await fetch(`/api/post/${postId}/bookmark/`, {
+        const response = await fetch(`/${window.location.pathname.split('/')[1]}/api/post/${postId}/bookmark/`, {
             method: 'POST',
             headers: {
                 'X-CSRFToken': '{{ csrf_token }}',
@@ -582,7 +591,7 @@ async function toggleBookmark(event, postId, element) {
                 element.classList.add('fa-regular');
             }
         } else if (response.status === 401 || response.status === 403) {
-            showToast('warning', 'Iltimos, oldin tizimga kiring!');
+            showToast('warning', `{% trans 'Iltimos, oldin tizimga kiring!'|escapejs %}`);
             setTimeout(()=>{ window.location.href = "{% url 'accounts:login' %}"; }, 1500);
         }
     } catch (error) {
@@ -592,19 +601,19 @@ async function toggleBookmark(event, postId, element) {
 
 async function contactUser(event, userId) {
     event.preventDefault();
-    if (!userId || userId === 'None') { showToast('error', "Bu e'lonning muallifi mavjud emas."); return; }
-    if (userId == {{ request.user.id|default:0 }}) { showToast('info', "Bu sizning o'z e'loningiz!"); return; }
+    if (!userId || userId === 'None') { showToast('error', `{% trans "Bu e'lonning muallifi mavjud emas."|escapejs %}`); return; }
+    if (userId == {{ request.user.id|default:0 }}) { showToast('info', `{% trans "Bu sizning o'z e'loningiz!"|escapejs %}`); return; }
     try {
-        const res = await fetch(`/api/user/${userId}/contact/`, {
+        const res = await fetch(`/${window.location.pathname.split('/')[1]}/api/user/${userId}/contact/`, {
             headers: { 'X-CSRFToken': '{{ csrf_token }}', 'Content-Type': 'application/json' }
         });
         if (res.status === 401 || res.status === 403) {
-            showToast('warning', 'Iltimos, oldin tizimga kiring!');
+            showToast('warning', `{% trans 'Iltimos, oldin tizimga kiring!'|escapejs %}`);
             setTimeout(()=>{ window.location.href = "{% url 'accounts:login' %}"; }, 1500);
             return;
         }
         const d = await res.json();
-        if (!res.ok) { showToast('error', d.error || 'Xatolik yuz berdi!'); return; }
+        if (!res.ok) { showToast('error', d.error || `{% trans 'Xatolik yuz berdi!'|escapejs %}`); return; }
 
         document.getElementById('cModal-avatar').src = d.avatar || '/static/images/default_avatar.svg';
         document.getElementById('cModal-name').textContent = d.full_name;
@@ -634,13 +643,25 @@ async function contactUser(event, userId) {
                 <div style="text-align:left;"><div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.85);">WhatsApp</div><div style="font-size:14px;color:#25d366;font-weight:600;">${d.whatsapp}</div></div>
             </a>`;
         }
-        if (!d.phone && !d.telegram && !d.whatsapp) {
+        if (d.instagram) {
+            btns += `<a href="${d.instagram_url}" target="_blank" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:18px;border:1px solid rgba(225,48,108,0.25);background:rgba(225,48,108,0.07);color:#fff;font-size:15px;font-weight:700;text-decoration:none;transition:all 0.25s;" onmouseover="this.style.background='rgba(225,48,108,0.14)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(225,48,108,0.07)';this.style.transform=''">
+                <div style="width:40px;height:40px;background:linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-brands fa-instagram" style="font-size:20px;color:#fff;"></i></div>
+                <div style="text-align:left;"><div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.85);">Instagram</div><div style="font-size:14px;color:#e1306c;font-weight:600;">${d.instagram}</div></div>
+            </a>`;
+        }
+        if (d.facebook) {
+            btns += `<a href="${d.facebook_url}" target="_blank" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:18px;border:1px solid rgba(24,119,242,0.25);background:rgba(24,119,242,0.07);color:#fff;font-size:15px;font-weight:700;text-decoration:none;transition:all 0.25s;" onmouseover="this.style.background='rgba(24,119,242,0.14)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(24,119,242,0.07)';this.style.transform=''">
+                <div style="width:40px;height:40px;background:rgba(24,119,242,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-brands fa-facebook" style="font-size:20px;color:#1877f2;"></i></div>
+                <div style="text-align:left;"><div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.85);">Facebook</div><div style="font-size:14px;color:#1877f2;font-weight:600;">${d.facebook}</div></div>
+            </a>`;
+        }
+        if (!d.phone && !d.telegram && !d.whatsapp && !d.instagram && !d.facebook) {
             btns += `<div style="text-align:center;padding:20px;color:rgba(255,255,255,0.3);font-size:14px;"><i class="fa-solid fa-circle-info" style="font-size:24px;display:block;margin-bottom:8px;opacity:0.4;"></i>Foydalanuvchi aloqa ma'lumotlarini to'ldirmagan</div>`;
         }
         document.getElementById('cModal-buttons').innerHTML = btns;
         document.getElementById('contactModal').style.display = 'flex';
         document.body.style.overflow = 'hidden';
-    } catch(err) { console.error(err); showToast('error', 'Xatolik yuz berdi!'); }
+    } catch(err) { console.error(err); showToast('error', `{% trans 'Xatolik yuz berdi!'|escapejs %}`); }
 }
 
 async function startChatWith(userId) {
@@ -678,22 +699,28 @@ function showToast(type, message) {
     const toastEl = document.getElementById('toastNotif');
     const iconEl = document.getElementById('toastIcon');
     const msgEl = document.getElementById('toastMsg');
+    
     const configs = {
-        'success': { icon: '<i class="fa-solid fa-circle-check" style="color:#10b981;"></i>', border: 'rgba(16,185,129,0.3)' },
-        'error':   { icon: '<i class="fa-solid fa-circle-xmark" style="color:#ef4444;"></i>', border: 'rgba(239,68,68,0.3)' },
-        'warning': { icon: '<i class="fa-solid fa-triangle-exclamation" style="color:#f59e0b;"></i>', border: 'rgba(245,158,11,0.3)' },
-        'info':    { icon: '<i class="fa-solid fa-circle-info" style="color:#60a5fa;"></i>', border: 'rgba(96,165,250,0.3)' },
+        'success': { icon: '<i class="fa-solid fa-check"></i>', bg: 'linear-gradient(135deg, #10b981, #059669)', glow: 'rgba(16,185,129,0.25)' },
+        'error':   { icon: '<i class="fa-solid fa-xmark"></i>', bg: 'linear-gradient(135deg, #ef4444, #dc2626)', glow: 'rgba(239,68,68,0.25)' },
+        'warning': { icon: '<i class="fa-solid fa-exclamation"></i>', bg: 'linear-gradient(135deg, #f59e0b, #d97706)', glow: 'rgba(245,158,11,0.25)' },
+        'info':    { icon: '<i class="fa-solid fa-info"></i>', bg: 'linear-gradient(135deg, #3b82f6, #2563eb)', glow: 'rgba(59,130,246,0.25)' },
     };
     const cfg = configs[type] || configs['info'];
+    
     iconEl.innerHTML = cfg.icon;
+    iconEl.style.background = cfg.bg;
+    toastEl.style.boxShadow = `0 20px 40px rgba(0,0,0,0.5), 0 0 0 1px ${cfg.glow} inset, 0 10px 30px ${cfg.glow}`;
+    
     msgEl.textContent = message;
-    toastEl.style.borderColor = cfg.border;
+
     toastEl.style.display = 'flex';
-    toastEl.style.animation = 'toastIn 0.35s cubic-bezier(0.16,1,0.3,1)';
+    toastEl.style.animation = 'toastPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards';
+
     clearTimeout(toastEl._timeout);
     toastEl._timeout = setTimeout(()=>{
-        toastEl.style.animation = 'toastOut 0.3s ease forwards';
-        setTimeout(()=>{ toastEl.style.display = 'none'; }, 300);
+        toastEl.style.animation = 'toastPopOut 0.4s cubic-bezier(0.16,1,0.3,1) forwards';
+        setTimeout(()=>{ toastEl.style.display = 'none'; }, 400);
     }, 3000);
 }
 </script>

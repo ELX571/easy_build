@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="uz">
 <head>
@@ -8,9 +9,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Plus Jakarta Sans',sans-serif}
-:root{--bg:#0a0d14;--sb:#0d1117;--border:rgba(255,255,255,.06);--text:#f1f5f9;--muted:#94a3b8;--label:#475569;--orange:#ff6b00;--ora:rgba(255,107,0,.12);--in:#1e293b;--divider:rgba(255,255,255,.05);--shadow:0 2px 16px rgba(0,0,0,.4)}
-body{background:var(--bg);height:100vh;overflow:hidden;display:flex;align-items:center; padding-left: 100px;}
-.shell{display:flex;width:100%;max-width:1300px;height:calc(100vh - 24px);margin:12px auto; border-radius:20px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.5);border:1px solid var(--border)}
+:root{--bg:#07090f;--sb:#0d1117;--border:rgba(255,255,255,.07);--text:#f1f5f9;--muted:#94a3b8;--label:#475569;--orange:#ff6b00;--ora:rgba(255,107,0,.13);--in:#1a2235;--divider:rgba(255,255,255,.05);--shadow:0 2px 16px rgba(0,0,0,.5)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@keyframes float{0%,100%{transform:translateY(0px)}50%{transform:translateY(-12px)}}
+@keyframes float2{0%,100%{transform:translateY(0px) rotate(0deg)}50%{transform:translateY(-18px) rotate(5deg)}}
+@keyframes shimmer{0%{background-position:200% center}100%{background-position:-200% center}}
+@keyframes orb-drift{0%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.05)}66%{transform:translate(-20px,10px) scale(.95)}100%{transform:translate(0,0) scale(1)}}
+@keyframes ripple{0%{transform:scale(1);opacity:.4}100%{transform:scale(2.5);opacity:0}}
+@keyframes fadeInUp{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}
+body{background:var(--bg);height:100vh;overflow:hidden;display:flex;align-items:center;padding-left:100px;position:relative}
+body::before{content:'';position:fixed;top:-40%;left:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(255,107,0,.06) 0%,transparent 70%);pointer-events:none;z-index:0;animation:orb-drift 18s ease-in-out infinite}
+body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:500px;background:radial-gradient(circle,rgba(99,102,241,.05) 0%,transparent 70%);pointer-events:none;z-index:0;animation:orb-drift 24s ease-in-out infinite reverse}
+.shell{display:flex;width:100%;max-width:1300px;height:calc(100vh - 24px);margin:12px auto;border-radius:20px;overflow:hidden;box-shadow:0 24px 100px rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.08);position:relative;z-index:1}
 
 /* SIDEBAR (SMART RAIL) */
 .sidebar-container { position: fixed; top: 12px; left: 12px; display: flex; z-index: 9999; height: calc(100vh - 24px); }
@@ -19,7 +29,7 @@ body{background:var(--bg);height:100vh;overflow:hidden;display:flex;align-items:
 .rail-item.active { background: var(--ora); color: var(--orange); border: 1px solid rgba(255,107,0,0.3); }
 .rail-item:hover:not(.active) { background: rgba(255,255,255,0.04); color: var(--text); }
 .rail-divider { width: 24px; height: 1px; background: var(--border); margin: 14px 0; }
-.expanded-menu { width: 0; opacity: 0; visibility: hidden; overflow: hidden; background: var(--sb); border-radius: 20px; box-shadow: var(--shadow); border: 1px solid var(--border); margin-left: -20px; padding-left: 20px; display: flex; transition: width 0.4s ease, opacity 0.3s ease, visibility 0.4s ease; }
+.expanded-menu { width: 0; opacity: 0; visibility: hidden; overflow: hidden; background: var(--sb); border-radius: 20px; box-shadow: var(--shadow); border: 1px solid var(--border); margin-left: -20px; padding-left: 20px; display: flex; transition: width 0.4s ease, opacity 0.3s ease, visibility 0.4s ease, margin 0.4s ease; }
 .sidebar-container:hover .expanded-menu { width: 280px; opacity: 1; visibility: visible; margin-left: 16px; }
 .menu-col { min-width: 250px; height: 100%; padding: 28px 20px; display: flex; flex-direction: column; }
 .menu-title { font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
@@ -29,40 +39,44 @@ body{background:var(--bg);height:100vh;overflow:hidden;display:flex;align-items:
 .menu-list li a i.main-icon { font-size: 16px; margin-right: 12px; color: var(--label); width: 20px; text-align: center; }
 
 /* SIDEBAR */
-.sb{width:320px;flex-shrink:0;background:var(--sb);border-right:1px solid var(--border);display:flex;flex-direction:column}
-.sb-head{padding:18px 16px 14px;border-bottom:1px solid var(--divider);display:flex;align-items:center;gap:10px}
+.sb{width:320px;flex-shrink:0;background:linear-gradient(180deg,rgba(13,17,23,1) 0%,rgba(10,13,20,1) 100%);border-right:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;position:relative}
+.sb::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,107,0,.3),transparent);pointer-events:none}
+.sb-head{padding:18px 16px 14px;border-bottom:1px solid var(--divider);display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.2)}
 .logo{display:flex;align-items:center;gap:8px;flex:1}
-.logo-icon{width:34px;height:34px;background:var(--orange);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px}
+.logo-icon{width:34px;height:34px;background:linear-gradient(135deg,#ff6b00,#e85e00);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;box-shadow:0 4px 12px rgba(255,107,0,.35)}
 .logo-text{font-size:16px;font-weight:800;color:var(--text)}
 .logo-text em{color:var(--orange);font-style:normal}
-.hbtn{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;text-decoration:none;transition:.2s}
-.hbtn:hover{color:var(--orange);border-color:var(--orange)}
-.sb-search{padding:10px 14px;border-bottom:1px solid var(--divider)}
-.si{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:12px;padding:9px 12px}
-.si i{color:var(--label);font-size:12px}
+.hbtn{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,.02);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;text-decoration:none;transition:.2s}
+.hbtn:hover{color:var(--orange);border-color:rgba(255,107,0,.5);background:var(--ora);transform:translateY(-1px)}
+.sb-search{padding:10px 14px 12px;border-bottom:1px solid var(--divider)}
+.si{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:9px 12px;transition:.2s}
+.si:focus-within{border-color:rgba(255,107,0,.4);background:rgba(255,107,0,.04);box-shadow:0 0 0 3px rgba(255,107,0,.08)}
+.si i{color:var(--label);font-size:12px;transition:.2s}
+.si:focus-within i{color:var(--orange)}
 .si input{border:none;background:transparent;outline:none;font-size:13px;color:var(--text);width:100%}
 .si input::placeholder{color:var(--label)}
 .contacts{flex:1;overflow-y:auto;padding:6px 0}
 .contacts::-webkit-scrollbar{width:3px}
-.contacts::-webkit-scrollbar-thumb{background:var(--divider);border-radius:3px}
-.sec{font-size:10px;font-weight:700;color:var(--label);text-transform:uppercase;letter-spacing:.8px;padding:12px 16px 6px}
-.ci{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;transition:.15s;position:relative}
-.ci:hover{background:rgba(255,107,0,.04)}
-.ci.active{background:var(--ora)}
-.ci.active::before{content:'';position:absolute;left:0;top:20%;height:60%;width:3px;background:var(--orange);border-radius:0 3px 3px 0}
-.av{width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.contacts::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:3px}
+.sec{font-size:10px;font-weight:700;color:var(--label);text-transform:uppercase;letter-spacing:1px;padding:12px 16px 6px;display:flex;align-items:center;gap:8px}
+.sec::after{content:'';flex:1;height:1px;background:var(--divider)}
+.ci{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;transition:.2s;position:relative;border-radius:0}
+.ci:hover{background:rgba(255,107,0,.05);padding-left:18px}
+.ci.active{background:linear-gradient(90deg,rgba(255,107,0,.12),rgba(255,107,0,.04));border-right:none}
+.ci.active::before{content:'';position:absolute;left:0;top:15%;height:70%;width:3px;background:linear-gradient(180deg,#ff6b00,#ff8c00);border-radius:0 3px 3px 0;box-shadow:0 0 8px rgba(255,107,0,.5)}
+.av{width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid rgba(255,255,255,.06)}
 .avp{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#fff;flex-shrink:0}
 .ci-info{flex:1;min-width:0}
 .ci-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px}
 .ci-name{font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ci-time{font-size:11px;color:var(--label);white-space:nowrap}
 .ci-prev{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.badge{background:var(--orange);color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 5px;flex-shrink:0}
-.odot{width:14px;height:14px;border-radius:50%;background:#22c55e;border:2.5px solid var(--sb);position:absolute;bottom:10px;left:42px;box-shadow:0 0 5px rgba(34,197,94,0.4)}
+.badge{background:linear-gradient(135deg,#ff6b00,#ff4500);color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 5px;flex-shrink:0;box-shadow:0 2px 8px rgba(255,107,0,.4)}
+.odot{width:10px;height:10px;border-radius:50%;background:#22c55e;border:2px solid var(--sb);position:absolute;bottom:12px;left:44px;box-shadow:0 0 6px rgba(34,197,94,.6),0 0 12px rgba(34,197,94,.3)}
 
 /* MAIN */
-.main{flex:1;display:flex;flex-direction:column;background:var(--bg);min-width:0}
-.ch{background:var(--sb);border-bottom:1px solid var(--border);padding:12px 18px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow)}
+.main{flex:1;display:flex;flex-direction:column;background:radial-gradient(ellipse at 70% 20%,rgba(255,107,0,.04) 0%,transparent 60%),var(--bg);min-width:0;position:relative}
+.ch{background:rgba(13,17,23,.9);border-bottom:1px solid rgba(255,255,255,.07);padding:13px 18px;display:flex;align-items:center;gap:12px;backdrop-filter:blur(12px);box-shadow:0 4px 24px rgba(0,0,0,.3)}
 .ca-wrap{position:relative}
 .ca{width:40px;height:40px;border-radius:50%;object-fit:cover}
 .con-dot{width:11px;height:11px;border-radius:50%;background:#22c55e;border:2px solid var(--sb);position:absolute;bottom:0;right:0}
@@ -84,10 +98,19 @@ body{background:var(--bg);height:100vh;overflow:hidden;display:flex;align-items:
 .bm{display:flex;align-items:center;gap:4px;margin-top:3px;justify-content:flex-end}
 .bt{font-size:10px;opacity:.65}
 .bc{font-size:10px}
-.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:14px;color:var(--label)}
-.ei{width:72px;height:72px;border-radius:50%;background:var(--ora);display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--orange)}
-.empty h3{font-size:17px;font-weight:700;color:var(--text)}
-.empty p{font-size:13px;color:var(--muted)}
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:0;color:var(--label);position:relative;overflow:hidden;animation:fadeInUp .5s ease}
+.empty-orb{position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none}
+.empty-orb-1{width:300px;height:300px;background:radial-gradient(circle,rgba(255,107,0,.08),transparent);top:10%;left:20%;animation:orb-drift 12s ease-in-out infinite}
+.empty-orb-2{width:250px;height:250px;background:radial-gradient(circle,rgba(99,102,241,.06),transparent);bottom:15%;right:15%;animation:orb-drift 16s ease-in-out infinite reverse}
+.empty-icon-wrap{position:relative;margin-bottom:28px}
+.ei{width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,rgba(255,107,0,.18),rgba(255,107,0,.05));border:1px solid rgba(255,107,0,.2);display:flex;align-items:center;justify-content:center;font-size:34px;color:var(--orange);position:relative;z-index:1;box-shadow:0 0 0 16px rgba(255,107,0,.05),0 0 0 32px rgba(255,107,0,.02);animation:float 4s ease-in-out infinite}
+.ei-ripple{position:absolute;width:90px;height:90px;border-radius:50%;border:1.5px solid rgba(255,107,0,.25);animation:ripple 2.5s ease-out infinite}
+.ei-ripple:nth-child(2){animation-delay:.8s}
+.ei-ripple:nth-child(3){animation-delay:1.6s}
+.empty h3{font-size:20px;font-weight:800;color:var(--text);margin-bottom:10px;background:linear-gradient(135deg,#fff,rgba(255,255,255,.7));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.empty p{font-size:13px;color:var(--muted);margin-bottom:28px;text-align:center;max-width:220px;line-height:1.6}
+.empty-cta{display:flex;align-items:center;gap:8px;padding:12px 24px;background:linear-gradient(135deg,rgba(255,107,0,.15),rgba(255,107,0,.05));border:1px solid rgba(255,107,0,.3);border-radius:14px;color:var(--orange);font-size:13px;font-weight:700;cursor:pointer;transition:.2s;text-decoration:none}
+.empty-cta:hover{background:linear-gradient(135deg,rgba(255,107,0,.25),rgba(255,107,0,.1));transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,107,0,.2)}
 .typing{font-size:12px;color:var(--muted);padding:0 20px 6px;display:none}
 .input-area{background:var(--sb);border-top:1px solid var(--border);padding:12px 18px}
 .ir{display:flex;align-items:flex-end;gap:8px}
@@ -157,18 +180,26 @@ body{background:var(--bg);height:100vh;overflow:hidden;display:flex;align-items:
 <body>
 <div class="sidebar-container">
     <div class="icon-rail">
-        <a href="{% url 'build:home' %}" class="rail-item" data-title="Bosh sahifa"><i class="fa-solid fa-house"></i></a>
-        <a href="{% url 'build:post_list' %}" class="rail-item" data-title="Market Pro"><i class="fa-solid fa-store"></i></a>
-        <a href="{% url 'build:profile_edit' %}" class="rail-item" data-title="Sozlamalar"><i class="fa-solid fa-gear"></i></a>
-        <a href="{% url 'build:post_create' %}" class="rail-item" data-title="Post yaratish"><i class="fa-solid fa-plus"></i></a>
-        <a href="{% url 'chat:chat' %}" class="rail-item active" data-title="Chatlar">
+        <a href="{% url 'build:home' %}" class="rail-item" data-title="{% trans 'Bosh sahifa' %}"><i class="fa-solid fa-house"></i></a>
+        <a href="{% url 'build:network' %}" class="rail-item" data-title="{% trans 'Hamkasblar' %}"><i class="fa-solid fa-users"></i></a>
+        <a href="{% url 'build:post_list' %}" class="rail-item" data-title="{% trans 'Market Pro' %}"><i class="fa-solid fa-store"></i></a>
+        <a href="{% url 'build:builder_list' %}" class="rail-item" data-title="{% trans 'Usta Qidirish' %}"><i class="fa-solid fa-helmet-safety"></i></a>
+        <a href="{% url 'build:post_create' %}" class="rail-item" data-title="{% trans 'Post yaratish' %}"><i class="fa-solid fa-plus"></i></a>
+        <a href="{% url 'chat:chat' %}" class="rail-item active" data-title="{% trans 'Chatlar' %}">
             <i class="fa-regular fa-comment-dots"></i>
             {% if unread_chat_count > 0 %}
-            <span style="position:absolute; top:8px; right:8px; background:var(--active-text-blue); color:white; font-size:10px; font-weight:800; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-panel);">{{ unread_chat_count }}</span>
+            <span style="position:absolute; top:8px; right:8px; background:var(--orange); color:white; font-size:10px; font-weight:800; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center; border:2px solid var(--sb);">{{ unread_chat_count }}</span>
             {% endif %}
         </a>
+        <div class="rail-item" id="themeToggleBtn" data-title="{% trans 'Rejimni o\'zgartirish' %}"><i class="fa-solid fa-moon"></i></div>
         <div class="rail-divider"></div>
-        <a href="{% url 'build:profile' %}" class="rail-item" data-title="Mening Profilim"><i class="fa-regular fa-user"></i></a>
+        <a href="{% url 'build:profile' %}" class="rail-item" data-title="Mening Profilim">
+            {% if request.user.profile.avatar %}
+                <img src="{{ request.user.profile.get_avatar_url }}" style="width:100%; height:100%; border-radius:14px; object-fit:cover;">
+            {% else %}
+                <i class="fa-regular fa-user"></i>
+            {% endif %}
+        </a>
     </div>
 
     <div class="expanded-menu">
@@ -179,9 +210,10 @@ body{background:var(--bg);height:100vh;overflow:hidden;display:flex;align-items:
             </div>
             <ul class="menu-list">
                 <li><a href="{% url 'build:home' %}"><i class="fa-solid fa-house main-icon"></i> Home</a></li>
-                <li><a href="{% url 'build:post_list' %}"><i class="fa-solid fa-store main-icon"></i> Market Pro (B2B)</a></li>
-                <li><a href="{% url 'build:profile_edit' %}"><i class="fa-solid fa-gear main-icon"></i> Sozlamalar</a></li>
-                <li><a href="{% url 'chat:chat' %}"><i class="fa-regular fa-comment-dots main-icon"></i> Xabarlar {% if unread_chat_count > 0 %}<span class="badge" style="background:var(--orange); color:white; font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; margin-left:auto;">{{ unread_chat_count }}</span>{% endif %}</a></li>
+                <li><a href="{% url 'build:network' %}"><i class="fa-solid fa-users main-icon"></i> {% trans "Hamkasblar" %}</a></li>
+                <li><a href="{% url 'build:post_list' %}"><i class="fa-solid fa-store main-icon"></i> {% trans "Market Pro (B2B)" %}</a></li>
+                <li><a href="{% url 'build:builder_list' %}"><i class="fa-solid fa-helmet-safety main-icon"></i> {% trans "Usta Qidirish" %}</a></li>
+                <li><a href="{% url 'chat:chat' %}"><i class="fa-regular fa-comment-dots main-icon"></i> {% trans "Xabarlar" %} {% if unread_chat_count > 0 %}<span class="badge" style="background:var(--orange); color:white; font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; margin-left:auto;">{{ unread_chat_count }}</span>{% endif %}</a></li>
                 <li><a href="{% url 'build:profile' %}"><i class="fa-regular fa-user main-icon"></i> Mening Profilim</a></li>
             </ul>
         </div>
@@ -235,9 +267,19 @@ body{background:var(--bg);height:100vh;overflow:hidden;display:flex;align-items:
 
   <div class="msgs" id="msgs">
     <div class="empty" id="empty">
-      <div class="ei"><i class="fa-solid fa-comments"></i></div>
+      <div class="empty-orb empty-orb-1"></div>
+      <div class="empty-orb empty-orb-2"></div>
+      <div class="empty-icon-wrap">
+        <div class="ei-ripple"></div>
+        <div class="ei-ripple"></div>
+        <div class="ei-ripple"></div>
+        <div class="ei"><i class="fa-solid fa-comments"></i></div>
+      </div>
       <h3>Chatni tanlang</h3>
-      <p>Chap tomondagi ro'yxatdan suhbat tanlang</p>
+      <p>Chap tomondagi ro'yxatdan suhbat tanlang yoki yangi suhbat boshlang</p>
+      <a class="empty-cta" onclick="openNewChat()" href="#">
+        <i class="fa-solid fa-pen-to-square"></i> Yangi suhbat
+      </a>
     </div>
   </div>
 
@@ -356,12 +398,13 @@ body{background:var(--bg);height:100vh;overflow:hidden;display:flex;align-items:
             <h2 id="psm-name" style="margin:0 0 4px 0; font-size:22px; font-weight:800; color:#fff; text-shadow:0 2px 4px rgba(0,0,0,0.3);"></h2>
             <div id="psm-username" style="font-size:13px; color:var(--muted); margin-bottom:12px;"></div>
             <p style="margin:0; font-size:13px; font-weight:500; color:#22c55e; background:rgba(34, 197, 94, 0.1); padding:4px 12px; border-radius:12px; display:inline-block;" id="psm-status"></p>
+            <div id="psm-socials" style="margin-top:20px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;"></div>
         </div>
         
         <!-- Media Links -->
         <div style="padding:0 24px 20px 24px;">
             <div style="display:flex; flex-direction:column; gap:8px;">
-                <div class="psm-media-tab" onclick="alert('Tez kunda!')">
+                <div class="psm-media-tab" onclick="showToast('Tez kunda! 🚀')">
                     <div style="display:flex; align-items:center; gap:12px;">
                         <div style="width:36px; height:36px; border-radius:10px; background:rgba(59, 130, 246, 0.1); color:#3b82f6; display:flex; align-items:center; justify-content:center; font-size:16px;"><i class="fa-solid fa-image"></i></div>
                         <div style="font-size:14px; font-weight:600; color:#fff;">Media (Rasm / Video)</div>
@@ -369,7 +412,7 @@ body{background:var(--bg);height:100vh;overflow:hidden;display:flex;align-items:
                     <div style="color:var(--muted); font-size:13px; display:flex; align-items:center; gap:6px;"><span id="psm-count-media">0</span> <i class="fa-solid fa-chevron-right" style="font-size:10px;"></i></div>
                 </div>
                 
-                <div class="psm-media-tab" onclick="alert('Tez kunda!')">
+                <div class="psm-media-tab" onclick="showToast('Tez kunda! 🚀')">
                     <div style="display:flex; align-items:center; gap:12px;">
                         <div style="width:36px; height:36px; border-radius:10px; background:rgba(245, 158, 11, 0.1); color:#f59e0b; display:flex; align-items:center; justify-content:center; font-size:16px;"><i class="fa-solid fa-file-lines"></i></div>
                         <div style="font-size:14px; font-weight:600; color:#fff;">Fayllar</div>
@@ -377,7 +420,7 @@ body{background:var(--bg);height:100vh;overflow:hidden;display:flex;align-items:
                     <div style="color:var(--muted); font-size:13px; display:flex; align-items:center; gap:6px;"><span id="psm-count-files">0</span> <i class="fa-solid fa-chevron-right" style="font-size:10px;"></i></div>
                 </div>
                 
-                <div class="psm-media-tab" onclick="alert('Tez kunda!')">
+                <div class="psm-media-tab" onclick="showToast('Tez kunda! 🚀')">
                     <div style="display:flex; align-items:center; gap:12px;">
                         <div style="width:36px; height:36px; border-radius:10px; background:rgba(16, 185, 129, 0.1); color:#10b981; display:flex; align-items:center; justify-content:center; font-size:16px;"><i class="fa-solid fa-microphone"></i></div>
                         <div style="font-size:14px; font-weight:600; color:#fff;">Ovozli xabarlar</div>
@@ -390,7 +433,7 @@ body{background:var(--bg);height:100vh;overflow:hidden;display:flex;align-items:
         <!-- Actions -->
         <div style="padding:20px 24px; border-top:1px solid rgba(255,255,255,0.05); background:rgba(0,0,0,0.2); display:flex; gap:12px;">
             <button onclick="document.getElementById('personal-settings-modal').style.display='none';" style="flex:1; padding:12px; background:rgba(255,255,255,0.03); color:#fff; border:1px solid rgba(255,255,255,0.1); border-radius:14px; cursor:pointer; font-weight:600; font-size:13px; display:flex; flex-direction:column; align-items:center; gap:6px; transition:0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.03)'"><i class="fa-solid fa-message" style="font-size:16px; color:#94a3b8;"></i> Xabar yozish</button>
-            <button onclick="alert('Tez kunda!')" style="flex:1; padding:12px; background:rgba(239, 68, 68, 0.1); color:#ef4444; border:1px solid rgba(239, 68, 68, 0.2); border-radius:14px; cursor:pointer; font-weight:600; font-size:13px; display:flex; flex-direction:column; align-items:center; gap:6px; transition:0.2s;" onmouseover="this.style.background='rgba(239, 68, 68, 0.2)'" onmouseout="this.style.background='rgba(239, 68, 68, 0.1)'"><i class="fa-solid fa-ban" style="font-size:16px;"></i> Bloklash</button>
+            <button onclick="showToast('Bloklash funksiyasi tez kunda! 🚀', true)" style="flex:1; padding:12px; background:rgba(239, 68, 68, 0.1); color:#ef4444; border:1px solid rgba(239, 68, 68, 0.2); border-radius:14px; cursor:pointer; font-weight:600; font-size:13px; display:flex; flex-direction:column; align-items:center; gap:6px; transition:0.2s;" onmouseover="this.style.background='rgba(239, 68, 68, 0.2)'" onmouseout="this.style.background='rgba(239, 68, 68, 0.1)'"><i class="fa-solid fa-ban" style="font-size:16px;"></i> Bloklash</button>
         </div>
     </div>
 </div>
@@ -415,8 +458,8 @@ body{background:var(--bg);height:100vh;overflow:hidden;display:flex;align-items:
             <input type="text" id="rename-group-input" style="width:100%; padding:14px 16px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); border-radius:12px; color:#fff; font-size:15px; outline:none; transition:0.2s;" onfocus="this.style.borderColor='var(--active-text-blue)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'" placeholder="Yangi nomni kiriting...">
         </div>
         <div style="padding:16px 24px; background:rgba(0,0,0,0.2); border-top:1px solid rgba(255,255,255,0.05); display:flex; gap:12px; justify-content:flex-end;">
-            <button onclick="document.getElementById('rename-group-modal').style.display='none'" style="padding:10px 20px; background:transparent; color:#94a3b8; border:none; cursor:pointer; font-weight:600; font-size:14px;">Bekor qilish</button>
-            <button onclick="submitRenameGroup()" style="padding:10px 24px; background:linear-gradient(45deg, var(--active-text-blue), #fb923c); color:#fff; border:none; border-radius:12px; cursor:pointer; font-weight:700; font-size:14px; box-shadow:0 4px 12px rgba(255, 107, 0, 0.2);">Saqlash</button>
+            <button onclick="document.getElementById('rename-group-modal').style.display='none'" style="padding:10px 20px; background:transparent; color:#94a3b8; border:none; cursor:pointer; font-weight:600; font-size:14px;">{% trans "Bekor qilish" %}</button>
+            <button onclick="submitRenameGroup()" style="padding:10px 24px; background:linear-gradient(45deg, var(--active-text-blue), #fb923c); color:#fff; border:none; border-radius:12px; cursor:pointer; font-weight:700; font-size:14px; box-shadow:0 4px 12px rgba(255, 107, 0, 0.2);">{% trans "Saqlash" %}</button>
         </div>
     </div>
 </div>
@@ -524,21 +567,45 @@ function playDialtone() {
 window.showToast = function(msg, isError=false) {
     const container = document.getElementById('toast-container');
     const toast = document.createElement('div');
-    const bg = isError ? 'rgba(239, 68, 68, 0.9)' : 'rgba(34, 197, 94, 0.9)';
-    const icon = isError ? '<i class="fa-solid fa-circle-exclamation"></i>' : '<i class="fa-solid fa-circle-check"></i>';
     
-    toast.style.cssText = `background:${bg}; color:#fff; padding:12px 20px; border-radius:12px; font-size:14px; font-weight:600; display:flex; align-items:center; gap:10px; box-shadow:0 10px 25px rgba(0,0,0,0.3); backdrop-filter:blur(5px); animation:toastSlide 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);`;
-    toast.innerHTML = `${icon} ${esc(msg)}`;
+    const iconColor = isError ? '#ff4b4b' : '#10b981';
+    const bgColor = isError ? 'rgba(255, 75, 75, 0.15)' : 'rgba(16, 185, 129, 0.15)';
+    const borderColor = isError ? 'rgba(255, 75, 75, 0.3)' : 'rgba(16, 185, 129, 0.3)';
+    const iconClass = isError ? 'fa-solid fa-triangle-exclamation' : 'fa-solid fa-check';
+    
+    toast.style.cssText = `
+        background: rgba(20, 20, 25, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-left: 4px solid ${iconColor};
+        color: #f1f5f9;
+        padding: 12px 18px 12px 14px;
+        border-radius: 16px;
+        font-size: 14px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+        animation: toastSlide 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    `;
+    
+    toast.innerHTML = `
+        <div style="width: 36px; height: 36px; border-radius: 12px; background: ${bgColor}; color: ${iconColor}; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; border: 1px solid ${borderColor}; shadow: inset 0 0 10px ${bgColor};"><i class="${iconClass}"></i></div>
+        <div style="line-height: 1.4;">${msg}</div>
+    `;
     
     container.appendChild(toast);
     
     setTimeout(() => {
-        toast.style.animation = 'toastFadeOut 0.3s ease forwards';
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
+        toast.style.animation = 'toastFadeOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+        setTimeout(() => toast.remove(), 400);
+    }, 4500);
 }
 const ME={{ me_id }};
 const CSRF='{{ csrf_token }}';
+const LANG_PREFIX='/{{ LANGUAGE_CODE|default:"uz" }}';
 const COLORS=['#6366f1','#f59e0b','#10b981','#ec4899','#8b5cf6','#06b6d4','#f97316','#84cc16'];
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const col=id=>COLORS[id%COLORS.length];
@@ -549,7 +616,7 @@ let roomId=null,contact=null,ws=null,allContacts=[],typingTimer=null,currentRoom
 // ── CONTACTS ──
 async function loadContacts(){
   try{
-    const r=await fetch('/chat/api/contacts/');
+    const r=await fetch(`${LANG_PREFIX}/chat/api/contacts/`);
     const d=await r.json();
     allContacts=d.contacts||[];
     renderContacts(allContacts);
@@ -705,6 +772,26 @@ function goToSettings() {
             mStatus.style.background = 'rgba(255, 255, 255, 0.05)';
         }
         
+        const mSocials = document.getElementById('psm-socials');
+        mSocials.innerHTML = '';
+        if (contact.socials) {
+            if (contact.socials.phone) {
+                mSocials.innerHTML += `<a href="tel:${contact.socials.phone}" title="Telefon" style="width:36px; height:36px; border-radius:12px; background:rgba(16,185,129,0.1); color:#10b981; display:flex; align-items:center; justify-content:center; font-size:16px; transition:0.2s; border:1px solid rgba(16,185,129,0.2);" onmouseover="this.style.background='rgba(16,185,129,0.2)'" onmouseout="this.style.background='rgba(16,185,129,0.1)'"><i class="fa-solid fa-phone"></i></a>`;
+            }
+            if (contact.socials.telegram_url) {
+                mSocials.innerHTML += `<a href="${contact.socials.telegram_url}" target="_blank" title="Telegram" style="width:36px; height:36px; border-radius:12px; background:rgba(41,182,246,0.1); color:#29b6f6; display:flex; align-items:center; justify-content:center; font-size:18px; transition:0.2s; border:1px solid rgba(41,182,246,0.2);" onmouseover="this.style.background='rgba(41,182,246,0.2)'" onmouseout="this.style.background='rgba(41,182,246,0.1)'"><i class="fa-brands fa-telegram"></i></a>`;
+            }
+            if (contact.socials.whatsapp_url) {
+                mSocials.innerHTML += `<a href="${contact.socials.whatsapp_url}" target="_blank" title="WhatsApp" style="width:36px; height:36px; border-radius:12px; background:rgba(37,211,102,0.1); color:#25d366; display:flex; align-items:center; justify-content:center; font-size:18px; transition:0.2s; border:1px solid rgba(37,211,102,0.2);" onmouseover="this.style.background='rgba(37,211,102,0.2)'" onmouseout="this.style.background='rgba(37,211,102,0.1)'"><i class="fa-brands fa-whatsapp"></i></a>`;
+            }
+            if (contact.socials.instagram_url) {
+                mSocials.innerHTML += `<a href="${contact.socials.instagram_url}" target="_blank" title="Instagram" style="width:36px; height:36px; border-radius:12px; background:rgba(225,48,108,0.1); color:#e1306c; display:flex; align-items:center; justify-content:center; font-size:18px; transition:0.2s; border:1px solid rgba(225,48,108,0.2);" onmouseover="this.style.background='rgba(225,48,108,0.2)'" onmouseout="this.style.background='rgba(225,48,108,0.1)'"><i class="fa-brands fa-instagram"></i></a>`;
+            }
+            if (contact.socials.facebook_url) {
+                mSocials.innerHTML += `<a href="${contact.socials.facebook_url}" target="_blank" title="Facebook" style="width:36px; height:36px; border-radius:12px; background:rgba(24,119,242,0.1); color:#1877f2; display:flex; align-items:center; justify-content:center; font-size:18px; transition:0.2s; border:1px solid rgba(24,119,242,0.2);" onmouseover="this.style.background='rgba(24,119,242,0.2)'" onmouseout="this.style.background='rgba(24,119,242,0.1)'"><i class="fa-brands fa-facebook"></i></a>`;
+            }
+        }
+        
         let countMedia = 0;
         let countFiles = 0;
         let countAudio = 0;
@@ -729,7 +816,7 @@ async function loadMessages(id){
   const w=document.getElementById('msgs');
   w.innerHTML='<div style="text-align:center;padding:40px;color:var(--muted);font-size:13px">Yuklanmoqda...</div>';
   try{
-    const r=await fetch(`/chat/api/messages/${id}/?limit=100`);
+    const r=await fetch(`${LANG_PREFIX}/chat/api/messages/${id}/?limit=100`);
     const d=await r.json();
     currentRoomMessages = d.messages||[];
     renderMessages(currentRoomMessages);
@@ -1081,7 +1168,7 @@ window.seekAudioWave = function(e, aid) {
 
 window.respondInvite = async function(id, action) {
     try {
-        const res = await fetch(`/api/team/invite/${id}/`, {
+        const res = await fetch(`/${window.location.pathname.split('/')[1]}/api/team/invite/${id}/`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json', 'X-CSRFToken': CSRF},
             body: JSON.stringify({action: action})
@@ -1111,16 +1198,20 @@ function initGlobalWS(){
   const proto=location.protocol==='https:'?'wss':'ws';
   ws=new WebSocket(`${proto}://${location.host}/ws/chat/0/`);
   ws.onopen=()=>console.log('Global WS connected');
-  ws.onclose=()=> {
+  ws.onclose=()=>{
       globalWsInitialized = false;
-      setTimeout(initGlobalWS, 3000);
+      // Reconnect immediately (no delay) to minimize unavailability
+      setTimeout(initGlobalWS, 500);
   };
   ws.onerror=e=>console.log('WS Xato',e);
   ws.onmessage=e=>{
     const d=JSON.parse(e.data);
     if(d.type==='message'){
       if (roomId == d.room_id) {
-          appendMsg(d,true);
+          // Skip own messages — already shown via optimistic rendering
+          if(d.sender_id !== ME) {
+              appendMsg(d,true);
+          }
           if(d.sender_id!==ME) ws.send(JSON.stringify({type:'read_receipt', room_id: d.room_id}));
       }
       const cIndex=allContacts.findIndex(x=>x.room_id===d.room_id);
@@ -1444,7 +1535,7 @@ async function sendMediaFile(file, txt) {
     updateActionBtn();
     
     try {
-        const r = await fetch(`/chat/api/upload/${roomId}/`, {
+        const r = await fetch(`${LANG_PREFIX}/chat/api/upload/${roomId}/`, {
             method: 'POST',
             headers: { 'X-CSRFToken': CSRF },
             body: formData
@@ -1548,6 +1639,15 @@ async function send(){
   }
   
   ws.send(JSON.stringify({type:'message',message:finalTxt, room_id: roomId}));
+  // Optimistic rendering — show immediately without waiting for WS echo
+  appendMsg({
+    sender_id: ME,
+    content: finalTxt,
+    sender_name: '{{ request.user.get_full_name|default:request.user.username }}',
+    time: new Date().toLocaleTimeString('uz',{hour:'2-digit',minute:'2-digit'}),
+    is_read: false,
+    id: 'tmp_' + Date.now()
+  }, true, true);
   inp.value='';inp.style.height='auto';
   clearMedia();
   updateActionBtn();
@@ -1584,7 +1684,7 @@ async function searchU(q) {
     let query = q.toLowerCase().trim();
     if (query.startsWith('@')) query = query.substring(1);
     
-    const r = await fetch(`/chat/api/users/?q=${encodeURIComponent(query)}`);
+    const r = await fetch(`${LANG_PREFIX}/chat/api/users/?q=${encodeURIComponent(query)}`);
     const d = await r.json();
     const el = document.getElementById('ur');
     if (!el) return;
@@ -1630,9 +1730,15 @@ async function searchU(q) {
 
 async function startChat(uid) {
   try {
-    const r = await fetch('/chat/api/start/', {method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':CSRF},body:JSON.stringify({user_id:uid})});
+    const r = await fetch(`${LANG_PREFIX}/chat/api/start/`, {method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':CSRF},body:JSON.stringify({user_id:uid})});
     const d = await r.json();
-    if(d.room_id){await loadContacts();openRoom(d.room_id);}
+    if(d.room_id){
+      // Force WS reconnect so the new room group is subscribed on the server
+      globalWsInitialized = false;
+      if(ws) ws.close();
+      await loadContacts();
+      openRoom(d.room_id);
+    }
   } catch(e) { console.error(e); }
 }
 
@@ -1674,7 +1780,7 @@ async function filterContacts(q) {
   
   // 2. Global (barcha saytdagi) foydalanuvchilarni qidirish
   try {
-      const r = await fetch(`/chat/api/users/?q=${encodeURIComponent(query)}`);
+      const r = await fetch(`${LANG_PREFIX}/chat/api/users/?q=${encodeURIComponent(query)}`);
       const d = await r.json();
       const globalUsers = d.users || [];
       
@@ -1787,7 +1893,7 @@ async function updateGroupData(data) {
         if (data.name) formData.append('name', data.name);
         if (data.avatar) formData.append('avatar', data.avatar);
         
-        const res = await fetch(`/chat/api/group/${roomId}/update/`, {
+        const res = await fetch(`${LANG_PREFIX}/chat/api/group/${roomId}/update/`, {
             method: 'POST',
             headers: {'X-CSRFToken': CSRF},
             body: formData
@@ -1863,16 +1969,29 @@ async function startCall(type) {
     try { playDialtone(); } catch(e) { console.log(e); }
     
     try {
-        localStream = await navigator.mediaDevices.getUserMedia({ video: isVideoCall, audio: true });
+        try {
+            localStream = await navigator.mediaDevices.getUserMedia({ video: isVideoCall, audio: true });
+        } catch (e) {
+            if (isVideoCall) {
+                showToast("📷 Kamera topilmadi, faqat mikrofon orqali ulanmoqda...", true);
+                isVideoCall = false;
+                document.getElementById('local-video').style.opacity = '0';
+                document.getElementById('remote-video').style.opacity = '0.01';
+                localStream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
+            } else {
+                throw e;
+            }
+        }
+        
         if (isVideoCall) document.getElementById('local-video').srcObject = localStream;
         
         ws.send(JSON.stringify({
             'type': 'call_start',
-            'call_type': type,
+            'call_type': isVideoCall ? 'video' : 'audio',
             'room_id': currentCallRoom
         }));
     } catch(e) {
-        alert("Kamera yoki mikrofon ruxsati berilmadi yoki qurilma topilmadi. (" + e.message + ")");
+        showToast("🎤 Mikrofon topilmadi yoki ruxsat berilmadi.", true);
         closeCallUI();
     }
 }
@@ -1906,12 +2025,25 @@ async function acceptCall() {
     stopAllAudio();
     
     try {
-        localStream = await navigator.mediaDevices.getUserMedia({ video: isVideoCall, audio: true });
+        try {
+            localStream = await navigator.mediaDevices.getUserMedia({ video: isVideoCall, audio: true });
+        } catch(e) {
+            if (isVideoCall) {
+                showToast("📷 Kamera topilmadi, faqat mikrofon orqali ulanmoqda...", true);
+                isVideoCall = false;
+                document.getElementById('local-video').style.opacity = '0';
+                document.getElementById('remote-video').style.opacity = '0.01';
+                localStream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
+            } else {
+                throw e;
+            }
+        }
+        
         if (isVideoCall) document.getElementById('local-video').srcObject = localStream;
         
         ws.send(JSON.stringify({ 'type': 'call_answer', 'room_id': currentCallRoom }));
     } catch(e) {
-        alert("Kamera yoki mikrofon ruxsati berilmadi yoki qurilma topilmadi. (" + e.message + ")");
+        showToast("🎤 Mikrofon topilmadi yoki ruxsat berilmadi.", true);
         rejectCall();
     }
 }

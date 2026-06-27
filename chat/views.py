@@ -60,6 +60,28 @@ def _format_contact_data(room, user, request, unread_count=None):
     if not other:
         return None
 
+    try:
+        profile = other.profile
+        telegram = profile.telegram or ''
+        if telegram and not telegram.startswith('@') and not telegram.startswith('t.me'):
+            telegram = '@' + telegram
+        whatsapp = profile.whatsapp or ''
+        whatsapp_clean = ''.join(filter(str.isdigit, whatsapp))
+        instagram = getattr(profile, 'instagram', '') or ''
+        instagram_url = instagram if instagram.startswith('http') else f"https://instagram.com/{instagram.lstrip('@')}" if instagram else ''
+        facebook = getattr(profile, 'facebook', '') or ''
+        facebook_url = facebook if facebook.startswith('http') else f"https://facebook.com/{facebook.lstrip('@')}" if facebook else ''
+        
+        socials = {
+            'phone': profile.phone or '',
+            'telegram_url': f"https://t.me/{telegram.lstrip('@')}" if telegram else '',
+            'whatsapp_url': f"https://wa.me/{whatsapp_clean}" if whatsapp_clean else '',
+            'instagram_url': instagram_url,
+            'facebook_url': facebook_url,
+        }
+    except Exception:
+        socials = {}
+
     return {
         'room_id': room.pk,
         'user_id': other.pk,
@@ -71,7 +93,8 @@ def _format_contact_data(room, user, request, unread_count=None):
         'sort_time': last_msg.created_at.timestamp() if last_msg else 0,
         'unread': unread,
         'online': bool(cache.get(f'user_online_{other.pk}')),
-        'is_group': False
+        'is_group': False,
+        'socials': socials
     }
 
 
