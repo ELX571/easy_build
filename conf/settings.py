@@ -9,6 +9,8 @@ Git'ga push QILMANG — u .gitignore orqali himoyalangan.
 """
 
 import os
+import dj_database_url
+
 from pathlib import Path
 from dotenv import load_dotenv
 from django.utils.translation import gettext_lazy as _  # i18n uchun zarur import
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'whitenoise.runserver_nostatic',,
     'django.contrib.sites',
     'django.contrib.humanize',
 
@@ -112,14 +115,11 @@ ASGI_APPLICATION = 'conf.asgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.postgresql'),
-        'NAME': os.getenv('DB_NAME', 'easy_build'),
-        'USER': os.getenv('DB_USER', 'postgres'),
-        'PASSWORD': os.getenv('DB_PASSWORD', ''),
-        'HOST': os.getenv('DB_HOST', '127.0.0.1'),
-        'PORT': os.getenv('DB_PORT', '5432'),
-    }
+    'default': dj_database_url.config(
+        default=f"postgres://{os.getenv('DB_USER', 'postgres')}:{os.getenv('DB_PASSWORD', '')}@{os.getenv('DB_HOST', '127.0.0.1')}:{os.getenv('DB_PORT', '5432')}/{os.getenv('DB_NAME', 'easy_build')}",
+        conn_max_age=600
+    )
+}
 }
 
 # ── Django Channels — InMemory (development) / Redis (production) ──
@@ -223,7 +223,6 @@ SOCIALACCOUNT_PROVIDERS = {
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Media fayllar uchun (Rasm, fayl yuklash uchun)
 MEDIA_URL = '/media/'
@@ -232,4 +231,4 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Tailwind va avtomatik yuklanish ilovasi nomi
 TAILWIND_APP_NAME = "templates"
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'STATIC_ROOT = BASE_DIR / 'staticfiles'

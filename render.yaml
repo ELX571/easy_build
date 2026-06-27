@@ -1,15 +1,24 @@
 services:
   - type: web
-    name: easybuild
+    name: easy-build
     env: python
     buildCommand: "./build.sh"
-    startCommand: "daphne -b 0.0.0.0 -p $PORT conf.asgi:application"
+    startCommand: "gunicorn conf.wsgi:application"
     envVars:
       - key: PYTHON_VERSION
-        value: 3.11.4
+        value: 3.14.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: easy-build-db
+          property: connectionString
       - key: SECRET_KEY
         generateValue: true
       - key: DEBUG
-        value: False
+        value: "False"
       - key: ALLOWED_HOSTS
-        value: '*'
+        value: "*"
+
+databases:
+  - name: easy-build-db
+    databaseName: easy_build
+    user: easy_build_user
