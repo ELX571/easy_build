@@ -67,6 +67,7 @@ if DEBUG:
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',  # Tillar uchun javobgar Middleware (Joylashuvi to'g'ri)
     'django.middleware.common.CommonMiddleware',
@@ -222,6 +223,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Media fayllar uchun (Rasm, fayl yuklash uchun)
 MEDIA_URL = '/media/'
