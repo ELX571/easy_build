@@ -2,12 +2,11 @@ services:
   - type: web
     name: easy-build
     env: python
-    plan: free
     buildCommand: "./build.sh"
     startCommand: "gunicorn conf.wsgi:application"
     envVars:
       - key: PYTHON_VERSION
-        value: "3.11.8"
+        value: 3.14.0
       - key: DATABASE_URL
         fromDatabase:
           name: easy-build-db
@@ -21,6 +20,5 @@ services:
 
 databases:
   - name: easy-build-db
-    plan: free
     databaseName: easy_build
     user: easy_build_user
