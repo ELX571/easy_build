@@ -21,5 +21,6 @@ services:
 
 databases:
   - name: easy-build-db
+      plan: free
     databaseName: easy_build
     user: easy_build_user
