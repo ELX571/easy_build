@@ -1,6 +1,5 @@
 from django.core.exceptions import MultipleObjectsReturned
 from django.db.models import Q
-
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from allauth.socialaccount.models import SocialApp
 
