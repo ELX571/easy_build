@@ -186,10 +186,10 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
 .bottom-nav-item .badge { position: absolute; top: 4px; right: 4px; background: #ef4444; color: #fff; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 10px; border: 2px solid var(--sb); box-shadow: 0 2px 8px rgba(239,68,68,0.4); }
 
 @media(max-width:768px){
-  body { padding-left: 0; padding-bottom: 75px; }
+  body { padding-left: 0; padding-bottom: 0; }
   .sidebar-container { display: none !important; }
   .bottom-nav { display: flex; }
-  .shell { height: calc(100vh - 100px); margin: 0; border-radius: 0; border: none; }
+  .shell { height: calc(100vh - 85px); margin: 0; border-radius: 0; border: none; position: absolute; top: 0; left: 0; width: 100%; }
   .sb { width: 100%; position: absolute; z-index: 10; height: 100%; }
   .sb.hide { display: none; }
   .bk { display: flex !important; }
@@ -707,6 +707,10 @@ async function openRoom(id){
     document.getElementById('ia').style.display='block';
     if (window.innerWidth <= 768) {
         document.getElementById('sb').classList.add('hide');
+        const bnav = document.querySelector('.bottom-nav');
+        if(bnav) bnav.style.display = 'none';
+        const shell = document.querySelector('.shell');
+        if(shell) shell.style.height = '100vh';
     }
     
     // Add click handler to navigate to settings
@@ -744,6 +748,12 @@ async function openRoom(id){
 
 function closeSidebar() {
     document.getElementById('sb').classList.remove('hide');
+    if (window.innerWidth <= 768) {
+        const bnav = document.querySelector('.bottom-nav');
+        if(bnav) bnav.style.display = 'flex';
+        const shell = document.querySelector('.shell');
+        if(shell) shell.style.height = 'calc(100vh - 85px)';
+    }
 }
 
 
