@@ -113,21 +113,27 @@
         @media (max-width: 768px) {
             .sidebar-container { display: none !important; }
             .bottom-nav { display: flex; }
-            body { padding: 85px 14px 120px 14px; overflow-x: hidden; }
-            .tweet-card { padding: 18px 0; border-radius: 0; border-left: none; border-right: none; margin: 0 -14px; gap: 12px; box-shadow: none; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); background: var(--bg-body); }
+            body { padding: 64px 0 120px 0; overflow-x: hidden; }
+            .profile-container { width: 100%; gap: 0; }
+            
+            .tweet-card { padding: 18px 0; border-radius: 0; border-left: none; border-right: none; margin: 0; gap: 12px; box-shadow: none; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); background: var(--bg-body); }
             .tweet-header, .tweet-body, .tweet-price-badge, .tweet-manage-toolbar, .tweet-footer, .tweet-stats, .tweet-manage-actions { padding-left: 16px; padding-right: 16px; }
             .tweet-image { width: 100%; border-radius: 0; border-left: none; border-right: none; margin-top: 8px; margin-bottom: 8px; max-height: 400px; }
-            .profile-header-card { margin: 0 -14px; border-radius: 0; border-left: none; border-right: none; border-top: none; }
+            
+            .profile-header-card { margin: 0; border-radius: 0; border-left: none; border-right: none; border-top: none; flex-direction: column; text-align: center; gap: 12px; padding: 30px 20px 24px; background: linear-gradient(180deg, rgba(255,107,0,0.05) 0%, transparent 100%); border-bottom: 1px solid var(--border-color); }
+            .p-avatar { width: 110px !important; height: 110px !important; border: 4px solid var(--bg-body) !important; box-shadow: 0 10px 25px rgba(255,107,0,0.2) !important; }
+            .edit-p-btn { display: none; }
             
             header { padding: 0 16px !important; height: 64px !important; }
             .header-left .menu-hamburger { display: none; }
-            .profile-header-card { flex-direction: column; text-align: center; gap: 10px; padding: 20px; }
-            .edit-p-btn { position: relative; top: 0; right: 0; margin-top: 10px; align-self: center; }
-            .profile-tabs { overflow-x: auto; white-space: nowrap; padding-bottom: 5px; }
-            .tab-node { flex: 0 0 auto; padding: 12px 16px; }
-            .profile-container { gap: 16px; }
+            
+            .profile-tabs { overflow-x: auto; white-space: nowrap; padding: 12px 16px; border-bottom: 1px solid var(--border-color); margin: 0; gap: 10px; }
+            .tab-node { flex: 0 0 auto; padding: 10px 18px; border-radius: 20px; font-size: 14px; background: var(--bg-panel); border: 1px solid var(--border-color); font-weight: 700; color: var(--text-muted); }
+            .tab-node.active-tab { background: var(--active-text-blue); color: #fff; border-color: var(--active-text-blue); }
+            
+            .profile-header-card > div:nth-child(2) > div { justify-content: center; margin-top: 24px !important; gap: 16px !important; }
+            .profile-header-card > div:nth-child(2) > div > a { width: 44px; height: 44px; border-radius: 50%; background: var(--bg-panel); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid var(--border-color); font-size: 20px; }
         }
-
     </style>
 </head>
 <body>
