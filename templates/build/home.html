@@ -227,12 +227,46 @@
         @keyframes slideRight { from { transform: translateX(-30px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* ── BOTTOM NAVIGATION (MOBILE) ── */
+        .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; width: 100%; height: 75px; background: var(--bg-panel); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-top: 1px solid var(--border-color); z-index: 1000; justify-content: space-around; align-items: center; padding: 0 10px; padding-bottom: env(safe-area-inset-bottom); box-shadow: 0 -10px 30px rgba(0,0,0,0.2); }
+        .bottom-nav-item { color: var(--rail-item-color); font-size: 22px; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 55px; height: 55px; border-radius: 16px; text-decoration: none; position: relative; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        .bottom-nav-item.active { color: var(--active-text-blue); }
+        .bottom-nav-item:hover { color: var(--text-main); background: var(--rail-item-hover-bg); transform: scale(1.05); }
+        .bottom-nav-item.add-btn { background: linear-gradient(135deg, #ff6b00, #ff8c33); color: #fff !important; border-radius: 50%; width: 60px; height: 60px; transform: translateY(-20px); box-shadow: 0 10px 25px var(--glow-color); border: 5px solid var(--bg-body); font-size: 24px; }
+        .bottom-nav-item.add-btn:hover { transform: translateY(-24px) scale(1.05); box-shadow: 0 14px 30px var(--glow-color); }
+        .bottom-nav-item .badge { position: absolute; top: 8px; right: 8px; background: #ef4444; color: #fff; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 10px; border: 2px solid var(--bg-panel); box-shadow: 0 2px 8px rgba(239,68,68,0.4); }
+
         @media (max-width: 768px) {
-            .sidebar-container:hover .expanded-menu { width: 250px; }
-            .main-content { margin-left: 95px; padding: 100px 16px 20px 16px; }
-            header { padding: 0 20px; }
+            .sidebar-container { display: none !important; }
+            .bottom-nav { display: flex; }
+            .main-content { margin-left: 0; padding: 85px 14px 100px 14px; }
+            header { padding: 0 16px; height: 64px; }
+            .header-container { grid-template-columns: 1fr auto 1fr; }
+            .header-add-btn { display: none; } /* Hide add button in header on mobile */
+            .logo { font-size: 20px; }
+            .profile-avatar { width: 38px; height: 38px; }
+            
+            .tweet-card { padding: 18px 16px; border-radius: 20px; gap: 14px; }
+            .tweet-name { font-size: 15px; }
+            .tweet-username { font-size: 12px; }
+            .tweet-avatar { width: 44px; height: 44px; }
+            .tweet-body h3 { font-size: 17px; margin-bottom: 12px; padding-bottom: 8px; }
+            .tweet-body { font-size: 14px; }
+            .tweet-image { border-radius: 12px; }
+            
+            .tweet-actions-left { gap: 8px; }
+            .tweet-action { padding: 8px 12px; font-size: 12px; }
+            .tweet-action i { font-size: 14px; }
+            .tweet-action.contact { flex: 2; max-width: none; }
+            
+            .premium-search-input { height: 50px; font-size: 14px; padding: 0 12px 0 44px; }
+            .premium-search-btn { height: 38px; padding: 0 16px; font-size: 13px; }
+            .search-icon-premium { left: 16px; font-size: 14px; }
+            .market-filter-bar { margin-bottom: 25px; }
+            .search-wrapper { border-radius: 25px; }
         }
     
+
         .custom-dropdown-menu { display: none; position: absolute; right: 0; top: 40px; background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); min-width: 200px; z-index: 100; overflow: hidden; flex-direction: column; }
         .custom-dropdown-menu.show { display: flex; }
         .custom-dropdown-menu a { padding: 12px 16px; color: var(--text-main); text-decoration: none; font-size: 15px; display: flex; align-items: center; gap: 10px; transition: background 0.2s; }
@@ -915,6 +949,20 @@ function showToast(type, message) {
 
         deleteModalObj.addEventListener('click', (e) => { if (e.target === deleteModalObj) closeDeleteModal(); });
     </script>
+    <!-- MOBILE BOTTOM NAVIGATION -->
+    <div class="bottom-nav">
+        <a href="{% url 'build:home' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}"><i class="fa-solid fa-house"></i></a>
+        <a href="{% url 'build:network' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}"><i class="fa-solid fa-users"></i></a>
+        <a href="{% url 'build:post_create' %}" class="bottom-nav-item add-btn"><i class="fa-solid fa-plus"></i></a>
+        <a href="{% url 'build:builder_list' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}"><i class="fa-solid fa-helmet-safety"></i></a>
+        <a href="{% url 'chat:chat' %}" class="bottom-nav-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}">
+            <i class="fa-regular fa-comment-dots"></i>
+            {% if unread_chat_count > 0 %}
+                <span class="badge">{{ unread_chat_count }}</span>
+            {% endif %}
+        </a>
+    </div>
+
 </body>
 
 
