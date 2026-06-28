@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('build', '0002_builderprofile'),
+        ('build', '0003_builderprofile_rating_cache_post_author_and_more'),
         ('chat', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
