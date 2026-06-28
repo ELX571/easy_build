@@ -1,0 +1,224 @@
+{% load i18n %}
+<!DOCTYPE html>
+  <html lang="{{ LANGUAGE_CODE|default:'uz' }}" data-theme="dark">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>{% trans "Post Yaratish" %}</title>
+      <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg?v=2">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+      <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;500;600;700;800&display=swap" rel="stylesheet">
+      <style>
+          :root {
+              --bg-body: #f4f6fa;
+              --bg-panel: rgba(255, 255, 255, 0.75);
+            --border-color: rgba(0, 0, 0, 0.06);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --active-text-blue: #ff6b00;
+                          --glow-color: rgba(255, 107, 0, 0.2);
+            --card-gradient: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+            --input-bg: #ffffff;
+                          --input-text: #0f172a;
+}
+
+        [data-theme="dark"] {
+            --bg-body: #05070c;
+            --bg-panel: rgba(10, 14, 23, 0.7);
+            --border-color: rgba(255, 255, 255, 0.05);
+            --text-main: #f8fafc;
+                          --text-muted: #94a3b8;
+            --active-text-blue: #ff6b00;
+                          --glow-color: rgba(255, 107, 0, 0.4);
+            --card-gradient: linear-gradient(135deg, rgba(13, 18, 30, 0.85), rgba(8, 11, 20, 0.6));
+            --input-bg: rgba(255, 255, 255, 0.02);
+            --input-text: #ffffff;
+              }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        body {
+                      background-color: var(--bg-body); color: var(--text-main);
+            display: flex; justify-content: center; min-height: 100vh;
+            transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+        .profile-avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border-color); cursor: pointer; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); background: black; }
+
+        .layout-container {
+                      display: flex; max-width: 800px; width: 100%; margin-top: 100px; gap: 30px; padding: 0 20px 0 110px; justify-content: center;
+}
+
+        .settings-content {
+                      flex-grow: 1; background: var(--card-gradient); border-radius: 24px;
+            border: 1px solid var(--border-color); padding: 40px;
+            backdrop-filter: blur(24px); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+}
+
+        .pane-title { font-size: 24px; font-weight: 800; margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; display: flex; align-items: center; gap: 10px;}
+
+        .form-group { margin-bottom: 22px; position: relative; }
+        .form-group label { display: block; margin-bottom: 9px; font-weight: 600; font-size: 14px; color: var(--text-main); }
+        .form-group input, .form-group textarea, .form-group select {
+                      width: 100%; padding: 14px 18px; background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px;
+            outline: none; color: var(--input-text); font-size: 15px; transition: all 0.3s ease;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+        .select-wrapper { position: relative; }
+        .select-wrapper::after {
+                      content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+                      position: absolute; right: 18px; top: 16px; color: #94a3b8; pointer-events: none; font-size: 12px;
+}
+        .form-group select { appearance: none; cursor: pointer; }
+        .form-group select:focus, .form-group input:focus, .form-group textarea:focus {
+                      background: rgba(255, 255, 255, 0.06);
+            border-color: var(--active-text-blue);
+            box-shadow: 0 0 0 4px rgba(251, 146, 60, 0.15), inset 0 2px 4px rgba(0,0,0,0.1);
+}
+        .form-group select option { background: var(--bg-panel, #1e293b); color: var(--text-main, #ffffff); }
+
+                  input[type="file"] {
+                      background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.05)) !important;
+            border: 2px dashed rgba(251, 146, 60, 0.4) !important;
+            padding: 16px !important;
+            border-radius: 16px !important;
+            color: #94a3b8;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        input[type="file"]:hover {
+                      border-color: var(--active-text-blue) !important;
+            background: rgba(251, 146, 60, 0.05) !important;
+            color: var(--input-text);
+                                  }
+        input[type="file"]::file-selector-button {
+                      border: none;
+            background: linear-gradient(45deg, var(--active-text-blue), #f97316);
+                          padding: 10px 20px;
+            border-radius: 12px;
+            color: #fff;
+                        font-weight: 700;
+            cursor: pointer;
+            margin-right: 16px;
+            transition: 0.2s;
+            box-shadow: 0 4px 15px rgba(251, 146, 60, 0.3);
+}
+        input[type="file"]::file-selector-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(251, 146, 60, 0.4);
+}
+
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(45deg, var(--active-text-blue), #f97316);
+            color: #ffffff;
+            border: none; padding: 16px; border-radius: 16px; font-weight: 800;
+            cursor: pointer; box-shadow: 0 8px 25px rgba(251, 146, 60, 0.4);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-top: 15px; font-size: 16px; display: flex; align-items: center; justify-content: center; gap: 10px;
+            text-transform: uppercase; letter-spacing: 1px;
+}
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(251, 146, 60, 0.5);
+}
+
+        .sidebar-container { position: fixed; top: 100px; left: 24px; display: flex; z-index: 999; height: calc(100vh - 130px); }
+        .icon-rail { width: 68px; height: 100%; background: var(--bg-panel); border-radius: 20px; display: flex; flex-direction: column; align-items: center; padding: 24px 0; box-shadow: 0 20px 40px rgba(0,0,0,0.1); border: 1px solid var(--border-color); backdrop-filter: blur(24px); }
+        .rail-item { width: 46px; height: 46px; border-radius: 14px; display: flex; justify-content: center; align-items: center; color: var(--text-muted); font-size: 18px; margin-bottom: 10px; cursor: pointer; position: relative; text-decoration: none; }
+        .rail-item.active { background: var(--active-text-blue); color: #ffffff; box-shadow: 0 8px 20px var(--glow-color); }
+[data-theme="dark"] .rail-item.active { background: rgba(255, 107, 0, 0.14); color: var(--active-text-blue); border: 1px solid rgba(255, 107, 0, 0.3); }
+        .rail-item:hover:not(.active) { background: rgba(255,255,255,0.03); color: var(--text-main); transform: scale(1.05); }
+        .rail-divider { width: 24px; height: 1px; background: var(--border-color); margin: 14px 0; }
+        .expanded-menu { width: 0; opacity: 0; overflow: hidden; background: var(--bg-panel); border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.2); border: 1px solid var(--border-color); margin-left: -20px; padding-left: 20px; display: flex; backdrop-filter: blur(24px); transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, margin 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .sidebar-container:hover .expanded-menu { width: 280px; opacity: 1; margin-left: 16px; }
+        .menu-col { min-width: 250px; height: 100%; padding: 28px 20px; display: flex; flex-direction: column; }
+        .menu-title { font-size: 17px; font-weight: 700; color: var(--text-main); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+        .menu-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+        .menu-list li a { display: flex; align-items: center; padding: 11px 14px; color: var(--text-muted); font-size: 14px; font-weight: 600; text-decoration: none; border-radius: 10px; }
+        .menu-list li a:hover { background: rgba(255,255,255,0.03); color: var(--text-main); transform: translateX(5px); }
+        .menu-list li a i.main-icon { font-size: 16px; margin-right: 12px; color: var(--text-muted); width: 20px; text-align: center; }
+
+        @media (max-width: 768px) {
+            .layout-container { padding: 0 10px; margin-top: 80px; }
+            .sidebar-container { display: none; }
+}
+    </style>
+</head>
+<body>
+    <header style="background: var(--bg-panel); position: fixed; width: 100%; height: 76px; top: 0; left: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); padding: 0 40px; display: flex; align-items: center; backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);">
+        <div style="width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;">
+            <div style="display: flex; justify-content: flex-start; gap: 10px;">
+                <a href="{% url 'build:post_list' %}" style="background: var(--bg-panel); border: 1px solid var(--border-color); color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 8px; padding: 0 16px; height: 44px; border-radius: 14px; font-weight: 700; font-size: 14px; transition: all 0.3s ease;">
+                    <i class="fa-solid fa-arrow-left"></i> {% trans "Orqaga" %}
+                </a>
+            </div>
+            <div style="display: flex; justify-content: center;">
+                <a href="{% url 'build:home' %}" style="font-size: 24px; font-weight: 800; color: var(--active-text-blue); text-decoration: none; letter-spacing: -0.8px; display: flex; align-items: center; gap: 6px;">
+                    Easy<span style="color: var(--text-main); font-weight: 500;">Build</span> <i class="fa-solid fa-helmet-safety"></i>
+                </a>
+            </div>
+            <div style="display: flex; justify-content: flex-end; align-items: center; gap: 20px;">
+                <a href="{% url 'build:profile' %}">
+                    <img src="{{ user.profile.get_avatar_url }}" alt="Profil" class="profile-avatar">
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="sidebar-container">
+        <div class="icon-rail">
+            <a href="{% url 'build:home' %}" class="rail-item" data-title="{% trans 'Bosh sahifa' %}"><i class="fa-solid fa-house"></i></a>
+            <a href="{% url 'build:network' %}" class="rail-item" data-title="{% trans 'Hamkasblar' %}"><i class="fa-solid fa-users"></i></a>
+            <a href="{% url 'build:post_list' %}" class="rail-item" data-title="{% trans 'Market Pro' %}"><i class="fa-solid fa-store"></i></a>
+            <a href="{% url 'build:builder_list' %}" class="rail-item" data-title="{% trans 'Usta Qidirish' %}"><i class="fa-solid fa-helmet-safety"></i></a>
+            <a href="{% url 'build:post_create' %}" class="rail-item active" data-title="{% trans 'Post yaratish' %}"><i class="fa-solid fa-plus"></i></a>
+            <a href="{% url 'chat:chat' %}" class="rail-item" data-title="{% trans 'Chatlar' %}">
+                <i class="fa-regular fa-comment-dots"></i>
+            </a>
+            <div class="rail-divider"></div>
+            <a href="{% url 'build:profile' %}" class="rail-item" data-title="{% trans 'Profil sozlamalari' %}"><i class="fa-regular fa-user"></i></a>
+        </div>
+    </div>
+
+    <div class="layout-container">
+        <div class="settings-content">
+            <div class="pane-title"><i class="fa-solid fa-plus" style="color: var(--active-text-blue);"></i> {% trans "E'lon joylashtirish" %}</div>
+            <form method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+
+                <div class="form-group">
+                    <label for="id_title"><i class="fa-solid fa-heading"></i> {% trans "Sarlavha:" %}</label>
+{{ form.title }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_category"><i class="fa-solid fa-list"></i> {% trans "Kategoriya:" %}</label>
+                    <div class="select-wrapper">
+{{ form.category }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_price"><i class="fa-solid fa-money-bill-wave"></i> {% trans "Narxi (so'm):" %}</label>
+{{ form.price }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_description"><i class="fa-solid fa-align-left"></i> {% trans "Batafsil ma'lumot:" %}</label>
+{{ form.description }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_image"><i class="fa-solid fa-image"></i> {% trans "Rasm yuklash:" %}</label>
+{{ form.image }}
+                </div>
+
+                <button type="submit" class="btn-submit"><i class="fa-solid fa-paper-plane"></i> {% trans "E'lonni joylash" %}</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
