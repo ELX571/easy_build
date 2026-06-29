@@ -102,7 +102,7 @@
 
         /* ── BOTTOM NAVIGATION (MOBILE) ── */
         /* ── BOTTOM NAVIGATION (MOBILE) ── */
-        .bottom-nav { display: none; position: fixed; bottom: calc(15px + env(safe-area-inset-bottom)); left: 15px; width: calc(100% - 30px); height: 65px; background: var(--bg-panel); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--border-color); border-radius: 22px; z-index: 1000; justify-content: space-around; align-items: center; padding: 0 10px; box-shadow: 0 15px 40px rgba(0,0,0,0.25); }
+        .bottom-nav { display: none; position: fixed; bottom: calc(15px + env(safe-area-inset-bottom, 0px)); left: 15px; width: calc(100% - 30px); height: 65px; background: var(--bg-panel); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--border-color); border-radius: 22px; z-index: 1000; justify-content: space-around; align-items: center; padding: 0 10px; box-shadow: 0 15px 40px rgba(0,0,0,0.25); }
         .bottom-nav-item { color: var(--rail-item-color); font-size: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 50px; height: 50px; border-radius: 16px; text-decoration: none; position: relative; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
         .bottom-nav-item.active { color: var(--active-text-blue); }
         .bottom-nav-item:hover { color: var(--text-main); background: var(--rail-item-hover-bg); transform: scale(1.1); }
