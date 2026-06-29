@@ -161,6 +161,7 @@
 
         @media (max-width: 992px) { .search-grid-form { grid-template-columns: 1fr 1fr; } .submit-search-btn { grid-column: 1 / -1; width: 100%; } }
         @media (max-width: 768px) {
+            html, body { overflow-x: hidden !important; max-width: 100vw !important; width: 100%; }
             .sidebar-container { display: none !important; }
             .bottom-nav { display: flex; }
             .main-content { margin-left: 0; padding: 85px 14px 120px 14px; width: 100%; overflow-x: hidden; }

@@ -283,6 +283,7 @@
         .bottom-nav-item .badge { position: absolute; top: 4px; right: 4px; background: #ef4444; color: #fff; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 10px; border: 2px solid var(--bg-panel); box-shadow: 0 2px 8px rgba(239,68,68,0.4); }
 
         @media (max-width: 768px) {
+            html, body { overflow-x: hidden !important; max-width: 100vw !important; width: 100%; }
             .sidebar-container { display: none !important; }
             .bottom-nav { display: flex; }
             .main-content { margin-left: 0; padding: 85px 14px 120px 14px; width: 100%; overflow-x: hidden; }
@@ -293,7 +294,7 @@
             .profile-avatar { width: 38px; height: 38px; }
             .market-filter-bar { margin-bottom: 25px; }
 
-            .tweet-card { padding: 18px 0; border-radius: 0; border-left: none; border-right: none; margin: 0 -14px; gap: 12px; box-shadow: none; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); background: var(--bg-body); }
+            .tweet-card { padding: 18px 0 !important; border-radius: 0 !important; border-left: none !important; border-right: none !important; margin: 0 -14px !important; gap: 12px; box-shadow: none !important; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); background: var(--bg-body) !important; }
             .tweet-header, .tweet-body, .tweet-price-badge, .tweet-manage-toolbar, .tweet-footer, .tweet-stats, .tweet-manage-actions { padding-left: 16px; padding-right: 16px; }
             .tweet-image { width: 100%; border-radius: 0; border-left: none; border-right: none; margin-top: 8px; margin-bottom: 8px; max-height: 400px; }
             .tweet-name { font-size: 15px; }
