@@ -1,787 +1,91 @@
-{% load i18n %}
-{% load i18n %}
+{% load i18n humanize static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE|default:'uz' }}" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Easy Build</title>
-    <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg?v=2">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
+    <title>{% trans "Profil" %} | Easy Build</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        :root {
-            --bg-body: #f4f6fa;
-            --bg-panel: rgba(255, 255, 255, 0.75);
-            --border-color: rgba(0, 0, 0, 0.06);
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --active-text-blue: #ff6b00;
-            --glow-color: rgba(255, 107, 0, 0.2);
-            --card-gradient: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
-            --input-bg: #ffffff;
-            --input-text: #0f172a;
-        }
+        :root { --bg-body: #f4f6fa; --bg-panel: #ffffff; --text-main: #0f172a; --text-muted: #64748b; --active-text-blue: #ff6b00; --border-color: #e2e8f0; }
+        [data-theme="dark"] { --bg-body: #05070c; --bg-panel: #111115; --text-main: #f8fafc; --text-muted: #94a3b8; --border-color: #2d2d35; }
 
-        [data-theme="dark"] {
-            --bg-body: #05070c;
-            --bg-panel: rgba(10, 14, 23, 0.7);
-            --border-color: rgba(255, 255, 255, 0.05);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --active-text-blue: #ff6b00;
-            --glow-color: rgba(255, 107, 0, 0.4);
-            --card-gradient: linear-gradient(135deg, rgba(13, 18, 30, 0.85), rgba(8, 11, 20, 0.6));
-            --input-bg: rgba(255, 255, 255, 0.02);
-            --input-text: #ffffff;
-        }
+        body { background-color: var(--bg-body); color: var(--text-main); font-family: 'Plus Jakarta Sans', sans-serif; padding-bottom: 100px; }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        /* Profil Header */
+        .profile-hero { background: var(--bg-panel); padding: 40px 20px 20px; text-align: center; border-bottom: 1px solid var(--border-color); }
+        .p-avatar { width: 100px; height: 100px; border-radius: 50%; border: 4px solid var(--active-text-blue); margin-bottom: 16px; object-fit: cover; }
+        .p-name { font-size: 20px; font-weight: 800; }
+        .p-username { color: var(--text-muted); font-size: 14px; }
 
-        body {
-            background-color: var(--bg-body); color: var(--text-main);
-            display: flex; justify-content: center; min-height: 100vh;
-            transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+        /* Tablar */
+        .tabs { display: flex; overflow-x: auto; padding: 15px; gap: 10px; background: var(--bg-panel); border-bottom: 1px solid var(--border-color); scrollbar-width: none; }
+        .tab-item { padding: 10px 20px; border-radius: 20px; font-size: 14px; font-weight: 700; background: rgba(0,0,0,0.05); cursor: pointer; white-space: nowrap; }
+        .tab-item.active { background: var(--active-text-blue); color: #fff; }
 
-        /* HEADER CONTROLS */
-        .header-icon-btn { color: var(--text-muted); font-size: 18px; padding: 10px; border-radius: 12px; transition: all 0.25s ease; text-decoration: none; display: flex; align-items: center; justify-content: center; }
-        .header-icon-btn:hover { color: var(--active-text-blue); background: rgba(255,107,0,0.1); transform: translateY(-2px); }
-        .profile-avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border-color); cursor: pointer; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); background: black; }
+        /* Tweet Card (Responsive) */
+        .tweet-card { background: var(--bg-panel); margin: 15px; padding: 16px; border-radius: 20px; border: 1px solid var(--border-color); }
+        .tweet-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .tweet-body { font-size: 15px; line-height: 1.5; margin-bottom: 12px; }
+        .tweet-image { width: 100%; border-radius: 12px; margin-top: 10px; }
 
-        /* ASOSIY LAYOUT */
-        .layout-container {
-            display: flex; max-width: 1200px; width: 100%; margin-top: 100px; gap: 30px; padding: 0 20px 0 110px;
-        }
+        /* Button */
+        .btn-manage { display: block; width: 100%; padding: 12px; border-radius: 12px; border: none; font-weight: 700; margin-top: 8px; cursor: pointer; }
+        .btn-delete { background: #ef4444; color: white; }
 
-        /* CHAP TOMON: SIDEBAR MENU */
-        .settings-sidebar {
-            width: 280px; display: flex; flex-direction: column; gap: 8px; flex-shrink: 0;
-        }
-        .tab-btn {
-            background: transparent; border: none; padding: 14px 20px; text-align: left;
-            color: var(--text-muted); font-size: 15px; font-weight: 600; border-radius: 14px;
-            cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 12px;
-        }
-        .tab-btn i { font-size: 18px; width: 24px; text-align: center; }
-        .tab-btn:hover { background: rgba(255, 255, 255, 0.03); color: var(--text-main); }
-        .tab-btn.active {
-            background: rgba(255, 107, 0, 0.1); color: var(--active-text-blue);
-        }
-
-        /* O'NG TOMON: CONTENT PANE */
-        .settings-content {
-            flex-grow: 1; background: var(--card-gradient); border-radius: 24px;
-            border: 1px solid var(--border-color); padding: 40px;
-            backdrop-filter: blur(24px); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-            transition: background 0.4s ease, border-color 0.4s ease;
-        }
-
-        .tab-pane { display: none; animation: fadeIn 0.4s ease; }
-        .tab-pane.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .pane-title { font-size: 24px; font-weight: 800; margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; display: flex; align-items: center; gap: 10px;}
-
-        /* FORMA ELEMENTLARI */
-        .form-group { margin-bottom: 22px; position: relative; }
-        .form-group label { display: block; margin-bottom: 9px; font-weight: 600; font-size: 14px; color: var(--text-main); }
-        .form-group input, .form-group textarea, .form-group select {
-            width: 100%; padding: 14px 18px; background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px;
-            outline: none; color: var(--input-text); font-size: 15px; transition: all 0.3s ease;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .select-wrapper { position: relative; }
-        .select-wrapper::after {
-            content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
-            position: absolute; right: 18px; top: 16px; color: #94a3b8; pointer-events: none; font-size: 12px;
-        }
-        .form-group select { appearance: none; cursor: pointer; }
-        .form-group select:focus, .form-group input:focus, .form-group textarea:focus {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: var(--active-text-blue);
-            box-shadow: 0 0 0 4px rgba(251, 146, 60, 0.15), inset 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .form-group select option { background: var(--bg-panel, #1e293b); color: var(--text-main, #ffffff); }
-
-        input[type="file"] {
-            background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.05)) !important;
-            border: 2px dashed rgba(251, 146, 60, 0.4) !important;
-            padding: 16px !important;
-            border-radius: 16px !important;
-            color: #94a3b8;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-        input[type="file"]:hover {
-            border-color: var(--active-text-blue) !important;
-            background: rgba(251, 146, 60, 0.05) !important;
-            color: var(--input-text);
-        }
-        input[type="file"]::file-selector-button {
-            border: none;
-            background: linear-gradient(45deg, var(--active-text-blue), #f97316);
-            padding: 10px 20px;
-            border-radius: 12px;
-            color: #fff;
-            font-weight: 700;
-            cursor: pointer;
-            margin-right: 16px;
-            transition: 0.2s;
-            box-shadow: 0 4px 15px rgba(251, 146, 60, 0.3);
-        }
-        input[type="file"]::file-selector-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(251, 146, 60, 0.4);
-        }
-
-        .btn-submit {
-            width: 100%;
-            background: linear-gradient(45deg, var(--active-text-blue), #f97316);
-            color: #ffffff;
-            border: none; padding: 16px; border-radius: 16px; font-weight: 800;
-            cursor: pointer; box-shadow: 0 8px 25px rgba(251, 146, 60, 0.4);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            margin-top: 15px; font-size: 16px; display: flex; align-items: center; justify-content: center; gap: 10px;
-            text-transform: uppercase; letter-spacing: 1px;
-        }
-        .btn-submit:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(251, 146, 60, 0.5);
-        }
-
-        /* PRICING SYSTEM */
-        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 25px; align-items: stretch; }
-        .pricing-card {
-            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 24px; padding: 32px 24px; position: relative; overflow: hidden;
-            display: flex; flex-direction: column; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            backdrop-filter: blur(10px);
-        }
-
-        .pricing-card.plan-blue { border-color: rgba(59, 130, 246, 0.2); }
-        .pricing-card.plan-blue .p-icon { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
-        .pricing-card.plan-blue .btn-plan { background: rgba(255,255,255,0.05); color: #94a3b8; border: 1px solid var(--border-color); }
-
-        .pricing-card.plan-green {
-            border-color: var(--active-text-blue);
-            background: linear-gradient(135deg, rgba(255, 107, 0, 0.06), rgba(16, 185, 129, 0.01));
-            transform: scale(1.03);
-            box-shadow: 0 20px 40px var(--glow-color);
-            z-index: 2;
-        }
-        .pricing-card.plan-green .p-icon { background: rgba(16, 185, 129, 0.15); color: #10b981; }
-        .pricing-card.plan-green .btn-plan { background: #10b981; color: #fff; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); }
-        .pricing-card.plan-green .btn-plan:hover { background: #059669; }
-
-        .pricing-card.plan-gold { border-color: rgba(245, 158, 11, 0.3); background: linear-gradient(135deg, rgba(245, 158, 11, 0.05), rgba(245, 158, 11, 0.01)); }
-        .pricing-card.plan-gold .p-icon { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
-        .pricing-card.plan-gold .btn-plan { background: linear-gradient(45deg, #f59e0b, #eab308); color: #000; font-weight: 800; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
-        .pricing-card.plan-gold .btn-plan:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5); }
-
-        .popular-tag {
-            position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
-            background: var(--active-text-blue); color: white; padding: 4px 16px;
-            border-radius: 20px; font-size: 11px; font-weight: 800; text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .p-icon { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px; }
-        .p-title { font-size: 19px; font-weight: 800; color: var(--text-main); margin-bottom: 8px; }
-        .p-price { font-size: 28px; font-weight: 900; color: var(--text-main); margin-bottom: 6px; }
-        .p-price span { font-size: 13px; color: var(--text-muted); font-weight: 500; }
-        .p-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 24px; flex-grow: 1; }
-        .p-features { list-style: none; padding: 0; margin: 0 0 24px 0; display: flex; flex-direction: column; gap: 12px; border-top: 1px dashed var(--border-color); padding-top: 16px; }
-        .p-features li { font-size: 13px; color: var(--text-main); display: flex; align-items: center; gap: 10px; font-weight: 600; }
-        .p-features li.disabled-feature { color: var(--text-muted); opacity: 0.4; }
-
-        .btn-plan { width: 100%; border: none; padding: 14px; border-radius: 12px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; margin-top: auto; }
-        .btn-plan.active-plan { background: rgba(255,255,255,0.04) !important; color: #94a3b8 !important; box-shadow: none !important; cursor: default; }
-
-        /* ⚡️ SIDEBAR CSS */
-        .sidebar-container { position: fixed; top: 100px; left: 24px; display: flex; z-index: 999; height: calc(100vh - 130px); animation: slideRight 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-        .icon-rail { width: 68px; height: 100%; background: var(--bg-panel); border-radius: 20px; display: flex; flex-direction: column; align-items: center; padding: 24px 0; box-shadow: 0 20px 40px rgba(0,0,0,0.1); border: 1px solid var(--border-color); backdrop-filter: blur(24px); }
-        .rail-item { width: 46px; height: 46px; border-radius: 14px; display: flex; justify-content: center; align-items: center; color: var(--text-muted); font-size: 18px; margin-bottom: 10px; cursor: pointer; position: relative; text-decoration: none; }
-        .rail-item.active { background: var(--active-text-blue); color: #ffffff; box-shadow: 0 8px 20px var(--glow-color); }
-        [data-theme="dark"] .rail-item.active { background: rgba(255, 107, 0, 0.14); color: var(--active-text-blue); border: 1px solid rgba(255, 107, 0, 0.3); }
-        .rail-item:hover:not(.active) { background: rgba(255,255,255,0.03); color: var(--text-main); transform: scale(1.05); }
-        .rail-divider { width: 24px; height: 1px; background: var(--border-color); margin: 14px 0; }
-        .expanded-menu { width: 0; opacity: 0; overflow: hidden; background: var(--bg-panel); border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.2); border: 1px solid var(--border-color); margin-left: -20px; padding-left: 20px; display: flex; backdrop-filter: blur(24px); transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, margin 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        .sidebar-container:hover .expanded-menu { width: 280px; opacity: 1; margin-left: 16px; }
-        .menu-col { min-width: 250px; height: 100%; padding: 28px 20px; display: flex; flex-direction: column; }
-        .menu-title { font-size: 17px; font-weight: 700; color: var(--text-main); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
-        .menu-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
-        .menu-list li a { display: flex; align-items: center; padding: 11px 14px; color: var(--text-muted); font-size: 14px; font-weight: 600; text-decoration: none; border-radius: 10px; }
-        .menu-list li a:hover { background: rgba(255,255,255,0.03); color: var(--text-main); transform: translateX(5px); }
-        .menu-list li a i.main-icon { font-size: 16px; margin-right: 12px; color: var(--text-muted); width: 20px; text-align: center; }
-        .menu-list li a.active-link { background: rgba(255,107,0,0.1); color: var(--active-text-blue); }
-
-        @media (max-width: 992px) {
-            .pricing-grid { grid-template-columns: 1fr; gap: 30px; }
-            .pricing-card.plan-green { transform: none; }
-        }
-        /* ── BOTTOM NAVIGATION (MOBILE) ── */
-        .bottom-nav { display: none; position: fixed; bottom: calc(15px + env(safe-area-inset-bottom, 0px)); left: 15px; width: calc(100% - 30px); height: 65px; background: var(--bg-panel); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--border-color); border-radius: 22px; z-index: 1000; justify-content: space-around; align-items: center; padding: 0 10px; box-shadow: 0 15px 40px rgba(0,0,0,0.25); }
-        .bottom-nav-item { color: var(--text-muted); font-size: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 50px; height: 50px; border-radius: 16px; text-decoration: none; position: relative; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-        .bottom-nav-item.active { color: var(--active-text-blue); }
-        .bottom-nav-item:hover { color: var(--text-main); background: rgba(255,255,255,0.03); transform: scale(1.1); }
-        .bottom-nav-item.add-btn { background: linear-gradient(135deg, #ff6b00, #ff8c33); color: #fff !important; border-radius: 50%; width: 54px; height: 54px; transform: translateY(-15px); box-shadow: 0 10px 25px var(--glow-color); border: 4px solid var(--bg-body); font-size: 22px; }
-        .bottom-nav-item.add-btn:hover { transform: translateY(-20px) scale(1.05); box-shadow: 0 14px 30px var(--glow-color); }
-        .bottom-nav-item .badge { position: absolute; top: 4px; right: 4px; background: #ef4444; color: #fff; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 10px; border: 2px solid var(--bg-panel); box-shadow: 0 2px 8px rgba(239,68,68,0.4); }
-
-        @media (max-width: 768px) {
-            .layout-container { flex-direction: column; padding: 0; margin-top: 64px; margin-bottom: 120px; gap: 0; }
-            .settings-sidebar { width: 100%; flex-direction: row; overflow-x: auto; padding: 12px 16px; background: var(--bg-body); border-bottom: 1px solid var(--border-color); }
-            .tab-btn { white-space: nowrap; padding: 8px 16px; font-size: 13px; font-weight: 700; background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 20px; margin-right: 8px; color: var(--text-muted); }
-            .tab-btn.active { background: var(--active-text-blue); color: #fff; border-color: var(--active-text-blue); }
-            .tab-btn i { display: none; }
-            
-            .settings-content { padding: 24px 16px; border-radius: 0; border-left: none; border-right: none; box-shadow: none; border-top: none; background: transparent; }
-            .pane-title { font-size: 20px; margin-bottom: 20px; }
-            
-            .form-group { margin-bottom: 16px; flex-direction: column; }
-            .form-group label { font-size: 13px; margin-bottom: 6px; }
-            .form-group input, .form-group textarea, .form-group select { padding: 12px 14px; font-size: 16px; }
-            
-            .pricing-card { padding: 24px 16px; }
-            
-            .sidebar-container { display: none !important; }
-            .bottom-nav { display: flex; }
-            header { padding: 0 16px !important; height: 64px !important; }
-        }
+        /* Nav */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; height: 65px; background: var(--bg-panel); display: flex; justify-content: space-around; align-items: center; border-top: 1px solid var(--border-color); z-index: 1000; padding-bottom: env(safe-area-inset-bottom); }
     </style>
 </head>
 <body>
 
-    <!-- MAIN PLATFORM HEADER -->
-    <header style="background: var(--bg-panel); position: fixed; width: 100%; height: 76px; top: 0; left: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); padding: 0 40px; display: flex; align-items: center; backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);">
-        <div style="width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;">
-            <div style="display: flex; justify-content: flex-start; gap: 10px;">
-                <a href="{% url 'build:profile' %}" style="background: var(--bg-panel); border: 1px solid var(--border-color); color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 8px; padding: 0 16px; height: 44px; border-radius: 14px; font-weight: 700; font-size: 14px; transition: all 0.3s ease;">
-                    <i class="fa-solid fa-arrow-left"></i> {% trans "Orqaga" %}
-                </a>
-                <a href="{% url 'build:post_create' %}" style="background: var(--active-text-blue); color: #ffffff; width: 44px; height: 44px; border-radius: 14px; text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 4px 12px rgba(255,107,0,0.2); transition: all 0.3s ease;">
-                    <i class="fa-solid fa-plus"></i>
-                </a>
-            </div>
-            <div style="display: flex; justify-content: center;">
-                <a href="#" onclick="if(typeof toggleTheme === 'function') toggleTheme(); else if(typeof applyTheme === 'function') applyTheme(); return false;" style="font-size: 24px; font-weight: 800; color: var(--active-text-blue); text-decoration: none; letter-spacing: -0.8px; display: flex; align-items: center; gap: 6px;">
-                    Easy<span style="color: var(--text-main); font-weight: 500;">Build</span> <i class="fa-solid fa-helmet-safety"></i>
-                </a>
-            </div>
-            <div style="display: flex; justify-content: flex-end; align-items: center; gap: 20px;">
-                <div style="position: relative;">
-                    <form method="post" action="{% url 'set_language' %}" id="lang-form">
-                        {% csrf_token %}
-                        <input name="next" type="hidden" value="{{ request.path }}">
-                        <button type="button" id="lang-btn" onclick="document.getElementById('lang-menu').classList.toggle('show-lang')" style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); color: var(--text-main); height: 44px; padding: 0 16px 0 10px; border-radius: 30px; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: all 0.25s ease;">
-                            {% get_current_language as LANGUAGE_CODE %}
-                            <img class="uz-flag-wave" src="{% if LANGUAGE_CODE == 'uz' %}https://upload.wikimedia.org/wikipedia/commons/8/84/Flag_of_Uzbekistan.svg{% elif LANGUAGE_CODE == 'ru' %}https://flagcdn.com/w80/ru.png{% else %}https://flagcdn.com/w80/us.png{% endif %}" alt="{{ LANGUAGE_CODE }}" style="width: 24px; height: 24px; min-width: 24px; border-radius: 50%; object-fit: cover; object-position: 20% 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">
-                            <span id="lang-label">{% if LANGUAGE_CODE == 'uz' %}O'zbekcha{% elif LANGUAGE_CODE == 'ru' %}Русский{% else %}English{% endif %}</span> <i class="fa-solid fa-chevron-down" style="font-size: 11px; margin-left: 2px;"></i>
-                        </button>
-                        <div id="lang-menu" style="position: absolute; right: 0; top: 120%; background: var(--card-gradient); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 10px; display: none; flex-direction: column; gap: 4px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); min-width: 150px; z-index: 100;">
-                            <a href="#" onclick="setLang('uz'); return false;" style="color: {% if LANGUAGE_CODE == 'uz' %}var(--active-text-blue){% else %}#fff{% endif %}; text-decoration: none; padding: 10px 14px; border-radius: 10px; display: flex; align-items: center; gap: 12px; transition: 0.2s; {% if LANGUAGE_CODE == 'uz' %}background: rgba(255, 107, 0, 0.1);{% else %}background: rgba(255, 255, 255, 0.05);{% endif %} font-weight: 600;">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Flag_of_Uzbekistan.svg" alt="uz" style="width: 24px; height: 24px; min-width: 24px; border-radius: 50%; object-fit: cover; object-position: 20% 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"> O'zbekcha
-                            </a>
-                            <a href="#" onclick="setLang('ru'); return false;" style="color: {% if LANGUAGE_CODE == 'ru' %}var(--active-text-blue){% else %}#cbd5e1{% endif %}; text-decoration: none; padding: 10px 14px; border-radius: 10px; display: flex; align-items: center; gap: 12px; transition: 0.2s; {% if LANGUAGE_CODE == 'ru' %}background: rgba(255, 107, 0, 0.1);{% endif %} font-weight: 500;">
-                                <img src="https://flagcdn.com/w80/ru.png" alt="ru" style="width: 24px; height: 24px; min-width: 24px; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"> Русский
-                            </a>
-                            <a href="#" onclick="setLang('en'); return false;" style="color: {% if LANGUAGE_CODE == 'en' %}var(--active-text-blue){% else %}#cbd5e1{% endif %}; text-decoration: none; padding: 10px 14px; border-radius: 10px; display: flex; align-items: center; gap: 12px; transition: 0.2s; {% if LANGUAGE_CODE == 'en' %}background: rgba(255, 107, 0, 0.1);{% endif %} font-weight: 500;">
-                                <img src="https://flagcdn.com/w80/us.png" alt="us" style="width: 24px; height: 24px; min-width: 24px; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"> English
-                            </a>
-                        </div>
-                    </form>
-                </div>
-                <a href="{% url 'build:profile' %}">
-                    <img src="{{ user.profile.get_avatar_url }}" alt="Profil" class="profile-avatar">
-                </a>
-            </div>
-        </div>
-        <style>
-            .uz-flag-wave { animation: flag-flutter 2s ease-in-out infinite; }
-            @keyframes flag-flutter {
-                0%, 100% { transform: rotate(0deg) scale(1); }
-                25% { transform: rotate(-3deg) scale(1.02); }
-                75% { transform: rotate(3deg) scale(1.02); }
-            }
-            .show-lang { display: flex !important; animation: fadeIn 0.2s ease; }
-            #lang-menu { top: 130% !important; }
-            #lang-menu a:hover { background: rgba(255,255,255,0.08); color: #fff !important; transform: translateX(3px); }
-        </style>
-    </header>
-
-    <script>
-        document.addEventListener('click', function(event) {
-            var isClickInside = event.target.closest('#lang-menu') || event.target.closest('#lang-btn');
-            if (!isClickInside) {
-                var menu = document.getElementById('lang-menu');
-                if (menu) menu.classList.remove('show-lang');
-            }
-        });
-
-        function setLang(langCode) {
-            var form = document.getElementById('lang-form');
-            var input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'language';
-            input.value = langCode;
-            form.appendChild(input);
-            
-            var nextInput = form.querySelector('input[name="next"]');
-            if (nextInput && window.location.hash) {
-                nextInput.value += window.location.hash;
-            }
-            
-            form.submit();
-        }
-    </script>
-
-    <div class="sidebar-container">
-        <div class="icon-rail">
-            <a href="{% url 'build:home' %}" class="rail-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}" data-title="{% trans 'Bosh sahifa' %}"><i class="fa-solid fa-house"></i></a>
-            <a href="{% url 'build:network' %}" class="rail-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}" data-title="{% trans 'Hamkasblar' %}"><i class="fa-solid fa-users"></i></a>
-            <a href="{% url 'build:post_list' %}" class="rail-item {% if request.resolver_match.url_name == 'post_list' %}active{% endif %}" data-title="{% trans 'Market Pro' %}"><i class="fa-solid fa-store"></i></a>
-            <a href="{% url 'build:builder_list' %}" class="rail-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" data-title="{% trans 'Usta Qidirish' %}"><i class="fa-solid fa-helmet-safety"></i></a>
-            <a href="{% url 'build:post_create' %}" class="rail-item {% if request.resolver_match.url_name == 'post_create' %}active{% endif %}" data-title="{% trans 'Post yaratish' %}"><i class="fa-solid fa-plus"></i></a>
-            <a href="{% url 'chat:chat' %}" class="rail-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}" data-title="{% trans 'Chatlar' %}">
-                <i class="fa-regular fa-comment-dots"></i>
-                {% if unread_chat_count > 0 %}
-                <span style="position:absolute; top:8px; right:8px; background:var(--active-text-blue); color:white; font-size:10px; font-weight:800; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-panel);">{{ unread_chat_count }}</span>
-                {% endif %}
-            </a>
-            <div class="rail-item" id="themeToggleBtn" data-title="{% trans 'Rejimni o\'zgartirish' %}"><i class="fa-solid fa-moon"></i></div>
-            <div class="rail-divider"></div>
-            <a href="{% url 'build:profile' %}" class="rail-item active" data-title="{% trans 'Profil sozlamalari' %}"><i class="fa-regular fa-user"></i></a>
-        </div>
-
-        <div class="expanded-menu">
-            <div class="menu-col">
-                <div class="menu-title"><i class="fa-solid fa-compass" style="color: var(--active-text-blue); transform: rotate(15deg);"></i> Navigator</div>
-                <ul class="menu-list">
-                    <li><a href="{% url 'build:home' %}"><i class="fa-solid fa-house main-icon"></i> {% trans "Bosh sahifa" %}</a></li>
-                    <li><a href="{% url 'build:network' %}"><i class="fa-solid fa-users main-icon"></i> {% trans "Hamkasblar" %}</a></li>
-                    <li><a href="{% url 'build:post_list' %}"><i class="fa-solid fa-store main-icon"></i> {% trans "Market Pro (B2B)" %}</a></li>
-                    <li><a href="{% url 'build:builder_list' %}"><i class="fa-solid fa-helmet-safety main-icon"></i> {% trans "Usta Qidirish" %}</a></li>
-                    <li><a href="{% url 'chat:chat' %}"><i class="fa-regular fa-comment-dots main-icon"></i> {% trans "Xabarlar" %} {% if unread_chat_count > 0 %}<span class="badge" style="background:linear-gradient(135deg, #ff6b00, #ff8c33); color:#ffffff; font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; margin-left:auto;">{{ unread_chat_count }}</span>{% endif %}</a></li>
-                </ul>
-            </div>
-        </div>
+    <div class="profile-hero">
+        <img src="{{ profile.get_avatar_url }}" class="p-avatar" onerror="this.src='/static/images/default_avatar.svg'">
+        <h1 class="p-name">{{ request.user.get_full_name }}</h1>
+        <p class="p-username">@{{ request.user.username }}</p>
+        <a href="{% url 'build:profile_edit' %}" style="display:block; margin-top:15px; color:var(--active-text-blue); font-weight:700; font-size:14px;">{% trans "Tahrirlash" %}</a>
     </div>
 
-    <div class="layout-container">
-
-        <div class="settings-sidebar">
-            <button class="tab-btn active" onclick="openTab('tab-profile', this)"><i class="fa-solid fa-user-pen"></i> {% trans "Asosiy ma'lumotlar" %}</button>
-            <button class="tab-btn" onclick="openTab('tab-verify', this)"><i class="fa-solid fa-wallet"></i> {% trans "Verifikatsiya & Obunalar" %}</button>
-            <button class="tab-btn" onclick="openTab('tab-team', this)"><i class="fa-solid fa-users-gear"></i> {% trans "Jamoa sozlamalari" %}</button>
-            <button class="tab-btn" onclick="openTab('tab-security', this)"><i class="fa-solid fa-lock"></i> {% trans "Xavfsizlik va Parol" %}</button>
-            
-            <a href="{% url 'accounts:logout' %}" class="tab-btn" style="color: #ef4444; margin-top: 30px; text-decoration: none; border: 1px solid rgba(239,68,68,0.2); background: rgba(239,68,68,0.05);">
-                <i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> {% trans "Tizimdan chiqish" %}
-            </a>
-        </div>
-
-        <div class="settings-content">
-
-            <div id="tab-profile" class="tab-pane active">
-                <div class="pane-title"><i class="fa-solid fa-user-pen" style="color: var(--active-text-blue);"></i> {% trans "Shaxsiy ma'lumotlar" %}</div>
-                <form method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-
-                    <div style="display:flex; flex-direction:column; align-items:center; margin-bottom:30px;">
-                        <div id="avatar-preview-container" style="position:relative; width:120px; height:120px; border-radius:50%; cursor:pointer; overflow:hidden; border:3px solid transparent; background:linear-gradient(145deg, rgba(30, 35, 50, 0.95), rgba(15, 17, 26, 0.95)) padding-box, linear-gradient(45deg, var(--active-text-blue), #fb923c) border-box; box-shadow:0 10px 25px rgba(255, 107, 0, 0.2);" onclick="document.getElementById('id_avatar').click()" onmouseover="document.getElementById('av-overlay').style.opacity='1'" onmouseout="document.getElementById('av-overlay').style.opacity='0'">
-                            <img id="avatar-preview" src="{{ form.instance.get_avatar_url }}" style="width:100%; height:100%; object-fit:cover; display:block; background: black;">
-                            <div id="av-overlay" style="position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); border-radius:50%; display:flex; justify-content:center; align-items:center; color:#fff; font-size:28px; opacity:0; transition:0.2s;"><i class="fa-solid fa-camera"></i></div>
-                        </div>
-                        <p style="margin:10px 0 0 0; font-size:13px; color:var(--text-muted); font-weight:600;">{% trans "Profil rasmini o'zgartirish" %}</p>
-                        <input type="file" name="avatar" id="id_avatar" style="display:none" accept="image/*" onchange="previewAvatar(this)">
-                    </div>
-
-                    <div class="form-group" style="display: flex; gap: 20px;">
-                        <div style="flex: 1;">
-                            <label><i class="fa-solid fa-user"></i> {% trans "Ism:" %}</label>
-                            {{ form.first_name }}
-                        </div>
-                        <div style="flex: 1;">
-                            <label><i class="fa-solid fa-user"></i> {% trans "Familiya:" %}</label>
-                            {{ form.last_name }}
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label><i class="fa-solid fa-phone"></i> {% trans "Telefon:" %}</label>
-                        {{ form.phone }}
-                    </div>
-                    <div class="form-group">
-                        <label for="id_city"><i class="fa-solid fa-location-dot"></i> {% trans "Shahar / Viloyat:" %}</label>
-                        <div class="select-wrapper">
-                            <select name="city" id="id_city">
-                                {% for code, name in form.fields.city.choices %}
-                                    <option value="{{ code }}" {% if form.instance.city == code %}selected{% endif %}>{{ name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fa-solid fa-address-card"></i> {% trans "Ma'lumot (Bio):" %}</label>
-                        {{ form.bio }}
-                    </div>
-
-                    <div style="margin: 30px 0 15px 0; border-top: 1px dashed var(--border-color); padding-top: 20px;">
-                        <h4 style="font-size: 16px; font-weight: 700; color: var(--text-main); margin-bottom: 15px;"><i class="fa-solid fa-link" style="color: var(--active-text-blue);"></i> {% trans "Ijtimoiy tarmoqlar (Ixtiyoriy)" %}</h4>
-                        
-                        <div class="form-group" style="display: flex; gap: 20px;">
-                            <div style="flex: 1;">
-                                <label><i class="fa-brands fa-telegram" style="color: #29b6f6;"></i> Telegram:</label>
-                                {{ form.telegram }}
-                            </div>
-                            <div style="flex: 1;">
-                                <label><i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> WhatsApp:</label>
-                                {{ form.whatsapp }}
-                            </div>
-                        </div>
-
-                        <div class="form-group" style="display: flex; gap: 20px;">
-                            <div style="flex: 1;">
-                                <label><i class="fa-brands fa-instagram" style="color: #e1306c;"></i> Instagram:</label>
-                                {{ form.instagram }}
-                            </div>
-                            <div style="flex: 1;">
-                                <label><i class="fa-brands fa-facebook" style="color: #1877f2;"></i> Facebook:</label>
-                                {{ form.facebook }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn-submit"><i class="fa-solid fa-floppy-disk"></i> {% trans "O'zgarishlarni saqlash" %}</button>
-                </form>
-            </div>
-
-            <div id="tab-verify" class="tab-pane">
-                <div class="pane-title"><i class="fa-solid fa-wallet" style="color: var(--active-text-blue);"></i> {% trans "Verifikatsiya & Obunalar" %}</div>
-
-                <div style="display:flex; justify-content:center; margin-bottom:10px; margin-top:20px;">
-                    <div style="background:rgba(255,255,255,0.05); padding:6px; border-radius:100px; display:inline-flex; align-items:center; position:relative; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);">
-                        <div id="plan-toggle-bg" style="position:absolute; width:120px; height:calc(100% - 12px); background:linear-gradient(45deg, var(--active-text-blue), #fb923c); border-radius:100px; transition:0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); left:6px;"></div>
-                        <button id="btn-monthly" onclick="togglePlan('monthly')" style="position:relative; z-index:1; padding:10px 24px; border:none; background:transparent; color:#fff; font-weight:700; font-size:14px; cursor:pointer; width:120px; transition:0.3s;">{% trans "Oylik" %}</button>
-                        <button id="btn-yearly" onclick="togglePlan('yearly')" style="position:relative; z-index:1; padding:10px 24px; border:none; background:transparent; color:#94a3b8; font-weight:700; font-size:14px; cursor:pointer; width:120px; transition:0.3s;">{% trans "Yillik" %} <span style="position:absolute; top:-5px; right:-5px; background:#10b981; color:#fff; font-size:10px; padding:3px 8px; border-radius:12px; font-weight:800;">-15%</span></button>
-                    </div>
-                </div>
-
-                <div class="pricing-grid">
-
-                    <div class="pricing-card plan-blue">
-                        <div class="p-icon"><i class="fa-solid fa-user"></i></div>
-                        <div class="p-title">{% trans "Boshlang'ich" %}</div>
-                        <div class="p-price">{% trans "Bepul" %}</div>
-                        <div class="p-desc">{% trans "Tizimga kirgan barcha foydalanuvchilar uchun standart tanishuv imkoniyatlari." %}</div>
-                        <ul class="p-features">
-                            <li><i class="fa-solid fa-check" style="color: #3b82f6;"></i> {% trans "Ko'k tasdiq belgisi" %}</li>
-                            <li><i class="fa-solid fa-check" style="color: #3b82f6;"></i> {% trans "Kuniga 1 ta e'lon joylash" %}</li>
-                            <li class="disabled-feature"><i class="fa-solid fa-xmark"></i> {% trans "Kontaktlarni ko'rish" %}</li>
-                        </ul>
-                        <button class="btn-plan active-plan"><i class="fa-solid fa-check"></i> {% trans "Faol" %}</button>
-                    </div>
-
-                    <div class="pricing-card plan-green">
-                        <div class="popular-tag">{% trans "Eng ommabop" %}</div>
-                        <div class="p-icon"><i class="fa-solid fa-bolt"></i></div>
-                        <div class="p-title">PRO Obuna</div>
-                        <div class="p-price"><span id="price-pro">99,000</span> <span id="period-pro">{% trans "so'm / oy" %}</span></div>
-                        <div class="p-desc">{% trans "Doimiy va jiddiy buyurtmalar oqimiga ega bo'lishni xohlovchi ustalar uchun." %}</div>
-                        <ul class="p-features">
-                            <li><i class="fa-solid fa-check" style="color: #10b981;"></i> {% trans "Yashil premium belgi" %}</li>
-                            <li><i class="fa-solid fa-check" style="color: #10b981;"></i> {% trans "Cheksiz e'lon joylash" %}</li>
-                            <li><i class="fa-solid fa-check" style="color: #10b981;"></i> {% trans "Mijozlar kontaktlarini ochish" %}</li>
-                            <li><i class="fa-solid fa-check" style="color: #10b981;"></i> AI Scoring (+500 ball)</li>
-                        </ul>
-                        <button class="btn-plan">{% trans "Sotib olish" %}</button>
-                    </div>
-
-                    <div class="pricing-card plan-gold">
-                        <div class="p-icon"><i class="fa-solid fa-crown"></i></div>
-                        <div class="p-title">Premium VIP</div>
-                        <div class="p-price"><span id="price-vip">199,000</span> <span id="period-vip">{% trans "so'm / oy" %}</span></div>
-                        <div class="p-desc">{% trans "Yirik guruhlar, brigadirlar va B2B qurilish jamoalari uchun maxsus reja." %}</div>
-                        <ul class="p-features">
-                            <li><i class="fa-solid fa-check" style="color: #f59e0b;"></i> {% trans "Oltin tasdiq belgisi" %}</li>
-                            <li><i class="fa-solid fa-check" style="color: #f59e0b;"></i> {% trans "O'z jamoasini yaratish" %}</li>
-                            <li><i class="fa-solid fa-check" style="color: #f59e0b;"></i> {% trans "Neon ramkali e'lonlar" %}</li>
-                            <li><i class="fa-solid fa-check" style="color: #f59e0b;"></i> AI Max Boost (+1500 ball)</li>
-                        </ul>
-                        <button class="btn-plan">{% trans "Sotib olish" %}</button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="tab-team" class="tab-pane">
-                <div class="pane-title"><i class="fa-solid fa-users-gear" style="color: var(--active-text-blue);"></i> {% trans "Jamoa Sozlamalari" %}</div>
-
-                {% if profile.role == 'team' %}
-                <div style="margin-bottom: 24px; padding: 16px; border-radius: 16px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255, 107, 0, 0.1); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(255, 107, 0, 0.1); color: var(--active-text-blue); display: flex; align-items: center; justify-content: center; font-size: 20px;">
-                            <i class="fa-solid fa-users"></i>
-                        </div>
-                        <div style="flex-grow: 1;">
-                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
-                                <input type="text" id="team-name-input" value="{{ profile.builder_info.group_chat_room.group_name|default:'Mening Jamoam' }}" style="font-size: 18px; font-weight: 800; background: transparent; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: var(--input-text); padding: 4px 8px; outline: none; width: 100%; max-width: 250px;">
-                                <button onclick="renameTeam({{ profile.builder_info.group_chat_room.id }})" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.3); padding: 6px 12px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 12px;">{% trans "Saqlash" %}</button>
-                            </div>
-                            <p style="font-size: 13px; color: var(--text-muted); margin: 2px 0 0 0;">{% trans "Jamoangiz nomi va a'zolarini shu yerdan boshqaring" %}</p>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 12px;">
-                        <a href="{% url 'chat:chat' %}" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 18px; font-size: 13px; font-weight: 700; border-radius: 10px; background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.3); text-decoration: none;">
-                            <i class="fa-solid fa-comments"></i> {% trans "Guruhga o'tish" %}
-                        </a>
-                        <button onclick="openTeamModal()" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 18px; font-size: 13px; font-weight: 700; border-radius: 10px; background: linear-gradient(45deg, var(--active-text-blue), #fb923c); border: none; cursor: pointer;">
-                            <i class="fa-solid fa-user-plus"></i> {% trans "A'zo qo'shish" %}
-                        </button>
-                    </div>
-                </div>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;">
-                    {% for member in profile.builder_info.members.all %}
-                        <div style="padding: 20px; display: flex; flex-direction: column; align-items: center; text-align: center; border-radius: 16px; border: 1px solid rgba(255, 107, 0, 0.15); background: linear-gradient(145deg, rgba(255, 107, 0, 0.05) 0%, rgba(0,0,0,0) 100%);">
-                            <div style="width: 70px; height: 70px; border-radius: 50%; padding: 3px; background: linear-gradient(45deg, var(--active-text-blue), #fb923c); margin-bottom: 12px;">
-                                <img src="{{ member.profile.get_avatar_url }}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; background: black;">
-                            </div>
-                            <h3 style="font-size: 15px; font-weight: 800; color: var(--text-main); margin-bottom: 4px;">{{ member.get_full_name|default:member.username }}</h3>
-                            <p style="font-size: 12px; font-weight: 600; color: var(--active-text-blue); margin-bottom: 16px; background: rgba(255, 107, 0, 0.1); padding: 4px 10px; border-radius: 8px;">{{ member.profile.get_role_display }}</p>
-                            <button onclick="removeTeamMember({{ member.id }}, '{{ member.username }}')" class="btn-submit" style="width: 100%; padding: 8px; font-size: 13px; font-weight: 700; margin-top: auto; background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); bo                                <i class="fa-solid fa-user-xmark"></i> {% trans "Jamoadan o'chirish" %}
-                             </button>
-                        </div>
-                    {% empty %}
-                        <div style="grid-column: 1 / -1; padding: 40px 24px; text-align: center; background: rgba(255,255,255,0.02); border-radius: 16px; border: 1px dashed rgba(255, 107, 0, 0.3); color: var(--text-muted); font-size: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;">
-                            <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(255, 107, 0, 0.1); color: var(--active-text-blue); display: flex; align-items: center; justify-content: center; font-size: 24px;">
-                                <i class="fa-solid fa-users-slash"></i>
-                            </div>
-                            <span>{% trans "Jamoangizga hali hech kim qo'shilmagan." %}<br>{% trans "Yuqoridagi 'A'zo qo'shish' tugmasini bosing!" %}</span>
-                        </div>
-                    {% endfor %}
-                </div>
-                {% else %}
-                    <div style="background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 24px; text-align: center; margin-bottom: 30px;">
-                        <i class="fa-solid fa-users" style="font-size: 40px; color: var(--text-muted); margin-bottom: 16px;"></i>
-                        <h3 style="font-size: 18px; margin-bottom: 8px;">{% trans "Siz jamoa rahbari emassiz" %}</h3>
-                        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">{% trans "Siz 2 tagacha jamoaga a'zo bo'lishingiz yoki o'z jamoangizni yaratishingiz mumkin." %}</p>hingiz mumkin.</p>
-                    </div>
-                {% endif %}
-            </div>
-
-            <div id="tab-security" class="tab-pane">
-                <div class="pane-title"><i class="fa-solid fa-lock" style="color: var(--active-text-blue);"></i> {% trans "Xavfsizlik va Parol" %}</div>
-                <div class="form-group">
-                    <label>{% trans "Joriy parol:" %}</label>
-                    <input type="password" placeholder="••••••••">
-                </div>
-                <div class="form-group">
-                    <label>{% trans "Yangi parol:" %}</label>
-                    <input type="password" placeholder="••••••••">
-                </div>
-                <div class="form-group">
-                    <label>{% trans "Parolni tasdiqlang:" %}</label>
-                    <input type="password" placeholder="••••••••">
-                </div>
-                <button type="button" class="btn-submit" onclick="showToast('{% trans "Parolni o\'zgartirish tizimi ishlab chiqilmoqda" %}', 'error')">{% trans "Parolni o'zgartirish" %}</button>
-            </div>
-
-        </div>
+    <div class="tabs">
+        <div class="tab-item active" onclick="showTab('posts', this)">{% trans "E'lonlarim" %}</div>
+        <div class="tab-item" onclick="showTab('liked', this)">{% trans "Yoqqanlar" %}</div>
+        <div class="tab-item" onclick="showTab('saved', this)">{% trans "Saqlanganlar" %}</div>
     </div>
 
-    <div id="teamSearchModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); z-index: 1000; display: none; align-items: center; justify-content: center;">
-        <div style="background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 20px; width: 90%; max-width: 400px; padding: 20px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h3 style="font-size: 18px; font-weight: 800;">{% trans "A'zo qo'shish" %}</h3>
-                <button onclick="closeTeamModal()" style="background: transparent; border: none; color: var(--text-muted); font-size: 20px; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
+    <div id="posts" class="tab-content">
+        {% for post in my_posts %}
+        <div class="tweet-card">
+            <div class="tweet-header">
+                <img src="{{ post.author.profile.get_avatar_url }}" style="width:40px; height:40px; border-radius:50%;">
+                <div>
+                    <div style="font-weight:700;">{{ post.title }}</div>
+                    <div style="font-size:12px; color:var(--text-muted);">{{ post.created_time|date:"d M, H:i" }}</div>
+                </div>
             </div>
-            <input type="text" id="teamSearchInput" placeholder="{% trans 'Ism, username yoki telefon...' %}" onkeyup="searchTeamUsers()" style="width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--input-bg); color: var(--text-main); font-size: 16px; outline: none; margin-bottom: 15px;">
-            <div id="teamSearchResults" style="max-height: 300px; overflow-y: auto;"></div>
+            <div class="tweet-body">{{ post.description|truncatewords:20 }}</div>
+            {% if post.image %}<img src="{{ post.image.url }}" class="tweet-image">{% endif %}
+            <button class="btn-manage btn-delete" onclick="openDeleteModal('{% url 'build:post_delete' post.id %}')">{% trans "O'chirish" %}</button>
         </div>
+        {% endfor %}
     </div>
 
-    <div id="customConfirmModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); z-index: 1000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s;">
-        <div style="background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 20px; width: 90%; max-width: 360px; padding: 24px; text-align: center; transform: translateY(20px); transition: transform 0.2s;">
-            <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(239, 68, 68, 0.1); color: #ef4444; font-size: 28px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px auto;">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-            </div>
-            <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 8px;">{% trans "Tasdiqlang" %}</h3>
-            <p id="customConfirmMessage" style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.5;"></p>
-            <div style="display: flex; gap: 12px;">
-                <button id="customConfirmCancelBtn" style="flex: 1; padding: 12px; border-radius: 12px; background: rgba(255,255,255,0.05); color: var(--text-main); border: 1px solid var(--border-color); font-weight: 700; cursor: pointer;">{% trans "Bekor qilish" %}</button>
-                <button id="customConfirmOkBtn" style="flex: 1; padding: 12px; border-radius: 12px; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); font-weight: 700; cursor: pointer;">{% trans "Ha, o'chirish" %}</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // ⚡️ REJIM TO'LIQ INTEGRATSIYASI VA LOCALSTORAGE BILAN ISHLASH TIZIMI
-        document.addEventListener('DOMContentLoaded', () => {
-            // Theme toggle - sidebar + header
-            const settingsBtn = document.getElementById('settingsThemeToggleBtn');
-            const headerBtn = document.getElementById('profileThemeToggleBtn');
-            const statusText = document.getElementById('settings-theme-text');
-            const headerStatusText = document.getElementById('theme-status-text');
-            const themeToggleIcon = document.getElementById('themeToggleBtn');
-
-            const currentTheme = localStorage.getItem('theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', currentTheme);
-            syncAllThemeUI(currentTheme);
-
-            window.applyTheme = function() {
-                let theme = document.documentElement.getAttribute('data-theme');
-                let newTheme = theme === 'dark' ? 'light' : 'dark';
-                document.documentElement.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme', newTheme);
-                syncAllThemeUI(newTheme);
-            }
-
-            if (settingsBtn) settingsBtn.addEventListener('click', applyTheme);
-            if (headerBtn) headerBtn.addEventListener('click', applyTheme);
-            if (themeToggleIcon) themeToggleIcon.addEventListener('click', applyTheme);
-
-            function syncAllThemeUI(theme) {
-                // Settings sidebar button
-                if (settingsBtn) {
-                    const icon = settingsBtn.querySelector('i');
-                    if (theme === 'dark') {
-                        icon.className = 'fa-solid fa-sun';
-                        if (statusText) statusText.innerText = `{% trans "Yorug' kun" %}`;
-                    } else {
-                        icon.className = 'fa-solid fa-moon';
-                        if (statusText) statusText.innerText = `{% trans "Kiber tun" %}`;
-                    }
-                }
-                // Header button
-                if (headerBtn) {
-                    const hIcon = headerBtn.querySelector('i');
-                    if (theme === 'dark') {
-                        hIcon.className = 'fa-solid fa-sun';
-                        if (headerStatusText) headerStatusText.innerText = `{% trans "Yorug' kun" %}`;
-                    } else {
-                        hIcon.className = 'fa-solid fa-moon';
-                        if (headerStatusText) headerStatusText.innerText = `{% trans "Kiber tun" %}`;
-                    }
-                }
-                // Rail icon
-                if (themeToggleIcon) {
-                    const rIcon = themeToggleIcon.querySelector('i');
-                    rIcon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-                }
-            }
-        });
-
-        window.customConfirm = function(message, onConfirm) {
-            const modal = document.getElementById('customConfirmModal');
-            const msgEl = document.getElementById('customConfirmMessage');
-            const cancelBtn = document.getElementById('customConfirmCancelBtn');
-            const okBtn = document.getElementById('customConfirmOkBtn');
-            const modalContent = modal.querySelector('div');
-
-            msgEl.innerText = message;
-            modal.style.display = 'flex';
-            setTimeout(() => { modal.style.opacity = '1'; modalContent.style.transform = 'translateY(0)'; }, 10);
-
-            const closeIt = () => {
-                modal.style.opacity = '0'; modalContent.style.transform = 'translateY(20px)';
-                setTimeout(() => { modal.style.display = 'none'; }, 200);
-            };
-            cancelBtn.onclick = closeIt;
-            okBtn.onclick = () => { closeIt(); if(onConfirm) onConfirm(); };
-        };
-
-        function openTab(tabId, btn) {
-            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            if (btn) btn.classList.add('active');
-            window.history.replaceState(null, null, `#${tabId}`);
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const hash = window.location.hash;
-            if (hash && document.getElementById(hash.substring(1))) { openTab(hash.substring(1), null); }
-        });
-
-        window.openTeamModal = function() { document.getElementById('teamSearchModal').style.display = 'flex'; }
-        window.closeTeamModal = function() { document.getElementById('teamSearchModal').style.display = 'none'; }
-
-        function togglePlan(type) {
-            const bg = document.getElementById('plan-toggle-bg');
-            const bMonth = document.getElementById('btn-monthly');
-            const bYear = document.getElementById('btn-yearly');
-
-            const pricePro = document.getElementById('price-pro');
-            const priceVip = document.getElementById('price-vip');
-            const periodPro = document.getElementById('period-pro');
-            const periodVip = document.getElementById('period-vip');
-
-            if (type === 'yearly') {
-                bg.style.left = 'calc(100% - 126px)';
-                bYear.style.color = '#fff'; bMonth.style.color = '#94a3b8';
-
-                pricePro.style.opacity = 0; priceVip.style.opacity = 0;
-                setTimeout(() => {
-                    pricePro.innerText = '999,000'; periodPro.innerText = "so'm / yil";
-                    priceVip.innerText = '1,999,000'; periodVip.innerText = "so'm / yil";
-                    pricePro.style.opacity = 1; priceVip.style.opacity = 1;
-                }, 150);
-            } else {
-                bg.style.left = '6px';
-                bMonth.style.color = '#fff'; bYear.style.color = '#94a3b8';
-
-                pricePro.style.opacity = 0; priceVip.style.opacity = 0;
-                setTimeout(() => {
-                    pricePro.innerText = '99,000'; periodPro.innerText = "so'm / oy";
-                    priceVip.innerText = '199,000'; periodVip.innerText = "so'm / oy";
-                    pricePro.style.opacity = 1; priceVip.style.opacity = 1;
-                }, 150);
-            }
-        }
-
-        function previewAvatar(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) { document.getElementById('avatar-preview').src = e.target.result; }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-    </script>
-
-    <style>
-        .custom-toast { position: fixed; top: 20px; right: 20px; background: var(--card-gradient); backdrop-filter: blur(24px); border: 1px solid rgba(255, 107, 0, 0.3); color: #fff; padding: 16px 24px; border-radius: 12px; z-index: 9999; display: flex; align-items: center; gap: 12px; transform: translateX(120%); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .custom-toast.show { transform: translateX(0); }
-        .custom-toast.error { border-color: rgba(239, 68, 68, 0.5); }
-        .custom-toast i { font-size: 20px; }
-        .custom-toast.error i { color: #ef4444; }
-        .custom-toast.success i { color: #10b981; }
-    </style>
-    <div id="custom-toast" class="custom-toast"><i class="fa-solid fa-circle-check"></i><span id="custom-toast-msg">Xabar</span></div>
-    <script>
-        window.showToast = function(message, type = 'success') {
-            const toast = document.getElementById('custom-toast');
-            const msg = document.getElementById('custom-toast-msg');
-            const icon = toast.querySelector('i');
-            msg.innerText = message;
-            toast.className = 'custom-toast';
-            if (type === 'error') { toast.classList.add('error'); icon.className = 'fa-solid fa-circle-exclamation'; }
-            else { toast.classList.add('success'); icon.className = 'fa-solid fa-circle-check'; }
-            toast.classList.add('show'); setTimeout(() => { toast.classList.remove('show'); }, 3000);
-        }
-    </script>
     <div class="bottom-nav">
-        <a href="{% url 'build:home' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}"><i class="fa-solid fa-house"></i></a>
-        <a href="{% url 'build:network' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}"><i class="fa-solid fa-users"></i></a>
-        <a href="{% url 'build:post_create' %}" class="bottom-nav-item add-btn"><i class="fa-solid fa-plus"></i></a>
-        <a href="{% url 'build:builder_list' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}"><i class="fa-solid fa-helmet-safety"></i></a>
-        <a href="{% url 'chat:chat' %}" class="bottom-nav-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}">
-            <i class="fa-regular fa-comment-dots"></i>
-            {% if unread_chat_count > 0 %}
-                <span class="badge">{{ unread_chat_count }}</span>
-            {% endif %}
-        </a>
+        <a href="{% url 'build:home' %}" class="bottom-nav-item"><i class="fa-solid fa-house"></i></a>
+        <a href="{% url 'build:post_create' %}" style="background:var(--active-text-blue); color:#fff; width:50px; height:50px; border-radius:50%; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-plus"></i></a>
+        <a href="{% url 'chat:chat' %}" class="bottom-nav-item"><i class="fa-regular fa-comment"></i></a>
     </div>
+
+    <script>
+        function showTab(id, el) {
+            document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+            document.querySelectorAll('.tab-item').forEach(i => i.classList.remove('active'));
+            document.getElementById(id).style.display = 'block';
+            el.classList.add('active');
+        }
+        // Boshlang'ich holat
+        document.querySelectorAll('.tab-content').forEach((c, idx) => c.style.display = idx === 0 ? 'block' : 'none');
+    </script>
 </body>
 </html>

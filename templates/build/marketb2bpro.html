@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyBuild - Market Pro (B2B)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    {% load humanize %}
+    <style>
+        :root {
+            --bg-body: #f4f6fa; --bg-panel: rgba(255, 255, 255, 0.75); --border-color: rgba(0, 0, 0, 0.06);
+            --text-main: #0f172a; --text-muted: #64748b; --active-text-blue: #ff6b00; --divider-col: #e2e8f0;
+            --glow-color: rgba(255, 107, 0, 0.2); --card-gradient: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+            --input-bg: #ffffff;
+        }
+        [data-theme="dark"] {
+            --bg-body: #05070c; --bg-panel: rgba(10, 14, 23, 0.7); --border-color: rgba(255, 255, 255, 0.05);
+            --text-main: #f8fafc; --text-muted: #94a3b8; --active-text-blue: #ff6b00; --divider-col: rgba(255, 255, 255, 0.04);
+            --glow-color: rgba(255, 107, 0, 0.4); --card-gradient: linear-gradient(135deg, rgba(13, 18, 30, 0.85), rgba(8, 11, 20, 0.6));
+            --input-bg: rgba(255, 255, 255, 0.02);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        body { background-color: var(--bg-body); min-height: 100vh; color: var(--text-main); position: relative; transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+
+        /* HEADER */
+        header { background: var(--bg-panel); position: fixed; width: 100%; height: 76px; top: 0; left: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); padding: 0 40px; display: flex; align-items: center; backdrop-filter: blur(24px); transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .header-container { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+        .header-left { display: flex; align-items: center; gap: 15px; }
+        .header-center { position: absolute; left: 50%; transform: translateX(-50%); }
+        .header-right { display: flex; align-items: center; gap: 20px; }
+
+        .menu-hamburger { font-size: 20px; cursor: pointer; color: var(--text-muted); padding: 10px; border-radius: 12px; transition: all 0.25s ease; }
+        .menu-hamburger:hover { color: var(--active-text-blue); background: rgba(255,107,0,0.05); }
+
+        .logo { font-size: 24px; font-weight: 800; color: var(--active-text-blue); text-decoration: none; display: flex; align-items: center; gap: 6px; }
+        .logo span { color: var(--text-main); font-weight: 500; }
+        .profile-avatar { width: 44px; height: 44px; border-radius: 14px; object-fit: cover; border: 2px solid var(--border-color); background: #000; }
+
+        /* SIDEBAR SOZLAMALARI */
+        .sidebar-container { position: fixed; top: 100px; left: 24px; display: flex; z-index: 999; height: calc(100vh - 130px); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .icon-rail { width: 68px; height: 100%; background: var(--bg-panel); border-radius: 20px; display: flex; flex-direction: column; align-items: center; padding: 24px 0; border: 1px solid var(--border-color); backdrop-filter: blur(24px); transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .rail-item { width: 46px; height: 46px; border-radius: 14px; display: flex; justify-content: center; align-items: center; color: var(--text-muted); font-size: 18px; margin-bottom: 10px; cursor: pointer; text-decoration: none; position: relative; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
+        .rail-item.active { background: rgba(255, 107, 0, 0.14); color: var(--active-text-blue); border: 1px solid rgba(255, 107, 0, 0.3); }
+        .rail-item:hover:not(.active) { color: var(--text-main); background: rgba(255,255,255,0.05); transform: scale(1.05); }
+        .rail-divider { width: 24px; height: 1px; background: var(--border-color); margin: 14px 0; }
+
+        .expanded-menu { width: 0; opacity: 0; overflow: hidden; background: var(--bg-panel); border-radius: 20px; border: 1px solid var(--border-color); margin-left: -20px; padding-left: 20px; display: flex; backdrop-filter: blur(24px); pointer-events: none; transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, margin-left 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .sidebar-container:hover .expanded-menu { width: 240px; opacity: 1; margin-left: 16px; pointer-events: auto; }
+        .menu-col { min-width: 210px; height: 100%; padding: 24px 15px; display: flex; flex-direction: column; }
+        .menu-title { font-size: 16px; font-weight: 700; color: var(--text-main); margin-bottom: 16px; }
+        .menu-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+        .menu-list li a { display: flex; align-items: center; padding: 11px 14px; color: var(--text-muted); font-size: 14px; font-weight: 600; text-decoration: none; border-radius: 10px; transition: all 0.2s ease; }
+        .menu-list li a.active-link { background: var(--active-bg-light); color: var(--active-text-blue); }
+
+        /* MAIN BLOKLAR */
+        .main-content { margin-left: 120px; padding: 120px 40px 40px 40px; display: flex; flex-direction: column; align-items: center; transition: margin-left 0.4s cubic-bezier(0.16, 1, 0.3, 1), width 0.4s cubic-bezier(0.16, 1, 0.3, 1); width: calc(100% - 120px); }
+
+        .market-search-wrapper { width: 100%; max-width: 1140px; margin-bottom: 24px; }
+        .market-search-container { background: var(--card-gradient); border: 1px solid var(--border-color); padding: 16px; border-radius: 20px; display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; }
+        .search-input-group { display: flex; align-items: center; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 0 14px; height: 44px; }
+        .search-core-field { width: 100%; border: none; background: transparent; outline: none; color: var(--text-main); font-size: 14px; font-weight: 600; }
+        .search-submit-btn { background: var(--active-text-blue); color: white; border: none; border-radius: 12px; height: 44px; padding: 0 20px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; }
+        .search-submit-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+        .market-filter-bar { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 30px; width: 100%; max-width: 1140px; justify-content: space-between; align-items: center; }
+        .filter-btn { background: var(--bg-panel); border: 1px solid var(--border-color); color: var(--text-main); padding: 8px 16px; border-radius: 12px; font-weight: 600; font-size: 13px; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 6px; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
+        .filter-btn.active { background: var(--active-text-blue); color: white; border-color: var(--active-text-blue); box-shadow: 0 4px 12px var(--glow-color); }
+        .filter-btn:hover:not(.active) { transform: translateY(-2px); background: rgba(255,255,255,0.05); }
+
+        /* ⚡️ YANGI: PREMIUM ORDER SELECT DROPDOWN */
+        .select-order-field { background: var(--bg-panel); color: var(--text-main); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 12px; font-size: 13px; font-weight: 600; outline: none; cursor: pointer; height: 38px; }
+        .select-order-field option { background: #05070c; color: #fff; }
+
+        /* GRID TIZIMI */
+        .posts-grid { width: 100%; max-width: 1140px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+        /* ULTRA SMOOTH CARD */
+        .market-pro-card {
+            background: var(--card-gradient);
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        background 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, box-shadow;
+        }
+        .market-pro-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 38px var(--glow-color);
+        }
+
+        .card-hero-banner { width: 100%; height: 210px; background: #0c101d; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .card-img-source { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .market-pro-card:hover .card-img-source { transform: scale(1.04); }
+        .card-placeholder-icon { font-size: 44px; color: rgba(255,255,255,0.03); }
+
+        .card-category-tag { position: absolute; top: 14px; right: 14px; background: #05070c; color: var(--active-text-blue); font-size: 10px; font-weight: 800; padding: 4px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .card-content-area { padding: 24px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1; }
+        .card-meta-line { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-muted); font-weight: 600; }
+        .card-author-name { color: var(--active-text-blue); display: flex; align-items: center; gap: 4px; }
+
+        .card-title-text { font-size: 17px; font-weight: 800; color: var(--text-main); line-height: 1.4; letter-spacing: -0.3px; }
+        .card-desc-short { font-size: 13.5px; color: var(--text-muted); line-height: 1.6; min-height: 44px; }
+
+        .card-footer-action { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 16px; margin-top: auto; }
+        .card-price-tag { font-size: 16px; font-weight: 800; color: var(--active-text-blue); }
+
+        .card-actions-envelope { display: flex; align-items: center; gap: 8px; }
+        .card-action-node { background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-muted); padding: 8px 12px; border-radius: 10px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px; cursor: pointer; transition: all 0.2s; }
+        .card-action-node:hover { background: rgba(255,255,255,0.05); color: var(--text-main); }
+        .card-action-node.liked { color: #ef4444; background: rgba(239, 68, 68, 0.08); border-color: rgba(239, 68, 68, 0.2); }
+        .card-action-node.bookmarked { color: #f59e0b; background: rgba(245, 158, 11, 0.08); border-color: rgba(245, 158, 11, 0.2); }
+
+        /* PAGINATION */
+        .pagination-container { display: flex; justify-content: center; margin-top: 40px; width: 100%; max-width: 1140px; }
+        .pagination-box { background: var(--bg-panel); padding: 6px; border-radius: 14px; display: flex; align-items: center; gap: 8px; border: 1px solid var(--border-color); backdrop-filter: blur(10px); }
+        .page-link { width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; background: var(--input-bg); color: var(--text-main); border-radius: 8px; text-decoration: none; font-weight: 700; border: 1px solid var(--border-color); font-size: 13px; transition: all 0.2s ease; }
+        .page-link:hover { background: var(--active-text-blue); color: #ffffff; box-shadow: 0 4px 10px var(--glow-color); }
+        .page-current { padding: 0 12px; font-weight: 800; color: var(--active-text-blue); font-size: 13px; }
+
+        /* MODALS */
+        .cyber-modal-overlay { position: fixed; inset: 0; background: rgba(5, 7, 12, 0.4); backdrop-filter: blur(0px); z-index: 2000; display: none; justify-content: center; align-items: center; padding: 20px; transition: backdrop-filter 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: backdrop-filter; }
+        .cyber-modal-overlay.active-overlay { display: flex; backdrop-filter: blur(14px); background: rgba(5, 7, 12, 0.6); }
+
+        .cyber-modal-container { background: var(--card-gradient); border: 1px solid var(--border-color); width: 100%; max-width: 620px; border-radius: 28px; box-shadow: 0 10px 30px rgba(0,0,0,0); overflow: hidden; display: flex; flex-direction: column; transform: scale(0.95) translateY(15px); opacity: 0; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; }
+        .cyber-modal-overlay.active-overlay .cyber-modal-container { transform: scale(1) translateY(0); opacity: 1; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5); }
+
+        .modal-banner-area { width: 100%; height: 260px; background: #0c101d; position: relative; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border-color); }
+        .modal-banner-img { width: 100%; height: 100%; object-fit: cover; }
+        .modal-close-trigger { position: absolute; top: 16px; right: 16px; background: rgba(5, 7, 12, 0.6); border: 1px solid var(--border-color); width: 36px; height: 36px; border-radius: 50%; color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; }
+        .modal-close-trigger:hover { background: #ef4444; border-color: #ef4444; transform: rotate(90deg); }
+        .modal-content-core { padding: 28px; display: flex; flex-direction: column; gap: 16px; }
+        .modal-title-main { font-size: 20px; font-weight: 800; color: var(--text-main); }
+        .modal-description-full { font-size: 14.5px; color: var(--text-muted); line-height: 1.6; white-space: pre-wrap; }
+
+        @media (max-width: 992px) { .posts-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 650px) { .posts-grid { grid-template-columns: 1fr; } .main-content { margin-left: 0; width: 100%; padding: 100px 16px 20px 16px; } .sidebar-container { transform: translateX(-150%); opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <div class="cyber-modal-overlay" id="marketDetailModal" onclick="closeMarketModal()">
+        <div class="cyber-modal-container" onclick="event.stopPropagation()">
+            <div class="modal-banner-area" id="mHeroZone">
+                <div class="modal-close-trigger" onclick="closeMarketModal()"><i class="fa-solid fa-xmark"></i></div>
+                <img src="" class="modal-banner-img" id="modalMainImg">
+                <div id="modalPlaceholderIcon" class="card-placeholder-icon" style="display:none;"><i class="fa-solid fa-helmet-safety"></i></div>
+            </div>
+            <div class="modal-content-core">
+                <div class="card-meta-line" style="border-bottom: 1px solid var(--border-color); padding-bottom: 14px;">
+                    <span id="modalAuthor" class="card-author-name"></span>
+                    <span id="modalDate"></span>
+                </div>
+                <h3 class="modal-title-main" id="modalTitle"></h3>
+                <p class="modal-description-full" id="modalDesc"></p>
+                <div class="card-footer-action" style="border:none; padding:0; margin-top:10px;">
+                    <div id="modalPrice" class="card-price-tag" style="font-size: 18px;"></div>
+                    <button class="filter-btn" id="modalContactBtn" style="background: var(--active-text-blue); color: white; border: none; padding: 10px 20px;"><i class="fa-regular fa-comment"></i> Bog'lanish</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="contactModal" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.6); backdrop-filter:blur(12px); align-items:center; justify-content:center;">
+        <div id="contactModalInner" style="background:linear-gradient(145deg,#0f0f1a,#1a1a2e); border:1px solid rgba(255,255,255,0.1); border-radius:32px; width:min(440px,92vw); position:relative; overflow:hidden;"><div style="height:4px; background:linear-gradient(90deg,#3b82f6,#6366f1,#8b5cf6); width:100%;"></div><div style="padding:28px; display:flex; align-items:center; gap:18px;"><img id="cModal-avatar" src="" style="width:72px;height:72px;border-radius:50%;object-fit:cover;background:black;"><div style="flex:1;"><div id="cModal-name" style="font-size:18px;font-weight:800;color:#fff;"></div><div id="cModal-username" style="font-size:13px;color:rgba(255,255,255,0.5);"></div><div id="cModal-role" style="font-size:11px;font-weight:700;color:#818cf8;margin-top:4px;"></div></div><button onclick="closeContactModal()" style="position:absolute;top:20px;right:20px;background:none;border:none;color:white;font-size:24px;cursor:pointer;">&times;</button></div><div id="cModal-buttons" style="display:flex;flex-direction:column;gap:10px;padding:0 28px 28px;"></div></div>
+    </div>
+
+    <header>
+        <div class="header-container">
+            <div class="header-left">
+                <i class="fa-solid fa-bars menu-hamburger" id="hamburgerBtn"></i>
+            </div>
+            <div class="header-center">
+                <a href="{% url 'build:home' %}" class="logo">Easy<span>Build</span></a>
+            </div>
+            <div class="header-right">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'build:profile' %}">
+                        <img src="{{ user.profile.get_avatar_url }}" class="profile-avatar">
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <div class="sidebar-container" id="sidebarContainer">
+        <div class="icon-rail">
+            <a href="{% url 'build:home' %}" class="rail-item" title="Bosh sahifa"><i class="fa-solid fa-house"></i></a>
+            <a href="{% url 'build:post_list' %}" class="rail-item active" title="Market Pro"><i class="fa-solid fa-store"></i></a>
+            <div class="rail-item" id="themeToggleBtn" title="Rejimni o'zgartirish"><i class="fa-solid fa-moon"></i></div>
+            <div class="rail-divider"></div>
+            <a href="{% url 'build:profile' %}" class="rail-item" title="Profil Sozlamalari"><i class="fa-regular fa-user"></i></a>
+        </div>
+    </div>
+
+    <div class="main-content" id="mainContentArea">
+
+        <div class="market-search-wrapper">
+            <form method="GET" action="{% url 'build:post_list' %}" class="market-search-container" id="searchSubmitForm">
+                {% if current_category %}<input type="hidden" name="category" value="{{ current_category }}">{% endif %}
+                {% if current_order %}<input type="hidden" name="order_by" value="{{ current_order }}">{% endif %}
+                <div class="search-input-group">
+                    <input type="text" name="search" id="liveSearchInput" value="{{ search_query }}" placeholder="Jonli va mexanik qidiruv (sement, gisht, usta)..." class="search-core-field" autocomplete="off">
+                </div>
+                <button type="submit" class="search-submit-btn">Qidirish</button>
+            </form>
+        </div>
+
+        <div class="market-filter-bar">
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                <a href="?{% if search_query %}search={{ search_query }}&{% endif %}{% if current_order %}order_by={{ current_order }}{% endif %}" class="filter-btn {% if not current_category %}active{% endif %}">Barchasi</a>
+                <a href="?category=material{% if search_query %}&search={{ search_query }}{% endif %}{% if current_order %}&order_by={{ current_order }}{% endif %}" class="filter-btn {% if current_category == 'material' %}active{% endif %}">Materiallar bozori</a>
+                <a href="?category=tech{% if search_query %}&search={{ search_query }}&{% endif %}{% if current_order %}order_by={{ current_order }}{% endif %}" class="filter-btn {% if current_category == 'tech' %}active{% endif %}">Texnika ijarasi</a>
+
+                <select class="select-order-field" id="marketOrderSelector" onchange="executeOrderFilter(this.value)">
+                    <option value="" {% if not current_order %}selected{% endif %}>🤖 Tavsiya bo'yicha</option>
+                    <option value="newest" {% if current_order == 'newest' %}selected{% endif %}>🕒 Eng yangilari</option>
+                    <option value="oldest" {% if current_order == 'oldest' %}selected{% endif %}>⏳ Eng eskilar</option>
+                    <option value="price_asc" {% if current_order == 'price_asc' %}selected{% endif %}>📉 Narx: Arzonidan</option>
+                    <option value="price_desc" {% if current_order == 'price_desc' %}selected{% endif %}>📈 Narx: Qimmatidan</option>
+                </select>
+            </div>
+            <a href="{% url 'build:post_create' %}" class="filter-btn" style="background:var(--active-text-blue); color:white; border:none;">+ E'lon qo'shish Rejasi</a>
+        </div>
+
+        <div class="posts-grid" id="postsGridContainer">
+            {% if posts or object_list %}
+                {% for post in posts|default:object_list %}
+                    <div class="market-pro-card"
+                         data-title="{{ post.title }}"
+                         data-desc="{{ post.description }}"
+                         data-author="@{{ post.author.username }}"
+                         data-author-id="{{ post.author.id }}"
+                         data-date="{{ post.created_time|date:'d.m.Y' }}"
+                         data-price="{% if post.price %}{{ post.price|intcomma }} UZS{% else %}Kelishilgan{% endif %}"
+                         data-image="{% if post.image %}{{ post.image.url }}{% endif %}"
+                         onclick="openMarketModal(this)">
+
+                        <div class="card-hero-banner">
+                            {% if post.image %}
+                                <img src="{{ post.image.url }}" class="card-img-source">
+                            {% else %}
+                                <div class="card-placeholder-icon"><i class="fa-solid fa-helmet-safety"></i></div>
+                            {% endif %}
+                            <span class="card-category-tag">{{ post.get_category_display }}</span>
+                        </div>
+
+                        <div class="card-content-area">
+                            <div class="card-meta-line">
+                                <span class="card-author-name"><i class="fa-regular fa-circle-user"></i> @{{ post.author.username }}</span>
+                                <span>{{ post.created_time|date:"d.m.Y" }}</span>
+                            </div>
+                            <h3 class="card-title-text">{{ post.title }}</h3>
+                            <p class="card-desc-short">{{ post.description|truncatewords:12 }}</p>
+
+                            <div class="card-footer-action" onclick="event.stopPropagation()">
+                                <div class="card-price-tag">
+                                    {% if post.price %}{{ post.price|intcomma }} <span style="font-size:11px;">UZS</span>{% else %}Kelishilgan{% endif %}
+                                </div>
+                                <div class="card-actions-envelope">
+                                    <button class="card-action-node like {% if post.is_liked %}liked{% endif %}" onclick="toggleLike(event, '{{ post.id }}', this)">
+                                        <i class="fa-heart {% if post.is_liked %}fa-solid{% else %}fa-regular{% endif %}"></i> <span class="likes-count">{{ post.likes_count|default:0 }}</span>
+                                    </button>
+                                    <button class="card-action-node bookmark {% if post.is_bookmarked %}bookmarked{% endif %}" onclick="toggleBookmark(event, '{{ post.id }}', this)">
+                                        <i class="fa-bookmark {% if post.is_bookmarked %}fa-solid{% else %}fa-regular{% endif %}"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="dashboard-card"><h1>Hech qanday e'lon topilmadi</h1></div>
+            {% endif %}
+        </div>
+
+        {% if is_paginated %}
+        <div class="pagination-container" id="paginationWrapper">
+            <div class="pagination-box">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1{% if current_category %}&category={{ current_category }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_order %}&order_by={{ current_order }}{% endif %}" class="page-link"><i class="fa-solid fa-angles-left"></i></a>
+                    <a href="?page={{ page_obj.previous_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_order %}&order_by={{ current_order }}{% endif %}" class="page-link"><i class="fa-solid fa-angle-left"></i></a>
+                {% endif %}
+                <span class="page-current">{{ page_obj.number }} / {{ paginator.num_pages }}</span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_order %}&order_by={{ current_order }}{% endif %}" class="page-link"><i class="fa-solid fa-angle-right"></i></a>
+                    <a href="?page={{ paginator.num_pages }}{% if current_category %}&category={{ current_category }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_order %}&order_by={{ current_order }}{% endif %}" class="page-link"><i class="fa-solid fa-angles-right"></i></a>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const sidebar = document.getElementById('sidebarContainer');
+            const mainContent = document.getElementById('mainContentArea');
+
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            updateThemeIcon(currentTheme);
+
+            if (themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', () => {
+                    let theme = document.documentElement.getAttribute('data-theme');
+                    let newTheme = theme === 'dark' ? 'light' : 'dark';
+                    document.documentElement.setAttribute('data-theme', newTheme);
+                    localStorage.setItem('theme', newTheme);
+                    updateThemeIcon(newTheme);
+                });
+            }
+
+            function updateThemeIcon(theme) {
+                const icon = themeToggleBtn.querySelector('i');
+                icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+            }
+
+            if (hamburgerBtn && sidebar && mainContent) {
+                hamburgerBtn.addEventListener('click', () => {
+                    const isHidden = sidebar.style.transform === 'translateX(-150%)';
+                    if (!isHidden) {
+                        sidebar.style.transform = 'translateX(-150%)'; sidebar.style.opacity = '0';
+                        mainContent.style.marginLeft = '40px'; mainContent.style.width = 'calc(100% - 40px)';
+                    } else {
+                        sidebar.style.transform = 'translateX(0)'; sidebar.style.opacity = '1';
+                        mainContent.style.marginLeft = '120px'; mainContent.style.width = 'calc(100% - 120px)';
+                    }
+                });
+            }
+        });
+
+        // ⚡️ STRATEGIK FILTR SYSTEM: AMALDAGI SEARCH VA CATEGORY'LARNI BUZMASDAN URL QURADI
+        function executeOrderFilter(selectedValue) {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (selectedValue) {
+                urlParams.set('order_by', selectedValue);
+            } else {
+                urlParams.delete('order_by');
+            }
+            // Sahifani yangi parametrik URL bilan yangilaydi
+            window.location.search = urlParams.toString();
+        }
+
+        // DETAIL MODAL SYSTEM
+        function openMarketModal(card) {
+            document.getElementById('modalTitle').innerText = card.getAttribute('data-title');
+            document.getElementById('modalDesc').innerText = card.getAttribute('data-desc');
+            document.getElementById('modalAuthor').innerHTML = '<i class="fa-regular fa-circle-user"></i> ' + card.getAttribute('data-author');
+            document.getElementById('modalDate').innerText = card.getAttribute('data-date');
+            document.getElementById('modalPrice').innerText = card.getAttribute('data-price');
+
+            const mainImg = document.getElementById('modalMainImg');
+            const placeholderIcon = document.getElementById('modalPlaceholderIcon');
+            const imgUrl = card.getAttribute('data-image');
+
+            if (imgUrl && imgUrl !== '' && imgUrl !== 'None') {
+                mainImg.src = imgUrl; mainImg.style.display = 'block'; placeholderIcon.style.display = 'none';
+            } else {
+                mainImg.style.display = 'none'; placeholderIcon.style.display = 'block';
+            }
+
+            const authorId = card.getAttribute('data-author-id');
+            document.getElementById('modalContactBtn').onclick = function(e) {
+                closeMarketModal(); contactUser(e, authorId);
+            };
+
+            const overlay = document.getElementById('marketDetailModal');
+            overlay.style.display = 'flex';
+            setTimeout(() => { overlay.classList.add('active-overlay'); }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMarketModal() {
+            const overlay = document.getElementById('marketDetailModal');
+            overlay.classList.remove('active-overlay');
+            setTimeout(() => { overlay.style.display = 'none'; }, 350);
+            document.body.style.overflow = '';
+        }
+
+        // ⚡️ JONLI + MEXANIK MIXED SEARCH CONTROL
+        function filterGridLive(query) {
+            const cards = document.querySelectorAll('.market-pro-card');
+            const pag = document.getElementById('paginationWrapper');
+            cards.forEach(card => {
+                const title = card.getAttribute('data-title').toLowerCase();
+                const desc = card.getAttribute('data-desc').toLowerCase();
+                card.style.display = (title.includes(query.toLowerCase()) || desc.includes(query.toLowerCase())) ? 'flex' : 'none';
+            });
+            // Dinamik qidiruv vaqtida pagination vaqtincha yashiriladi
+            if (pag) pag.style.display = query.length > 0 ? 'none' : 'flex';
+        }
+        document.getElementById('liveSearchInput').addEventListener('input', (e) => filterGridLive(e.target.value.trim()));
+
+        // DYNAMIC LIKE INTERACTION
+        async function toggleLike(e, id, el) {
+            e.preventDefault();
+            const res = await fetch(`/api/post/${id}/like/`, { method:'POST', headers:{'X-CSRFToken':'{{ csrf_token }}'} });
+            if(res.ok) {
+                const d = await res.json();
+                el.classList.toggle('liked', d.is_liked);
+                el.querySelector('i').className = d.is_liked ? 'fa-solid fa-heart' : 'fa-regular fa-heart';
+                el.querySelector('.likes-count').textContent = d.likes_count;
+            }
+        }
+
+        // DYNAMIC BOOKMARK INTERACTION
+        async function toggleBookmark(e, id, el) {
+            e.preventDefault();
+            const res = await fetch(`/api/post/${id}/bookmark/`, { method:'POST', headers:{'X-CSRFToken':'{{ csrf_token }}'} });
+            if(res.ok) {
+                const d = await res.json();
+                el.classList.toggle('bookmarked', d.is_bookmarked);
+                el.querySelector('i').className = d.is_bookmarked ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark';
+            }
+        }
+    </script>
+</body>
+</html>

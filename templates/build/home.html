@@ -1,10 +1,10 @@
-{% load i18n %}
+{% load i18n static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE|default:'uz' }}" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Easy Build</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
+    <title>Easy Build - Market Pro</title>
     <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg?v=2">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,61 +15,54 @@
            ————————————————————————————————————————————————————————— */
         :root {
             --bg-body: #f4f6fa;
-            --bg-panel: rgba(255, 255, 255, 0.75);
-            --border-color: rgba(0, 0, 0, 0.06);
+            --bg-panel: rgba(255, 255, 255, 0.85);
+            --border-color: rgba(0, 0, 0, 0.08);
             --text-main: #0f172a;
             --text-muted: #64748b;
             --text-label: #94a3b8;
             --link-color: #475569;
-            --link-hover-bg: rgba(255, 107, 0, 0.06);
-            --active-bg-light: rgba(255, 107, 0, 0.09);
+            --link-hover-bg: rgba(255, 107, 0, 0.08);
+            --active-bg-light: rgba(255, 107, 0, 0.1);
             --active-text-blue: #ff6b00;
             --rail-item-color: #64748b;
             --rail-item-hover-bg: #f1f5f9;
-            --shadow-rail: rgba(0, 0, 0, 0.03);
+            --shadow-rail: rgba(0, 0, 0, 0.04);
             --shadow-menu: rgba(15, 23, 42, 0.08);
             --divider-col: #e2e8f0;
-            --glow-color: rgba(255, 107, 0, 0.2);
-            --card-gradient: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+            --glow-color: rgba(255, 107, 0, 0.25);
+            --card-gradient: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.7));
             --input-bg: #ffffff;
             --watermark-color: var(--active-text-blue);
-            --watermark-opacity: 0.15;
+            --watermark-opacity: 0.1;
         }
 
         [data-theme="dark"] {
             --bg-body: #05070c;
-            --bg-panel: rgba(10, 14, 23, 0.7);
-            --border-color: rgba(255, 255, 255, 0.05);
+            --bg-panel: rgba(10, 14, 23, 0.75);
+            --border-color: rgba(255, 255, 255, 0.06);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --text-label: #475569;
             --link-color: #94a3b8;
-            --link-hover-bg: rgba(255, 107, 0, 0.04);
-            --active-bg-light: rgba(255, 107, 0, 0.12);
+            --link-hover-bg: rgba(255, 107, 0, 0.05);
+            --active-bg-light: rgba(255, 107, 0, 0.15);
             --active-text-blue: #ff6b00;
             --rail-item-color: #64748b;
-            --rail-item-hover-bg: rgba(255, 255, 255, 0.03);
+            --rail-item-hover-bg: rgba(255, 255, 255, 0.04);
             --shadow-rail: rgba(0, 0, 0, 0.4);
             --shadow-menu: rgba(0, 0, 0, 0.6);
-            --divider-col: rgba(255, 255, 255, 0.04);
+            --divider-col: rgba(255, 255, 255, 0.05);
             --glow-color: rgba(255, 107, 0, 0.4);
             --card-gradient: linear-gradient(135deg, rgba(13, 18, 30, 0.85), rgba(8, 11, 20, 0.6));
-            --input-bg: rgba(255, 255, 255, 0.02);
+            --input-bg: rgba(255, 255, 255, 0.03);
             --watermark-color: var(--active-text-blue);
-            --watermark-opacity: 0.05;
+            --watermark-opacity: 0.03;
         }
 
-        /* —————————————————————————————————————————————————————————
-           UMUMIY STILLAR & LUXURY RESETS
-           ————————————————————————————————————————————————————————— */
         * {
             margin: 0; padding: 0; box-sizing: border-box;
             font-family: 'Plus Jakarta Sans', sans-serif;
-            transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                        border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                        color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            -webkit-tap-highlight-color: transparent; /* Mobilda tugmani bosganda ko'k ramkani olib tashlaydi */
         }
 
         body {
@@ -78,20 +71,26 @@
             overflow-x: hidden;
             position: relative;
             color: var(--text-main);
+            transition: background 0.4s ease, color 0.4s ease;
         }
 
         body::before, body::after {
-            content: ''; position: absolute; width: 500px; height: 500px; border-radius: 50%; z-index: -1; pointer-events: none; filter: blur(140px); opacity: 0.6;
+            content: ''; position: absolute; width: 50vw; height: 50vw; min-width: 400px; min-height: 400px; border-radius: 50%; z-index: -1; pointer-events: none; filter: blur(140px); opacity: 0.5;
         }
-        body::before { top: -150px; right: -100px; background: radial-gradient(circle, var(--glow-color) 0%, rgba(0,0,0,0) 70%); }
-        body::after { bottom: -100px; left: -150px; background: radial-gradient(circle, rgba(255, 107, 0, 0.1) 0%, rgba(0,0,0,0) 70%); }
+        body::before { top: -10%; right: -10%; background: radial-gradient(circle, var(--glow-color) 0%, rgba(0,0,0,0) 70%); }
+        body::after { bottom: -10%; left: -10%; background: radial-gradient(circle, rgba(255, 107, 0, 0.1) 0%, rgba(0,0,0,0) 70%); }
 
-        .bg-watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 70vh; color: var(--watermark-color); opacity: var(--watermark-opacity); z-index: -2; pointer-events: none; transition: all 0.4s ease; }
+        .bg-watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 50vw; color: var(--watermark-color); opacity: var(--watermark-opacity); z-index: -2; pointer-events: none; }
 
+        /* —————————————————————————————————————————————————————————
+           HEADER
+           ————————————————————————————————————————————————————————— */
         header {
             background: var(--bg-panel); position: fixed; width: 100%; height: 76px; top: 0; left: 0; z-index: 1000;
             border-bottom: 1px solid var(--border-color); padding: 0 40px; display: flex; align-items: center;
-            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            /* iPhone notch (kamera tirqishi) qismiga kirmasligi uchun */
+            padding-top: env(safe-area-inset-top);
         }
 
         .header-container { width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
@@ -99,61 +98,57 @@
 
         .header-add-btn { background: var(--active-text-blue); color: #ffffff; width: 44px; height: 44px; border-radius: 14px; text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 4px 12px var(--glow-color); transition: all 0.3s ease; position: relative; }
         .header-add-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px var(--glow-color); }
-        .header-add-btn::after { content: attr(data-title); position: absolute; top: 55px; left: 50%; transform: translateX(-50%) translateY(-10px); background: var(--bg-panel); color: var(--text-main); padding: 6px 12px; font-size: 12px; font-weight: 600; border-radius: 8px; border: 1px solid var(--border-color); opacity: 0; pointer-events: none; transition: all 0.3s ease; white-space: nowrap; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .header-add-btn:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-        .menu-hamburger { font-size: 20px; cursor: pointer; color: var(--link-color); padding: 10px; border-radius: 12px; }
-        .menu-hamburger:hover { color: var(--active-text-blue); background: var(--link-hover-bg); transform: scale(1.05); }
         .header-center { display: flex; justify-content: center; }
-
         .logo { font-size: 24px; font-weight: 800; color: var(--active-text-blue); text-decoration: none; letter-spacing: -0.8px; display: flex; align-items: center; gap: 6px; }
         .logo span { color: var(--text-main); font-weight: 500; }
-        .header-right { display: flex; justify-content: flex-end; }
 
+        .header-right { display: flex; justify-content: flex-end; align-items: center; gap: 20px; }
         .profile-avatar { width: 44px; height: 44px; border-radius: 14px; object-fit: cover; border: 2px solid var(--border-color); cursor: pointer; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
 
         /* —————————————————————————————————————————————————————————
-           SIDEBAR SOZLAMALARI
+           SIDEBAR (Faqat Desktop uchun)
            ————————————————————————————————————————————————————————— */
-        .sidebar-container { position: fixed; top: 100px; left: 24px; display: flex; z-index: 999; height: calc(100vh - 130px); animation: slideRight 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-        .icon-rail { width: 68px; height: 100%; background: var(--bg-panel); border-radius: 20px; display: flex; flex-direction: column; align-items: center; padding: 24px 0; box-shadow: 0 20px 40px var(--shadow-rail); border: 1px solid var(--border-color); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); position: relative; z-index: 2; }
-
-        .rail-item { width: 46px; height: 46px; border-radius: 14px; display: flex; justify-content: center; align-items: center; color: var(--rail-item-color); font-size: 18px; margin-bottom: 10px; cursor: pointer; position: relative; text-decoration: none; }
+        .sidebar-container { position: fixed; top: 100px; left: 24px; display: flex; z-index: 999; height: calc(100vh - 130px); }
+        .icon-rail { width: 68px; height: 100%; background: var(--bg-panel); border-radius: 20px; display: flex; flex-direction: column; align-items: center; padding: 24px 0; box-shadow: 0 20px 40px var(--shadow-rail); border: 1px solid var(--border-color); backdrop-filter: blur(24px); position: relative; z-index: 2; }
+        .rail-item { width: 46px; height: 46px; border-radius: 14px; display: flex; justify-content: center; align-items: center; color: var(--rail-item-color); font-size: 18px; margin-bottom: 10px; cursor: pointer; text-decoration: none; transition: 0.3s; }
         .rail-item.active { background: var(--active-text-blue); color: #ffffff; box-shadow: 0 8px 20px var(--glow-color); }
         [data-theme="dark"] .rail-item.active { background: rgba(255, 107, 0, 0.14); color: var(--active-text-blue); border: 1px solid rgba(255, 107, 0, 0.3); }
         .rail-item:hover:not(.active) { background: var(--rail-item-hover-bg); color: var(--text-main); transform: scale(1.05); }
-
-        .rail-item::after { content: attr(data-title); position: absolute; left: 80px; background: var(--text-main); color: var(--bg-body); padding: 6px 12px; font-size: 12px; font-weight: 600; border-radius: 8px; opacity: 0; pointer-events: none; transform: translateX(-10px); transition: all 0.2s ease; white-space: nowrap; }
-        .rail-item:hover::after { opacity: 1; transform: translateX(0); }
         .rail-divider { width: 24px; height: 1px; background: var(--border-color); margin: 14px 0; }
 
-        .expanded-menu { width: 0; opacity: 0; visibility: hidden; overflow: hidden; background: var(--bg-panel); border-radius: 20px; box-shadow: 0 30px 60px var(--shadow-menu); border: 1px solid var(--border-color); margin-left: -20px; padding-left: 20px; display: flex; backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); pointer-events: none; transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, visibility 0.4s ease, margin 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .expanded-menu { width: 0; opacity: 0; visibility: hidden; overflow: hidden; background: var(--bg-panel); border-radius: 20px; box-shadow: 0 30px 60px var(--shadow-menu); border: 1px solid var(--border-color); margin-left: -20px; padding-left: 20px; display: flex; backdrop-filter: blur(24px); transition: 0.4s ease; pointer-events: none;}
         .sidebar-container:hover .expanded-menu { width: 280px; opacity: 1; visibility: visible; margin-left: 16px; pointer-events: auto; }
-
         .menu-col { min-width: 250px; height: 100%; padding: 28px 20px; display: flex; flex-direction: column; }
-        .menu-col:first-child { border-right: 1px solid var(--divider-col); }
         .menu-title { font-size: 17px; font-weight: 700; color: var(--text-main); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
-        .section-label { font-size: 11px; font-weight: 700; color: var(--text-label); text-transform: uppercase; letter-spacing: 1.2px; margin: 22px 0 8px 10px; }
         .menu-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
-
-        .menu-list li a { display: flex; align-items: center; padding: 11px 14px; color: var(--link-color); font-size: 14px; font-weight: 600; text-decoration: none; border-radius: 10px; }
+        .menu-list li a { display: flex; align-items: center; padding: 11px 14px; color: var(--link-color); font-size: 14px; font-weight: 600; text-decoration: none; border-radius: 10px; transition: 0.2s; }
         .menu-list li a:hover { background: var(--link-hover-bg); color: var(--text-main); transform: translateX(5px); }
-        .menu-list li a i.main-icon { font-size: 16px; margin-right: 12px; color: var(--text-muted); width: 20px; text-align: center; }
-        .menu-list li a:hover i.main-icon { color: var(--active-text-blue); }
         .menu-list li a.active-link { background: var(--active-bg-light); color: var(--active-text-blue); }
-        .badge { background: linear-gradient(135deg, #ff6b00, #ff8c33); color: #ffffff; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-left: auto; }
+        .menu-list li a i.main-icon { font-size: 16px; margin-right: 12px; color: var(--text-muted); width: 20px; text-align: center; }
 
         /* —————————————————————————————————————————————————————————
-           MARKET PRO WORKSPACE & TWITTER FEED STYLE
+           MAIN CONTENT & SEARCH (Global)
            ————————————————————————————————————————————————————————— */
-        .main-content { margin-left: 120px; padding: 120px 40px 40px 40px; animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-        .market-filter-bar { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 35px; max-width: 1200px; }
+        .main-content { margin-left: 120px; padding: 120px 40px 40px 40px; animation: fadeIn 0.8s ease; }
 
-        .filter-btn { background: var(--bg-panel); border: 1px solid var(--border-color); color: var(--text-main); padding: 10px 20px; border-radius: 14px; font-weight: 600; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(10px); text-decoration: none; }
-        .filter-btn:hover, .filter-btn.active { background: var(--active-text-blue); color: #ffffff; border-color: var(--active-text-blue); box-shadow: 0 6px 15px var(--glow-color); transform: translateY(-2px); }
+        .search-wrapper { position: relative; width: 100%; border-radius: 50px; background: rgba(12, 14, 22, 0.9); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 20px 40px rgba(0, 0, 0, 0.45), 0 4px 12px rgba(0, 0, 0, 0.3); backdrop-filter: blur(32px); transition: 0.3s ease; }
+        [data-theme="light"] .search-wrapper { background: rgba(255, 255, 255, 0.95); border-color: rgba(0, 0, 0, 0.09); box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+        .search-inner { display: flex; align-items: center; padding: 0 8px 0 0; }
 
-        /* APP STYLE POSTS FEED */
-        .twitter-feed { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; margin-bottom: 60px; }
+        .premium-search-input { flex: 1; height: 56px; padding: 0 16px 0 52px; background: transparent; border: none; color: var(--text-main); font-size: 16px; /* 16px Anti-Zoom */ font-weight: 500; outline: none; }
+        .premium-search-input::placeholder { color: rgba(100, 116, 139, 0.7); }
+
+        .search-icon-premium { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: rgba(100, 116, 139, 0.6); font-size: 15px; }
+        .search-wrapper:focus-within .search-icon-premium { color: var(--active-text-blue); }
+
+        .premium-search-btn { flex-shrink: 0; height: 44px; padding: 0 24px; border-radius: 24px; border: none; background: linear-gradient(180deg, #ff7a1a 0%, #e85e00 100%); color: #fff; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(232, 94, 0, 0.4); transition: 0.2s; }
+        .premium-search-btn:active { transform: scale(0.95); }
+
+        /* —————————————————————————————————————————————————————————
+           POSTS FEED (TWEET CARDS)
+           ————————————————————————————————————————————————————————— */
+        .twitter-feed { max-width: 680px; margin: 0 auto 60px auto; display: flex; flex-direction: column; gap: 24px; }
 
         .tweet-card {
             background: var(--card-gradient);
@@ -161,235 +156,147 @@
             padding: 26px;
             box-shadow: 0 10px 35px var(--shadow-rail);
             border: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            backdrop-filter: blur(20px);
+            display: flex; flex-direction: column; gap: 16px;
+            backdrop-filter: blur(20px); transition: 0.3s;
         }
-        .tweet-card:hover { transform: translateY(-4px); box-shadow: 0 20px 45px rgba(0,0,0,0.12); }
 
         .tweet-header { display: flex; justify-content: space-between; align-items: flex-start; }
         .tweet-author { display: flex; gap: 14px; align-items: center; text-decoration: none; }
-        .tweet-avatar { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--active-text-blue); background: #000; }
-
+        .tweet-avatar { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--active-text-blue); }
         .tweet-author-info { display: flex; flex-direction: column; gap: 2px; }
         .tweet-name { font-size: 16px; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 5px; }
         .tweet-username { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+        .verified-badge { color: #1da1f2; font-size: 14px; }
 
-        .tweet-body { font-size: 18px; color: var(--text-main); line-height: 1.6; font-weight: 500; white-space: pre-wrap; }
+        .tweet-options { cursor: pointer; padding: 5px; color: var(--text-muted); position: relative; }
+        .custom-dropdown-menu { display: none; position: absolute; right: 0; top: 30px; background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); min-width: 180px; z-index: 100; flex-direction: column; overflow: hidden; backdrop-filter: blur(24px); }
+        .custom-dropdown-menu.show { display: flex; animation: fadeIn 0.2s; }
+        .custom-dropdown-menu a { padding: 12px 16px; color: var(--text-main); text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+        .custom-dropdown-menu a:hover { background: var(--link-hover-bg); }
+
+        .tweet-body { font-size: 16px; color: var(--text-main); line-height: 1.6; font-weight: 500; white-space: pre-wrap; }
+        .tweet-body h3 { font-size: 20px; font-weight: 900; background: linear-gradient(135deg, #ff6b00, #ff8c33); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 12px; }
+
         .tweet-price-badge { display: inline-flex; align-items: center; gap: 6px; font-weight: 800; color: #10b981; font-size: 14px; background: rgba(16, 185, 129, 0.1); padding: 6px 14px; border-radius: 12px; align-self: flex-start; }
-        .tweet-image { width: 100%; border-radius: 16px; object-fit: cover; max-height: 380px; border: 1px solid var(--border-color); box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .tweet-image { width: 100%; border-radius: 16px; object-fit: cover; max-height: 400px; border: 1px solid var(--border-color); }
 
         .tweet-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--divider-col); padding-top: 16px; margin-top: 4px; }
         .tweet-actions-left { display: flex; gap: 12px; flex: 1; }
+        .tweet-action { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; font-weight: 700; color: var(--text-muted); padding: 10px 16px; border-radius: 14px; background: var(--input-bg); border: 1px solid var(--border-color); cursor: pointer; transition: 0.2s; }
 
-        .tweet-action { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--text-muted); text-decoration: none; padding: 10px 16px; border-radius: 14px; background: var(--input-bg); border: 1px solid var(--border-color); cursor: pointer; }
-        .tweet-action i { font-size: 16px; }
+        .tweet-action.like:active { transform: scale(0.9); }
+        .tweet-action.like.liked { color: #ef4444; background: rgba(239, 68, 68, 0.08); border-color: rgba(239, 68, 68, 0.2); }
+        .tweet-action.like.liked i { font-weight: 900; }
 
-        .tweet-action.like:hover, .tweet-action.like.liked { color: #ef4444; background: rgba(239, 68, 68, 0.08); border-color: rgba(239, 68, 68, 0.2); }
-        .tweet-action.like.liked i { color: #ef4444; font-weight: 900; }
+        .tweet-action.contact { background: linear-gradient(135deg, #3b82f6, #6366f1); color: #fff !important; border: none; box-shadow: 0 4px 16px rgba(99,102,241,0.35); flex: 1; max-width: 180px; }
+        .tweet-action.contact:active { transform: scale(0.95); }
 
-        .tweet-action.contact {
-            background: linear-gradient(135deg, #3b82f6, #6366f1);
-            color: #fff !important;
-            border-color: transparent;
-            box-shadow: 0 4px 16px rgba(99,102,241,0.35);
-            flex: 1;
-            max-width: 180px;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .tweet-action.contact::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%; width: 60%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transform: skewX(-20deg);
-            transition: left 0.5s;
-        }
-        .tweet-action.contact:hover::before { left: 150%; }
-        .tweet-action.contact:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 24px rgba(99,102,241,0.5); color: #fff !important; }
-        .tweet-action.contact i { color: #fff !important; }
-        .tweet-action.contact span { color: #fff !important; }
+        .bookmark { color: var(--text-muted); font-size: 16px; cursor: pointer; padding: 10px 14px; border-radius: 14px; background: var(--input-bg); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .bookmark.bookmarked { color: #f59e0b; background: rgba(245, 158, 11, 0.08); border-color: rgba(245, 158, 11, 0.2); }
 
-        .bookmark { color: var(--text-muted); font-size: 16px; cursor: pointer; padding: 11px; border-radius: 14px; background: var(--input-bg); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; }
-        .bookmark:hover, .bookmark.bookmarked { color: #f59e0b; background: rgba(245, 158, 11, 0.08); border-color: rgba(245, 158, 11, 0.2); }
-        .bookmark.bookmarked i { font-weight: 900; }
-
-        .verified-badge i { font-size: 14px; color: #1da1f2; }
-
-        .dashboard-card { background: var(--card-gradient); border-radius: 24px; padding: 45px; border: 1px solid var(--border-color); max-width: 900px; backdrop-filter: blur(20px); text-align: center; margin: 40px auto; }
-        .dashboard-card h1 { font-size: 22px; font-weight: 800; margin-bottom: 10px; }
-        .dashboard-card p { color: var(--text-muted); font-size: 14px; }
-
-        @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        @keyframes slideRight { from { transform: translateX(-30px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* ── BOTTOM NAVIGATION (MOBILE) ── */
-        /* ── BOTTOM NAVIGATION (MOBILE) ── */
-        .bottom-nav { display: none; position: fixed; bottom: calc(15px + env(safe-area-inset-bottom, 0px)); left: 15px; width: calc(100% - 30px); height: 65px; background: var(--bg-panel); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--border-color); border-radius: 22px; z-index: 1000; justify-content: space-around; align-items: center; padding: 0 10px; box-shadow: 0 15px 40px rgba(0,0,0,0.25); }
-        .bottom-nav-item { color: var(--rail-item-color); font-size: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 50px; height: 50px; border-radius: 16px; text-decoration: none; position: relative; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        /* —————————————————————————————————————————————————————————
+           📱 100% RESPONSIVE MOBILE STYLES (App-Like UI)
+           ————————————————————————————————————————————————————————— */
+        .bottom-nav { display: none; position: fixed; bottom: 0; padding-bottom: env(safe-area-inset-bottom); left: 0; width: 100%; background: var(--bg-panel); backdrop-filter: blur(24px); border-top: 1px solid var(--border-color); z-index: 1000; justify-content: space-around; align-items: center; height: calc(65px + env(safe-area-inset-bottom)); box-shadow: 0 -10px 30px rgba(0,0,0,0.1); }
+        .bottom-nav-item { color: var(--rail-item-color); font-size: 22px; display: flex; align-items: center; justify-content: center; width: 100%; height: 65px; text-decoration: none; position: relative; transition: 0.2s; }
         .bottom-nav-item.active { color: var(--active-text-blue); }
-        .bottom-nav-item:hover { color: var(--text-main); background: var(--rail-item-hover-bg); transform: scale(1.1); }
-        .bottom-nav-item.add-btn { background: linear-gradient(135deg, #ff6b00, #ff8c33); color: #fff !important; border-radius: 50%; width: 54px; height: 54px; transform: translateY(-15px); box-shadow: 0 10px 25px var(--glow-color); border: 4px solid var(--bg-body); font-size: 22px; }
-        .bottom-nav-item.add-btn:hover { transform: translateY(-20px) scale(1.05); box-shadow: 0 14px 30px var(--glow-color); }
-        .bottom-nav-item .badge { position: absolute; top: 4px; right: 4px; background: #ef4444; color: #fff; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 10px; border: 2px solid var(--bg-panel); box-shadow: 0 2px 8px rgba(239,68,68,0.4); }
+
+        .bottom-nav-item.add-btn { background: linear-gradient(135deg, #ff6b00, #ff8c33); color: #fff !important; border-radius: 50%; width: 56px; height: 56px; flex-shrink: 0; transform: translateY(-20px); box-shadow: 0 8px 25px var(--glow-color); border: 4px solid var(--bg-body); font-size: 24px; position: absolute; left: 50%; margin-left: -28px; z-index: 10; }
+        .bottom-nav-item.add-btn:active { transform: translateY(-15px) scale(0.95); }
+        .bottom-nav-item .badge { position: absolute; top: 12px; right: calc(50% - 18px); background: #ef4444; color: #fff; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 10px; border: 2px solid var(--bg-panel); }
 
         @media (max-width: 768px) {
-            html, body { overflow-x: hidden !important; max-width: 100vw !important; width: 100%; }
+            body { background-color: var(--bg-body); }
+            /* Menyular va oraliqlar */
             .sidebar-container { display: none !important; }
             .bottom-nav { display: flex; }
-            .main-content { margin-left: 0; padding: 85px 14px 120px 14px; width: 100%; overflow-x: hidden; }
-            header { padding: 0 16px; height: 64px; }
-            .header-container { grid-template-columns: 1fr auto 1fr; }
-            .header-add-btn { display: none; } /* Hide add button in header on mobile */
-            .logo { font-size: 20px; }
+
+            /* Tepa qism: Qidiruv paneli ekranga yopishadi */
+            header { padding: env(safe-area-inset-top) 16px 0 16px; height: calc(64px + env(safe-area-inset-top)); }
+            .header-container { grid-template-columns: auto 1fr auto; }
+            .header-add-btn { display: none; }
+            .logo { font-size: 20px; justify-content: flex-start; }
             .profile-avatar { width: 38px; height: 38px; }
-            .twitter-feed { width: 100% !important; }
-            
-            .tweet-card { padding: 18px 0 !important; border-radius: 0 !important; border-left: none !important; border-right: none !important; margin: 0 -14px !important; gap: 12px; box-shadow: none !important; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); background: var(--bg-body) !important; }
-            .tweet-header, .tweet-body, .tweet-price-badge, .tweet-manage-toolbar, .tweet-footer, .tweet-stats, .tweet-manage-actions { padding-left: 16px; padding-right: 16px; }
-            .tweet-image { width: 100%; border-radius: 0; border-left: none; border-right: none; margin-top: 8px; margin-bottom: 8px; max-height: 400px; }
+
+            .main-content { margin-left: 0; padding: calc(85px + env(safe-area-inset-top)) 0 calc(90px + env(safe-area-inset-bottom)) 0; width: 100%; }
+
+            /* Qidiruv bar mobil uchun siqiladi */
+            .market-filter-bar { padding: 0 14px; margin-bottom: 20px; }
+            .search-wrapper { border-radius: 18px; }
+            .premium-search-input { height: 50px; font-size: 16px; padding: 0 12px 0 44px; }
+            .search-icon-premium { left: 16px; }
+            /* Qidiruv tugmasidagi matnni yashirib faqat icon qoldiramiz (joy tejash uchun) */
+            .premium-search-btn { height: 38px; padding: 0 14px; border-radius: 12px; }
+            .premium-search-btn span { display: none; }
+            .premium-search-btn i { margin-right: 0 !important; font-size: 16px; }
+
+            /* ⚡️ POSTLAR LENTASI: Edge-to-Edge dizayn (Instagram kabi) */
+            .twitter-feed { gap: 10px; }
+            .tweet-card {
+                border-radius: 0; border-left: none; border-right: none;
+                padding: 16px 0; background: var(--bg-body); box-shadow: none;
+                border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);
+            }
+            .tweet-header, .tweet-body, .tweet-price-badge, .tweet-footer { padding: 0 16px; }
+
+            /* Rasm ham ekranga yopishib turadi */
+            .tweet-image { border-radius: 0; border-left: none; border-right: none; margin-top: 12px; max-height: 350px; }
+
+            .tweet-avatar { width: 44px; height: 44px; }
             .tweet-name { font-size: 15px; }
             .tweet-username { font-size: 12px; }
-            .tweet-avatar { width: 44px; height: 44px; }
-            .tweet-body h3 { font-size: 17px; margin-bottom: 12px; padding-bottom: 8px; }
-            .tweet-body { font-size: 14px; }
-            .tweet-image { border-radius: 12px; }
-            
+
+            /* Tugmalar kichrayadi */
             .tweet-actions-left { gap: 8px; }
-            .tweet-action { padding: 8px 12px; font-size: 12px; }
-            .tweet-action i { font-size: 14px; }
-            .tweet-action.contact { flex: 2; max-width: none; }
-            
-            .premium-search-input { height: 50px; font-size: 16px; padding: 0 12px 0 44px; }
-            .premium-search-btn { height: 38px; padding: 0 16px; font-size: 13px; }
-            .search-icon-premium { left: 16px; font-size: 14px; }
-            .market-filter-bar { margin-bottom: 25px; }
-            .search-wrapper { border-radius: 25px; }
+            .tweet-action { padding: 8px 12px; font-size: 13px; flex: 1; }
+            .tweet-action.contact { max-width: none; flex: 1.5; }
+            .bookmark { padding: 8px 12px; }
         }
-    
 
-        .custom-dropdown-menu { display: none; position: absolute; right: 0; top: 40px; background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); min-width: 200px; z-index: 100; overflow: hidden; flex-direction: column; }
-        .custom-dropdown-menu.show { display: flex; }
-        .custom-dropdown-menu a { padding: 12px 16px; color: var(--text-main); text-decoration: none; font-size: 15px; display: flex; align-items: center; gap: 10px; transition: background 0.2s; }
-        .custom-dropdown-menu a:hover { background: var(--link-hover-bg); }
-        .custom-dropdown-menu .text-danger { color: #ef4444 !important; }
-        .custom-dropdown-menu .text-warning { color: #f59e0b !important; }
-        .custom-dropdown-menu .divider { height: 1px; background: var(--border-color); margin: 4px 0; }
-
-    
+        /* —————————————————————————————————————————————————————————
+           MODALLAR VA TOASTS
+           ————————————————————————————————————————————————————————— */
         .secure-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 20px; }
-        .secure-modal { background: #ffffff; color: #0f172a; width: 100%; max-width: 440px; border-radius: 24px; padding: 28px; box-shadow: 0 25px 50px rgba(0,0,0,0.3); display: flex; flex-direction: column; gap: 16px; border: 1px solid #cbd5e1; }
-        .secure-title { font-size: 18px; font-weight: 800; color: #ef4444; display: flex; align-items: center; gap: 8px; }
-        .secure-desc { font-size: 14px; color: #475569; line-height: 1.5; font-weight: 500; }
-        .secure-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
-        .secure-btn { padding: 12px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; border: none; text-align: center; text-decoration: none; }
-        .secure-btn.cancel { background: #f1f5f9; color: #475569; }
-        .secure-btn.confirm { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; transition: all 0.3s ease; }
-        .secure-btn.confirm.active { background: #ef4444; color: #ffffff; cursor: pointer; box-shadow: 0 4px 14px rgba(239,68,68,0.4); }
+        .secure-modal { background: var(--bg-panel); color: var(--text-main); width: 100%; max-width: 400px; border-radius: 24px; padding: 28px; box-shadow: 0 25px 50px rgba(0,0,0,0.4); border: 1px solid var(--border-color); animation: modalPop 0.3s ease; }
+        @keyframes modalPop { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
+        /* Kontakt Modal */
+        #contactModalInner { background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 32px; width: 100%; max-width: 400px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.5); backdrop-filter: blur(24px); }
+        .contact-btn-item { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-radius: 16px; text-decoration: none; font-weight: 600; font-size: 15px; transition: 0.2s; margin-bottom: 10px; }
+        .contact-btn-item:active { transform: scale(0.97); }
+
+        @media (max-width: 500px) {
+            /* Kichik telefonda modallar pastdan chiqadigan (Bottom Sheet) bo'ladi */
+            .secure-modal-overlay { align-items: flex-end; padding: 10px; }
+            .secure-modal, #contactModalInner { border-radius: 32px 32px 20px 20px !important; margin: 0; max-width: 100%; animation: slideUp 0.3s ease; }
+            @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        }
     </style>
 </head>
 <body>
 
-    <div class="secure-modal-overlay" id="deleteConfirmationModal">
-        <div class="secure-modal">
-            <div class="secure-title"><i class="fa-solid fa-triangle-exclamation"></i> {% trans "Kritik amalni tasdiqlang" %}</div>
-            <p class="secure-desc">{% trans "Ushbu e'lonni butunlay o'chirib tashlamoqchimisiz? Bu amalni ortga qaytarib bo'lmaydi." %}</p>
-            <div class="secure-actions">
-                <button class="secure-btn cancel" onclick="closeDeleteModal()">{% trans "Bekor qilish" %}</button>
-                <form id="finalDeleteForm" method="POST" action="">
-                    {% csrf_token %}
-                    <button type="submit" id="finalDeleteTriggerBtn" class="secure-btn confirm active" style="width:100%;">{% trans "O'chirish" %}</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
     {% if messages %}
-        <div class="messages-container" style="position: fixed; top: 90px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px;">
+        <div style="position: fixed; top: 90px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; width: 90%; max-width: 400px; pointer-events: none;">
             {% for message in messages %}
-                <div class="alert-message {{ message.tags }}" style="background: var(--card-gradient); border: 1px solid var(--border-color); color: white; padding: 16px 24px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); backdrop-filter: blur(10px); display: flex; align-items: center; gap: 12px; animation: slideDown 0.3s ease;">
-                    {% if message.tags == 'error' %}<i class="fa-solid fa-circle-exclamation" style="color: #ef4444; font-size: 20px;"></i>
-                    {% elif message.tags == 'success' %}<i class="fa-solid fa-circle-check" style="color: #10b981; font-size: 20px;"></i>
-                    {% else %}<i class="fa-solid fa-circle-info" style="color: var(--active-text-blue); font-size: 20px;"></i>{% endif %}
-                    <span style="font-size: 15px; font-weight: 600;">{{ message }}</span>
+                <div class="alert-message {{ message.tags }}" style="pointer-events: auto; background: var(--bg-panel); border: 1px solid var(--border-color); color: var(--text-main); padding: 14px 20px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); backdrop-filter: blur(16px); display: flex; align-items: center; gap: 12px; animation: slideDown 0.4s cubic-bezier(0.16,1,0.3,1);">
+                    {% if message.tags == 'error' %}<i class="fa-solid fa-circle-exclamation" style="color: #ef4444; font-size: 22px;"></i>
+                    {% elif message.tags == 'success' %}<i class="fa-solid fa-circle-check" style="color: #10b981; font-size: 22px;"></i>
+                    {% else %}<i class="fa-solid fa-circle-info" style="color: var(--active-text-blue); font-size: 22px;"></i>{% endif %}
+                    <span style="font-size: 14px; font-weight: 600; line-height: 1.4;">{{ message }}</span>
                 </div>
             {% endfor %}
         </div>
         <script>
             setTimeout(() => {
-                const msgs = document.querySelectorAll('.alert-message');
-                msgs.forEach(msg => {
+                document.querySelectorAll('.alert-message').forEach(msg => {
                     msg.style.opacity = '0';
-                    msg.style.transform = 'translateX(20px)';
+                    msg.style.transform = 'translateY(-20px)';
                     msg.style.transition = 'all 0.3s ease';
                     setTimeout(() => msg.remove(), 300);
                 });
-            }, 4000);
+            }, 3500);
         </script>
     {% endif %}
-
-    <i class="fa-solid fa-helmet-safety bg-watermark"></i>
-
-    <div id="contactModal" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.6); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); align-items:center; justify-content:center;">
-        <div id="contactModalInner" style="background:linear-gradient(145deg,#0f0f1a,#1a1a2e); border:1px solid rgba(255,255,255,0.1); border-radius:32px; padding:0; width:min(440px,92vw); box-shadow:0 40px 100px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05); position:relative; overflow:hidden; animation:modalPop 0.35s cubic-bezier(0.16,1,0.3,1);">
-            <div style="height:4px; background:linear-gradient(90deg,#3b82f6,#6366f1,#8b5cf6); width:100%;"></div>
-            <div style="padding:28px 28px 20px; display:flex; align-items:center; gap:18px;">
-                <div style="position:relative;">
-                    <img id="cModal-avatar" src="" alt="" style="width:72px;height:72px;border-radius:50%;object-fit:cover;border:3px solid rgba(99,102,241,0.5);box-shadow:0 0 20px rgba(99,102,241,0.3);background:black;" onerror="this.src='/static/images/default_avatar.svg'">
-                    <div style="position:absolute;bottom:2px;right:2px;width:14px;height:14px;background:#10b981;border-radius:50%;border:2px solid #1a1a2e;"></div>
-                </div>
-                <div style="flex:1;">
-                    <div id="cModal-name" style="font-size:20px;font-weight:800;color:#fff;margin-bottom:3px;letter-spacing:-0.3px;"></div>
-                    <div id="cModal-username" style="font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:6px;"></div>
-                    <div id="cModal-role" style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(59,130,246,0.2));color:#818cf8;padding:3px 12px;border-radius:20px;display:inline-block;border:1px solid rgba(99,102,241,0.25);"></div>
-                </div>
-                <button onclick="closeContactModal()" style="position:absolute;top:20px;right:20px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:50%;width:38px;height:38px;cursor:pointer;color:rgba(255,255,255,0.5);font-size:20px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.14)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.07)';this.style.color='rgba(255,255,255,0.5)'">&times;</button>
-            </div>
-            <div style="padding:0 28px; margin-bottom:16px;">
-                <div style="display:flex;align-items:center;gap:10px;">
-                    <div style="flex:1;height:1px;background:rgba(255,255,255,0.07);"></div>
-                    <span style="font-size:11px;color:rgba(255,255,255,0.3);font-weight:600;letter-spacing:1px;text-transform:uppercase;">Aloqa usullari</span>
-                    <div style="flex:1;height:1px;background:rgba(255,255,255,0.07);"></div>
-                </div>
-            </div>
-            <div id="cModal-buttons" style="display:flex;flex-direction:column;gap:10px;padding:0 28px 28px;"></div>
-        </div>
-    </div>
-
-    <!-- ====== LUXURY PILL TOAST NOTIFICATION ====== -->
-    <div id="toastNotif" style="display:none;position:fixed;top:40px;left:50%;transform:translateX(-50%);z-index:99999;background:rgba(20, 25, 35, 0.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.08);border-radius:50px;padding:10px 24px 10px 10px;align-items:center;gap:14px;box-shadow:0 20px 40px rgba(0,0,0,0.5);min-width:max-content;max-width:90vw;">
-        <div id="toastIcon" style="width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;flex-shrink:0;box-shadow:0 4px 10px rgba(0,0,0,0.2);"></div>
-        <div id="toastMsg" style="font-size:14px;font-weight:600;color:#f8fafc;letter-spacing:-0.2px;padding-right:8px;"></div>
-    </div>
-    <style>
-        @keyframes toastPopIn { 0% { opacity: 0; transform: translate(-50%, -20px) scale(0.9); } 60% { transform: translate(-50%, 5px) scale(1.02); } 100% { opacity: 1; transform: translate(-50%, 0) scale(1); } }
-        @keyframes toastPopOut { 0% { opacity: 1; transform: translate(-50%, 0) scale(1); } 100% { opacity: 0; transform: translate(-50%, -20px) scale(0.9); } }
-    
-        .custom-dropdown-menu { display: none; position: absolute; right: 0; top: 40px; background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); min-width: 200px; z-index: 100; overflow: hidden; flex-direction: column; }
-        .custom-dropdown-menu.show { display: flex; }
-        .custom-dropdown-menu a { padding: 12px 16px; color: var(--text-main); text-decoration: none; font-size: 15px; display: flex; align-items: center; gap: 10px; transition: background 0.2s; }
-        .custom-dropdown-menu a:hover { background: var(--link-hover-bg); }
-        .custom-dropdown-menu .text-danger { color: #ef4444 !important; }
-        .custom-dropdown-menu .text-warning { color: #f59e0b !important; }
-        .custom-dropdown-menu .divider { height: 1px; background: var(--border-color); margin: 4px 0; }
-
-    
-        .secure-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 20px; }
-        .secure-modal { background: #ffffff; color: #0f172a; width: 100%; max-width: 440px; border-radius: 24px; padding: 28px; box-shadow: 0 25px 50px rgba(0,0,0,0.3); display: flex; flex-direction: column; gap: 16px; border: 1px solid #cbd5e1; }
-        .secure-title { font-size: 18px; font-weight: 800; color: #ef4444; display: flex; align-items: center; gap: 8px; }
-        .secure-desc { font-size: 14px; color: #475569; line-height: 1.5; font-weight: 500; }
-        .secure-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
-        .secure-btn { padding: 12px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; border: none; text-align: center; text-decoration: none; }
-        .secure-btn.cancel { background: #f1f5f9; color: #475569; }
-        .secure-btn.confirm { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; transition: all 0.3s ease; }
-        .secure-btn.confirm.active { background: #ef4444; color: #ffffff; cursor: pointer; box-shadow: 0 4px 14px rgba(239,68,68,0.4); }
-
-    </style>
 
     <header>
         <div class="header-container">
@@ -403,14 +310,14 @@
                     Easy<span>Build</span> <i class="fa-solid fa-helmet-safety"></i>
                 </div>
             </div>
-            <div class="header-right" style="display: flex; align-items: center; gap: 20px;">
+            <div class="header-right">
                 {% if user.is_authenticated %}
                     <a href="{% url 'build:profile' %}">
-                        <img src="{{ user.profile.get_avatar_url }}" alt="Profil" class="profile-avatar" style="background: black;">
+                        <img src="{{ user.profile.get_avatar_url }}" alt="Profil" class="profile-avatar">
                     </a>
                 {% else %}
-                    <a href="{% url 'accounts:login' %}" style="text-decoration: none; color: var(--active-text-blue); font-weight: 700;">
-                        <i class="fa-solid fa-right-to-bracket"></i> Kirish
+                    <a href="{% url 'accounts:login' %}" style="text-decoration: none; color: var(--active-text-blue); font-weight: 700; font-size: 15px;">
+                        <i class="fa-solid fa-right-to-bracket"></i> <span class="hidden sm:inline">Kirish</span>
                     </a>
                 {% endif %}
             </div>
@@ -423,16 +330,15 @@
             <a href="{% url 'build:network' %}" class="rail-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}" data-title="{% trans 'Hamkasblar' %}"><i class="fa-solid fa-users"></i></a>
             <a href="{% url 'build:post_list' %}" class="rail-item {% if request.resolver_match.url_name == 'post_list' %}active{% endif %}" data-title="{% trans 'Market Pro' %}"><i class="fa-solid fa-store"></i></a>
             <a href="{% url 'build:builder_list' %}" class="rail-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" data-title="{% trans 'Usta Qidirish' %}"><i class="fa-solid fa-helmet-safety"></i></a>
-            <a href="{% url 'build:post_create' %}" class="rail-item {% if request.resolver_match.url_name == 'post_create' %}active{% endif %}" data-title="{% trans 'Post yaratish' %}"><i class="fa-solid fa-plus"></i></a>
             <a href="{% url 'chat:chat' %}" class="rail-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}" data-title="{% trans 'Chatlar' %}">
                 <i class="fa-regular fa-comment-dots"></i>
                 {% if unread_chat_count > 0 %}
-                <span style="position:absolute; top:8px; right:8px; background:var(--active-text-blue); color:white; font-size:10px; font-weight:800; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-panel);">{{ unread_chat_count }}</span>
+                <span style="position:absolute; top:8px; right:8px; background:var(--active-text-blue); color:white; font-size:10px; font-weight:800; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center;">{{ unread_chat_count }}</span>
                 {% endif %}
             </a>
             <div class="rail-item" id="themeToggleBtn" data-title="{% trans 'Rejimni o\'zgartirish' %}"><i class="fa-solid fa-moon"></i></div>
             <div class="rail-divider"></div>
-            <a href="{% url 'build:profile' %}" class="rail-item {% if request.resolver_match.url_name == 'profile' %}active{% endif %}" data-title="{% trans 'Profil sozlamalari' %}">
+            <a href="{% url 'build:profile' %}" class="rail-item">
                 {% if request.user.profile.avatar %}
                     <img src="{{ request.user.profile.get_avatar_url }}" style="width:100%; height:100%; border-radius:14px; object-fit:cover;">
                 {% else %}
@@ -440,159 +346,17 @@
                 {% endif %}
             </a>
         </div>
-
-        <div class="expanded-menu">
-            <div class="menu-col">
-                <div class="menu-title">
-                    <i class="fa-solid fa-compass" style="color: var(--active-text-blue); transform: rotate(15deg);"></i>
-                    {% trans "Navigator" %}
-                </div>
-                <ul class="menu-list">
-                    <li><a href="{% url 'build:home' %}" class="{% if request.resolver_match.url_name == 'home' %}active-link{% endif %}"><i class="fa-solid fa-house main-icon"></i> {% trans "Bosh sahifa" %}</a></li>
-                    <li><a href="{% url 'build:network' %}" class="{% if request.resolver_match.url_name == 'network' %}active-link{% endif %}"><i class="fa-solid fa-users main-icon"></i> {% trans "Hamkasblar" %}</a></li>
-                    <li><a href="{% url 'build:post_list' %}" class="{% if request.resolver_match.url_name == 'post_list' %}active-link{% endif %}"><i class="fa-solid fa-store main-icon"></i> {% trans "Market Pro (B2B)" %}</a></li>
-                    <li><a href="{% url 'build:builder_list' %}" class="{% if request.resolver_match.url_name == 'builder_list' %}active-link{% endif %}"><i class="fa-solid fa-helmet-safety main-icon"></i> {% trans "Usta Qidirish" %}</a></li>
-                    <li><a href="{% url 'chat:chat' %}" class="{% if request.resolver_match.namespace == 'chat' %}active-link{% endif %}"><i class="fa-regular fa-comment-dots main-icon"></i> {% trans "Xabarlar" %} {% if unread_chat_count > 0 %}<span class="badge" style="background:linear-gradient(135deg, #ff6b00, #ff8c33); color:#ffffff; font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; margin-left:auto;">{{ unread_chat_count }}</span>{% endif %}</a></li>
-                </ul>
-                <div class="section-label">{% trans "Tizim" %}</div>
-                <ul class="menu-list">
-                    <li><a href="#"><i class="fa-solid fa-layer-group main-icon"></i> {% trans "Ish jarayonlari" %}</a></li>
-                </ul>
-            </div>
-        </div>
     </div>
 
     <div class="main-content">
-        <div class="market-filter-bar" style="width: 100%; max-width: 900px; margin: 0 auto 40px auto; position: relative;">
-            <style>
-                /* ── SEARCH WRAPPER ── */
-                .search-wrapper {
-                    position: relative;
-                    width: 100%;
-                    border-radius: 50px;
-                    background: rgba(12, 14, 22, 0.9);
-                    border: 1px solid rgba(255, 255, 255, 0.08);
-                    box-shadow:
-                        0 1px 0 rgba(255,255,255,0.04) inset,
-                        0 20px 40px rgba(0, 0, 0, 0.45),
-                        0 4px 12px rgba(0, 0, 0, 0.3);
-                    transition: border-color 0.25s ease, box-shadow 0.25s ease;
-                    backdrop-filter: blur(32px);
-                    -webkit-backdrop-filter: blur(32px);
-                }
-                .search-wrapper:focus-within {
-                    border-color: rgba(255, 107, 0, 0.45);
-                    box-shadow:
-                        0 1px 0 rgba(255,255,255,0.06) inset,
-                        0 0 0 3px rgba(255, 107, 0, 0.1),
-                        0 24px 48px rgba(0, 0, 0, 0.5),
-                        0 4px 16px rgba(255, 107, 0, 0.08);
-                }
-                [data-theme="light"] .search-wrapper {
-                    background: rgba(255, 255, 255, 0.95);
-                    border-color: rgba(0, 0, 0, 0.09);
-                    box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.06);
-                }
-                [data-theme="light"] .search-wrapper:focus-within {
-                    border-color: rgba(255, 107, 0, 0.5);
-                    box-shadow: 0 0 0 3px rgba(255,107,0,0.1), 0 8px 32px rgba(0,0,0,0.1);
-                }
-                .search-inner {
-                    display: flex;
-                    align-items: center;
-                    padding: 0 8px 0 0;
-                }
-                /* ── INPUT ── */
-                .premium-search-input {
-                    flex: 1;
-                    height: 56px;
-                    padding: 0 16px 0 52px;
-                    background: transparent;
-                    border: none;
-                    color: var(--text-main);
-                    font-size: 15px;
-                    font-weight: 450;
-                    outline: none;
-                    letter-spacing: 0.15px;
-                }
-                .premium-search-input::placeholder {
-                    color: rgba(100, 116, 139, 0.7);
-                    font-weight: 400;
-                }
-                /* ── ICON ── */
-                .search-icon-premium {
-                    position: absolute;
-                    left: 18px;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    color: rgba(100, 116, 139, 0.6);
-                    font-size: 15px;
-                    pointer-events: none;
-                    z-index: 2;
-                    transition: color 0.2s ease;
-                }
-                .search-wrapper:focus-within .search-icon-premium {
-                    color: var(--active-text-blue);
-                }
-                /* ── BUTTON ── */
-                .premium-search-btn {
-                    flex-shrink: 0;
-                    height: 40px;
-                    padding: 0 22px;
-                    border-radius: 24px;
-                    border: none;
-                    background: linear-gradient(180deg, #ff7a1a 0%, #e85e00 100%);
-                    color: #fff;
-                    font-size: 13.5px;
-                    font-weight: 600;
-                    letter-spacing: 0.2px;
-                    cursor: pointer;
-                    position: relative;
-                    overflow: hidden;
-                    transition: all 0.2s ease;
-                    box-shadow:
-                        0 1px 0 rgba(255,255,255,0.2) inset,
-                        0 4px 12px rgba(232, 94, 0, 0.4);
-                }
-                .premium-search-btn:hover {
-                    background: linear-gradient(180deg, #ff8a2e 0%, #f06800 100%);
-                    box-shadow:
-                        0 1px 0 rgba(255,255,255,0.25) inset,
-                        0 6px 20px rgba(232, 94, 0, 0.5);
-                    transform: translateY(-1px);
-                }
-                .premium-search-btn:active {
-                    transform: translateY(0);
-                    box-shadow: 0 2px 8px rgba(232, 94, 0, 0.3);
-                }
-            
-        .custom-dropdown-menu { display: none; position: absolute; right: 0; top: 40px; background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); min-width: 200px; z-index: 100; overflow: hidden; flex-direction: column; }
-        .custom-dropdown-menu.show { display: flex; }
-        .custom-dropdown-menu a { padding: 12px 16px; color: var(--text-main); text-decoration: none; font-size: 15px; display: flex; align-items: center; gap: 10px; transition: background 0.2s; }
-        .custom-dropdown-menu a:hover { background: var(--link-hover-bg); }
-        .custom-dropdown-menu .text-danger { color: #ef4444 !important; }
-        .custom-dropdown-menu .text-warning { color: #f59e0b !important; }
-        .custom-dropdown-menu .divider { height: 1px; background: var(--border-color); margin: 4px 0; }
-
-    
-        .secure-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 20px; }
-        .secure-modal { background: #ffffff; color: #0f172a; width: 100%; max-width: 440px; border-radius: 24px; padding: 28px; box-shadow: 0 25px 50px rgba(0,0,0,0.3); display: flex; flex-direction: column; gap: 16px; border: 1px solid #cbd5e1; }
-        .secure-title { font-size: 18px; font-weight: 800; color: #ef4444; display: flex; align-items: center; gap: 8px; }
-        .secure-desc { font-size: 14px; color: #475569; line-height: 1.5; font-weight: 500; }
-        .secure-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
-        .secure-btn { padding: 12px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; border: none; text-align: center; text-decoration: none; }
-        .secure-btn.cancel { background: #f1f5f9; color: #475569; }
-        .secure-btn.confirm { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; transition: all 0.3s ease; }
-        .secure-btn.confirm.active { background: #ef4444; color: #ffffff; cursor: pointer; box-shadow: 0 4px 14px rgba(239,68,68,0.4); }
-
-    </style>
+        <div class="market-filter-bar">
             <form method="GET" action="{% url 'build:home' %}" style="width: 100%;">
                 <div class="search-wrapper">
                     <div class="search-inner">
                         <i class="fa-solid fa-magnifying-glass search-icon-premium"></i>
                         <input type="text" name="q" placeholder="{% trans 'Kerakli e\'lonni qidiring...' %}" value="{{ request.GET.q }}" class="premium-search-input">
                         <button type="submit" class="premium-search-btn">
-                            <i class="fa-solid fa-magnifying-glass" style="margin-right:7px; font-size:13px;"></i>{% trans "Qidirish" %}
+                            <i class="fa-solid fa-magnifying-glass"></i><span>{% trans "Qidirish" %}</span>
                         </button>
                     </div>
                 </div>
@@ -600,32 +364,19 @@
         </div>
 
         <div class="twitter-feed">
-            {% if user_role == 'client' or not user.is_authenticated %}
-            <div style="text-align:center; margin-bottom: 24px;">
-                <span style="font-size:12px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1.5px; opacity:0.6;">
-                    <i class="fa-solid fa-helmet-safety" style="margin-right:6px; color:var(--active-text-blue);"></i>{% trans "Ustalar e'lonlari" %}
-                </span>
-            </div>
-            {% elif user_role == 'builder' or user_role == 'team' %}
-            <div style="text-align:center; margin-bottom: 24px;">
-                <span style="font-size:12px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1.5px; opacity:0.6;">
-                    <i class="fa-solid fa-briefcase" style="margin-right:6px; color:var(--active-text-blue);"></i>{% trans "Mijozlar e'lonlari" %}
-                </span>
-            </div>
-            {% endif %}
             {% for post in posts %}
                 <div class="tweet-card" id="post-{{ post.id }}">
                     <div class="tweet-header">
                         <a href="#" class="tweet-author" onclick="contactUser(event, '{{ post.author.id }}')">
-                            <img src="{{ post.author.profile.get_avatar_url }}" alt="Avatar" class="tweet-avatar" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150'">
+                            <img src="{{ post.author.profile.get_avatar_url }}" alt="Avatar" class="tweet-avatar" onerror="this.src='/static/images/default_avatar.svg'">
                             <div class="tweet-author-info">
                                 <div class="tweet-name">
                                     {{ post.author.get_full_name|default:post.author.username }}
                                     {% if post.author.profile.role == 'team' or post.author.profile.role == 'builder' %}
-                                        <span class="verified-badge" title="{% trans 'Tasdiqlangan usta' %}"><i class="fa-solid fa-circle-check"></i></span>
+                                        <span class="verified-badge"><i class="fa-solid fa-circle-check"></i></span>
                                     {% endif %}
                                 </div>
-                                <div class="tweet-username">@{{ post.author.username }} &middot; {{ post.created_time|timesince }} {% trans "oldin" %}</div>
+                                <div class="tweet-username">@{{ post.author.username }} &middot; {{ post.created_time|timesince }}</div>
                             </div>
                         </a>
                         <div class="tweet-options" onclick="toggleDropdown(event, 'dropdown-{{ post.id }}')">
@@ -633,19 +384,15 @@
                             <div id="dropdown-{{ post.id }}" class="custom-dropdown-menu">
                                 {% if post.author == request.user %}
                                     <a href="{% url 'build:post_edit' post.id %}"><i class="fa-regular fa-pen-to-square"></i> Tahrirlash</a>
-                                    <a href="javascript:void(0)" onclick="openDeleteModal('{% url 'build:post_delete' post.id %}')" class="text-danger"><i class="fa-regular fa-trash-can"></i> O'chirish</a>
                                 {% else %}
-                                    <a href="javascript:void(0)" onclick="navigator.clipboard.writeText('{{ request.scheme }}://{{ request.get_host }}{% url 'build:home' %}#post-{{ post.id }}'); alert('Havola nusxalandi!')"><i class="fa-solid fa-link"></i> Nusxa olish</a>
-                                    <a href="javascript:void(0)" onclick="document.getElementById('post-{{ post.id }}').style.display='none'"><i class="fa-solid fa-eye-slash"></i> Ko'rinmaydigan qilish</a>
-                                    <div class="divider"></div>
-                                    <a href="javascript:void(0)" onclick="alert('Shikoyat qabul qilindi! Oliy darajadagi administratorlar tez orada ko'rib chiqadi.')" class="text-warning"><i class="fa-solid fa-flag"></i> Shikoyat qilish</a>
+                                    <a href="javascript:void(0)" onclick="alert('Shikoyat qabul qilindi!')" class="text-warning"><i class="fa-solid fa-flag"></i> Shikoyat qilish</a>
                                 {% endif %}
                             </div>
                         </div>
                     </div>
 
                     <div class="tweet-body">
-                        <h3 style="font-size: 20px; font-weight: 900; background: linear-gradient(135deg, #ff6b00, #ff8c33); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid rgba(255, 107, 0, 0.2); letter-spacing: 0.5px;">{{ post.title }}</h3>
+                        <h3>{{ post.title }}</h3>
                         {{ post.description }}
                     </div>
 
@@ -670,7 +417,6 @@
                                 <i class="fa-regular fa-paper-plane"></i> <span>{% trans "Bog'lanish" %}</span>
                             </button>
                         </div>
-
                         <div class="tweet-action-right">
                             <button class="bookmark {% if post.is_bookmarked %}bookmarked{% endif %}" onclick="toggleBookmark(event, '{{ post.id }}', this)">
                                 <i class="{% if post.is_bookmarked %}fa-solid{% else %}fa-regular{% endif %} fa-bookmark"></i>
@@ -678,258 +424,26 @@
                         </div>
                     </div>
                 </div>
-            {% empty %}
-                <div class="dashboard-card">
-                    <div style="width:70px;height:70px;background:rgba(255,107,0,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
-                        <i class="fa-solid fa-folder-open" style="font-size:30px;color:var(--active-text-blue);"></i>
-                    </div>
-                    <h1>Hech qanday e'lon topilmadi</h1>
-                    <p>Siz qidirgan toifada yoki hududda hozircha qurilish e'lonlari mavjud emas.</p>
-                </div>
             {% endfor %}
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const themeToggleBtn = document.getElementById('themeToggleBtn');
-            const logoText = document.getElementById('logoText');
-            const hamburgerBtn = document.querySelector('.menu-hamburger');
-            const sidebar = document.querySelector('.sidebar-container');
-            const mainContent = document.querySelector('.main-content');
-
-            const currentTheme = localStorage.getItem('theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', currentTheme);
-            updateToggleIcon(currentTheme);
-
-            window.toggleTheme = function() {
-                let theme = document.documentElement.getAttribute('data-theme');
-                if (theme === 'dark') {
-                    document.documentElement.setAttribute('data-theme', 'light');
-                    localStorage.setItem('theme', 'light');
-                    updateToggleIcon('light');
-                } else {
-                    document.documentElement.setAttribute('data-theme', 'dark');
-                    localStorage.setItem('theme', 'dark');
-                    updateToggleIcon('dark');
-                }
-            }
-
-            if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
-            if (logoText) logoText.addEventListener('click', toggleTheme);
-
-            function updateToggleIcon(theme) {
-                const icon = themeToggleBtn.querySelector('i');
-                icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-            }
-
-            if (hamburgerBtn && sidebar && mainContent) {
-                hamburgerBtn.addEventListener('click', function() {
-                    const isHidden = sidebar.style.transform === 'translateX(-150%)';
-                    if (!isHidden) {
-                        sidebar.style.transform = 'translateX(-150%)';
-                        sidebar.style.opacity = '0';
-                        mainContent.style.marginLeft = '40px';
-                    } else {
-                        sidebar.style.transform = 'translateX(0)';
-                        sidebar.style.opacity = '1';
-                        mainContent.style.marginLeft = '120px';
-                    }
-                });
-            }
-        });
-    </script>
-<script>
-async function toggleLike(event, postId, element) {
-    event.preventDefault();
-    try {
-        const response = await fetch(`/${window.location.pathname.split('/')[1]}/api/post/${postId}/like/`, {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}',
-                'Content-Type': 'application/json'
-            }
-        });
-        if (response.ok) {
-            const data = await response.json();
-            const icon = element.querySelector('i');
-            const countSpan = element.querySelector('.likes-count');
-
-            if (data.is_liked) {
-                element.classList.add('liked');
-                icon.className = 'fa-solid fa-heart';
-            } else {
-                element.classList.remove('liked');
-                icon.className = 'fa-regular fa-heart';
-            }
-            countSpan.textContent = data.likes_count;
-        } else if (response.status === 401 || response.status === 403) {
-            showToast('warning', `{% trans 'Iltimos, oldin tizimga kiring!'|escapejs %}`);
-            setTimeout(()=>{ window.location.href = "{% url 'accounts:login' %}"; }, 1500);
-        }
-    } catch (error) {
-        console.error('Error toggling like:', error);
-    }
-}
-
-async function toggleBookmark(event, postId, element) {
-    event.preventDefault();
-    event.stopPropagation();
-    try {
-        const response = await fetch(`/${window.location.pathname.split('/')[1]}/api/post/${postId}/bookmark/`, {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}',
-                'Content-Type': 'application/json'
-            }
-        });
-        if (response.ok) {
-            const data = await response.json();
-            const icon = element.querySelector('i');
-
-            if (data.is_bookmarked) {
-                element.classList.add('bookmarked');
-                icon.className = 'fa-solid fa-bookmark';
-            } else {
-                element.classList.remove('bookmarked');
-                icon.className = 'fa-regular fa-bookmark';
-            }
-        } else if (response.status === 401 || response.status === 403) {
-            showToast('warning', `{% trans 'Iltimos, oldin tizimga kiring!'|escapejs %}`);
-            setTimeout(()=>{ window.location.href = "{% url 'accounts:login' %}"; }, 1500);
-        }
-    } catch (error) {
-        console.error('Error toggling bookmark:', error);
-    }
-}
-
-async function contactUser(event, userId) {
-    event.preventDefault();
-    if (!userId || userId === 'None') { showToast('error', `{% trans "Bu e'lonning muallifi mavjud emas."|escapejs %}`); return; }
-    if (userId == {{ request.user.id|default:0 }}) { showToast('info', `{% trans "Bu sizning o'z e'loningiz!"|escapejs %}`); return; }
-    try {
-        const res = await fetch(`/${window.location.pathname.split('/')[1]}/api/user/${userId}/contact/`, {
-            headers: { 'X-CSRFToken': '{{ csrf_token }}', 'Content-Type': 'application/json' }
-        });
-        if (res.status === 401 || res.status === 403) {
-            showToast('warning', `{% trans 'Iltimos, oldin tizimga kiring!'|escapejs %}`);
-            setTimeout(()=>{ window.location.href = "{% url 'accounts:login' %}"; }, 1500);
-            return;
-        }
-        const d = await res.json();
-        if (!res.ok) { showToast('error', d.error || `{% trans 'Xatolik yuz berdi!'|escapejs %}`); return; }
-
-        document.getElementById('cModal-avatar').src = d.avatar || '/static/images/default_avatar.svg';
-        document.getElementById('cModal-name').textContent = d.full_name;
-        document.getElementById('cModal-username').textContent = '@' + d.username + (d.city ? '  ·  ' + d.city : '');
-        document.getElementById('cModal-role').textContent = d.role;
-
-        let btns = '';
-        btns += `<button onclick="startChatWith(${userId})" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:18px;border:none;background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff;font-size:15px;font-weight:700;cursor:pointer;width:100%;transition:all 0.25s;box-shadow:0 8px 24px rgba(99,102,241,0.35);" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 12px 32px rgba(99,102,241,0.45)'" onmouseout="this.style.transform='';this.style.boxShadow='0 8px 24px rgba(99,102,241,0.35)'">
-            <div style="width:40px;height:40px;background:rgba(255,255,255,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-regular fa-comment-dots" style="font-size:18px;"></i></div>
-            <div style="text-align:left;"><div style="font-size:15px;font-weight:700;">EasyBuild Chat</div><div style="font-size:12px;opacity:0.7;font-weight:400;">Platforma ichida xabar yozish</div></div>
-        </button>`;
-        if (d.phone) {
-            btns += `<a href="tel:${d.phone}" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:18px;border:1px solid rgba(16,185,129,0.25);background:rgba(16,185,129,0.07);color:#fff;font-size:15px;font-weight:600;text-decoration:none;transition:all 0.25s;" onmouseover="this.style.background='rgba(16,185,129,0.14)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(16,185,129,0.07)';this.style.transform=''">
-                <div style="width:40px;height:40px;background:rgba(16,185,129,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-solid fa-phone" style="font-size:17px;color:#10b981;"></i></div>
-                <div style="text-align:left;"><div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.85);">Telefon</div><div style="font-size:14px;color:#10b981;font-weight:600;">${d.phone}</div></div>
-            </a>`;
-        }
-        if (d.telegram) {
-            btns += `<a href="${d.telegram_url}" target="_blank" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:18px;border:1px solid rgba(0,136,204,0.3);background:rgba(0,136,204,0.1);color:#fff;font-size:15px;font-weight:700;text-decoration:none;transition:all 0.25s;" onmouseover="this.style.background='rgba(0,136,204,0.2)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(0,136,204,0.1)';this.style.transform=''">
-                <div style="width:40px;height:40px;background:rgba(0,136,204,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-brands fa-telegram" style="font-size:20px;color:#29b6f6;"></i></div>
-                <div style="text-align:left;"><div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.85);">Telegram</div><div style="font-size:14px;color:#29b6f6;font-weight:600;">${d.telegram}</div></div>
-            </a>`;
-        }
-        if (d.whatsapp) {
-            btns += `<a href="${d.whatsapp_url}" target="_blank" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:18px;border:1px solid rgba(37,211,102,0.25);background:rgba(37,211,102,0.07);color:#fff;font-size:15px;font-weight:700;text-decoration:none;transition:all 0.25s;" onmouseover="this.style.background='rgba(37,211,102,0.14)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(37,211,102,0.07)';this.style.transform=''">
-                <div style="width:40px;height:40px;background:rgba(37,211,102,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-brands fa-whatsapp" style="font-size:20px;color:#25d366;"></i></div>
-                <div style="text-align:left;"><div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.85);">WhatsApp</div><div style="font-size:14px;color:#25d366;font-weight:600;">${d.whatsapp}</div></div>
-            </a>`;
-        }
-        if (d.instagram) {
-            btns += `<a href="${d.instagram_url}" target="_blank" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:18px;border:1px solid rgba(225,48,108,0.25);background:rgba(225,48,108,0.07);color:#fff;font-size:15px;font-weight:700;text-decoration:none;transition:all 0.25s;" onmouseover="this.style.background='rgba(225,48,108,0.14)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(225,48,108,0.07)';this.style.transform=''">
-                <div style="width:40px;height:40px;background:linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-brands fa-instagram" style="font-size:20px;color:#fff;"></i></div>
-                <div style="text-align:left;"><div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.85);">Instagram</div><div style="font-size:14px;color:#e1306c;font-weight:600;">${d.instagram}</div></div>
-            </a>`;
-        }
-        if (d.facebook) {
-            btns += `<a href="${d.facebook_url}" target="_blank" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:18px;border:1px solid rgba(24,119,242,0.25);background:rgba(24,119,242,0.07);color:#fff;font-size:15px;font-weight:700;text-decoration:none;transition:all 0.25s;" onmouseover="this.style.background='rgba(24,119,242,0.14)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(24,119,242,0.07)';this.style.transform=''">
-                <div style="width:40px;height:40px;background:rgba(24,119,242,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-brands fa-facebook" style="font-size:20px;color:#1877f2;"></i></div>
-                <div style="text-align:left;"><div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.85);">Facebook</div><div style="font-size:14px;color:#1877f2;font-weight:600;">${d.facebook}</div></div>
-            </a>`;
-        }
-        if (!d.phone && !d.telegram && !d.whatsapp && !d.instagram && !d.facebook) {
-            btns += `<div style="text-align:center;padding:20px;color:rgba(255,255,255,0.3);font-size:14px;"><i class="fa-solid fa-circle-info" style="font-size:24px;display:block;margin-bottom:8px;opacity:0.4;"></i>Foydalanuvchi aloqa ma'lumotlarini to'ldirmagan</div>`;
-        }
-        document.getElementById('cModal-buttons').innerHTML = btns;
-        document.getElementById('contactModal').style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-    } catch(err) { console.error(err); showToast('error', `{% trans 'Xatolik yuz berdi!'|escapejs %}`); }
-}
-
-async function startChatWith(userId) {
-    closeContactModal();
-    showToast('success', 'Chat ochilmoqda...');
-    try {
-        await fetch('/chat/api/start/', {
-            method: 'POST',
-            headers: { 'X-CSRFToken': '{{ csrf_token }}', 'Content-Type': 'application/json' },
-            body: JSON.stringify({ user_id: userId })
-        });
-        window.location.href = "{% url 'chat:chat' %}";
-    } catch(err) { console.error(err); }
-}
-
-function closeContactModal() {
-    const modal = document.getElementById('contactModal');
-    const inner = document.getElementById('contactModalInner');
-    inner.style.opacity = '0';
-    inner.style.transform = 'scale(0.93) translateY(12px)';
-    inner.style.transition = 'all 0.2s ease';
-    setTimeout(()=>{
-        modal.style.display = 'none';
-        inner.style.opacity = '';
-        inner.style.transform = '';
-        inner.style.transition = '';
-    }, 200);
-    document.body.style.overflow = '';
-}
-document.getElementById('contactModal').addEventListener('click', function(e){
-    if (e.target === this) closeContactModal();
-});
-
-function showToast(type, message) {
-    const toastEl = document.getElementById('toastNotif');
-    const iconEl = document.getElementById('toastIcon');
-    const msgEl = document.getElementById('toastMsg');
-    
-    const configs = {
-        'success': { icon: '<i class="fa-solid fa-check"></i>', bg: 'linear-gradient(135deg, #10b981, #059669)', glow: 'rgba(16,185,129,0.25)' },
-        'error':   { icon: '<i class="fa-solid fa-xmark"></i>', bg: 'linear-gradient(135deg, #ef4444, #dc2626)', glow: 'rgba(239,68,68,0.25)' },
-        'warning': { icon: '<i class="fa-solid fa-exclamation"></i>', bg: 'linear-gradient(135deg, #f59e0b, #d97706)', glow: 'rgba(245,158,11,0.25)' },
-        'info':    { icon: '<i class="fa-solid fa-info"></i>', bg: 'linear-gradient(135deg, #3b82f6, #2563eb)', glow: 'rgba(59,130,246,0.25)' },
-    };
-    const cfg = configs[type] || configs['info'];
-    
-    iconEl.innerHTML = cfg.icon;
-    iconEl.style.background = cfg.bg;
-    toastEl.style.boxShadow = `0 20px 40px rgba(0,0,0,0.5), 0 0 0 1px ${cfg.glow} inset, 0 10px 30px ${cfg.glow}`;
-    
-    msgEl.textContent = message;
-
-    toastEl.style.display = 'flex';
-    toastEl.style.animation = 'toastPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards';
-
-    clearTimeout(toastEl._timeout);
-    toastEl._timeout = setTimeout(()=>{
-        toastEl.style.animation = 'toastPopOut 0.4s cubic-bezier(0.16,1,0.3,1) forwards';
-        setTimeout(()=>{ toastEl.style.display = 'none'; }, 400);
-    }, 3000);
-}
-</script>
+    <div class="bottom-nav">
+        <a href="{% url 'build:home' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}"><i class="fa-solid fa-house"></i></a>
+        <a href="{% url 'build:network' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}"><i class="fa-solid fa-users"></i></a>
+        <div style="width: 56px;"></div>
+        <a href="{% url 'build:builder_list' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}"><i class="fa-solid fa-helmet-safety"></i></a>
+        <a href="{% url 'chat:chat' %}" class="bottom-nav-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}">
+            <i class="fa-regular fa-comment-dots"></i>
+            {% if unread_chat_count > 0 %}
+                <span class="badge">{{ unread_chat_count }}</span>
+            {% endif %}
+        </a>
+        <a href="{% url 'build:post_create' %}" class="bottom-nav-item add-btn"><i class="fa-solid fa-plus"></i></a>
+    </div>
 
     <script>
+        // Dropdown menuni yopish
         function toggleDropdown(event, id) {
             event.stopPropagation();
             document.querySelectorAll('.custom-dropdown-menu.show').forEach(el => {
@@ -940,35 +454,26 @@ function showToast(type, message) {
         window.addEventListener('click', () => {
             document.querySelectorAll('.custom-dropdown-menu.show').forEach(el => el.classList.remove('show'));
         });
+
+        // Theme Toggle (Dark/Light)
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+            const logoText = document.getElementById('logoText');
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            if (themeToggleBtn) themeToggleBtn.querySelector('i').className = currentTheme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+
+            window.toggleTheme = function() {
+                let theme = document.documentElement.getAttribute('data-theme');
+                let newTheme = theme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                if (themeToggleBtn) themeToggleBtn.querySelector('i').className = newTheme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+            }
+            if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
+            if (logoText) logoText.addEventListener('click', toggleTheme);
+        });
     </script>
-
-    <script>
-        const deleteModalObj = document.getElementById('deleteConfirmationModal');
-        const deleteFormObj = document.getElementById('finalDeleteForm');
-
-        function openDeleteModal(deleteUrl) {
-            deleteFormObj.action = deleteUrl; 
-            deleteModalObj.style.display = 'flex';
-        }
-        function closeDeleteModal() { deleteModalObj.style.display = 'none'; }
-
-        deleteModalObj.addEventListener('click', (e) => { if (e.target === deleteModalObj) closeDeleteModal(); });
-    </script>
-    <!-- MOBILE BOTTOM NAVIGATION -->
-    <div class="bottom-nav">
-        <a href="{% url 'build:home' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}"><i class="fa-solid fa-house"></i></a>
-        <a href="{% url 'build:network' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}"><i class="fa-solid fa-users"></i></a>
-        <a href="{% url 'build:post_create' %}" class="bottom-nav-item add-btn"><i class="fa-solid fa-plus"></i></a>
-        <a href="{% url 'build:builder_list' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}"><i class="fa-solid fa-helmet-safety"></i></a>
-        <a href="{% url 'chat:chat' %}" class="bottom-nav-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}">
-            <i class="fa-regular fa-comment-dots"></i>
-            {% if unread_chat_count > 0 %}
-                <span class="badge">{{ unread_chat_count }}</span>
-            {% endif %}
-        </a>
-    </div>
-
 </body>
-
-
 </html>
