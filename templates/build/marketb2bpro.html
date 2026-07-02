@@ -5,9 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
     <meta name="theme-color" content="#05070c" media="(prefers-color-scheme: dark)">
     <meta name="theme-color" content="#f4f6fa" media="(prefers-color-scheme: light)">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="mobile-web-app-capable" content="yes">
     <title>EasyBuild - Market Pro (B2B)</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -167,16 +164,6 @@
             .header-center { position: relative; left: 0; transform: none; display: flex; justify-content: flex-start; }
             .menu-hamburger { display: none; }
             .posts-grid { grid-template-columns: 1fr; }
-        }
-    
-        /* Anti-bounce and App-like scrolling */
-        html, body { overscroll-behavior-x: none; overscroll-behavior-y: none; }
-        .main-content { overscroll-behavior-y: auto; -webkit-overflow-scrolling: touch; }
-        
-        /* Hide bottom nav when virtual keyboard is open */
-        @media (max-height: 450px) {
-            .bottom-nav { display: none !important; }
-            body { padding-bottom: 0 !important; }
         }
 
     </style>
@@ -472,17 +459,6 @@
                 el.querySelector('i').className = d.is_bookmarked ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark';
             }
         }
-    </script>
-
-    <script>
-        // PWA App-like Virtual Keyboard handling
-        document.addEventListener('DOMContentLoaded', () => {
-            const inputs = document.querySelectorAll('input, textarea');
-            inputs.forEach(input => {
-                input.addEventListener('focus', () => document.body.classList.add('keyboard-open'));
-                input.addEventListener('blur', () => document.body.classList.remove('keyboard-open'));
-            });
-        });
     </script>
 
 </body>

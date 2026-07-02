@@ -6,9 +6,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
     <meta name="theme-color" content="#05070c" media="(prefers-color-scheme: dark)">
     <meta name="theme-color" content="#f4f6fa" media="(prefers-color-scheme: light)">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="mobile-web-app-capable" content="yes">
     <title>{% trans "Profil" %} | Easy Build</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -42,16 +39,6 @@
 
         /* Nav */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; height: 65px; background: var(--bg-panel); display: flex; justify-content: space-around; align-items: center; border-top: 1px solid var(--border-color); z-index: 1000; padding-bottom: env(safe-area-inset-bottom); }
-    
-        /* Anti-bounce and App-like scrolling */
-        html, body { overscroll-behavior-x: none; overscroll-behavior-y: none; }
-        .main-content { overscroll-behavior-y: auto; -webkit-overflow-scrolling: touch; }
-        
-        /* Hide bottom nav when virtual keyboard is open */
-        @media (max-height: 450px) {
-            .bottom-nav { display: none !important; }
-            body { padding-bottom: 0 !important; }
-        }
 
     </style>
 </head>
@@ -102,17 +89,6 @@
         }
         // Boshlang'ich holat
         document.querySelectorAll('.tab-content').forEach((c, idx) => c.style.display = idx === 0 ? 'block' : 'none');
-    </script>
-
-    <script>
-        // PWA App-like Virtual Keyboard handling
-        document.addEventListener('DOMContentLoaded', () => {
-            const inputs = document.querySelectorAll('input, textarea');
-            inputs.forEach(input => {
-                input.addEventListener('focus', () => document.body.classList.add('keyboard-open'));
-                input.addEventListener('blur', () => document.body.classList.remove('keyboard-open'));
-            });
-        });
     </script>
 
 </body>
