@@ -3,7 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
+    <meta name="theme-color" content="#05070c" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f4f6fa" media="(prefers-color-scheme: light)">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>Easy Build</title>
     <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg?v=2">
     <meta name="description" content="EasyBuild platformasida ro'yxatdan o'ting.">
@@ -642,6 +647,17 @@
                 padding: 16px;
             }
         }
+    
+        /* Anti-bounce and App-like scrolling */
+        html, body { overscroll-behavior-x: none; overscroll-behavior-y: none; }
+        .main-content { overscroll-behavior-y: auto; -webkit-overflow-scrolling: touch; }
+        
+        /* Hide bottom nav when virtual keyboard is open */
+        @media (max-height: 450px) {
+            .bottom-nav { display: none !important; }
+            body { padding-bottom: 0 !important; }
+        }
+
     </style>
 </head>
 
@@ -909,6 +925,18 @@
             finally { setLoading(false); }
         });
     </script>
+
+    <script>
+        // PWA App-like Virtual Keyboard handling
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputs = document.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => document.body.classList.add('keyboard-open'));
+                input.addEventListener('blur', () => document.body.classList.remove('keyboard-open'));
+            });
+        });
+    </script>
+
 </body>
 
 </html>

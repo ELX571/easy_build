@@ -2,7 +2,12 @@
 <html lang="uz" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
+    <meta name="theme-color" content="#05070c" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f4f6fa" media="(prefers-color-scheme: light)">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>EasyBuild - Market Pro (B2B)</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -143,8 +148,37 @@
         .modal-title-main { font-size: 20px; font-weight: 800; color: var(--text-main); }
         .modal-description-full { font-size: 14.5px; color: var(--text-muted); line-height: 1.6; white-space: pre-wrap; }
 
+        /* ── BOTTOM NAVIGATION (MOBILE) ── */
+        .bottom-nav { display: none; position: fixed; bottom: 0; padding-bottom: env(safe-area-inset-bottom); left: 0; width: 100%; background: var(--bg-panel); backdrop-filter: blur(24px); border-top: 1px solid var(--border-color); z-index: 1000; justify-content: space-around; align-items: center; height: calc(65px + env(safe-area-inset-bottom)); box-shadow: 0 -10px 30px rgba(0,0,0,0.1); }
+        .bottom-nav-item { color: var(--text-muted); font-size: 22px; display: flex; align-items: center; justify-content: center; width: 100%; height: 65px; text-decoration: none; position: relative; transition: 0.2s; }
+        .bottom-nav-item.active { color: var(--active-text-blue); }
+        .bottom-nav-item.add-btn { background: linear-gradient(135deg, #ff6b00, #ff8c33); color: #fff !important; border-radius: 50%; width: 56px; height: 56px; flex-shrink: 0; transform: translateY(-20px); box-shadow: 0 8px 25px var(--glow-color); border: 4px solid var(--bg-body); font-size: 24px; position: absolute; left: 50%; margin-left: -28px; z-index: 10; }
+        .bottom-nav-item.add-btn:active { transform: translateY(-15px) scale(0.95); }
+        .bottom-nav-item .badge { position: absolute; top: 12px; right: calc(50% - 18px); background: #ef4444; color: #fff; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 10px; border: 2px solid var(--bg-panel); }
+
         @media (max-width: 992px) { .posts-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 650px) { .posts-grid { grid-template-columns: 1fr; } .main-content { margin-left: 0; width: 100%; padding: 100px 16px 20px 16px; } .sidebar-container { transform: translateX(-150%); opacity: 0; } }
+        @media (max-width: 768px) {
+            body { padding-bottom: calc(90px + env(safe-area-inset-bottom)); }
+            .sidebar-container { display: none !important; }
+            .bottom-nav { display: flex; }
+            header { padding: env(safe-area-inset-top) 16px 0 16px; height: calc(64px + env(safe-area-inset-top)); }
+            .main-content { margin-left: 0; width: 100%; padding: calc(85px + env(safe-area-inset-top)) 14px 120px 14px; }
+            .header-container { display: grid; grid-template-columns: auto 1fr auto; align-items: center; }
+            .header-center { position: relative; left: 0; transform: none; display: flex; justify-content: flex-start; }
+            .menu-hamburger { display: none; }
+            .posts-grid { grid-template-columns: 1fr; }
+        }
+    
+        /* Anti-bounce and App-like scrolling */
+        html, body { overscroll-behavior-x: none; overscroll-behavior-y: none; }
+        .main-content { overscroll-behavior-y: auto; -webkit-overflow-scrolling: touch; }
+        
+        /* Hide bottom nav when virtual keyboard is open */
+        @media (max-height: 450px) {
+            .bottom-nav { display: none !important; }
+            body { padding-bottom: 0 !important; }
+        }
+
     </style>
 </head>
 <body>
@@ -301,6 +335,19 @@
         {% endif %}
     </div>
 
+    <!-- MOBILE BOTTOM NAVIGATION -->
+    <div class="bottom-nav">
+        <a href="{% url 'build:home' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}"><i class="fa-solid fa-house"></i></a>
+        <a href="{% url 'build:network' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}"><i class="fa-solid fa-users"></i></a>
+        <div style="width: 56px;"></div>
+        <a href="{% url 'build:builder_list' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}"><i class="fa-solid fa-helmet-safety"></i></a>
+        <a href="{% url 'chat:chat' %}" class="bottom-nav-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}">
+            <i class="fa-regular fa-comment-dots"></i>
+            {% if unread_chat_count > 0 %}<span class="badge">{{ unread_chat_count }}</span>{% endif %}
+        </a>
+        <a href="{% url 'build:post_create' %}" class="bottom-nav-item add-btn"><i class="fa-solid fa-plus"></i></a>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const themeToggleBtn = document.getElementById('themeToggleBtn');
@@ -426,5 +473,17 @@
             }
         }
     </script>
+
+    <script>
+        // PWA App-like Virtual Keyboard handling
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputs = document.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => document.body.classList.add('keyboard-open'));
+                input.addEventListener('blur', () => document.body.classList.remove('keyboard-open'));
+            });
+        });
+    </script>
+
 </body>
 </html>

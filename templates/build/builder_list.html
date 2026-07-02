@@ -4,7 +4,12 @@
 <html lang="{{ request.LANGUAGE_CODE|default:'uz' }}" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
+    <meta name="theme-color" content="#05070c" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f4f6fa" media="(prefers-color-scheme: light)">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>Easy Build</title>
     <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg?v=2">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -176,6 +181,17 @@
             #lang-btn { height: 38px; padding: 0 12px 0 8px; font-size: 12px; }
             .flag-icon { width: 20px; height: 20px; }
         }
+    
+        /* Anti-bounce and App-like scrolling */
+        html, body { overscroll-behavior-x: none; overscroll-behavior-y: none; }
+        .main-content { overscroll-behavior-y: auto; -webkit-overflow-scrolling: touch; }
+        
+        /* Hide bottom nav when virtual keyboard is open */
+        @media (max-height: 450px) {
+            .bottom-nav { display: none !important; }
+            body { padding-bottom: 0 !important; }
+        }
+
     </style>
 </head>
 <body>
@@ -226,6 +242,17 @@
     <style>
         @keyframes toastPopIn { 0% { opacity: 0; transform: translate(-50%, -20px) scale(0.9); } 60% { transform: translate(-50%, 5px) scale(1.02); } 100% { opacity: 1; transform: translate(-50%, 0) scale(1); } }
         @keyframes toastPopOut { 0% { opacity: 1; transform: translate(-50%, 0) scale(1); } 100% { opacity: 0; transform: translate(-50%, -20px) scale(0.9); } }
+    
+        /* Anti-bounce and App-like scrolling */
+        html, body { overscroll-behavior-x: none; overscroll-behavior-y: none; }
+        .main-content { overscroll-behavior-y: auto; -webkit-overflow-scrolling: touch; }
+        
+        /* Hide bottom nav when virtual keyboard is open */
+        @media (max-height: 450px) {
+            .bottom-nav { display: none !important; }
+            body { padding-bottom: 0 !important; }
+        }
+
     </style>
 
 <header>
@@ -704,6 +731,18 @@ function showToast(type, message) {
             {% endif %}
         </a>
     </div>
+
+
+    <script>
+        // PWA App-like Virtual Keyboard handling
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputs = document.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => document.body.classList.add('keyboard-open'));
+                input.addEventListener('blur', () => document.body.classList.remove('keyboard-open'));
+            });
+        });
+    </script>
 
 </body>
 </html>
