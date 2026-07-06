@@ -7,8 +7,8 @@ pip install -r requirements.txt
 python manage.py collectstatic --no-input
 
 # Fix inconsistent migration history on Render caused by previous missing migrations
-python manage.py shell -c "from django.db.migrations.recorder import MigrationRecorder; MigrationRecorder.Migration.objects.filter(app='chat', name='0002_alter_chatroom_options_alter_message_options_and_more').delete()" || true
-python manage.py shell -c "from django.db.migrations.recorder import MigrationRecorder; MigrationRecorder.Migration.objects.filter(app='build', name__startswith='0003_builderprofile').delete()" || true
+python manage.py shell -c "from django.db import connection; from django.db.migrations.recorder import MigrationRecorder; MigrationRecorder.Migration.objects.filter(app='chat', name='0002_alter_chatroom_options_alter_message_options_and_more').delete() if 'django_migrations' in connection.introspection.table_names() else None"
+python manage.py shell -c "from django.db import connection; from django.db.migrations.recorder import MigrationRecorder; MigrationRecorder.Migration.objects.filter(app='build', name__startswith='0003_builderprofile').delete() if 'django_migrations' in connection.introspection.table_names() else None"
 
 python manage.py migrate build --fake
 python manage.py migrate chat --fake
