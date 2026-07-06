@@ -1,20 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-    <h1>Register</h1>
+{% block title %}Register - Easy Build{% endblock %}
 
-    <form method="post">
+{% block content %}
+<div class="auth-container">
+    <h2>Register</h2>
+    
+    <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
-
+        
+        {% if form.non_field_errors %}
+            <div class="error-message">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                    <div class="field-errors">
+                        {% for error in field.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        
         <button type="submit">Register</button>
     </form>
-
-</body>
-</html>
+    
+    <p>Already have an account? <a href="{% url 'account:login' %}">Login here</a></p>
+</div>
+{% endblock %}

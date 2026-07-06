@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Easy Build{% endblock %}
+
+{% block content %}
+<div class="posts-container">
+    <h2>All Posts</h2>
+    
+    {% if home_page %}
+        {% for post in home_page %}
+            <div class="post-card">
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.content }}</p>
+                <small>By {{ post.author }} on {{ post.created_at }}</small>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No posts found. Be the first to create one!</p>
+    {% endif %}
+</div>
+{% endblock %}
