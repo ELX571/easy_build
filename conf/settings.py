@@ -31,7 +31,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://easy-build-bmz2.onrender.com']
+CSRF_TRUSTED_ORIGINS = ['https://easy-build-bmz2.onrender.com', 'https://*.onrender.com', 'https://easybuild.com', 'https://www.easybuild.com', 'https://easybuild.uz', 'https://www.easybuild.uz']
 
 
 # Application definition
