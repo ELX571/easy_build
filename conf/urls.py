@@ -3,10 +3,12 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
+from django.http import HttpResponse
 
 # 1. TIL PREFIKSIZ (Sof marshrutlar)
 # Bular global marshrutlar bo'lib, URL boshida /uz/, /ru/ prefikslarini talab qilmaydi
 urlpatterns = [
+    path('ping/', lambda request: HttpResponse('ok', status=200)),
     path('admin/', admin.site.urls),
     path('i18n/', include('django.conf.urls.i18n')),  # <── Eng tepaga chiqdi! Endi 404 mutlaqo bo'lmaydi.
 ]
