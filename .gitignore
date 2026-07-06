@@ -43,7 +43,7 @@ staticfiles/
 .vscode/
 *.swp
 *.swo
-
+staticfiles/
 # OS
 .DS_Store
 Thumbs.db
