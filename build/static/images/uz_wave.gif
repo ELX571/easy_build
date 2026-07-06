@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+
+    <title>Error: not found - AnimatedImages.org</title>
+
+    <meta name="robots" content="noindex, follow, noarchive"/>
+    <meta http-equiv="language" content="EN"/>
+    <link rel="stylesheet" href="./templates/gifstheme/assets/images/style.css"/>
+    <link rel="canonical" href="https://www.animatedimages.org/data/media/1085/animated-uzbekistan-flag-image-0014.gif" />
+	<link rel="stylesheet" href="/templates/gifstheme/assets/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="/templates/gifstheme/assets/css/style.css" />
+	<link href="/templates/gifstheme/assets/js/ratingstars/rating.css" rel="stylesheet">
+	<script type="text/javascript" src="/templates/gifstheme/assets/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/templates/gifstheme/assets/js/bootstrap.min.js"></script>
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+
+<body>
+
+<header id="header-alt">
+    <div id="header">
+        
+<!-- Second navbar for categories -->
+<nav class="navbar navbar-ai">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="logo">animatedimages.org</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right text-center-sm">
+                <li><a id="home" href="/">Home</a></li>
+                <li><a href="https://www.animatedimages.org/#popular-categories">Popular Categories</a></li>
+                <li><a href="/top.php">Popular Images</a></li>
+                <li><a href="/help.htm">FAQ & Help</a></li>
+                <li><a href="/recommend.htm">Recommend us</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container -->
+</nav><!-- /.navbar -->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="search-box">
+    <form action="https://www.animatedimages.org/searchresults.htm" id="cse-search-box">
+        <div class="input-group">
+            <input type="text" name="q" placeholder="Enter search term..." class="form-control">
+            <span class="input-group-btn">
+                <button class="btn btn-default" name="sa" type="submit" onclick="ga('send', 'event', 'Searchbar', 'Click', 'Search');" >
+                    <span class="hidden-sm hidden-md hidden-lg glyphicon glyphicon-search"></span> <span class="hidden-xs">Search</span>
+                </button>
+            </span>
+        </div>
+    </form>
+</div>                </div>
+            </div>
+        </div>
+    </div>
+    <div id="header-signature">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <img src="/templates/gifstheme/assets/images/signature-header.png">
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div id="main-content" class="postcard-create">
+    <div id="search-page" class="container">
+        <div id="category-navigation" class="row">
+            <div class="col-sm-12">
+                <p><a href="./">Home</a>&nbsp;/&nbsp;Error</p>
+            </div>
+        </div>
+        <div id="main-content-inner" class="row">
+            <div class="col-sm-12">
+                <h1>Error: not found</h1>
+
+                <p>We are very sorry! We could not find the page or image you are looking for. Please use the search above or return <a href="/">to the frontpage</a>.</p>
+                <p><br/></p>
+				<p><img src="/templates/gifstheme/assets/images/404-crying.gif" width="500" height="257" alt="Error: not found" class="img-responsive img-center" /></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section id="footer">
+    <div id="footer-menu" class="footer-menu-outer">
+        <div class="footer-menu-container container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="footer-menu-inner text-center">
+                        <li><a href="">Home</a></li>
+                        <li><a href="https://www.animatedimages.org/#popular-categories">Popular Categories</a></li>
+                        <li><a href="/top.php">Popular Images</a></li>
+                        <li><a href="/help.htm">FAQ & Help</a></li>
+                        <li><a href="/recommend.htm">Recommend us</a></li>
+                        <li><a href="/contact.htm">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer-copyright" class="footer-copyright-outer">
+        <div class="footer-copyright-container container">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <div class="footer-copyright-inner">
+                        <p class="footer-copyright-text">&copy; 2026 animatedimages.org</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LFJGGCBDQW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-LFJGGCBDQW');
+</script>
+
+<script type="text/javascript" src="/templates/gifstheme/assets/js/ratingstars/rating.js"></script>
+<script type="text/javascript" src="/templates/gifstheme/assets/js/footer.js"></script>
+
+</body>
+</html>
