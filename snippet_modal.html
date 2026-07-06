@@ -1,0 +1,34 @@
+    <div id="contactModal" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.6); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); align-items:center; justify-content:center;">
+        <div id="contactModalInner" style="background:linear-gradient(145deg,#0f0f1a,#1a1a2e); border:1px solid rgba(255,255,255,0.1); border-radius:32px; padding:0; width:min(440px,92vw); box-shadow:0 40px 100px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05); position:relative; overflow:hidden; animation:modalPop 0.35s cubic-bezier(0.16,1,0.3,1);">
+            <div style="height:4px; background:linear-gradient(90deg,#3b82f6,#6366f1,#8b5cf6); width:100%;"></div>
+            <div style="padding:28px 28px 20px; display:flex; align-items:center; gap:18px;">
+                <div style="position:relative;">
+                    <img id="cModal-avatar" src="" alt="" style="width:72px;height:72px;border-radius:50%;object-fit:cover;border:3px solid rgba(99,102,241,0.5);box-shadow:0 0 20px rgba(99,102,241,0.3);background:black;" onerror="this.src='/static/images/default_avatar.svg'">
+                    <div style="position:absolute;bottom:2px;right:2px;width:14px;height:14px;background:#10b981;border-radius:50%;border:2px solid #1a1a2e;"></div>
+                </div>
+                <div style="flex:1;">
+                    <div id="cModal-name" style="font-size:20px;font-weight:800;color:#fff;margin-bottom:3px;letter-spacing:-0.3px;"></div>
+                    <div id="cModal-username" style="font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:6px;"></div>
+                    <div id="cModal-role" style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(59,130,246,0.2));color:#818cf8;padding:3px 12px;border-radius:20px;display:inline-block;border:1px solid rgba(99,102,241,0.25);"></div>
+                </div>
+                <button onclick="closeContactModal()" style="position:absolute;top:20px;right:20px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:50%;width:38px;height:38px;cursor:pointer;color:rgba(255,255,255,0.5);font-size:20px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.14)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.07)';this.style.color='rgba(255,255,255,0.5)'">&times;</button>
+            </div>
+            <div style="padding:0 28px; margin-bottom:16px;">
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="flex:1;height:1px;background:rgba(255,255,255,0.07);"></div>
+                    <span style="font-size:11px;color:rgba(255,255,255,0.3);font-weight:600;letter-spacing:1px;text-transform:uppercase;">Aloqa usullari</span>
+                    <div style="flex:1;height:1px;background:rgba(255,255,255,0.07);"></div>
+                </div>
+            </div>
+            <div id="cModal-buttons" style="display:flex;flex-direction:column;gap:10px;padding:0 28px 28px;"></div>
+        </div>
+    </div>
+
+    <!-- ====== LUXURY PILL TOAST NOTIFICATION ====== -->
+    <div id="toastNotif" style="display:none;position:fixed;top:40px;left:50%;transform:translateX(-50%);z-index:99999;background:rgba(20, 25, 35, 0.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.08);border-radius:50px;padding:10px 24px 10px 10px;align-items:center;gap:14px;box-shadow:0 20px 40px rgba(0,0,0,0.5);min-width:max-content;max-width:90vw;">
+        <div id="toastIcon" style="width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;flex-shrink:0;box-shadow:0 4px 10px rgba(0,0,0,0.2);"></div>
+        <div id="toastMsg" style="font-size:14px;font-weight:600;color:#f8fafc;letter-spacing:-0.2px;padding-right:8px;"></div>
+    </div>
+    <style>
+        @keyframes toastPopIn { 0% { opacity: 0; transform: translate(-50%, -20px) scale(0.9); } 60% { transform: translate(-50%, 5px) scale(1.02); } 100% { opacity: 1; transform: translate(-50%, 0) scale(1); } }
+        @keyframes toastPopOut { 0% { opacity: 1; transform: translate(-50%, 0) scale(1); } 100% { opacity: 0; transform: translate(-50%, -20px) scale(0.9); } }

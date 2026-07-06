@@ -637,12 +637,16 @@ async function startChatWith(userId) {
     closeContactModal();
     showToast('success', 'Chat ochilmoqda...');
     try {
-        await fetch('/chat/api/start/', {
+        const lang = window.location.pathname.split('/')[1] || 'uz';
+        const response = await fetch(`/${lang}/chat/api/start/`, {
             method: 'POST',
             headers: { 'X-CSRFToken': 'S26duZ2oNkdq3OOuTIIUBcNGg5dvPRgdd7ImOnQbljTrMDA1kwHdQCRuffwaD9QY', 'Content-Type': 'application/json' },
             body: JSON.stringify({ user_id: userId })
         });
-        window.location.href = "/uz/chat/";
+        if (response.ok) {
+            const d = await response.json();
+            window.location.href = `/${lang}/chat/?room_id=${d.room_id || d.id}`;
+        }
     } catch(err) { console.error(err); }
 }
 

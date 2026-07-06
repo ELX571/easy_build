@@ -11,8 +11,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+        .bg-watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 70vh; color: var(--watermark-color); opacity: var(--watermark-opacity); z-index: -2; pointer-events: none; transition: all 0.4s ease; }
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Plus Jakarta Sans',sans-serif}
-:root{--bg:#07090f;--sb:#0d1117;--border:rgba(255,255,255,.07);--text:#f1f5f9;--muted:#94a3b8;--label:#475569;--orange:#ff6b00;--ora:rgba(255,107,0,.13);--in:#1a2235;--divider:rgba(255,255,255,.05);--shadow:0 2px 16px rgba(0,0,0,.5)}
+:root{--watermark-color: var(--orange); --watermark-opacity: 0.03; --bg:#07090f;--sb:#0d1117;--border:rgba(255,255,255,.07);--text:#f1f5f9;--muted:#94a3b8;--label:#475569;--orange:#ff6b00;--ora:rgba(255,107,0,.13);--in:#1a2235;--divider:rgba(255,255,255,.05);--shadow:0 2px 16px rgba(0,0,0,.5)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
 @keyframes float{0%,100%{transform:translateY(0px)}50%{transform:translateY(-12px)}}
 @keyframes float2{0%,100%{transform:translateY(0px) rotate(0deg)}50%{transform:translateY(-18px) rotate(5deg)}}
@@ -201,14 +202,116 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
   #rename-group-input { font-size: 16px !important; }
 }
 
+    
+        /* MUKAMMAL MOBIL UI UCHUN QO'SHIMCHA SOZLAMALAR */
+        html, body {
+            overflow-x: hidden !important;
+            width: 100% !important; /* 100vw o'rniga 100% ishlatsak gorizontal scrollbar chiqmaydi */
+            max-width: 100%;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .logo { white-space: nowrap !important; display: block !important; line-height: 1 !important; display: flex !important; align-items: center !important; }
+
+        @media (max-width: 768px) {
+            /* iOS da inputlarga bosganda ekran zoom bo'lib ketmasligi uchun */
+            input, textarea, select { font-size: 16px !important; }
+            
+            /* Tepa panel moslashuvi (Notch kirmasligi uchun) */
+            header {
+                padding-top: env(safe-area-inset-top, 0px) !important;
+                padding-left: 14px !important;
+                padding-right: 14px !important;
+                height: calc(64px + env(safe-area-inset-top, 0px)) !important;
+            }
+            .header-add-btn { width: 40px !important; height: 40px !important; }
+
+            /* Asosiy kontent moslashuvi */
+            .main-content {
+                padding-top: calc(85px + env(safe-area-inset-top, 0px)) !important;
+                padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)) !important;
+                padding-left: 0 !important; padding-right: 0 !important;
+                width: 100% !important;
+            }
+            
+            /* Grid va qidiruv bo'limlari chetidan joy qoldirish */
+            .market-filter-bar, .builders-grid-layout, .profile-container, .form-container, .auth-wrapper {
+                padding-left: 14px !important;
+                padding-right: 14px !important;
+            }
+
+            /* Edge-to-Edge tweet cards */
+            .twitter-feed { gap: 10px !important; margin-bottom: 30px !important; }
+            .tweet-card {
+                border-radius: 0 !important;
+                border-left: none !important;
+                border-right: none !important;
+                margin-left: 0 !important; margin-right: 0 !important;
+                border-top: 1px solid var(--border-color) !important;
+                border-bottom: 1px solid var(--border-color) !important;
+            }
+            
+            /* Bottom Nav (Pastki menyu moslashuvi) */
+            .bottom-nav {
+                display: flex !important;
+                padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+                height: calc(65px + env(safe-area-inset-bottom, 0px)) !important;
+                bottom: 0 !important; width: 100% !important; left: 0 !important;
+                border-radius: 0 !important; border-left: none !important; border-right: none !important; border-bottom: none !important;
+            }
+            
+            /* Modallar va Bottom sheets */
+            .secure-modal-overlay { align-items: flex-end !important; padding: 0 !important; }
+            .secure-modal, #contactModalInner {
+                margin: 0 !important; max-width: 100% !important;
+                border-radius: 32px 32px 0 0 !important; border-bottom: none !important;
+            }
+        }
+
     </style>
+
+<style id="market-toast-style">
+#market-toast {
+  position: fixed;
+  top: 80px;
+  right: -100%;
+  background: #1c1c1e;
+  border: 1px solid #2c2c2e;
+  border-left: 4px solid #ff6b00;
+  border-radius: 12px;
+  padding: 12px 16px 12px 12px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  z-index: 99999;
+  transition: right 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  max-width: 400px;
+}
+#market-toast.show {
+  right: 24px;
+}
+#market-toast .mt-icon {
+  width: 36px; height: 36px;
+  background: rgba(255,107,0,0.08);
+  border: 1px solid rgba(255,107,0,0.25);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; color: #ff6b00; flex-shrink: 0;
+}
+#market-toast .mt-text { color: #f8fafc; font-size: 14px; font-weight: 500; font-family: 'Plus Jakarta Sans', sans-serif; display: flex; align-items: center; gap: 8px; line-height: 1.4; }
+@media(max-width:768px){ 
+  #market-toast { top: 70px; right: -100%; } 
+  #market-toast.show { right: 16px; left: 16px; width: calc(100% - 32px); } 
+}
+</style>
 </head>
 <body>
 <div class="sidebar-container">
     <div class="icon-rail">
         <a href="{% url 'build:home' %}" class="rail-item" data-title="{% trans 'Bosh sahifa' %}"><i class="fa-solid fa-house"></i></a>
         <a href="{% url 'build:network' %}" class="rail-item" data-title="{% trans 'Hamkasblar' %}"><i class="fa-solid fa-users"></i></a>
-        <a href="{% url 'build:post_list' %}" class="rail-item" data-title="{% trans 'Market Pro' %}"><i class="fa-solid fa-store"></i></a>
+        <a href="{% url 'build:market' %}" class="rail-item {% if request.resolver_match.url_name == 'market' %}active{% endif %}" data-title="Market Pro"><i class="fa-solid fa-store"></i></a>
         <a href="{% url 'build:builder_list' %}" class="rail-item" data-title="{% trans 'Usta Qidirish' %}"><i class="fa-solid fa-helmet-safety"></i></a>
         <a href="{% url 'build:post_create' %}" class="rail-item" data-title="{% trans 'Post yaratish' %}"><i class="fa-solid fa-plus"></i></a>
         <a href="{% url 'chat:chat' %}" class="rail-item active" data-title="{% trans 'Chatlar' %}">
@@ -218,6 +321,12 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
             {% endif %}
         </a>
         <div class="rail-item" id="themeToggleBtn" data-title="{% trans 'Rejimni o\'zgartirish' %}"><i class="fa-solid fa-moon"></i></div>
+            <a href="{% url 'build:notifications_list' %}" class="rail-item {% if request.resolver_match.url_name == 'notifications_list' %}active{% endif %}" data-title="Bildirishnomalar">
+    <i class="fa-solid fa-bell"></i>
+    {% if unread_notifications_count > 0 %}
+        <span style="position:absolute; top:8px; right:8px; background:#ef4444; color:white; font-size:10px; font-weight:800; border-radius:50%; width:16px; height:16px; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-panel);">{{ unread_notifications_count }}</span>
+    {% endif %}
+</a>
         <div class="rail-divider"></div>
         <a href="{% url 'build:profile' %}" class="rail-item" data-title="Mening Profilim">
             {% if request.user.profile.avatar %}
@@ -237,7 +346,7 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
             <ul class="menu-list">
                 <li><a href="{% url 'build:home' %}"><i class="fa-solid fa-house main-icon"></i> Home</a></li>
                 <li><a href="{% url 'build:network' %}"><i class="fa-solid fa-users main-icon"></i> {% trans "Hamkasblar" %}</a></li>
-                <li><a href="{% url 'build:post_list' %}"><i class="fa-solid fa-store main-icon"></i> {% trans "Market Pro (B2B)" %}</a></li>
+                <li><a href="{% url 'build:market' %}" class="{% if request.resolver_match.url_name == 'market' %}active-link{% endif %}"><i class="fa-solid fa-store main-icon"></i> {% trans "Market Pro (B2B)" %}</a></li>
                 <li><a href="{% url 'build:builder_list' %}"><i class="fa-solid fa-helmet-safety main-icon"></i> {% trans "Usta Qidirish" %}</a></li>
                 <li><a href="{% url 'chat:chat' %}"><i class="fa-regular fa-comment-dots main-icon"></i> {% trans "Xabarlar" %} {% if unread_chat_count > 0 %}<span class="badge" style="background:var(--orange); color:white; font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; margin-left:auto;">{{ unread_chat_count }}</span>{% endif %}</a></li>
                 <li><a href="{% url 'build:profile' %}"><i class="fa-regular fa-user main-icon"></i> Mening Profilim</a></li>
@@ -269,7 +378,8 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
 
 <!-- MAIN -->
 <div class="main" id="main">
-  <div class="ch" id="ch" style="display:none">
+    <i class="fa-solid fa-helmet-safety bg-watermark" style="position: absolute; z-index: 0;"></i>
+  <div class="ch" id="ch" style="display:none; position:relative; z-index:2;">
     <button class="hbtn bk" id="bk" onclick="closeSidebar()" style="display:none"><i class="fa-solid fa-arrow-left"></i></button>
     <div class="ca-wrap" style="cursor:pointer;" onclick="goToSettings()" title="Sozlamalarga o'tish">
       <img src="" class="ca" id="ca" onerror="this.style.display='none';document.getElementById('cap').style.display='flex'">
@@ -291,7 +401,7 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
     </div>
   </div>
 
-  <div class="msgs" id="msgs">
+  <div class="msgs" id="msgs" style="position: relative; z-index: 1;">
     <div class="empty" id="empty">
       <div class="empty-orb empty-orb-1"></div>
       <div class="empty-orb empty-orb-2"></div>
@@ -311,7 +421,7 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
 
   <div class="typing" id="typing">✍️ yozmoqda...</div>
 
-  <div class="input-area" id="ia" style="display:none">
+  <div class="input-area" id="ia" style="display:none; position:relative; z-index:2;">
     <!-- Action Banner for Edit / Reply -->
     <div id="action-banner" style="display:none; align-items:center; gap:12px; margin-bottom:10px; padding:10px 14px; background:rgba(255,255,255,0.03); border-radius:12px; border:1px solid var(--border); position:relative;">
         <div id="action-icon-banner" style="color:var(--orange); font-size:18px;"></div>
@@ -465,6 +575,7 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
 </div>
 
 <style>
+        .bg-watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 70vh; color: var(--watermark-color); opacity: var(--watermark-opacity); z-index: -2; pointer-events: none; transition: all 0.4s ease; }
 @keyframes fadeScale { 0% { opacity: 0; transform: scale(0.95) translateY(10px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
 @keyframes toastSlide { 0% { opacity: 0; transform: translateX(50px); } 100% { opacity: 1; transform: translateX(0); } }
 @keyframes toastFadeOut { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0.9); } }
@@ -472,6 +583,72 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
 #csm-members::-webkit-scrollbar { width: 4px; }
 #csm-members::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); border-radius: 4px; }
 #csm-members::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+    
+        /* MUKAMMAL MOBIL UI UCHUN QO'SHIMCHA SOZLAMALAR */
+        html, body {
+            overflow-x: hidden !important;
+            width: 100% !important; /* 100vw o'rniga 100% ishlatsak gorizontal scrollbar chiqmaydi */
+            max-width: 100%;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .logo { white-space: nowrap !important; display: block !important; line-height: 1 !important; display: flex !important; align-items: center !important; }
+
+        @media (max-width: 768px) {
+            /* iOS da inputlarga bosganda ekran zoom bo'lib ketmasligi uchun */
+            input, textarea, select { font-size: 16px !important; }
+            
+            /* Tepa panel moslashuvi (Notch kirmasligi uchun) */
+            header {
+                padding-top: env(safe-area-inset-top, 0px) !important;
+                padding-left: 14px !important;
+                padding-right: 14px !important;
+                height: calc(64px + env(safe-area-inset-top, 0px)) !important;
+            }
+            .header-add-btn { width: 40px !important; height: 40px !important; }
+
+            /* Asosiy kontent moslashuvi */
+            .main-content {
+                padding-top: calc(85px + env(safe-area-inset-top, 0px)) !important;
+                padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)) !important;
+                padding-left: 0 !important; padding-right: 0 !important;
+                width: 100% !important;
+            }
+            
+            /* Grid va qidiruv bo'limlari chetidan joy qoldirish */
+            .market-filter-bar, .builders-grid-layout, .profile-container, .form-container, .auth-wrapper {
+                padding-left: 14px !important;
+                padding-right: 14px !important;
+            }
+
+            /* Edge-to-Edge tweet cards */
+            .twitter-feed { gap: 10px !important; margin-bottom: 30px !important; }
+            .tweet-card {
+                border-radius: 0 !important;
+                border-left: none !important;
+                border-right: none !important;
+                margin-left: 0 !important; margin-right: 0 !important;
+                border-top: 1px solid var(--border-color) !important;
+                border-bottom: 1px solid var(--border-color) !important;
+            }
+            
+            /* Bottom Nav (Pastki menyu moslashuvi) */
+            .bottom-nav {
+                display: flex !important;
+                padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+                height: calc(65px + env(safe-area-inset-bottom, 0px)) !important;
+                bottom: 0 !important; width: 100% !important; left: 0 !important;
+                border-radius: 0 !important; border-left: none !important; border-right: none !important; border-bottom: none !important;
+            }
+            
+            /* Modallar va Bottom sheets */
+            .secure-modal-overlay { align-items: flex-end !important; padding: 0 !important; }
+            .secure-modal, #contactModalInner {
+                margin: 0 !important; max-width: 100% !important;
+                border-radius: 32px 32px 0 0 !important; border-bottom: none !important;
+            }
+        }
 
     </style>
 
@@ -2259,5 +2436,23 @@ document.addEventListener('keydown', function(e) {
         </a>
     </div>
 
+
+<script id="market-toast-script">
+function showMarketToast() {
+  if (!document.getElementById('market-toast')) {
+    document.body.insertAdjacentHTML('beforeend', `
+      <div id="market-toast">
+        <div class="mt-icon"><i class="fa-solid fa-rocket"></i></div>
+        <div class="mt-text">Market Pro bo'limi tez kunda ishga tushadi!</div>
+      </div>`);
+  }
+  const t = document.getElementById('market-toast');
+  t.classList.remove('show');
+  void t.offsetWidth; // trigger reflow
+  t.classList.add('show');
+  clearTimeout(t._tmr);
+  t._tmr = setTimeout(() => t.classList.remove('show'), 3500);
+}
+</script>
 </body>
 </html>

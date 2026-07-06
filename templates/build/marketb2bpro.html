@@ -10,13 +10,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     {% load humanize %}
     <style>
+        .bg-watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 70vh; color: var(--watermark-color); opacity: var(--watermark-opacity); z-index: -2; pointer-events: none; transition: all 0.4s ease; }
         :root {
+            --watermark-color: var(--active-text-blue);
+            --watermark-opacity: 0.08;
             --bg-body: #f4f6fa; --bg-panel: rgba(255, 255, 255, 0.75); --border-color: rgba(0, 0, 0, 0.06);
             --text-main: #0f172a; --text-muted: #64748b; --active-text-blue: #ff6b00; --divider-col: #e2e8f0;
             --glow-color: rgba(255, 107, 0, 0.2); --card-gradient: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
             --input-bg: #ffffff;
         }
         [data-theme="dark"] {
+            --watermark-color: var(--active-text-blue);
+            --watermark-opacity: 0.03;
             --bg-body: #05070c; --bg-panel: rgba(10, 14, 23, 0.7); --border-color: rgba(255, 255, 255, 0.05);
             --text-main: #f8fafc; --text-muted: #94a3b8; --active-text-blue: #ff6b00; --divider-col: rgba(255, 255, 255, 0.04);
             --glow-color: rgba(255, 107, 0, 0.4); --card-gradient: linear-gradient(135deg, rgba(13, 18, 30, 0.85), rgba(8, 11, 20, 0.6));
@@ -166,9 +171,112 @@
             .posts-grid { grid-template-columns: 1fr; }
         }
 
+    
+        /* MUKAMMAL MOBIL UI UCHUN QO'SHIMCHA SOZLAMALAR */
+        html, body {
+            overflow-x: hidden !important;
+            width: 100% !important; /* 100vw o'rniga 100% ishlatsak gorizontal scrollbar chiqmaydi */
+            max-width: 100%;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .logo { white-space: nowrap !important; display: block !important; line-height: 1 !important; display: flex !important; align-items: center !important; }
+
+        @media (max-width: 768px) {
+            /* iOS da inputlarga bosganda ekran zoom bo'lib ketmasligi uchun */
+            input, textarea, select { font-size: 16px !important; }
+            
+            /* Tepa panel moslashuvi (Notch kirmasligi uchun) */
+            header {
+                padding-top: env(safe-area-inset-top, 0px) !important;
+                padding-left: 14px !important;
+                padding-right: 14px !important;
+                height: calc(64px + env(safe-area-inset-top, 0px)) !important;
+            }
+            .header-add-btn { width: 40px !important; height: 40px !important; }
+
+            /* Asosiy kontent moslashuvi */
+            .main-content {
+                padding-top: calc(85px + env(safe-area-inset-top, 0px)) !important;
+                padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)) !important;
+                padding-left: 0 !important; padding-right: 0 !important;
+                width: 100% !important;
+            }
+            
+            /* Grid va qidiruv bo'limlari chetidan joy qoldirish */
+            .market-filter-bar, .builders-grid-layout, .profile-container, .form-container, .auth-wrapper {
+                padding-left: 14px !important;
+                padding-right: 14px !important;
+            }
+
+            /* Edge-to-Edge tweet cards */
+            .twitter-feed { gap: 10px !important; margin-bottom: 30px !important; }
+            .tweet-card {
+                border-radius: 0 !important;
+                border-left: none !important;
+                border-right: none !important;
+                margin-left: 0 !important; margin-right: 0 !important;
+                border-top: 1px solid var(--border-color) !important;
+                border-bottom: 1px solid var(--border-color) !important;
+            }
+            
+            /* Bottom Nav (Pastki menyu moslashuvi) */
+            .bottom-nav {
+                display: flex !important;
+                padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+                height: calc(65px + env(safe-area-inset-bottom, 0px)) !important;
+                bottom: 0 !important; width: 100% !important; left: 0 !important;
+                border-radius: 0 !important; border-left: none !important; border-right: none !important; border-bottom: none !important;
+            }
+            
+            /* Modallar va Bottom sheets */
+            .secure-modal-overlay { align-items: flex-end !important; padding: 0 !important; }
+            .secure-modal, #contactModalInner {
+                margin: 0 !important; max-width: 100% !important;
+                border-radius: 32px 32px 0 0 !important; border-bottom: none !important;
+            }
+        }
+
     </style>
+
+<style id="market-toast-style">
+#market-toast {
+  position: fixed;
+  top: 80px;
+  right: -100%;
+  background: #1c1c1e;
+  border: 1px solid #2c2c2e;
+  border-left: 4px solid #ff6b00;
+  border-radius: 12px;
+  padding: 12px 16px 12px 12px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  z-index: 99999;
+  transition: right 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  max-width: 400px;
+}
+#market-toast.show {
+  right: 24px;
+}
+#market-toast .mt-icon {
+  width: 36px; height: 36px;
+  background: rgba(255,107,0,0.08);
+  border: 1px solid rgba(255,107,0,0.25);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; color: #ff6b00; flex-shrink: 0;
+}
+#market-toast .mt-text { color: #f8fafc; font-size: 14px; font-weight: 500; font-family: 'Plus Jakarta Sans', sans-serif; display: flex; align-items: center; gap: 8px; line-height: 1.4; }
+@media(max-width:768px){ 
+  #market-toast { top: 70px; right: -100%; } 
+  #market-toast.show { right: 16px; left: 16px; width: calc(100% - 32px); } 
+}
+</style>
 </head>
 <body>
+    <i class="fa-solid fa-helmet-safety bg-watermark"></i>
 
     <div class="cyber-modal-overlay" id="marketDetailModal" onclick="closeMarketModal()">
         <div class="cyber-modal-container" onclick="event.stopPropagation()">
@@ -216,110 +324,103 @@
 
     <div class="sidebar-container" id="sidebarContainer">
         <div class="icon-rail">
-            <a href="{% url 'build:home' %}" class="rail-item" title="Bosh sahifa"><i class="fa-solid fa-house"></i></a>
-            <a href="{% url 'build:post_list' %}" class="rail-item active" title="Market Pro"><i class="fa-solid fa-store"></i></a>
-            <div class="rail-item" id="themeToggleBtn" title="Rejimni o'zgartirish"><i class="fa-solid fa-moon"></i></div>
+            <a href="{% url 'build:home' %}" class="rail-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}" data-title="Bosh sahifa"><i class="fa-solid fa-house"></i></a>
+            <a href="{% url 'build:network' %}" class="rail-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}" data-title="Hamkasblar"><i class="fa-solid fa-users"></i></a>
+            <a href="{% url 'build:market' %}" class="rail-item {% if request.resolver_match.url_name == 'market' %}active{% endif %}" data-title="Market Pro"><i class="fa-solid fa-store"></i></a>
+            <a href="{% url 'build:builder_list' %}" class="rail-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" data-title="Usta Qidirish"><i class="fa-solid fa-helmet-safety"></i></a>
+            <a href="{% url 'chat:chat' %}" class="rail-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}" data-title="Chatlar">
+                <i class="fa-regular fa-comment-dots"></i>
+                {% if unread_chat_count > 0 %}
+                <span style="position:absolute; top:8px; right:8px; background:var(--active-text-blue); color:white; font-size:10px; font-weight:800; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center;">{{ unread_chat_count }}</span>
+                {% endif %}
+            </a>
+            <div class="rail-item" id="themeToggleBtn" data-title="Rejim" style="cursor:pointer;"><i class="fa-solid fa-moon"></i></div>
+            <a href="{% url 'build:notifications_list' %}" class="rail-item {% if request.resolver_match.url_name == 'notifications_list' %}active{% endif %}" data-title="Bildirishnomalar">
+                <i class="fa-solid fa-bell"></i>
+                {% if unread_notifications_count > 0 %}
+                    <span style="position:absolute; top:8px; right:8px; background:#ef4444; color:white; font-size:10px; font-weight:800; border-radius:50%; width:16px; height:16px; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-panel);">{{ unread_notifications_count }}</span>
+                {% endif %}
+            </a>
             <div class="rail-divider"></div>
-            <a href="{% url 'build:profile' %}" class="rail-item" title="Profil Sozlamalari"><i class="fa-regular fa-user"></i></a>
+            <a href="{% url 'build:profile' %}" class="rail-item" data-title="Profil Sozlamalari">
+                {% if request.user.profile.avatar %}
+                    <img src="{{ request.user.profile.get_avatar_url }}" style="width:100%; height:100%; border-radius:14px; object-fit:cover;">
+                {% else %}
+                    <i class="fa-regular fa-user"></i>
+                {% endif %}
+            </a>
         </div>
     </div>
 
     <div class="main-content" id="mainContentArea">
 
-        <div class="market-search-wrapper">
-            <form method="GET" action="{% url 'build:post_list' %}" class="market-search-container" id="searchSubmitForm">
-                {% if current_category %}<input type="hidden" name="category" value="{{ current_category }}">{% endif %}
-                {% if current_order %}<input type="hidden" name="order_by" value="{{ current_order }}">{% endif %}
-                <div class="search-input-group">
-                    <input type="text" name="search" id="liveSearchInput" value="{{ search_query }}" placeholder="Jonli va mexanik qidiruv (sement, gisht, usta)..." class="search-core-field" autocomplete="off">
+        <!-- COMING SOON UI -->
+        <div style="width: 100%; max-width: 1140px; display: flex; flex-direction: column; align-items: center;">
+            
+            <!-- Filters (Visual only for coming soon) -->
+            <div class="market-filter-bar" style="justify-content: flex-start; margin-bottom: 60px;">
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                    <button class="filter-btn active" style="background:var(--active-text-blue); color:white; border-color:var(--active-text-blue); box-shadow:0 4px 12px var(--glow-color);"><i class="fa-solid fa-border-all"></i> Barchasi</button>
+                    <button class="filter-btn"><i class="fa-solid fa-boxes-stacked"></i> Materiallar bozori</button>
+                    <button class="filter-btn"><i class="fa-solid fa-tractor"></i> Texnika ijarasi</button>
                 </div>
-                <button type="submit" class="search-submit-btn">Qidirish</button>
-            </form>
-        </div>
-
-        <div class="market-filter-bar">
-            <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
-                <a href="?{% if search_query %}search={{ search_query }}&{% endif %}{% if current_order %}order_by={{ current_order }}{% endif %}" class="filter-btn {% if not current_category %}active{% endif %}">Barchasi</a>
-                <a href="?category=material{% if search_query %}&search={{ search_query }}{% endif %}{% if current_order %}&order_by={{ current_order }}{% endif %}" class="filter-btn {% if current_category == 'material' %}active{% endif %}">Materiallar bozori</a>
-                <a href="?category=tech{% if search_query %}&search={{ search_query }}&{% endif %}{% if current_order %}order_by={{ current_order }}{% endif %}" class="filter-btn {% if current_category == 'tech' %}active{% endif %}">Texnika ijarasi</a>
-
-                <select class="select-order-field" id="marketOrderSelector" onchange="executeOrderFilter(this.value)">
-                    <option value="" {% if not current_order %}selected{% endif %}>🤖 Tavsiya bo'yicha</option>
-                    <option value="newest" {% if current_order == 'newest' %}selected{% endif %}>🕒 Eng yangilari</option>
-                    <option value="oldest" {% if current_order == 'oldest' %}selected{% endif %}>⏳ Eng eskilar</option>
-                    <option value="price_asc" {% if current_order == 'price_asc' %}selected{% endif %}>📉 Narx: Arzonidan</option>
-                    <option value="price_desc" {% if current_order == 'price_desc' %}selected{% endif %}>📈 Narx: Qimmatidan</option>
-                </select>
             </div>
-            <a href="{% url 'build:post_create' %}" class="filter-btn" style="background:var(--active-text-blue); color:white; border:none;">+ E'lon qo'shish Rejasi</a>
-        </div>
 
-        <div class="posts-grid" id="postsGridContainer">
-            {% if posts or object_list %}
-                {% for post in posts|default:object_list %}
-                    <div class="market-pro-card"
-                         data-title="{{ post.title }}"
-                         data-desc="{{ post.description }}"
-                         data-author="@{{ post.author.username }}"
-                         data-author-id="{{ post.author.id }}"
-                         data-date="{{ post.created_time|date:'d.m.Y' }}"
-                         data-price="{% if post.price %}{{ post.price|intcomma }} UZS{% else %}Kelishilgan{% endif %}"
-                         data-image="{% if post.image %}{{ post.image.url }}{% endif %}"
-                         onclick="openMarketModal(this)">
+            <!-- Hero Section -->
+            <div style="position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; margin-bottom: 60px; z-index: 1;">
+                <div style="width: 320px; height: 320px; background: rgba(255, 107, 0, 0.05); position: absolute; border-radius: 50%; filter: blur(60px); z-index: -1;"></div>
+                <div style="width: 80px; height: 80px; border-radius: 24px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); color: #3b82f6; font-size: 32px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.15);">
+                    <i class="fa-solid fa-store"></i>
+                </div>
+                <h1 style="font-size: 36px; font-weight: 800; color: var(--text-main); margin-bottom: 12px; letter-spacing: -0.5px;">Market Pro (B2B)</h1>
+                <p style="font-size: 16px; color: var(--text-muted); max-width: 480px; line-height: 1.6; font-weight: 500;">Professional qurilish materiallari va texnika ijarasi bozori tez kunda ishga tushadi.</p>
+            </div>
 
-                        <div class="card-hero-banner">
-                            {% if post.image %}
-                                <img src="{{ post.image.url }}" class="card-img-source">
-                            {% else %}
-                                <div class="card-placeholder-icon"><i class="fa-solid fa-helmet-safety"></i></div>
-                            {% endif %}
-                            <span class="card-category-tag">{{ post.get_category_display }}</span>
-                        </div>
-
-                        <div class="card-content-area">
-                            <div class="card-meta-line">
-                                <span class="card-author-name"><i class="fa-regular fa-circle-user"></i> @{{ post.author.username }}</span>
-                                <span>{{ post.created_time|date:"d.m.Y" }}</span>
-                            </div>
-                            <h3 class="card-title-text">{{ post.title }}</h3>
-                            <p class="card-desc-short">{{ post.description|truncatewords:12 }}</p>
-
-                            <div class="card-footer-action" onclick="event.stopPropagation()">
-                                <div class="card-price-tag">
-                                    {% if post.price %}{{ post.price|intcomma }} <span style="font-size:11px;">UZS</span>{% else %}Kelishilgan{% endif %}
-                                </div>
-                                <div class="card-actions-envelope">
-                                    <button class="card-action-node like {% if post.is_liked %}liked{% endif %}" onclick="toggleLike(event, '{{ post.id }}', this)">
-                                        <i class="fa-heart {% if post.is_liked %}fa-solid{% else %}fa-regular{% endif %}"></i> <span class="likes-count">{{ post.likes_count|default:0 }}</span>
-                                    </button>
-                                    <button class="card-action-node bookmark {% if post.is_bookmarked %}bookmarked{% endif %}" onclick="toggleBookmark(event, '{{ post.id }}', this)">
-                                        <i class="fa-bookmark {% if post.is_bookmarked %}fa-solid{% else %}fa-regular{% endif %}"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+            <!-- Feature Cards -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%;">
+                
+                <div class="market-pro-card" style="padding: 32px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px;">
+                    <div style="width: 56px; height: 56px; border-radius: 16px; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2); color: #f59e0b; font-size: 24px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fa-solid fa-boxes-stacked"></i>
                     </div>
-                {% endfor %}
-            {% else %}
-                <div class="dashboard-card"><h1>Hech qanday e'lon topilmadi</h1></div>
-            {% endif %}
-        </div>
+                    <div>
+                        <h3 style="font-size: 18px; font-weight: 800; color: var(--text-main); margin-bottom: 8px;">Materiallar bozori</h3>
+                        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">Sement, g'isht, armatura va qurilish materiallarining eng katta bazasi.</p>
+                    </div>
+                </div>
 
-        {% if is_paginated %}
-        <div class="pagination-container" id="paginationWrapper">
-            <div class="pagination-box">
-                {% if page_obj.has_previous %}
-                    <a href="?page=1{% if current_category %}&category={{ current_category }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_order %}&order_by={{ current_order }}{% endif %}" class="page-link"><i class="fa-solid fa-angles-left"></i></a>
-                    <a href="?page={{ page_obj.previous_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_order %}&order_by={{ current_order }}{% endif %}" class="page-link"><i class="fa-solid fa-angle-left"></i></a>
-                {% endif %}
-                <span class="page-current">{{ page_obj.number }} / {{ paginator.num_pages }}</span>
-                {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_order %}&order_by={{ current_order }}{% endif %}" class="page-link"><i class="fa-solid fa-angle-right"></i></a>
-                    <a href="?page={{ paginator.num_pages }}{% if current_category %}&category={{ current_category }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_order %}&order_by={{ current_order }}{% endif %}" class="page-link"><i class="fa-solid fa-angles-right"></i></a>
-                {% endif %}
+                <div class="market-pro-card" style="padding: 32px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px;">
+                    <div style="width: 56px; height: 56px; border-radius: 16px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); color: #3b82f6; font-size: 24px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fa-solid fa-truck-front"></i>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 18px; font-weight: 800; color: var(--text-main); margin-bottom: 8px;">Texnika ijarasi</h3>
+                        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">Ekskavator, kran va og'ir qurilish texnikalarini ishonchli ijaraga olish.</p>
+                    </div>
+                </div>
+
+                <div class="market-pro-card" style="padding: 32px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px;">
+                    <div style="width: 56px; height: 56px; border-radius: 16px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); color: #10b981; font-size: 24px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fa-solid fa-handshake"></i>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 18px; font-weight: 800; color: var(--text-main); margin-bottom: 8px;">B2B Shartnomalar</h3>
+                        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">Kompaniyalar o'rtasida to'g'ridan-to'g'ri ishonchli shartnomalar tuzish imkoniyati.</p>
+                    </div>
+                </div>
+
             </div>
         </div>
-        {% endif %}
+
+        <style>
+            @media (max-width: 992px) {
+                .posts-grid, div[style*="grid-template-columns: repeat(3, 1fr)"] { grid-template-columns: repeat(2, 1fr) !important; }
+            }
+            @media (max-width: 768px) {
+                .posts-grid, div[style*="grid-template-columns: repeat(3, 1fr)"] { grid-template-columns: 1fr !important; }
+                .market-filter-bar { justify-content: center !important; margin-bottom: 40px !important; }
+            }
+        </style>
     </div>
 
     <!-- MOBILE BOTTOM NAVIGATION -->
@@ -440,7 +541,8 @@
         // DYNAMIC LIKE INTERACTION
         async function toggleLike(e, id, el) {
             e.preventDefault();
-            const res = await fetch(`/api/post/${id}/like/`, { method:'POST', headers:{'X-CSRFToken':'{{ csrf_token }}'} });
+            const lang = window.location.pathname.split('/')[1] || 'uz';
+            const res = await fetch(`/${lang}/api/post/${id}/like/`, { method:'POST', headers:{'X-CSRFToken':'{{ csrf_token }}'} });
             if(res.ok) {
                 const d = await res.json();
                 el.classList.toggle('liked', d.is_liked);
@@ -452,7 +554,8 @@
         // DYNAMIC BOOKMARK INTERACTION
         async function toggleBookmark(e, id, el) {
             e.preventDefault();
-            const res = await fetch(`/api/post/${id}/bookmark/`, { method:'POST', headers:{'X-CSRFToken':'{{ csrf_token }}'} });
+            const lang = window.location.pathname.split('/')[1] || 'uz';
+            const res = await fetch(`/${lang}/api/post/${id}/bookmark/`, { method:'POST', headers:{'X-CSRFToken':'{{ csrf_token }}'} });
             if(res.ok) {
                 const d = await res.json();
                 el.classList.toggle('bookmarked', d.is_bookmarked);
@@ -461,5 +564,23 @@
         }
     </script>
 
+
+<script id="market-toast-script">
+function showMarketToast() {
+  if (!document.getElementById('market-toast')) {
+    document.body.insertAdjacentHTML('beforeend', `
+      <div id="market-toast">
+        <div class="mt-icon"><i class="fa-solid fa-rocket"></i></div>
+        <div class="mt-text">Market Pro bo'limi tez kunda ishga tushadi!</div>
+      </div>`);
+  }
+  const t = document.getElementById('market-toast');
+  t.classList.remove('show');
+  void t.offsetWidth; // trigger reflow
+  t.classList.add('show');
+  clearTimeout(t._tmr);
+  t._tmr = setTimeout(() => t.classList.remove('show'), 3500);
+}
+</script>
 </body>
 </html>

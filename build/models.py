@@ -16,7 +16,7 @@ class Post(models.Model):
         User, on_delete=models.CASCADE,
         related_name='posts', null=True, blank=True
     )
-    title = models.CharField(max_length=200, default="Qurilish e'loni")
+    title = models.CharField(max_length=200, blank=True, null=True)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='material')
     description = models.TextField()
     price = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
@@ -45,7 +45,7 @@ class BuilderProfile(models.Model):
     members = models.ManyToManyField(User, related_name='joined_teams', blank=True)
     rating_cache = models.FloatField(
         default=0.0,
-        validators=[MinValueValidator(0.0), MaxValueValidator(5.0)]
+        validators=[MinValueValidator(0.0), MaxValueValidator(7.0)]
     )
 
     class Meta:
@@ -54,12 +54,42 @@ class BuilderProfile(models.Model):
 
     def update_rating(self):
         reviews = self.received_reviews.all()
-        if reviews.exists():
-            total = sum(r.rating for r in reviews)
-            self.rating_cache = round(total / reviews.count(), 1)
-        else:
+        if not reviews.exists():
             self.rating_cache = 0.0
+        else:
+            # 7 yulduz tizimi: Har bir yulduz = 50 ball (Umumiy 7 * 50 = 350 ball)
+            # 70 kishi 5 yulduzdan bossa (70 * 5 = 350 ball) -> 7 yulduz
+            from django.db.models import Sum
+            total_points = reviews.aggregate(total=Sum('rating'))['total'] or 0
+            
+            calculated_stars = total_points / 50.0
+            
+            # Maksimal 7.0 yulduz
+            self.rating_cache = min(round(calculated_stars, 2), 7.0)
+                
         self.save(update_fields=['rating_cache'])
+        
+        # Profile dagi reytingni ham yangilash (Trust Index uchun)
+        self.profile.rating_average = self.rating_cache
+        self.profile.save(update_fields=['rating_average'])
+
+    @property
+    def gamification_status(self):
+        orders = self.profile.completed_orders_count
+        rating = self.rating_cache
+        
+        if orders >= 100 and rating >= 4.8:
+            return "Elite"
+        elif orders >= 50 and rating >= 4.5:
+            return "Pro"
+        elif orders >= 10 and rating >= 4.0:
+            return "Trusted"
+        return "Newbie"
+        
+    @property
+    def is_needs_improvement(self):
+        # 3.0 dan past bo'lgan ustalar Sifatni oshirish kurslariga yuboriladi
+        return self.rating_cache > 0 and self.rating_cache < 3.0
 
     @property
     def group_chat_room(self):
@@ -175,16 +205,42 @@ class Review(models.Model):
         BuilderProfile, on_delete=models.CASCADE, related_name='received_reviews'
     )
     rating = models.IntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(5)]
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+        blank=True,
+        help_text="Umumiy baho (Avtomat hisoblanadi)"
+    )
+    quality_rating = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)], default=5, verbose_name="Ish sifati"
+    )
+    time_rating = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)], default=5, verbose_name="Vaqtga rioya qilish"
+    )
+    politeness_rating = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)], default=5, verbose_name="Xushmuomalalik"
     )
     comment = models.TextField()
+    builder_reply = models.TextField(blank=True, null=True, verbose_name="Ustaning javobi")
+    ip_address = models.GenericIPAddressField(null=True, blank=True, help_text="Fake baholarni oldini olish uchun IP")
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = 'Sharh'
         verbose_name_plural = 'Sharhlar'
+        # 1-qoida: Bir mijoz bitta ustaga faqat 1 marta baho bera oladi
+        unique_together = ('client', 'builder')
+
+    def clean(self):
+        from django.core.exceptions import ValidationError
+        # 2-qoida: Faqat Yakunlangan buyurtmalargagina baho berish mumkin
+        if self.order.status != 'completed':
+            raise ValidationError("Baho faqat 'Yakunlangan' (completed) buyurtmalar uchun berilishi mumkin.")
+        if self.order.assigned_builder != self.builder:
+            raise ValidationError("Bu buyurtma ushbu ustaga tegishli emas.")
 
     def save(self, *args, **kwargs):
+        # 3 ta yo'nalishdagi bahoning o'rtachasini olib asosiy rating ga yozamiz
+        self.rating = round((self.quality_rating + self.time_rating + self.politeness_rating) / 3.0)
+        self.full_clean() # clean() ni doimiy ishga tushirish uchun
         super().save(*args, **kwargs)
         self.builder.update_rating()
 

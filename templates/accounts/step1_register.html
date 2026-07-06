@@ -11,8 +11,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        .bg-watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 70vh; color: var(--watermark-color); opacity: var(--watermark-opacity); z-index: -2; pointer-events: none; transition: all 0.4s ease; }
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
+            --watermark-color: var(--active-text-blue);
+            --watermark-opacity: 0.08;
             --bg-body: #f4f6fa;
             --bg-card: rgba(255, 255, 255, 0.97);
             --border-color: rgba(0, 0, 0, 0.06);
@@ -25,6 +28,8 @@
             --shadow-card: 0 20px 60px rgba(0, 0, 0, 0.07);
         }
         [data-theme="dark"] {
+            --watermark-color: var(--active-text-blue);
+            --watermark-opacity: 0.03;
             --bg-body: #05070c;
             --bg-card: rgba(12, 17, 29, 0.95);
             --border-color: rgba(255, 255, 255, 0.06);
@@ -207,10 +212,77 @@
             .role-card { padding: 16px; gap: 12px; }
         }
 
+    
+        /* MUKAMMAL MOBIL UI UCHUN QO'SHIMCHA SOZLAMALAR */
+        html, body {
+            overflow-x: hidden !important;
+            width: 100% !important; /* 100vw o'rniga 100% ishlatsak gorizontal scrollbar chiqmaydi */
+            max-width: 100%;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .logo { white-space: nowrap !important; display: block !important; line-height: 1 !important; display: flex !important; align-items: center !important; }
+
+        @media (max-width: 768px) {
+            /* iOS da inputlarga bosganda ekran zoom bo'lib ketmasligi uchun */
+            input, textarea, select { font-size: 16px !important; }
+            
+            /* Tepa panel moslashuvi (Notch kirmasligi uchun) */
+            header {
+                padding-top: env(safe-area-inset-top, 0px) !important;
+                padding-left: 14px !important;
+                padding-right: 14px !important;
+                height: calc(64px + env(safe-area-inset-top, 0px)) !important;
+            }
+            .header-add-btn { width: 40px !important; height: 40px !important; }
+
+            /* Asosiy kontent moslashuvi */
+            .main-content {
+                padding-top: calc(85px + env(safe-area-inset-top, 0px)) !important;
+                padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)) !important;
+                padding-left: 0 !important; padding-right: 0 !important;
+                width: 100% !important;
+            }
+            
+            /* Grid va qidiruv bo'limlari chetidan joy qoldirish */
+            .market-filter-bar, .builders-grid-layout, .profile-container, .form-container, .auth-wrapper {
+                padding-left: 14px !important;
+                padding-right: 14px !important;
+            }
+
+            /* Edge-to-Edge tweet cards */
+            .twitter-feed { gap: 10px !important; margin-bottom: 30px !important; }
+            .tweet-card {
+                border-radius: 0 !important;
+                border-left: none !important;
+                border-right: none !important;
+                margin-left: 0 !important; margin-right: 0 !important;
+                border-top: 1px solid var(--border-color) !important;
+                border-bottom: 1px solid var(--border-color) !important;
+            }
+            
+            /* Bottom Nav (Pastki menyu moslashuvi) */
+            .bottom-nav {
+                display: flex !important;
+                padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+                height: calc(65px + env(safe-area-inset-bottom, 0px)) !important;
+                bottom: 0 !important; width: 100% !important; left: 0 !important;
+                border-radius: 0 !important; border-left: none !important; border-right: none !important; border-bottom: none !important;
+            }
+            
+            /* Modallar va Bottom sheets */
+            .secure-modal-overlay { align-items: flex-end !important; padding: 0 !important; }
+            .secure-modal, #contactModalInner {
+                margin: 0 !important; max-width: 100% !important;
+                border-radius: 32px 32px 0 0 !important; border-bottom: none !important;
+            }
+        }
+
     </style>
 </head>
 
 <body>
+    <i class="fa-solid fa-helmet-safety bg-watermark"></i>
 
     <div class="page-wrap">
         <div class="branding">

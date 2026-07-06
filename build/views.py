@@ -211,26 +211,34 @@ class PostListView(ListView):
 # FOYDALANUVCHI PROFILLI (DASHBOARD)
 # =========================================================================
 @login_required
-def profile_view(request):
-    profile, created = Profile.objects.get_or_create(user=request.user)
+def profile_view(request, user_id=None):
+    from django.contrib.auth.models import User as DjangoUser
+    if user_id:
+        target_user = get_object_or_404(DjangoUser, id=user_id)
+        profile = get_object_or_404(Profile, user=target_user)
+        is_own_profile = False
+    else:
+        target_user = request.user
+        profile, created = Profile.objects.get_or_create(user=target_user)
+        is_own_profile = True
 
     is_liked_subquery = Exists(PostLike.objects.filter(post=OuterRef('pk'), user=request.user))
     is_bookmarked_subquery = Exists(PostBookmark.objects.filter(post=OuterRef('pk'), user=request.user))
 
-    my_posts = Post.objects.filter(author=request.user).select_related('author__profile').annotate(
+    my_posts = Post.objects.filter(author=target_user).select_related('author__profile').annotate(
         likes_count=Count('likes', distinct=True),
         is_liked=is_liked_subquery,
         is_bookmarked=is_bookmarked_subquery
     ).order_by('-created_time')
 
-    liked_post_ids = PostLike.objects.filter(user=request.user).values_list('post_id', flat=True)
+    liked_post_ids = PostLike.objects.filter(user=target_user).values_list('post_id', flat=True)
     liked_posts = Post.objects.filter(id__in=liked_post_ids).select_related('author__profile').annotate(
         likes_count=Count('likes', distinct=True),
         is_liked=is_liked_subquery,
         is_bookmarked=is_bookmarked_subquery
     ).order_by('-created_time')
 
-    bookmarked_post_ids = PostBookmark.objects.filter(user=request.user).values_list('post_id', flat=True)
+    bookmarked_post_ids = PostBookmark.objects.filter(user=target_user).values_list('post_id', flat=True)
     bookmarked_posts = Post.objects.filter(id__in=bookmarked_post_ids).select_related('author__profile').annotate(
         likes_count=Count('likes', distinct=True),
         is_liked=is_liked_subquery,
@@ -239,6 +247,8 @@ def profile_view(request):
 
     context = {
         'profile': profile,
+        'target_user': target_user,
+        'is_own_profile': is_own_profile,
         'my_posts': my_posts,
         'liked_posts': liked_posts,
         'bookmarked_posts': bookmarked_posts,
@@ -415,8 +425,24 @@ def builder_list_view(request):
     return render(request, 'build/builder_list.html', context)
 
 
+@login_required
 def workflow_list_view(request):
-    return render(request, 'build/workflow_list.html')
+    profile = request.user.profile
+    if profile.role == 'builder' and hasattr(profile, 'builder_info'):
+        projects = profile.builder_info.assigned_projects.all()
+    else:
+        projects = profile.project_orders.all()
+    
+    # We can also fetch the review if it exists so we can display rating stars
+    projects = projects.prefetch_related('review')
+    
+    for p in projects:
+        try:
+            p.has_review = bool(p.review)
+        except Exception:
+            p.has_review = False
+            
+    return render(request, 'build/workflow_list.html', {'projects': projects})
 
 
 # =========================================================================
@@ -598,7 +624,7 @@ class AddTeamMemberAPIView(APIView):
         invite.status = 'pending'
         invite.save()
 
-        room, _ = ChatRoom.get_or_create_for(request.user, target_user)
+        room, room_created = ChatRoom.get_or_create_for(request.user, target_user)
         Message.objects.create(room=room, sender=request.user, content=f"__TEAM_INVITE__:{invite.id}")
         return Response({'success': True, 'message': _("Taklif foydalanuvchi chatiga yuborildi!")})
 
@@ -647,7 +673,7 @@ class RespondTeamInviteAPIView(APIView):
             invite.save()
             invite.team.members.add(request.user)
 
-            room, _ = ChatRoom.get_or_create_for(request.user, invite.team.profile.user)
+            room, room_created = ChatRoom.get_or_create_for(request.user, invite.team.profile.user)
             Message.objects.create(room=room, sender=request.user,
                                    content=_("🤝 Men jamoangizga qo'shilish taklifini qabul qildim!"))
 
@@ -671,7 +697,7 @@ class RespondTeamInviteAPIView(APIView):
                 return Response({'error': _("Bu taklifga allaqachon javob berilgan!")}, status=400)
             invite.status = 'rejected'
             invite.save()
-            room, _ = ChatRoom.get_or_create_for(request.user, invite.team.profile.user)
+            room, room_created = ChatRoom.get_or_create_for(request.user, invite.team.profile.user)
             Message.objects.create(room=room, sender=request.user,
                                    content=_("❌ Men jamoangizga qo'shilish taklifini rad etdim."))
             Message.objects.filter(content=f"__TEAM_INVITE__:{invite.id}").update(
@@ -711,3 +737,117 @@ def post_delete_view(request, post_id):
         post.delete()
         messages.success(request, _("Eʼlon muvaffaqiyatli oʻchirildi!"))
     return redirect('build:profile')
+
+@login_required
+def market_pro_view(request):
+    from chat.models import Message
+    unread_count = Message.objects.filter(
+        room__participants=request.user,
+        is_read=False
+    ).exclude(sender=request.user).count()
+    return render(request, 'build/marketb2bpro.html', {'unread_chat_count': unread_count})
+
+@login_required
+def leave_review_view(request, order_id):
+    from django.shortcuts import redirect
+    from django.contrib import messages
+    
+    order = get_object_or_404(ProjectOrder, id=order_id, client=request.user.profile, status='completed')
+    
+    if request.method == 'POST':
+        # Assuming we just send a single rating from 1 to 5
+        rating = int(request.POST.get('rating', 5))
+        comment = request.POST.get('comment', '')
+        
+        # Make sure they haven't rated yet
+        if not hasattr(order, 'review'):
+            from build.models import Review
+            Review.objects.create(
+                order=order,
+                client=request.user.profile,
+                builder=order.assigned_builder,
+                quality_rating=rating,
+                time_rating=rating,
+                politeness_rating=rating,
+                comment=comment,
+                ip_address=request.META.get('REMOTE_ADDR')
+            )
+            messages.success(request, "Ustaga bahoingiz muvaffaqiyatli saqlandi! Rahmat.")
+        else:
+            messages.info(request, "Siz bu ustaga avval baho bergansiz.")
+            
+    return redirect('build:workflow')
+
+class NegotiateAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, user_id):
+        from django.contrib.auth.models import User as DjangoUser
+        from accounts.models import Notification
+        target_user = get_object_or_404(DjangoUser, id=user_id)
+        
+        if target_user == request.user:
+            return Response({'error': 'You cannot negotiate with yourself'}, status=status.HTTP_400_BAD_REQUEST)
+            
+        Notification.objects.create(
+            user=target_user,
+            title="Kelishuv taklifi",
+            message=f"{request.user.get_full_name() or request.user.username} loyiha bo'yicha siz bilan kelishish istagini bildirdi.",
+            link=f"/uz/profile/{request.user.id}/"
+        )
+        return Response({'success': True, 'message': "Kelishuv taklifi muvaffaqiyatli yuborildi."})
+
+class ShowInterestAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, user_id):
+        from django.contrib.auth.models import User as DjangoUser
+        from accounts.models import Notification
+        target_user = get_object_or_404(DjangoUser, id=user_id)
+        
+        if target_user == request.user:
+            return Response({'error': 'You cannot show interest in yourself'}, status=status.HTTP_400_BAD_REQUEST)
+            
+        Notification.objects.create(
+            user=target_user,
+            title="Qiziqish bildirish",
+            message=f"Mijoz {request.user.get_full_name() or request.user.username} sizning xizmatlaringizga qiziqish bildirdi.",
+            link=f"/uz/profile/{request.user.id}/"
+        )
+        return Response({'success': True, 'message': "Qiziqish bildirilganligi ustaga yuborildi."})
+
+@login_required
+def mark_notifications_read(request):
+    from django.http import JsonResponse
+    if request.method == 'POST':
+        request.user.notifications.filter(is_read=False).update(is_read=True)
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False}, status=400)
+
+@login_required
+def verify_profile_view(request):
+    return render(request, 'build/profile_verify.html')
+
+@login_required
+def update_notifications_view(request):
+    if request.method == 'POST':
+        request.user.notifications.filter(is_read=False).update(is_read=True)
+        return redirect('build:notifications_list')
+    return redirect('build:notifications_list')
+
+@login_required
+def notifications_list_view(request):
+    return render(request, 'build/notifications.html')
+class UpdateTeamNameAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        if request.user.profile.role != 'team':
+            return Response({'error': _("Siz qurilish jamoasi emassiz!")}, status=403)
+        team_name = request.data.get('team_name')
+        if not team_name:
+            return Response({'error': _("Jamoa nomi kiritilmagan!")}, status=400)
+        
+        request.user.first_name = team_name
+        request.user.save()
+        return Response({'success': True, 'message': _("Jamoa nomi muvaffaqiyatli saqlandi!")})
