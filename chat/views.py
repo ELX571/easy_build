@@ -60,6 +60,24 @@ def _format_contact_data(room, user, request, unread_count=None):
     if not other:
         return None
 
+    payment_info = None
+    if other and (other.is_superuser or other.is_staff or user.is_superuser or user.is_staff):
+        builder_user = user if (other.is_superuser or other.is_staff) else other
+        if hasattr(builder_user, 'profile') and builder_user.profile.role == 'builder':
+            bp = getattr(builder_user.profile, 'builder_info', None)
+            if bp:
+                from build.models import SubscriptionRequest
+                latest_req = SubscriptionRequest.objects.filter(user=builder_user).order_by('-created_at').first()
+                payment_info = {
+                    'pending_plan': bp.pending_plan.name if bp.pending_plan else None,
+                    'pending_price': str(bp.pending_plan.price) if bp.pending_plan else None,
+                    'is_temp_active': bp.is_temp_active,
+                    'subscription_status': bp.subscription_status,
+                    'subscription_plan': bp.subscription_plan.name if bp.subscription_plan else None,
+                    'request_status': latest_req.status if latest_req else None,
+                    'request_id': latest_req.id if latest_req else None,
+                }
+
     return {
         'room_id': room.pk,
         'user_id': other.pk,
@@ -71,7 +89,8 @@ def _format_contact_data(room, user, request, unread_count=None):
         'sort_time': last_msg.created_at.timestamp() if last_msg else 0,
         'unread': unread,
         'online': bool(cache.get(f'user_online_{other.pk}')),
-        'is_group': False
+        'is_group': False,
+        'payment_info': payment_info
     }
 
 
@@ -309,6 +328,56 @@ def api_upload_file(request, room_id):
         file=file,
         file_type=file_type
     )
+
+    # Check if this is a payment verification screenshot upload
+    if file_type == 'image' and hasattr(request.user, 'profile') and request.user.profile.role == 'builder':
+        other_user = room.participants.exclude(pk=request.user.pk).first()
+        if other_user and (other_user.is_superuser or other_user.is_staff):
+            bp = getattr(request.user.profile, 'builder_info', None)
+            if bp and bp.pending_plan:
+                from build.models import SubscriptionRequest
+                from django.utils import timezone
+                
+                # Create SubscriptionRequest
+                sub_request = SubscriptionRequest.objects.create(
+                    user=request.user,
+                    plan_name=bp.pending_plan.name,
+                    amount=bp.pending_plan.price,
+                    screenshot=file,
+                    status='pending'
+                )
+                
+                # Grant 24h temporary access
+                bp.is_temp_active = True
+                bp.temp_active_until = timezone.now() + timezone.timedelta(hours=24)
+                bp.save()
+                
+                # Create and broadcast system notification message
+                sys_content = f"Tizim: To'lov cheki qabul qilindi. {bp.pending_plan.name} tarifi uchun 24 soatlik vaqtinchalik kirish imkoni berildi. Admin tekshiruvi kutilmoqda."
+                sys_message = Message.objects.create(
+                    room=room,
+                    sender=other_user,
+                    content=sys_content
+                )
+                
+                from channels.layers import get_channel_layer
+                from asgiref.sync import async_to_sync
+                
+                channel_layer = get_channel_layer()
+                async_to_sync(channel_layer.group_send)(
+                    f'chat_{room.pk}',
+                    {
+                        'type': 'chat_message',
+                        'message_id': sys_message.id,
+                        'message': sys_message.content,
+                        'sender_id': other_user.id,
+                        'sender_name': other_user.get_full_name() or other_user.username,
+                        'sender_avatar': _get_avatar_url(other_user, request),
+                        'time': sys_message.time_str(),
+                        'is_read': False,
+                        'room_id': room.pk,
+                    }
+                )
     
     from channels.layers import get_channel_layer
     from asgiref.sync import async_to_sync

@@ -321,6 +321,9 @@
             <a href="{% url 'chat:chat' %}" class="rail-item" data-title="{% trans 'Chatlar' %}">
                 <i class="fa-regular fa-comment-dots"></i>
             </a>
+            <a href="{% url 'build:payment_dashboard' %}" class="rail-item {% if request.resolver_match.url_name == 'payment_dashboard' %}active{% endif %}" data-title="Premium"><i class="fa-solid fa-gem"></i></a>
+            
+            
             <div class="rail-divider"></div>
             <a href="{% url 'build:profile' %}" class="rail-item" data-title="{% trans 'Profil sozlamalari' %}"><i class="fa-regular fa-user"></i></a>
         </div>
@@ -1009,6 +1012,9 @@
                 <span class="badge">{{ unread_chat_count }}</span>
             {% endif %}
         </a>
+            
+            
+            
     </div>
 
     <script>
@@ -1067,311 +1073,17 @@ function showMarketToast() {
 </script>
 
 <!-- ═══════════════ PAYMENT MODAL ═══════════════ -->
-<div id="paymentOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(12px);z-index:99990;align-items:center;justify-content:center;padding:16px;">
-<style>
-        .bg-watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 70vh; color: var(--watermark-color); opacity: var(--watermark-opacity); z-index: -2; pointer-events: none; transition: all 0.4s ease; }
-#payModal{background:linear-gradient(160deg,#0d1424,#111827);border:1px solid rgba(255,255,255,0.08);border-radius:28px;width:100%;max-width:480px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,0.6);font-family:'Plus Jakarta Sans',sans-serif;position:relative;}
-#payModal .pm-head{padding:28px 28px 20px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;}
-#payModal .pm-head h2{color:#f8fafc;font-size:20px;font-weight:800;display:flex;align-items:center;gap:10px;}
-#payModal .pm-head h2 span{font-size:13px;font-weight:600;padding:4px 10px;border-radius:20px;background:rgba(255,107,0,0.12);color:#ff6b00;border:1px solid rgba(255,107,0,0.25);}
-.pm-close{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#94a3b8;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:.2s;}
-.pm-close:hover{background:rgba(239,68,68,0.15);color:#ef4444;border-color:rgba(239,68,68,0.3);}
-/* Steps */
-#payModal .pm-step{padding:24px 28px;display:none;}
-#payModal .pm-step.active{display:block;}
-/* Method grid */
-.pm-methods{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px;}
-.pm-method{background:rgba(255,255,255,0.03);border:1.5px solid rgba(255,255,255,0.07);border-radius:18px;padding:18px 16px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:10px;transition:.25s;position:relative;}
-.pm-method:hover{border-color:rgba(255,107,0,0.5);background:rgba(255,107,0,0.05);transform:translateY(-2px);}
-.pm-method.selected{border-color:#ff6b00;background:rgba(255,107,0,0.08);box-shadow:0 0 0 3px rgba(255,107,0,0.15);}
-.pm-method img{height:32px;object-fit:contain;}
-.pm-method span{color:#cbd5e1;font-size:12px;font-weight:700;}
-.pm-method .pm-check{position:absolute;top:10px;right:10px;width:20px;height:20px;border-radius:50%;background:#ff6b00;display:none;align-items:center;justify-content:center;color:#fff;font-size:10px;}
-.pm-method.selected .pm-check{display:flex;}
-/* Card form */
-.pm-label{color:#94a3b8;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:block;}
-.pm-input{width:100%;background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px 18px;color:#f8fafc;font-size:16px;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:.2s;letter-spacing:1.5px;}
-.pm-input:focus{border-color:#ff6b00;box-shadow:0 0 0 3px rgba(255,107,0,0.12);}
-.pm-input::placeholder{color:#475569;letter-spacing:0;}
-.pm-input:disabled{opacity:0.5;cursor:not-allowed;}
-.pm-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;}
-.pm-field{margin-bottom:18px;}
-/* Amount highlight */
-.pm-amount-box{background:linear-gradient(135deg,rgba(255,107,0,0.1),rgba(255,140,51,0.05));border:1px solid rgba(255,107,0,0.25);border-radius:16px;padding:18px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;}
-.pm-amount-box .pm-plan-name{color:#94a3b8;font-size:13px;font-weight:600;}
-.pm-amount-box .pm-plan-price{color:#ff6b00;font-size:22px;font-weight:900;}
-/* Secure badge */
-.pm-secure{display:flex;align-items:center;justify-content:center;gap:6px;color:#475569;font-size:12px;margin-top:16px;}
-/* Buttons */
-.pm-btn-next{width:100%;padding:16px;background:linear-gradient(135deg,#ff6b00,#ff8c33);color:#fff;border:none;border-radius:16px;font-size:16px;font-weight:800;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:.3s;box-shadow:0 8px 24px rgba(255,107,0,0.35);display:flex;align-items:center;justify-content:center;gap:10px;}
-.pm-btn-next:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(255,107,0,0.5);}
-.pm-btn-next:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
-.pm-btn-back{background:none;border:1px solid rgba(255,255,255,0.1);color:#94a3b8;padding:10px 20px;border-radius:12px;cursor:pointer;font-size:14px;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;transition:.2s;margin-right:12px;}
-.pm-btn-back:hover{border-color:rgba(255,255,255,0.2);color:#f8fafc;}
-/* Success */
-.pm-success{text-align:center;padding:40px 0 20px;}
-.pm-success-icon{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#10b981,#059669);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:36px;color:#fff;box-shadow:0 16px 40px rgba(16,185,129,0.4);animation:popIn .5s cubic-bezier(0.34,1.56,0.64,1);}
-@keyframes popIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
-.pm-success h3{color:#f8fafc;font-size:22px;font-weight:900;margin-bottom:10px;}
-.pm-success p{color:#94a3b8;font-size:15px;line-height:1.6;}
-/* Progress bar */
-.pm-progress{height:3px;background:rgba(255,255,255,0.05);position:relative;}
-.pm-progress-fill{height:100%;background:linear-gradient(90deg,#ff6b00,#ff8c33);transition:width .4s ease;border-radius:2px;}
-@media(max-width:480px){.pm-methods{grid-template-columns:1fr 1fr;}.pm-row{grid-template-columns:1fr;gap:0;}}
-</style>
-
-<div id="payModal">
-  <div class="pm-progress"><div class="pm-progress-fill" id="pmProgress" style="width:33%"></div></div>
-  <div class="pm-head">
-    <h2><i class="fa-solid fa-lock" style="color:#ff6b00;font-size:18px;"></i> To'lov <span id="pmPlanBadge">Oylik</span></h2>
-    <button class="pm-close" onclick="closePayModal()"><i class="fa-solid fa-xmark"></i></button>
-  </div>
-
-  <!-- STEP 1: To'lov usulini tanlash -->
-  <div class="pm-step active" id="pmStep1">
-    <p style="color:#94a3b8;font-size:14px;margin-bottom:20px;">To'lov usulini tanlang:</p>
-    <div class="pm-methods">
-      <div class="pm-method" onclick="selectMethod(this,'click')" data-method="click">
-        <div class="pm-check"><i class="fa-solid fa-check"></i></div>
-        <div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#00c2ff,#005aff);display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;font-weight:900;">C</div>
-        <span>Click</span>
-      </div>
-      <div class="pm-method" onclick="selectMethod(this,'payme')" data-method="payme">
-        <div class="pm-check"><i class="fa-solid fa-check"></i></div>
-        <div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#00c2a8,#007e6e);display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;font-weight:900;">P</div>
-        <span>Payme</span>
-      </div>
-      <div class="pm-method" onclick="selectMethod(this,'uzcard')" data-method="uzcard">
-        <div class="pm-check"><i class="fa-solid fa-check"></i></div>
-        <div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#00a651,#007a3c);display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;font-weight:900;">UZ</div>
-        <span>Uzcard</span>
-      </div>
-      <div class="pm-method" onclick="selectMethod(this,'humo')" data-method="humo">
-        <div class="pm-check"><i class="fa-solid fa-check"></i></div>
-        <div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#f59e0b,#d97706);display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;font-weight:900;letter-spacing:-1px;">H</div>
-        <span>Humo</span>
-      </div>
-    </div>
-    <div style="height:14px;"></div>
-    <button class="pm-btn-next" id="pmNextBtn1" onclick="goStep(2)" disabled>
-      Davom etish <i class="fa-solid fa-arrow-right"></i>
-    </button>
-    <div class="pm-secure"><i class="fa-solid fa-shield-halved" style="color:#10b981;"></i> 256-bit SSL shifrlash bilan himoyalangan</div>
-  </div>
-
-  <!-- STEP 2: Karta ma'lumotlari -->
-  <div class="pm-step" id="pmStep2">
-    <div class="pm-amount-box">
-      <div>
-        <div class="pm-plan-name" id="pmAmountLabel">Oylik Premium obuna</div>
-        <div style="color:#64748b;font-size:12px;margin-top:3px;">EasyBuild Premium</div>
-      </div>
-      <div class="pm-plan-price" id="pmAmountDisplay">49,000 UZS</div>
-    </div>
-
-    <div class="pm-field">
-      <label class="pm-label">Karta raqami</label>
-      <div style="position:relative;">
-        <input class="pm-input" id="pmCardNum" value="8600 0000 0000 0000" readonly disabled style="padding-right:50px;">
-        <div id="pmCardBrand" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:22px;"></div>
-      </div>
-    </div>
-    <div class="pm-row">
-      <div>
-        <label class="pm-label">Amal qilish muddati</label>
-        <input class="pm-input" id="pmExpiry" value="12/28" readonly disabled>
-      </div>
-      <div>
-        <label class="pm-label">Karta egasi</label>
-        <input class="pm-input" id="pmHolder" value="EASYBUILD" readonly disabled>
-      </div>
-    </div>
-
-    <div class="pm-field">
-      <label class="pm-label">To'lov summasi (UZS)</label>
-      <input class="pm-input" id="pmAmountInput" type="text" placeholder="Masalan: 49000" oninput="formatAmount(this)" style="font-size:20px;font-weight:800;letter-spacing:0;">
-    </div>
-
-    <div style="display:flex;align-items:center;margin-top:4px;">
-      <button class="pm-btn-back" onclick="goStep(1)"><i class="fa-solid fa-arrow-left"></i> Orqaga</button>
-      <button class="pm-btn-next" id="pmNextBtn2" onclick="goStep(3)" disabled style="flex:1;">
-        <i class="fa-solid fa-lock"></i> Xavfsiz To'lash
-      </button>
-    </div>
-    <div class="pm-secure"><i class="fa-solid fa-shield-halved" style="color:#10b981;"></i> Ma'lumotlaringiz xavfsiz saqlanadi</div>
-  </div>
-
-  <!-- STEP 3: Tasdiqlash / OTP -->
-  <div class="pm-step" id="pmStep3">
-    <div style="text-align:center;margin-bottom:28px;">
-      <div style="width:64px;height:64px;border-radius:50%;background:rgba(255,107,0,0.1);border:2px solid rgba(255,107,0,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;color:#ff6b00;"><i class="fa-solid fa-mobile-screen-button"></i></div>
-      <h3 style="color:#f8fafc;font-size:18px;font-weight:800;margin-bottom:8px;">SMS kod tasdiqlash</h3>
-      <p style="color:#94a3b8;font-size:14px;line-height:1.5;">Kartangizga ulangan telefon raqamiga<br><b style="color:#f8fafc;">+998 ** *** ** **</b> SMS kod yuborildi</p>
-    </div>
-
-    <div class="pm-field">
-      <label class="pm-label" style="text-align:center;display:block;margin-bottom:16px;">SMS kodni kiriting</label>
-      <div style="display:flex;gap:10px;justify-content:center;">
-        <input type="text" maxlength="1" class="pm-input pm-otp" oninput="otpNext(this,0)" style="width:54px;height:60px;text-align:center;font-size:24px;font-weight:900;padding:0;border-radius:14px;">
-        <input type="text" maxlength="1" class="pm-input pm-otp" oninput="otpNext(this,1)" style="width:54px;height:60px;text-align:center;font-size:24px;font-weight:900;padding:0;border-radius:14px;">
-        <input type="text" maxlength="1" class="pm-input pm-otp" oninput="otpNext(this,2)" style="width:54px;height:60px;text-align:center;font-size:24px;font-weight:900;padding:0;border-radius:14px;">
-        <input type="text" maxlength="1" class="pm-input pm-otp" oninput="otpNext(this,3)" style="width:54px;height:60px;text-align:center;font-size:24px;font-weight:900;padding:0;border-radius:14px;">
-        <input type="text" maxlength="1" class="pm-input pm-otp" oninput="otpNext(this,4)" style="width:54px;height:60px;text-align:center;font-size:24px;font-weight:900;padding:0;border-radius:14px;">
-        <input type="text" maxlength="1" class="pm-input pm-otp" oninput="otpNext(this,5)" style="width:54px;height:60px;text-align:center;font-size:24px;font-weight:900;padding:0;border-radius:14px;">
-      </div>
-      <div style="text-align:center;margin-top:14px;"><button onclick="resendOtp()" style="background:none;border:none;color:#ff6b00;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;" id="resendBtn">Qayta yuborish (60s)</button></div>
-    </div>
-
-    <div style="display:flex;align-items:center;margin-top:8px;">
-      <button class="pm-btn-back" onclick="goStep(2)"><i class="fa-solid fa-arrow-left"></i> Orqaga</button>
-      <button class="pm-btn-next" id="pmPayBtn" onclick="submitPayment()" style="flex:1;">
-        <i class="fa-solid fa-circle-check"></i> Tasdiqlash
-      </button>
-    </div>
-  </div>
-
-  <!-- STEP 4: Muvaffaqiyat -->
-  <div class="pm-step" id="pmStep4">
-    <div class="pm-success">
-      <div class="pm-success-icon"><i class="fa-solid fa-check"></i></div>
-      <h3>To'lov muvaffaqiyatli!</h3>
-      <p>EasyBuild Premium faollashtirildi.<br>Profilingizda ko'k galochka ✅ paydo bo'ldi!</p>
-      <div style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:16px;padding:18px;margin:24px 0;text-align:left;">
-        <div style="display:flex;justify-content:space-between;margin-bottom:10px;"><span style="color:#64748b;font-size:13px;">To'lov miqdori</span><span style="color:#10b981;font-weight:800;" id="pmSuccessAmount"></span></div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:10px;"><span style="color:#64748b;font-size:13px;">Obuna turi</span><span style="color:#f8fafc;font-weight:700;" id="pmSuccessPlan"></span></div>
-        <div style="display:flex;justify-content:space-between;"><span style="color:#64748b;font-size:13px;">Tranzaksiya ID</span><span style="color:#f8fafc;font-weight:700;font-size:12px;" id="pmTxId"></span></div>
-      </div>
-      <button class="pm-btn-next" onclick="finishPayment()">
-        <i class="fa-solid fa-star"></i> Premiumni Ko'rish
-      </button>
-    </div>
-  </div>
-</div>
-</div>
-
 <script>
-let pmPlan = 'monthly', pmAmount = 49000, pmMethod = '';
-
 function openPayModal(plan) {
-  pmPlan = plan;
-  
-  let planLabel = '';
-  if (plan === 'pro') {
-      pmAmount = 49000;
-      planLabel = 'PRO Obuna';
-  } else if (plan === 'vip') {
-      pmAmount = 99999000;
-      planLabel = 'Premium VIP (Cheksiz)';
-  } else if (plan === 'pro_yearly') {
-      pmAmount = 499800;
-      planLabel = 'PRO Yillik';
-  } else if (plan === 'vip_yearly') {
-      pmAmount = 99999000;
-      planLabel = 'Premium VIP (Cheksiz)';
-  } else {
-      pmAmount = plan === 'yearly' ? 470000 : 49000;
-      planLabel = plan === 'yearly' ? 'Yillik Premium' : 'Oylik Premium';
-  }
-
-  document.getElementById('pmPlanBadge').textContent = planLabel.replace(' obuna', '').replace(' Obuna', '');
-  document.getElementById('pmAmountLabel').textContent = planLabel;
-  document.getElementById('pmAmountDisplay').textContent = (pmAmount === 99999000 ? 'Cheksiz' : pmAmount.toLocaleString('en-US') + ' UZS');
-  document.getElementById('pmAmountInput').value = '';
-  document.getElementById('pmAmountInput').placeholder = pmAmount.toString();
-  document.querySelectorAll('.pm-method').forEach(m => m.classList.remove('selected'));
-  pmMethod = '';
-  document.getElementById('pmNextBtn1').disabled = true;
-  goStep(1);
-  const ov = document.getElementById('paymentOverlay');
-  ov.style.display = 'flex';
-  requestAnimationFrame(() => ov.style.opacity = '1');
+    let name = "PRO Obuna";
+    if (plan === 'vip' || plan === 'vip_yearly' || plan.includes('vip')) {
+        name = "Premium VIP";
+    } else if (plan === 'pro' || plan === 'pro_yearly' || plan.includes('pro')) {
+        name = "PRO Obuna";
+    }
+    window.location.href = `/uz/payment-dashboard/?plan_name=${encodeURIComponent(name)}`;
 }
 
-function closePayModal() {
-  const ov = document.getElementById('paymentOverlay');
-  ov.style.display = 'none';
-}
-
-document.getElementById('paymentOverlay').addEventListener('click', function(e) {
-  if (e.target === this) closePayModal();
-});
-
-function selectMethod(el, method) {
-  document.querySelectorAll('.pm-method').forEach(m => m.classList.remove('selected'));
-  el.classList.add('selected');
-  pmMethod = method;
-  document.getElementById('pmNextBtn1').disabled = false;
-  // Set card brand icon
-  const brands = {click:'💳',payme:'💳',uzcard:'🏧',humo:'🏧'};
-  document.getElementById('pmCardBrand').textContent = brands[method] || '💳';
-  // Auto-fill card by method
-  const cards = {click:'8600 0000 0000 0001',payme:'8600 0000 0000 0002',uzcard:'8600 0000 0000 0003',humo:'9860 0000 0000 0004'};
-  document.getElementById('pmCardNum').value = cards[method] || '8600 0000 0000 0000';
-}
-
-function goStep(n) {
-  document.querySelectorAll('.pm-step').forEach(s => s.classList.remove('active'));
-  document.getElementById('pmStep'+n).classList.add('active');
-  const pct = {1:33,2:66,3:85,4:100};
-  document.getElementById('pmProgress').style.width = pct[n]+'%';
-  if (n === 3) startOtpTimer();
-}
-
-function formatAmount(inp) {
-  let raw = inp.value.replace(/\D/g,'');
-  inp.value = raw ? parseInt(raw).toLocaleString('uz-UZ') : '';
-  const numVal = parseInt(raw) || 0;
-  document.getElementById('pmNextBtn2').disabled = numVal < 1000;
-}
-
-// OTP
-function otpNext(el, idx) {
-  const otps = document.querySelectorAll('.pm-otp');
-  if (el.value.length === 1 && idx < otps.length - 1) otps[idx+1].focus();
-  const full = [...otps].map(o=>o.value).join('');
-  document.getElementById('pmPayBtn').disabled = full.length < 6;
-}
-
-let otpTimer;
-function startOtpTimer() {
-  let t = 60;
-  const btn = document.getElementById('resendBtn');
-  clearInterval(otpTimer);
-  otpTimer = setInterval(() => {
-    t--;
-    btn.textContent = t > 0 ? `Qayta yuborish (${t}s)` : 'Qayta yuborish';
-    if (t <= 0) { clearInterval(otpTimer); btn.style.opacity='1'; btn.disabled=false; }
-  }, 1000);
-}
-
-function resendOtp() {
-  document.querySelectorAll('.pm-otp').forEach(o=>o.value='');
-  document.querySelectorAll('.pm-otp')[0].focus();
-  startOtpTimer();
-}
-
-function submitPayment() {
-  const btn = document.getElementById('pmPayBtn');
-  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Tekshirilmoqda...';
-  btn.disabled = true;
-  setTimeout(() => {
-    const txId = 'EB' + Date.now().toString().slice(-10).toUpperCase();
-    document.getElementById('pmSuccessAmount').textContent = pmAmount.toLocaleString() + ' UZS';
-    document.getElementById('pmSuccessPlan').textContent = pmPlan === 'yearly' ? 'Yillik Premium' : 'Oylik Premium';
-    document.getElementById('pmTxId').textContent = txId;
-    goStep(4);
-    // Submit the real form in background
-    const form = document.getElementById('hiddenPayForm');
-    if (form) { form.querySelector('input[name=plan]').value = pmPlan; form.submit(); }
-  }, 2000);
-}
-
-function finishPayment() {
-  closePayModal();
-  window.location.reload();
-}
-
-// Intercept premium form buttons
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('form[action*="profile_verify"]').forEach(form => {
     form.addEventListener('submit', function(e) {
@@ -1382,12 +1094,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
-
-<!-- Hidden real form for backend submission -->
-<form id="hiddenPayForm" method="POST" action="{% url 'build:profile_verify' %}" style="display:none;">
-  {% csrf_token %}
-  <input type="hidden" name="plan" value="monthly">
-</form>
 
 <!-- ═══════════════ ADD TEAM MEMBER MODAL ═══════════════ -->
 <div id="addMemberOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(12px);z-index:99990;align-items:center;justify-content:center;padding:16px;">

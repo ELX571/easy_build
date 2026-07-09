@@ -1,0 +1,272 @@
+{% extends 'base.html' %}
+
+{% block title %}Tarif Rejalari - Easy Build{% endblock %}
+
+{% block content %}
+<style>
+    .pricing-container {
+        max-width: 1100px;
+        margin: 3rem auto;
+        padding: 0 1.5rem;
+    }
+    
+    .pricing-header {
+        text-align: center;
+        margin-bottom: 3.5rem;
+    }
+    
+    .pricing-header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, #ff6b00, #2563eb);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    .pricing-header p {
+        font-size: 1.125rem;
+        color: #64748b;
+    }
+    
+    .plans-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        align-items: stretch;
+    }
+    
+    .plan-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 2.5rem 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+    
+    .plan-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        border-color: #ff6b00;
+    }
+    
+    .plan-card.active {
+        border: 2.5px solid #2563eb;
+    }
+    
+    .plan-card.featured {
+        border: 2.5px solid #ff6b00;
+    }
+    
+    .featured-badge {
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, #ff6b00, #e65c00);
+        color: #ffffff;
+        padding: 0.25rem 1rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        border-radius: 9999px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    
+    .active-badge {
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        color: #ffffff;
+        padding: 0.25rem 1rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        border-radius: 9999px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    
+    .plan-name {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 0.5rem;
+        text-align: center;
+    }
+    
+    .plan-price {
+        text-align: center;
+        margin: 1.5rem 0;
+    }
+    
+    .price-value {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #0f172a;
+    }
+    
+    .price-currency {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #64748b;
+    }
+    
+    .price-period {
+        font-size: 0.875rem;
+        color: #64748b;
+    }
+    
+    .plan-description {
+        color: #64748b;
+        font-size: 0.95rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        line-height: 1.5;
+    }
+    
+    .plan-features {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 2.5rem 0;
+        flex-grow: 1;
+    }
+    
+    .plan-features li {
+        color: #475569;
+        font-size: 0.95rem;
+        margin-bottom: 0.875rem;
+        display: flex;
+        align-items: center;
+    }
+    
+    .plan-features li::before {
+        content: "✓";
+        color: #ff6b00;
+        font-weight: bold;
+        margin-right: 0.75rem;
+        font-size: 1.1rem;
+    }
+    
+    .plan-action {
+        width: 100%;
+        display: block;
+        text-align: center;
+    }
+    
+    .btn-choose {
+        display: inline-block;
+        width: 100%;
+        padding: 0.875rem;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .btn-choose.standard {
+        background-color: #f1f5f9;
+        color: #0f172a;
+    }
+    
+    .btn-choose.standard:hover {
+        background-color: #e2e8f0;
+    }
+    
+    .btn-choose.primary {
+        background: linear-gradient(135deg, #ff6b00, #e65c00);
+        color: #ffffff;
+        box-shadow: 0 4px 10px rgba(255, 107, 0, 0.2);
+    }
+    
+    .btn-choose.primary:hover {
+        opacity: 0.9;
+        box-shadow: 0 6px 15px rgba(255, 107, 0, 0.3);
+    }
+    
+    .btn-choose.active-plan {
+        background-color: #e2e8f0;
+        color: #64748b;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+    
+    .btn-choose.pending-plan {
+        background-color: #fef3c7;
+        color: #d97706;
+        cursor: not-allowed;
+        pointer-events: none;
+        border: 1px dashed #f59e0b;
+    }
+</style>
+
+<div class="pricing-container">
+    <div class="pricing-header">
+        <h1>Quruvchilar obuna paketlari</h1>
+        <p>Loyihalaringiz ko'lamiga mos tarif rejasini tanlang va qo'shimcha imtiyozlarga ega bo'ling</p>
+    </div>
+    
+    <div class="plans-grid">
+        {% for plan in plans %}
+            {% is_current = profile.subscription_plan == plan %}
+            {% is_pending = profile.pending_plan == plan %}
+            
+            <div class="plan-card {% if is_current %}active{% elif forloop.counter == 2 %}featured{% endif %}">
+                {% if is_current %}
+                    <span class="active-badge">Joriy tarif</span>
+                {% elif forloop.counter == 2 %}
+                    <span class="featured-badge">Tavsiya etiladi</span>
+                {% endif %}
+                
+                <div>
+                    <h2 class="plan-name">{{ plan.name }}</h2>
+                    <div class="plan-price">
+                        <span class="price-value">${{ plan.price }}</span>
+                        <span class="price-period">/ {{ plan.duration_days }} kun</span>
+                    </div>
+                    <p class="plan-description">{{ plan.description|default:"Quruvchilar uchun mukammal imkoniyatlar to'plami." }}</p>
+                    
+                    <ul class="plan-features">
+                        <li>Barcha buyurtmalarni ko'rish</li>
+                        <li>Mijozlar bilan to'g'ridan-to'g'ri aloqa</li>
+                        <li>Profil reytingini oshirish</li>
+                        {% if plan.price > 10 %}
+                            <li>VIP takliflar va eksklyuziv buyurtmalar</li>
+                            <li>Tavsiya etilgan quruvchilar ro'yxatida ko'rinish</li>
+                        {% endif %}
+                        {% if plan.price > 30 %}
+                            <li>Shaxsiy menejer va tezkor qo'llab-quvvatlash</li>
+                            <li>Kafolatlangan buyurtmalar oqimi</li>
+                        {% endif %}
+                    </ul>
+                </div>
+                
+                <div class="plan-action">
+                    {% if is_current %}
+                        <span class="btn-choose active-plan">Faol obuna</span>
+                    {% elif is_pending %}
+                        <span class="btn-choose pending-plan">Tasdiqlanish kutilmoqda</span>
+                    {% else %}
+                        <a href="{% url 'build:choose_plan' plan.id %}" class="btn-choose {% if forloop.counter == 2 %}primary{% else %}standard{% endif %}">
+                            Tanlash
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        {% empty %}
+            <p style="text-align: center; grid-column: 1/-1; color: #64748b; font-size: 1.1rem;">Ayni vaqtda tarif rejalari mavjud emas. Iltimos, keyinroq urinib ko'ring.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

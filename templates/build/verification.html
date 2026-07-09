@@ -1,0 +1,355 @@
+{% extends 'base.html' %}
+
+{% block title %}Verifikatsiya Dashbordi - Easy Build{% endblock %}
+
+{% block content %}
+<style>
+    .verification-container {
+        max-width: 1200px;
+        margin: 3rem auto;
+        padding: 0 1.5rem;
+    }
+    
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2.5rem;
+        border-bottom: 1px solid #e2e8f0;
+        padding-bottom: 1.5rem;
+    }
+    
+    .dashboard-header h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #0f172a;
+    }
+    
+    .requests-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+        gap: 2rem;
+    }
+    
+    .request-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .request-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .screenshot-wrapper {
+        position: relative;
+        height: 200px;
+        background-color: #f1f5f9;
+        overflow: hidden;
+        cursor: pointer;
+    }
+    
+    .screenshot-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+    }
+    
+    .screenshot-wrapper:hover img {
+        transform: scale(1.05);
+    }
+    
+    .zoom-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(15, 23, 42, 0.4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.2s;
+        color: #ffffff;
+        font-size: 1.25rem;
+    }
+    
+    .screenshot-wrapper:hover .zoom-overlay {
+        opacity: 1;
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+    
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        background-color: #e2e8f0;
+    }
+    
+    .user-details h3 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #0f172a;
+    }
+    
+    .user-details p {
+        font-size: 0.85rem;
+        color: #64748b;
+    }
+    
+    .plan-info {
+        background-color: #f8fafc;
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        margin-bottom: 1.25rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .plan-info-label {
+        font-size: 0.85rem;
+        color: #475569;
+    }
+    
+    .plan-info-val {
+        font-weight: 700;
+        color: #ff6b00;
+    }
+    
+    .request-meta {
+        font-size: 0.8rem;
+        color: #94a3b8;
+        margin-bottom: 1.25rem;
+    }
+    
+    /* Action Buttons */
+    .actions-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .btn-action {
+        padding: 0.65rem;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        transition: opacity 0.2s;
+        border: none;
+        width: 100%;
+        display: inline-block;
+    }
+    
+    .btn-action:hover {
+        opacity: 0.9;
+    }
+    
+    .btn-accept {
+        background-color: #10b981;
+        color: #ffffff;
+    }
+    
+    .btn-reject {
+        background-color: #ef4444;
+        color: #ffffff;
+    }
+    
+    .btn-chat {
+        background-color: #f1f5f9;
+        color: #475569;
+        border: 1px solid #cbd5e1;
+        display: block;
+        width: 100%;
+        text-align: center;
+        text-decoration: none;
+        padding: 0.65rem;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        transition: background-color 0.2s;
+    }
+    
+    .btn-chat:hover {
+        background-color: #e2e8f0;
+        color: #0f172a;
+    }
+    
+    .status-banner {
+        text-align: center;
+        padding: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+    }
+    
+    .status-banner.accepted {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+    }
+    
+    .status-banner.rejected {
+        background-color: #ffebee;
+        color: #c62828;
+    }
+    
+    /* Lightbox Modal */
+    .lightbox {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(15, 23, 42, 0.9);
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .lightbox img {
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 8px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+    
+    .close-lightbox {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        color: #ffffff;
+        font-size: 2.5rem;
+        cursor: pointer;
+        user-select: none;
+    }
+</style>
+
+<div class="verification-container">
+    <div class="dashboard-header">
+        <h1>To'lovlarni Tasdiqlash Dashbordi</h1>
+        <span style="font-weight: 600; color: #64748b; background-color: #f1f5f9; padding: 0.5rem 1rem; border-radius: 9999px;">
+            Jami so'rovlar: {{ requests.count }}
+        </span>
+    </div>
+    
+    <div class="requests-grid">
+        {% for req in requests %}
+            <div class="request-card">
+                <!-- Screenshot -->
+                <div class="screenshot-wrapper" onclick="openLightbox('{{ req.screenshot.url }}')">
+                    <img src="{{ req.screenshot.url }}" alt="Screenshot">
+                    <div class="zoom-overlay">
+                        🔍 Kattalashtirish
+                    </div>
+                </div>
+                
+                <div class="card-body">
+                    <div>
+                        <!-- User info -->
+                        <div class="user-info">
+                            <img class="user-avatar" src="/static/avatars/default.png" alt="Avatar">
+                            <div class="user-details">
+                                <h3>{{ req.user.username }}</h3>
+                                <p>{{ req.user.email }}</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Requested Plan -->
+                        <div class="plan-info">
+                            <span class="plan-info-label">So'ralgan Plan:</span>
+                            <span class="plan-info-val">{{ req.plan_name }} ({{ req.amount|floatformat:0 }} so'm)</span>
+                        </div>
+                        
+                        <div class="request-meta">
+                            Yuborilgan vaqti: {{ req.created_at|date:"d.m.Y, H:i" }}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        {% if req.status == 'pending' %}
+                            <!-- Action Buttons for Pending requests -->
+                            <div class="actions-group">
+                                <a href="{% url 'build:process_verification' req.id 'accept' %}" class="btn-action btn-accept">
+                                    Qabul qilish
+                                </a>
+                                <a href="{% url 'build:process_verification' req.id 'reject' %}" class="btn-action btn-reject">
+                                    Rad etish
+                                </a>
+                            </div>
+                        {% else %}
+                            <!-- Status banners for processed requests -->
+                            <div class="status-banner {{ req.status }}">
+                                {% if req.status == 'accepted' %}
+                                    Qabul qilingan
+                                {% else %}
+                                    Rad etilgan
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                        
+                        <!-- Link to user's chatroom -->
+                        <a href="{% url 'build:chat_room_redirect' req.user.id %}" class="btn-chat">
+                            Chatni ochish
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div style="grid-column: 1/-1; text-align: center; color: #64748b; padding: 5rem 0;">
+                <h2 style="margin-bottom: 0.5rem;">Suhbatlar / So'rovlar mavjud emas</h2>
+                <p>Hozircha verifikatsiya qilinishi kerak bo'lgan to'lov screenshotlari yuborilmagan.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Image Lightbox Modal -->
+<div class="lightbox" id="image-lightbox" onclick="closeLightbox()">
+    <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+    <img src="" id="lightbox-image">
+</div>
+
+<script>
+    // Lightbox handlers
+    function openLightbox(src) {
+        const lightbox = document.getElementById('image-lightbox');
+        const lightboxImg = document.getElementById('lightbox-image');
+        lightboxImg.src = src;
+        lightbox.style.display = 'flex';
+    }
+    
+    function closeLightbox() {
+        const lightbox = document.getElementById('image-lightbox');
+        lightbox.style.display = 'none';
+    }
+</script>
+{% endblock %}

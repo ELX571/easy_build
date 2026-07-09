@@ -1,7 +1,18 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
+from django.utils import timezone
 from accounts.models import Profile
+
+
+class Plan(models.Model):
+    name = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.TextField(blank=True)
+    duration_days = models.IntegerField(default=30)
+
+    def __str__(self):
+        return f"{self.name} - ${self.price}"
 
 
 class Post(models.Model):
@@ -43,6 +54,19 @@ class BuilderProfile(models.Model):
     experience_years = models.PositiveIntegerField(default=0)
     is_available = models.BooleanField(default=True)
     members = models.ManyToManyField(User, related_name='joined_teams', blank=True)
+    subscription_status = models.BooleanField(default=False)
+    subscription_plan = models.ForeignKey(Plan, on_delete=models.SET_NULL, null=True, blank=True, related_name='builders')
+    is_temp_active = models.BooleanField(default=False)
+    temp_active_until = models.DateTimeField(null=True, blank=True)
+    pending_plan = models.ForeignKey(Plan, on_delete=models.SET_NULL, null=True, blank=True, related_name='pending_builders')
+
+    @property
+    def has_active_subscription(self):
+        if self.subscription_status:
+            return True
+        if self.is_temp_active and self.temp_active_until and self.temp_active_until > timezone.now():
+            return True
+        return False
     rating_cache = models.FloatField(
         default=0.0,
         validators=[MinValueValidator(0.0), MaxValueValidator(7.0)]
@@ -271,3 +295,20 @@ class PostBookmark(models.Model):
 
     def __str__(self):
         return f"{self.user.username} bookmarked {self.post.title}"
+
+
+class SubscriptionRequest(models.Model):
+    STATUS_CHOICES = (
+        ('pending', 'Pending'),
+        ('accepted', 'Accepted'),
+        ('rejected', 'Rejected'),
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='subscription_requests')
+    plan_name = models.CharField(max_length=100)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    screenshot = models.ImageField(upload_to='screenshots/')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.plan_name} (${self.amount}) - {self.status}"
