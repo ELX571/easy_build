@@ -1,0 +1,555 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block title %}P2P Obuna Tizimi - Easy Build{% endblock %}
+
+{% block content %}
+<!-- Plus Jakarta Sans shrifitini premium ko'rinish uchun ulash -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --color-bg: #05070c;
+        --color-panel: rgba(10, 14, 23, 0.75);
+        --color-border: rgba(255, 255, 255, 0.06);
+        --color-orange: #ff6b00;
+        --color-orange-hover: #e56000;
+        --color-text-main: #f8fafc;
+        --color-text-muted: #94a3b8;
+        --color-glass-input: rgba(255, 255, 255, 0.03);
+    }
+
+    body {
+        background-color: var(--color-bg) !important;
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+    }
+
+    .payment-wrapper {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1.5rem;
+    }
+
+    .dashboard-title {
+        font-size: 1.75rem;
+        font-weight: 800;
+        color: var(--color-text-main);
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .dashboard-title i {
+        color: var(--color-orange);
+    }
+
+    /* Asosiy 2 ustunli grid */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    @media (min-width: 992px) {
+        .dashboard-grid {
+            grid-template-columns: 1.1fr 0.9fr;
+        }
+    }
+
+    /* Glassmorphic Panel */
+    .glass-card {
+        background: var(--color-panel);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--color-border);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        min-height: 580px;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--color-text-main);
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        border-bottom: 1px solid var(--color-border);
+        padding-bottom: 0.75rem;
+    }
+
+    .card-title i {
+        color: var(--color-orange);
+    }
+
+    /* Karta ma'lumotlari bo'limi */
+    .card-details-box {
+        background: rgba(255, 107, 0, 0.05);
+        border: 1px dashed rgba(255, 107, 0, 0.2);
+        border-radius: 12px;
+        padding: 1.25rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+    }
+
+    .card-number-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 0.5rem;
+    }
+
+    .card-number-text {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--color-text-main);
+        letter-spacing: 2px;
+    }
+
+    .btn-copy {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--color-border);
+        color: var(--color-text-main);
+        padding: 0.35rem 0.75rem;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        transition: all 0.2s;
+    }
+
+    .btn-copy:hover {
+        background: var(--color-orange);
+        border-color: var(--color-orange);
+    }
+
+    /* To'lov formasi elementlari */
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+
+    .form-label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--color-text-muted);
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .premium-input, .premium-select {
+        background: var(--color-glass-input) !important;
+        border: 1px solid var(--color-border) !important;
+        border-radius: 10px !important;
+        color: var(--color-text-main) !important;
+        padding: 0.75rem 1rem !important;
+        font-size: 0.95rem !important;
+        width: 100%;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        transition: border-color 0.2s;
+    }
+
+    .premium-input:focus, .premium-select:focus {
+        border-color: var(--color-orange) !important;
+        box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.1) !important;
+    }
+
+    .file-upload-area {
+        border: 2px dashed var(--color-border);
+        border-radius: 12px;
+        padding: 2rem 1.5rem;
+        text-align: center;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.01);
+        transition: border-color 0.2s, background 0.2s;
+        margin-bottom: 1.5rem;
+    }
+
+    .file-upload-area:hover, .file-upload-area.drag-over {
+        border-color: var(--color-orange);
+        background: rgba(255, 107, 0, 0.02);
+    }
+
+    .file-upload-icon {
+        font-size: 2rem;
+        color: var(--color-text-muted);
+        margin-bottom: 0.75rem;
+    }
+
+    .file-upload-area:hover .file-upload-icon {
+        color: var(--color-orange);
+    }
+
+    .btn-submit {
+        background: var(--color-orange);
+        color: white;
+        border: none;
+        padding: 0.85rem;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.1s;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .btn-submit:hover {
+        background: var(--color-orange-hover);
+    }
+
+    .btn-submit:active {
+        transform: scale(0.98);
+    }
+
+    /* Status kartasi */
+    .status-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .status-badge.pending { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+    .status-badge.accepted { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+    .status-badge.rejected { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+
+    /* O'ng Ustun: Canli Chat */
+    .chat-container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .chat-messages {
+        flex-grow: 1;
+        overflow-y: auto;
+        padding: 1rem;
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid var(--color-border);
+        border-radius: 12px;
+        margin-bottom: 1rem;
+        max-height: 380px;
+        min-height: 300px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .message-bubble {
+        max-width: 75%;
+        padding: 0.75rem 1rem;
+        border-radius: 12px;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        word-wrap: break-word;
+    }
+
+    .message-bubble.me {
+        background: var(--color-orange);
+        color: white;
+        align-self: flex-end;
+        border-bottom-right-radius: 2px;
+    }
+
+    .message-bubble.other {
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--color-text-main);
+        align-self: flex-start;
+        border-bottom-left-radius: 2px;
+        border: 1px solid var(--color-border);
+    }
+
+    .message-time {
+        font-size: 0.65rem;
+        color: rgba(255, 255, 255, 0.4);
+        margin-top: 0.25rem;
+        text-align: right;
+    }
+
+    .chat-input-row {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .btn-send {
+        background: var(--color-orange);
+        border: none;
+        color: white;
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+    }
+
+    .btn-send:hover {
+        background: var(--color-orange-hover);
+    }
+
+    /* active request card */
+    .active-request-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--color-border);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-top: 1.5rem;
+    }
+</style>
+
+<div class="payment-wrapper">
+    <h1 class="dashboard-title">
+        <i class="fa-solid fa-credit-card"></i> P2P Obuna Tizimi
+    </h1>
+
+    <div class="dashboard-grid">
+        <!-- CHAP USTUN: TO'LOV VA screenshot FORM -->
+        <div class="glass-card">
+            <h2 class="card-title">
+                <i class="fa-solid fa-receipt"></i> To'lov qilish
+            </h2>
+
+            <!-- Admin Karta Ma'lumotlari -->
+            <div class="card-details-box">
+                <div style="font-size: 0.8rem; font-weight: 600; color: var(--color-orange)">KARTA RAQAMI (UZCARD):</div>
+                <div class="card-number-row">
+                    <span class="card-number-text" id="adminCardNumber">8600 1234 5678 9012</span>
+                    <button class="btn-copy" onclick="copyCardNumber()">
+                        <i class="fa-regular fa-copy"></i> Nusxalash
+                    </button>
+                </div>
+                <div style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--color-text-muted)">
+                    Egasi: EasyBuild.uz (MChJ) | To'lov qilgandan so'ng chek rasm/screenshotini yuklang.
+                </div>
+            </div>
+
+            <!-- Form -->
+            <form method="post" enctype="multipart/form-data" id="paymentForm">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="form-label" for="planSelect">Tarif paketini tanlang:</label>
+                    <select class="premium-select" name="plan_name" id="planSelect" onchange="updateAmount()">
+                        {% for plan in plans %}
+                            <option value="{{ plan.name }}" data-price="{{ plan.price }}">{{ plan.name }} — {{ plan.price|floatformat:0 }} so'm</option>
+                        {% empty %}
+                            <option value="PRO Obuna" data-price="49000">PRO Obuna — 49,000 so'm</option>
+                            <option value="Premium VIP" data-price="99000">Premium VIP — 99,000 so'm</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">To'lov miqdori (so'm):</label>
+                    <input type="text" class="premium-input" name="amount" id="amountInput" readonly value="49000">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">To'lov chekini yuklang (Screenshot):</label>
+                    <div class="file-upload-area" onclick="triggerFileInput()" id="dropZone">
+                        <i class="fa-solid fa-cloud-arrow-up file-upload-icon"></i>
+                        <p style="font-size: 0.85rem; font-weight: 600; color: var(--color-text-main);" id="fileNameDisplay">Faylni tanlang yoki shu yerga tashlang</p>
+                        <p style="font-size: 0.7rem; color: var(--color-text-muted); margin-top: 0.25rem;">PNG, JPG yoki PDF formatida</p>
+                        <input type="file" name="screenshot" id="screenshotFile" accept="image/*" style="display: none;" onchange="handleFileSelect(this)">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <i class="fa-solid fa-paper-plane"></i> To'lovni tasdiqlash
+                </button>
+            </form>
+
+            <!-- Oxirgi yuborilgan so'rov holati -->
+            {% if latest_request %}
+                <div class="active-request-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <span style="font-size: 0.85rem; font-weight: 700; color: var(--color-text-main);">Oxirgi so'rovingiz:</span>
+                        <span class="status-badge {{ latest_request.status }}">
+                            {% if latest_request.status == 'pending' %}Tekshirilmoqda{% elif latest_request.status == 'accepted' %}Tasdiqlangan{% else %}Rad etilgan{% endif %}
+                        </span>
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--color-text-muted)">
+                        Tarif: {{ latest_request.plan_name }} | Summa: {{ latest_request.amount|floatformat:0 }} so'm | Yuborilgan: {{ latest_request.created_at|date:"d.m.Y, H:i" }}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- O'NG USTUN: ADMIN BILAN CANLI CHAT OYNASI -->
+        <div class="glass-card">
+            <h2 class="card-title">
+                <i class="fa-solid fa-headset"></i> Qo'llab-quvvatlash va chat
+            </h2>
+
+            <div class="chat-container">
+                <!-- Xabarlar ro'yxati -->
+                <div class="chat-messages" id="chatWindow">
+                    {% for msg in messages %}
+                        <div class="message-bubble {% if msg.sender == request.user %}me{% else %}other{% endif %}">
+                            <div style="font-weight: 700; font-size: 0.7rem; margin-bottom: 0.15rem; color: rgba(255,255,255,0.7)">
+                                {{ msg.sender.get_full_name|default:msg.sender.username }}
+                            </div>
+                            <div>{{ msg.content }}</div>
+                            <div class="message-time">{{ msg.created_at|date:"H:i" }}</div>
+                        </div>
+                    {% empty %}
+                        <div style="text-align: center; color: var(--color-text-muted); font-size: 0.8rem; margin: auto 0; padding: 2rem;">
+                            Admin bilan suhbat hali boshlanmagan. To'lov haqida savollaringiz bo'lsa bu yerga yozing.
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Xabar yuborish inputs -->
+                <div class="chat-input-row">
+                    <input type="text" class="premium-input" id="chatInput" placeholder="Xabaringizni yozing..." onkeypress="handleKeyPress(event)">
+                    <button class="btn-send" onclick="sendChatMessage()">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Copy Karta Raqami
+    function copyCardNumber() {
+        const cardNum = document.getElementById('adminCardNumber').textContent.replace(/\s+/g, '');
+        navigator.clipboard.writeText(cardNum).then(() => {
+            alert("Karta raqami ko'chirib olindi!");
+        });
+    }
+
+    // Dynamic Plan Narxini yangilash
+    function updateAmount() {
+        const select = document.getElementById('planSelect');
+        const price = select.options[select.selectedIndex].getAttribute('data-price');
+        document.getElementById('amountInput').value = parseFloat(price).toFixed(0);
+    }
+
+    // Fayl tanlash elementlari
+    function triggerFileInput() {
+        document.getElementById('screenshotFile').click();
+    }
+
+    function handleFileSelect(input) {
+        if (input.files && input.files[0]) {
+            document.getElementById('fileNameDisplay').textContent = input.files[0].name;
+            document.getElementById('fileNameDisplay').style.color = '#ff6b00';
+        }
+    }
+
+    // Drag and Drop fayl yuklash
+    const dropZone = document.getElementById('dropZone');
+    
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, e => {
+            e.preventDefault();
+            dropZone.classList.add('drag-over');
+        }, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, e => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+        }, false);
+    });
+
+    dropZone.addEventListener('drop', e => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        if(files && files[0]) {
+            document.getElementById('screenshotFile').files = files;
+            document.getElementById('fileNameDisplay').textContent = files[0].name;
+            document.getElementById('fileNameDisplay').style.color = '#ff6b00';
+        }
+    });
+
+    // Chat Scroller pastga tushirish
+    const chatWindow = document.getElementById('chatWindow');
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+
+    // WebSocket Integratsiyasi
+    const roomId = "{{ room.id }}";
+    const wsScheme = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+    const socket = new WebSocket(wsScheme + window.location.host + '/ws/chat/' + roomId + '/');
+
+    socket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        if (data.type === 'chat_message') {
+            appendMessage(data.sender_id, data.sender_name, data.message, data.time);
+        }
+    };
+
+    function appendMessage(senderId, senderName, content, time) {
+        const isMe = senderId === {{ request.user.id }};
+        const bubble = document.createElement('div');
+        bubble.className = `message-bubble ${isMe ? 'me' : 'other'}`;
+        bubble.innerHTML = `
+            <div style="font-weight: 700; font-size: 0.7rem; margin-bottom: 0.15rem; color: rgba(255,255,255,0.7)">${senderName}</div>
+            <div>${content}</div>
+            <div class="message-time">${time}</div>
+        `;
+        chatWindow.appendChild(bubble);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+        
+        // Remove empty state message if exists
+        const emptyMsg = chatWindow.querySelector('div[style*="text-align: center"]');
+        if (emptyMsg) emptyMsg.remove();
+    }
+
+    // API orqali Xabar yuborish
+    async function sendChatMessage() {
+        const input = document.getElementById('chatInput');
+        const content = input.value.trim();
+        if(!content) return;
+        
+        input.value = '';
+        
+        try {
+            await fetch(`{{ LANG_PREFIX }}/chat/api/upload/${roomId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    'content': content,
+                    'file_type': 'document'
+                })
+            });
+        } catch(e) {
+            console.error(e);
+        }
+    }
+
+    function handleKeyPress(e) {
+        if(e.key === 'Enter') {
+            sendChatMessage();
+        }
+    }
+
+    // Boshlang'ich yuklanishda narxni sozlash
+    window.onload = function() {
+        updateAmount();
+    };
+</script>
+{% endblock %}

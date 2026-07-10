@@ -320,6 +320,9 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
             <span style="position:absolute; top:8px; right:8px; background:var(--orange); color:white; font-size:10px; font-weight:800; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center; border:2px solid var(--sb);">{{ unread_chat_count }}</span>
             {% endif %}
         </a>
+            <a href="{% url 'build:payment_dashboard' %}" class="rail-item {% if request.resolver_match.url_name == 'payment_dashboard' %}active{% endif %}" data-title="Premium"><i class="fa-solid fa-gem"></i></a>
+            
+            
         <div class="rail-item" id="themeToggleBtn" data-title="{% trans 'Rejimni o\'zgartirish' %}"><i class="fa-solid fa-moon"></i></div>
             <a href="{% url 'build:notifications_list' %}" class="rail-item {% if request.resolver_match.url_name == 'notifications_list' %}active{% endif %}" data-title="Bildirishnomalar">
     <i class="fa-solid fa-bell"></i>
@@ -349,6 +352,9 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
                 <li><a href="{% url 'build:market' %}" class="{% if request.resolver_match.url_name == 'market' %}active-link{% endif %}"><i class="fa-solid fa-store main-icon"></i> {% trans "Market Pro (B2B)" %}</a></li>
                 <li><a href="{% url 'build:builder_list' %}"><i class="fa-solid fa-helmet-safety main-icon"></i> {% trans "Usta Qidirish" %}</a></li>
                 <li><a href="{% url 'chat:chat' %}"><i class="fa-regular fa-comment-dots main-icon"></i> {% trans "Xabarlar" %} {% if unread_chat_count > 0 %}<span class="badge" style="background:var(--orange); color:white; font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; margin-left:auto;">{{ unread_chat_count }}</span>{% endif %}</a></li>
+                <li><a href="{% url 'build:payment_dashboard' %}" class="{% if request.resolver_match.url_name == 'payment_dashboard' %}active-link{% endif %}"><i class="fa-solid fa-gem main-icon"></i> {% trans "Premium Obuna" %}</a></li>
+                
+                
                 <li><a href="{% url 'build:profile' %}"><i class="fa-regular fa-user main-icon"></i> Mening Profilim</a></li>
             </ul>
         </div>
@@ -399,6 +405,15 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
       <button class="hbtn" onclick="startCall('audio')" title="Ovozli qo'ng'iroq"><i class="fa-solid fa-phone"></i></button>
       <button class="hbtn" onclick="startCall('video')" title="Video qo'ng'iroq"><i class="fa-solid fa-video"></i></button>
     </div>
+  </div>
+
+  <!-- PAYMENT STATUS BANNER -->
+  <div id="payment-status-banner" style="display:none; position:relative; z-index:2; background:rgba(255, 107, 0, 0.1); border-bottom:1px solid rgba(255, 107, 0, 0.15); padding:10px 16px; font-size:13px; color:#ff6b00; font-weight:600; justify-content:space-between; align-items:center; gap:12px;">
+      <div style="display:flex; align-items:center; gap:8px;">
+          <i class="fa-solid fa-gem" style="color:#ff6b00;"></i>
+          <span id="payment-status-text">Faol obuna turi: ...</span>
+      </div>
+      <div id="payment-status-actions" style="display:flex; gap:8px;"></div>
   </div>
 
   <div class="msgs" id="msgs" style="position: relative; z-index: 1;">
@@ -926,9 +941,65 @@ async function openRoom(id){
         else{document.getElementById('cdot').style.display='none';document.getElementById('cst').textContent='offline';document.getElementById('cst').style.color='var(--muted)';}
     }
   }
+
+  const banner = document.getElementById('payment-status-banner');
+  const textSpan = document.getElementById('payment-status-text');
+  const actionsDiv = document.getElementById('payment-status-actions');
+  
+  if (contact && contact.payment_info) {
+      banner.style.display = 'flex';
+      const info = contact.payment_info;
+      let statusStr = "";
+      if (info.subscription_status) {
+          statusStr = `Doimiy obuna faol (${info.subscription_plan})`;
+      } else if (info.is_temp_active) {
+          statusStr = `Vaqtinchalik kirish faol (${info.pending_plan}) — 24 soatlik tekshiruvda`;
+      } else if (info.request_status === 'rejected') {
+          statusStr = `To'lov rad etilgan (${info.pending_plan || ''})`;
+      } else if (info.request_status === 'pending') {
+          statusStr = `To'lov tekshirilmoqda (${info.pending_plan}) — kuting...`;
+      } else {
+          statusStr = `Obuna faol emas`;
+      }
+      textSpan.textContent = statusStr;
+      actionsDiv.innerHTML = '';
+      
+      const isUserAdmin = {% if request.user.is_superuser or request.user.is_staff %}true{% else %}false{% endif %};
+      if (isUserAdmin && info.request_status === 'pending') {
+          actionsDiv.innerHTML = `
+              <button onclick="processVerification(${info.request_id}, 'accept')" style="background:#10b981; color:#fff; border:none; padding:6px 12px; border-radius:6px; font-size:12px; cursor:pointer; font-weight:600; display:flex; align-items:center; gap:4px;"><i class="fa-solid fa-check"></i> Qabul qilish</button>
+              <button onclick="processVerification(${info.request_id}, 'reject')" style="background:#ef4444; color:#fff; border:none; padding:6px 12px; border-radius:6px; font-size:12px; cursor:pointer; font-weight:600; display:flex; align-items:center; gap:4px;"><i class="fa-solid fa-xmark"></i> Rad etish</button>
+          `;
+      }
+  } else {
+      if (banner) banner.style.display = 'none';
+  }
+
   await loadMessages(id);
   initGlobalWS();
   document.getElementById('inp').focus();
+}
+
+async function processVerification(reqId, action) {
+    if(!confirm(`Haqiqatan ham ushbu so'rovni ${action === 'accept' ? 'qabul qilmoqchimisiz' : 'rad etmoqchimisiz'}?`)) return;
+    try {
+        const response = await fetch(`${LANG_PREFIX}/verification/${reqId}/${action}/?ajax=1`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        });
+        const data = await response.json();
+        if (data.success) {
+            await loadContacts();
+            if (roomId) {
+                await openRoom(roomId);
+            }
+        }
+    } catch(e) {
+        console.error(e);
+    }
 }
 
 function closeSidebar() {
@@ -2434,6 +2505,9 @@ document.addEventListener('keydown', function(e) {
                 <span class="badge">{{ unread_chat_count }}</span>
             {% endif %}
         </a>
+            
+            
+            
     </div>
 
 

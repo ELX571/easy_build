@@ -47,4 +47,10 @@ urlpatterns = [
     path('post/<int:post_id>/delete/', views.post_delete_view, name='post_delete'),
     path('market/', views.market_pro_view, name='market'),
     path('order/<int:order_id>/review/', views.leave_review_view, name='leave_review'),
+    path('plans/', views.plans_list, name='plans_list'),
+    path('plans/<int:plan_id>/subscribe/', views.choose_plan, name='choose_plan'),
+    path('verification/', views.admin_verification_dashboard, name='admin_verification_dashboard'),
+    path('verification/<int:request_id>/<str:action>/', views.process_verification, name='process_verification'),
+    path('verification/chat/<int:user_id>/', views.chat_room_redirect, name='chat_room_redirect'),
+    path('payment-dashboard/', views.payment_dashboard, name='payment_dashboard'),
 ]

@@ -435,6 +435,9 @@
             <i class="fa-regular fa-comment-dots"></i>
             {% if unread_chat_count > 0 %}<span class="badge">{{ unread_chat_count }}</span>{% endif %}
         </a>
+            <a href="{% url 'build:payment_dashboard' %}" class="rail-item {% if request.resolver_match.url_name == 'payment_dashboard' %}active{% endif %}" data-title="Premium"><i class="fa-solid fa-gem"></i></a>
+            
+            
         <a href="{% url 'build:post_create' %}" class="bottom-nav-item add-btn"><i class="fa-solid fa-plus"></i></a>
     </div>
 

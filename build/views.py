@@ -851,3 +851,224 @@ class UpdateTeamNameAPIView(APIView):
         request.user.first_name = team_name
         request.user.save()
         return Response({'success': True, 'message': _("Jamoa nomi muvaffaqiyatli saqlandi!")})
+
+
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden, JsonResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.models import User
+from django.utils import timezone
+from build.models import Plan, BuilderProfile, SubscriptionRequest
+from chat.models import ChatRoom, Message
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+
+@login_required
+def plans_list(request):
+    if not hasattr(request.user, 'profile') or request.user.profile.role != 'builder':
+        return HttpResponseForbidden("Faqat quruvchilar (Builders) uchun ruxsat etilgan.")
+    
+    plans = Plan.objects.all().order_by('price')
+    profile = getattr(request.user.profile, 'builder_info', None)
+    if not profile:
+        profile, _ = BuilderProfile.objects.get_or_create(profile=request.user.profile)
+        
+    return render(request, 'build/plans.html', {
+        'plans': plans,
+        'profile': profile
+    })
+
+@login_required
+def choose_plan(request, plan_id):
+    if not hasattr(request.user, 'profile') or request.user.profile.role != 'builder':
+        return HttpResponseForbidden("Faqat quruvchilar uchun ruxsat etilgan.")
+        
+    plan = get_object_or_404(Plan, id=plan_id)
+    profile = getattr(request.user.profile, 'builder_info', None)
+    if not profile:
+        profile, _ = BuilderProfile.objects.get_or_create(profile=request.user.profile)
+        
+    profile.pending_plan = plan
+    profile.save()
+    
+    from django.urls import reverse
+    admin_user = User.objects.filter(is_superuser=True).first()
+    if admin_user:
+        room, _ = ChatRoom.get_or_create_for(request.user, admin_user)
+        return redirect(f"{reverse('chat:chat')}?room_id={room.id}")
+    return redirect(reverse('chat:chat'))
+
+@login_required
+def admin_verification_dashboard(request):
+    if not (request.user.is_superuser or request.user.is_staff):
+        return HttpResponseForbidden("Faqat adminlar uchun ruxsat etilgan.")
+        
+    requests = SubscriptionRequest.objects.all().order_by('-created_at')
+    return render(request, 'build/verification.html', {
+        'requests': requests
+    })
+
+@login_required
+def process_verification(request, request_id, action):
+    if not (request.user.is_superuser or request.user.is_staff):
+        return HttpResponseForbidden("Faqat adminlar uchun ruxsat etilgan.")
+        
+    sub_request = get_object_or_404(SubscriptionRequest, id=request_id)
+    builder_user = sub_request.user
+    bp = getattr(builder_user.profile, 'builder_info', None)
+    if not bp:
+        bp, _ = BuilderProfile.objects.get_or_create(profile=builder_user.profile)
+        
+    room, _ = ChatRoom.get_or_create_for(builder_user, request.user)
+    
+    if action == 'accept':
+        sub_request.status = 'accepted'
+        sub_request.save()
+        
+        plan = Plan.objects.filter(name=sub_request.plan_name).first()
+        
+        bp.is_temp_active = False
+        bp.subscription_status = True
+        bp.subscription_plan = plan
+        bp.pending_plan = None
+        bp.save()
+        
+        # Send system message & broadcast via WebSocket
+        content_msg = f"Tizim: To'lov tasdiqlandi. {sub_request.plan_name} tarifi doimiy faollashtirildi!"
+        msg = Message.objects.create(room=room, sender=request.user, content=content_msg)
+        
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            f'chat_{room.pk}',
+            {
+                'type': 'chat_message',
+                'message_id': msg.id,
+                'message': msg.content,
+                'sender_id': request.user.id,
+                'sender_name': request.user.get_full_name() or request.user.username,
+                'time': msg.time_str(),
+                'is_read': False,
+                'room_id': room.pk,
+            }
+        )
+        
+    elif action == 'reject':
+        sub_request.status = 'rejected'
+        sub_request.save()
+        
+        bp.is_temp_active = False
+        bp.subscription_status = False
+        bp.subscription_plan = None
+        bp.save()
+        
+        # Automatic warning notification posting: "To'lov tasdiqlanmadi"
+        content_msg = "To'lov tasdiqlanmadi"
+        msg = Message.objects.create(room=room, sender=request.user, content=content_msg)
+        
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            f'chat_{room.pk}',
+            {
+                'type': 'chat_message',
+                'message_id': msg.id,
+                'message': msg.content,
+                'sender_id': request.user.id,
+                'sender_name': request.user.get_full_name() or request.user.username,
+                'time': msg.time_str(),
+                'is_read': False,
+                'room_id': room.pk,
+            }
+        )
+        
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest' or request.GET.get('ajax') == '1':
+        return JsonResponse({'success': True})
+        
+    return redirect('build:admin_verification_dashboard')
+
+@login_required
+def chat_room_redirect(request, user_id):
+    other_user = get_object_or_404(User, id=user_id)
+    room, _ = ChatRoom.get_or_create_for(other_user, request.user)
+    return redirect(f"/chat/?room_id={room.id}")
+
+@login_required
+def payment_dashboard(request):
+    admin_user = User.objects.filter(is_superuser=True).first()
+    if not admin_user:
+        # Fallback to any staff/admin
+        admin_user = User.objects.filter(is_staff=True).first()
+        
+    room, _ = ChatRoom.get_or_create_for(request.user, admin_user)
+    bp = getattr(request.user.profile, 'builder_info', None)
+    if not bp:
+        bp, _ = BuilderProfile.objects.get_or_create(profile=request.user.profile)
+        
+    if request.method == 'POST':
+        plan_name = request.POST.get('plan_name')
+        amount_str = request.POST.get('amount', '0')
+        screenshot = request.FILES.get('screenshot')
+        
+        if not plan_name or not screenshot:
+            return redirect('build:payment_dashboard')
+            
+        try:
+            amount = float(amount_str)
+        except ValueError:
+            amount = 0.0
+            
+        # Create SubscriptionRequest
+        sub_request = SubscriptionRequest.objects.create(
+            user=request.user,
+            plan_name=plan_name,
+            amount=amount,
+            screenshot=screenshot,
+            status='pending'
+        )
+        
+        # Grant 24h temporary access and set pending plan
+        plan = Plan.objects.filter(name=plan_name).first()
+        bp.is_temp_active = True
+        bp.temp_active_until = timezone.now() + timezone.timedelta(hours=24)
+        bp.pending_plan = plan
+        bp.save()
+        
+        # Create chat message: "To'lov cheki yuborildi"
+        msg = Message.objects.create(
+            room=room,
+            sender=request.user,
+            content="To'lov cheki yuborildi"
+        )
+        
+        # Broadcast message via WebSocket
+        try:
+            channel_layer = get_channel_layer()
+            async_to_sync(channel_layer.group_send)(
+                f'chat_{room.pk}',
+                {
+                    'type': 'chat_message',
+                    'message_id': msg.id,
+                    'message': msg.content,
+                    'sender_id': request.user.id,
+                    'sender_name': request.user.get_full_name() or request.user.username,
+                    'time': msg.time_str(),
+                    'is_read': False,
+                    'room_id': room.pk,
+                }
+            )
+        except Exception:
+            pass
+            
+        return redirect('build:payment_dashboard')
+        
+    messages_list = Message.objects.filter(room=room).order_by('created_at')
+    latest_request = SubscriptionRequest.objects.filter(user=request.user).order_by('-created_at').first()
+    plans = Plan.objects.all().order_by('price')
+    
+    return render(request, 'build/payment_dashboard.html', {
+        'room': room,
+        'messages': messages_list,
+        'bp': bp,
+        'latest_request': latest_request,
+        'plans': plans,
+        'admin_user': admin_user
+    })
