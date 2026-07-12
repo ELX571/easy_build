@@ -92,6 +92,8 @@ MIDDLEWARE = [
 
     # Allauth Middleware
     'allauth.account.middleware.AccountMiddleware',
+    # Subscription expiry auto-check
+    'build.middleware.SubscriptionExpiryMiddleware',
 ]
 
 # DEBUG rejimida brauzerni avtomatik yangilash middleware'ini qo'shish
@@ -114,6 +116,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'chat.context_processors.unread_messages_count',
                 'build.context_processors.notifications_processor',
+                'build.context_processors.subscription_processor',
             ],
         },
     },

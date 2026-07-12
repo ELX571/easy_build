@@ -1,6 +1,6 @@
 from django.urls import path
 from build import views
-from build.views import workflow_list_view
+from build.views import workflow_list_view, PlaceBidAPIView, GrantProStatusAPIView, CheckSubscriptionStatusAPIView
 
 app_name = 'build'
 
@@ -53,4 +53,9 @@ urlpatterns = [
     path('verification/<int:request_id>/<str:action>/', views.process_verification, name='process_verification'),
     path('verification/chat/<int:user_id>/', views.chat_room_redirect, name='chat_room_redirect'),
     path('payment-dashboard/', views.payment_dashboard, name='payment_dashboard'),
+
+    # ── Subscription API ───────────────────────────────────────────────────────
+    path('api/order/<int:order_id>/bid/', PlaceBidAPIView.as_view(), name='api_place_bid'),
+    path('api/admin/grant-pro/<int:user_id>/', GrantProStatusAPIView.as_view(), name='api_grant_pro'),
+    path('api/subscription/status/', CheckSubscriptionStatusAPIView.as_view(), name='api_subscription_status'),
 ]

@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="uz" data-theme="light">
 <head>
@@ -5,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
     <meta name="theme-color" content="#05070c" media="(prefers-color-scheme: dark)">
     <meta name="theme-color" content="#f4f6fa" media="(prefers-color-scheme: light)">
-    <title>EasyBuild.uz</title>
+    <title>{% trans "Easy Build" %}</title>
     <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg?v=2">
     <meta name="description" content="EasyBuild platformasiga kiring.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -345,15 +346,15 @@
     <div class="branding">
         <div class="brand-logo">
             <div class="brand-logo-icon"><i class="fa-solid fa-layer-group"></i></div>
-            <span>EasyBuild.<em>uz</em></span>
+            <span>{% trans "EasyBuild" %}</span>
         </div>
         <div class="brand-body">
-            <h2>Qurilish loyihangizni boshqaring</h2>
-            <p>Eng yaxshi ustalar va buyurtmachilarni bir platformada birlashtirdik. Ro'yxatdan o'ting va bugun boshlang.</p>
+            <h2>{% trans "Qurilish loyihangizni boshqaring" %}</h2>
+            <p>{% trans "Eng yaxshi ustalar va buyurtmachilarni bir platformada birlashtirdik. Ro'yxatdan o'ting va bugun boshlang." %}</p>
         </div>
         <div class="brand-stats">
-            <div class="stat"><div class="num">1,200+</div><div class="lbl">Faol foydalanuvchi</div></div>
-            <div class="stat"><div class="num">500+</div><div class="lbl">Tugallangan loyiha</div></div>
+            <div class="stat"><div class="num">1,200+</div><div class="lbl">{% trans "Faol foydalanuvchi" %}</div></div>
+            <div class="stat"><div class="num">500+</div><div class="lbl">{% trans "Tugallangan loyiha" %}</div></div>
         </div>
     </div>
 
@@ -365,8 +366,8 @@
         </button>
 
         <div class="form-header">
-            <h1>Xush kelibsiz! 👋</h1>
-            <p>Hisobingizga kiring va davom eting</p>
+            <h1>{% trans "Xush kelibsiz! 👋" %}</h1>
+            <p>{% trans "Hisobingizga kiring va davom eting" %}</p>
         </div>
 
         <a href="{% url 'google_login' %}?process=login" class="btn-google">
@@ -374,7 +375,7 @@
             Google bilan kirish
         </a>
 
-        <div class="divider">yoki</div>
+        <div class="divider">{% trans "yoki" %}</div>
 
         <div class="alert alert-error"   id="errorBox"></div>
         <div class="alert alert-success" id="successBox"></div>
@@ -383,15 +384,15 @@
             {% csrf_token %}
 
             <div class="form-group">
-                <label for="username">Foydalanuvchi nomi</label>
+                <label for="username">{% trans "Foydalanuvchi nomi yoki Email" %}</label>
                 <div class="input-wrap">
                     <i class="fa-regular fa-user input-icon"></i>
-                    <input type="text" id="username" name="username" placeholder="username kiriting" required autocomplete="username">
+                    <input type="text" id="username" name="username" placeholder="Email yoki username kiriting" required autocomplete="username">
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="password">Parol</label>
+                <label for="password">{% trans "Parol" %}</label>
                 <div class="input-wrap">
                     <i class="fa-solid fa-lock input-icon"></i>
                     <input type="password" id="password" name="password" placeholder="Parolni kiriting" required autocomplete="current-password">
@@ -399,16 +400,16 @@
                 </div>
             </div>
 
-            <div class="forgot-row"><a href="#">Parolni unutdingizmi?</a></div>
+            <div class="forgot-row"><a href="#">{% trans "Parolni unutdingizmi?" %}</a></div>
 
             <button type="submit" class="btn-submit" id="submitBtn">
-                <span id="btnText">Kirish</span>
+                <span id="btnText">{% trans "Kirish" %}</span>
                 <div class="spinner" id="spinner"></div>
             </button>
         </form>
 
         <div class="card-footer">
-            Akkauntingiz yo'qmi? <a href="{% url 'accounts:register' %}">Ro'yxatdan o'ting</a>
+            Akkauntingiz yo'qmi? <a href="{% url 'accounts:register' %}">{% trans "Ro'yxatdan o'ting" %}</a>
         </div>
     </div>
 </div>

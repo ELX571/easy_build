@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="uz" data-theme="light">
 
@@ -6,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
     <meta name="theme-color" content="#05070c" media="(prefers-color-scheme: dark)">
     <meta name="theme-color" content="#f4f6fa" media="(prefers-color-scheme: light)">
-    <title>EasyBuild.uz</title>
+    <title>{% trans "Easy Build" %}</title>
     <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg?v=2">
     <meta name="description" content="EasyBuild platformasida ro'yxatdan o'ting.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -728,11 +729,11 @@
         <div class="branding">
             <div class="brand-logo">
                 <div class="brand-logo-icon"><i class="fa-solid fa-layer-group"></i></div>
-                <span>EasyBuild.<em>uz</em></span>
+                <span>{% trans "EasyBuild" %}</span>
             </div>
             <div class="brand-body">
-                <h2>Qurilish platformasiga qo'shiling</h2>
-                <p>Usta yoki mijoz — ikki bosqichda ro'yxatdan o'ting va darhol ishni boshlang.</p>
+                <h2>{% trans "Qurilish platformasiga qo'shiling" %}</h2>
+                <p>{% trans "Usta yoki mijoz — ikki bosqichda ro'yxatdan o'ting va darhol ishni boshlang." %}</p>
             </div>
             <ul class="brand-steps">
                 <li>
@@ -763,19 +764,19 @@
 
                 <!-- Step indicator -->
                 <div style="margin-bottom: 24px; text-align: center;">
-                    <span style="background: rgba(255, 107, 0, 0.1); color: var(--orange); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 800;">Qadam 2 / 3: Shaxsiy ma'lumotlar</span>
+                    <span style="background: rgba(255, 107, 0, 0.1); color: var(--orange); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 800;">{% trans "Qadam 2 / 3: Shaxsiy ma'lumotlar" %}</span>
                 </div>
                 <!-- Name row -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Ism</label>
+                        <label>{% trans "Ism" %}</label>
                         <div class="input-wrap">
                             <i class="fa-regular fa-id-card input-icon"></i>
                             <input type="text" id="first_name" placeholder="Ismingiz">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Familiya</label>
+                        <label>{% trans "Familiya" %}</label>
                         <div class="input-wrap">
                             <i class="fa-regular fa-id-card input-icon"></i>
                             <input type="text" id="last_name" placeholder="Familiyangiz">
@@ -785,7 +786,7 @@
 
                 <!-- Username -->
                 <div class="form-group">
-                    <label>Username</label>
+                    <label>{% trans "Username" %}</label>
                     <div class="input-wrap">
                         <i class="fa-solid fa-at input-icon"></i>
                         <input type="text" id="username" placeholder="username kiriting" required
@@ -796,7 +797,7 @@
 
                 <!-- Password -->
                 <div class="form-group">
-                    <label>Parol</label>
+                    <label>{% trans "Parol" %}</label>
                     <div class="input-wrap">
                         <i class="fa-solid fa-lock input-icon"></i>
                         <input type="password" id="password" placeholder="Kuchli parol o'ylab toping" required>
@@ -817,7 +818,7 @@
 
                 <!-- Re-password -->
                 <div class="form-group">
-                    <label>Parolni tasdiqlang</label>
+                    <label>{% trans "Parolni tasdiqlang" %}</label>
                     <div class="input-wrap">
                         <i class="fa-solid fa-shield-halved input-icon"></i>
                         <input type="password" id="re_password" placeholder="Parolni qayta kiriting" required>
@@ -826,13 +827,13 @@
                 </div>
 
                 <button type="submit" class="btn-submit" id="submitBtn">
-                    <span id="btnText">Ro'yxatdan o'tish →</span>
+                    <span id="btnText">{% trans "Ro'yxatdan o'tish →" %}</span>
                     <div class="spinner" id="spinner"></div>
                 </button>
             </form>
 
             <div class="card-footer">
-                Allaqachon akkauntingiz bormi? <a href="{% url 'accounts:login' %}">Tizimga kirish</a>
+                Allaqachon akkauntingiz bormi? <a href="{% url 'accounts:login' %}">{% trans "Tizimga kirish" %}</a>
             </div>
         </div>
     </div>

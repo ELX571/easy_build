@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-23 10:00+0500\n"
+"POT-Creation-Date: 2026-07-12 13:30+0500\n"
 "PO-Revision-Date: 2026-06-23 10:00+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Uzbek <uz@li.org>\n"
@@ -12,86 +12,725 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgid "Usta Qidirish"
-msgstr "Usta Qidirish"
+#: accounts/form.py:9 accounts/models.py:9
+msgid "Buyurtmachi (Mijoz)"
+msgstr ""
 
-msgid "Bosh sahifa"
-msgstr "Bosh sahifa"
+#: accounts/form.py:10 accounts/models.py:10
+msgid "Quruvchi (Usta)"
+msgstr ""
 
-msgid "Chatlar"
-msgstr "Chatlar"
+#: accounts/form.py:15 accounts/form.py:63
+#: templates/build/profile_edit.html:397
+msgid "Ismingiz"
+msgstr ""
 
-msgid "Rejimni o'zgartirish"
-msgstr "Rejimni o'zgartirish"
+#: accounts/form.py:19 accounts/form.py:64
+#: templates/build/profile_edit.html:401
+msgid "Familiyangiz"
+msgstr ""
 
-msgid "Profil Sozlamalari"
-msgstr "Profil Sozlamalari"
+#: accounts/form.py:23 accounts/form.py:55
+msgid "Foydalanuvchi nomi"
+msgstr ""
 
-msgid "Navigator"
-msgstr "Navigator"
+#: accounts/form.py:27
+msgid "Email (ixtiyoriy)"
+msgstr ""
 
-msgid "Xabarlar"
-msgstr "Xabarlar"
+#: accounts/form.py:31
+msgid "Parol (kamida 6 belgi)"
+msgstr ""
 
-msgid "Tizim"
-msgstr "Tizim"
+#: accounts/form.py:34
+msgid "Parolni takrorlang"
+msgstr ""
 
-msgid "Ish jarayonlari"
-msgstr "Ish jarayonlari"
+#: accounts/form.py:41
+msgid "Bu username allaqachon band!"
+msgstr ""
 
-msgid "Kalit so'z / Ism"
-msgstr "Kalit so'z / Ism"
+#: accounts/form.py:49
+msgid "Parollar mos emas!"
+msgstr ""
 
-msgid "Usta ismi yoki kalit so'z..."
-msgstr "Usta ismi yoki kalit so'z..."
+#: accounts/form.py:58
+msgid "Parol"
+msgstr ""
 
-msgid "Mutaxassislik"
-msgstr "Mutaxassislik"
+#: accounts/form.py:71 accounts/form.py:75
+msgid "+998 90 123 45 67"
+msgstr ""
 
-msgid "Barchasi"
-msgstr "Barchasi"
+#: accounts/form.py:72
+msgid "Masalan: Men 5 yillik tajribaga ega ustaman..."
+msgstr ""
 
-msgid "Shahar / Viloyat"
+#: accounts/form.py:74 accounts/form.py:76
+msgid "@username"
+msgstr ""
+
+#: accounts/form.py:77
+msgid "Foydalanuvchi nomi yoki link"
+msgstr ""
+
+#: accounts/models.py:11
+msgid "Qurilish jamoasi"
+msgstr ""
+
+#: accounts/models.py:15 templates/build/builder_list.html:541
+msgid "Toshkent shahri"
+msgstr ""
+
+#: accounts/models.py:16 templates/build/builder_list.html:542
+msgid "Toshkent viloyati"
+msgstr ""
+
+#: accounts/models.py:17 templates/build/builder_list.html:543
+msgid "Andijon viloyati"
+msgstr ""
+
+#: accounts/models.py:18 templates/build/builder_list.html:544
+msgid "Buxoro viloyati"
+msgstr ""
+
+#: accounts/models.py:19 templates/build/builder_list.html:545
+msgid "Farg'ona viloyati"
+msgstr ""
+
+#: accounts/models.py:20 templates/build/builder_list.html:546
+msgid "Jizzax viloyati"
+msgstr ""
+
+#: accounts/models.py:21 templates/build/builder_list.html:548
+msgid "Namangan viloyati"
+msgstr ""
+
+#: accounts/models.py:22 templates/build/builder_list.html:549
+msgid "Navoiy viloyati"
+msgstr ""
+
+#: accounts/models.py:23 templates/build/builder_list.html:550
+#, fuzzy
+#| msgid "Shahar / Viloyat"
+msgid "Qashqadaryo viloyati"
 msgstr "Shahar / Viloyat"
 
-msgid "Minimal Reyting"
-msgstr "Minimal Reyting"
+#: accounts/models.py:24
+#, fuzzy
+#| msgid "Shahar / Viloyat"
+msgid "Samarkand viloyati"
+msgstr "Shahar / Viloyat"
 
-msgid "Premium"
+#: accounts/models.py:25 templates/build/builder_list.html:552
+#, fuzzy
+#| msgid "Shahar / Viloyat"
+msgid "Sirdaryo viloyati"
+msgstr "Shahar / Viloyat"
+
+#: accounts/models.py:26 templates/build/builder_list.html:553
+msgid "Surxondaryo viloyati"
+msgstr ""
+
+#: accounts/models.py:27 templates/build/builder_list.html:547
+msgid "Xorazm viloyati"
+msgstr ""
+
+#: accounts/models.py:28 templates/build/builder_list.html:554
+msgid "Qoraqalpog'iston Respublikasi"
+msgstr ""
+
+#: accounts/models.py:44 templates/build/profile_edit.html:486
+#, fuzzy
+#| msgid "Xabarlar"
+msgid "Yangi xabarlar"
+msgstr "Xabarlar"
+
+#: accounts/models.py:45 templates/build/profile_edit.html:499
+msgid "Yangi buyurtmalar"
+msgstr ""
+
+#: accounts/models.py:46 templates/build/profile_edit.html:512
+msgid "Tizim xabarnomalari"
+msgstr ""
+
+#: accounts/models.py:47 templates/build/profile_edit.html:525
+msgid "Aksiya va chegirmalar"
+msgstr ""
+
+#: accounts/models.py:50
+msgid "Tasdiqlangan usta"
+msgstr ""
+
+#: accounts/models.py:51
+#, fuzzy
+#| msgid "Premium"
+msgid "Premium obunachi"
 msgstr "Premium"
 
-msgid "Yuqori"
-msgstr "Yuqori"
+#: accounts/models.py:52
+msgid "O'rtacha baho"
+msgstr ""
 
-msgid "Yaxshi"
-msgstr "Yaxshi"
+#: accounts/models.py:53
+msgid "Tugatilgan buyurtmalar"
+msgstr ""
 
-msgid "Qidirish"
-msgstr "Qidirish"
+#: accounts/models.py:54
+msgid "Bekor qilingan buyurtmalar"
+msgstr ""
 
-msgid "Ish tajribasi"
-msgstr "Ish tajribasi"
+#: accounts/models.py:55
+msgid "O'rtacha javob berish vaqti (daqiqa)"
+msgstr ""
 
-msgid "yil"
-msgstr "yil"
+#: accounts/models.py:110
+msgid "Sarlavha"
+msgstr ""
 
-msgid "Reyting"
-msgstr "Reyting"
+#: accounts/models.py:111
+#, fuzzy
+#| msgid "Xabarlar"
+msgid "Xabar matni"
+msgstr "Xabarlar"
 
-msgid "Bog'lanish"
-msgstr "Bog'lanish"
+#: accounts/models.py:112
+msgid "Havola (URL)"
+msgstr ""
 
-msgid "Hech qanday usta topilmadi"
-msgstr "Hech qanday usta topilmadi"
+#: accounts/models.py:114
+msgid "O'qilgan"
+msgstr ""
 
-msgid "Qidiruv shartlariga mos keladigan Quruvchilar hozircha mavjud emas."
-msgstr "Qidiruv shartlariga mos keladigan Quruvchilar hozircha mavjud emas."
+#: build/views.py:283
+msgid "Profilingiz muvaffaqiyatli yangilandi!"
+msgstr ""
 
+#: build/views.py:308
+msgid "Eʼloningiz muvaffaqiyatli joylashtirildi!"
+msgstr ""
+
+#: build/views.py:483
+msgid "Qurilish e'loni"
+msgstr ""
+
+#: build/views.py:537
+msgid "O'zingizning ma'lumotlaringiz."
+msgstr ""
+
+#: build/views.py:618
+msgid "Kompaniya/Jamoa"
+msgstr ""
+
+#: build/views.py:622 build/views.py:625 build/views.py:663 build/views.py:666
+#: build/views.py:869
+msgid "Siz qurilish jamoasi emassiz!"
+msgstr ""
+
+#: build/views.py:629
+msgid "O'zingizni qo'sha olmaysiz!"
+msgstr ""
+
+#: build/views.py:632
+msgid "Foydalanuvchi allaqachon jamoangizda!"
+msgstr ""
+
+#: build/views.py:635
+msgid "Foydalanuvchi eng ko'pi bilan 2 ta jamoaga a'zo bo'lishi mumkin!"
+msgstr ""
+
+#: build/views.py:645
+msgid "Taklif allaqachon yuborilgan!"
+msgstr ""
+
+#: build/views.py:652
+msgid "Taklif foydalanuvchi chatiga yuborildi!"
+msgstr ""
+
+#: build/views.py:677
+msgid "Foydalanuvchi jamoadan o'chirildi!"
+msgstr ""
+
+#: build/views.py:686
+msgid "Sizga tegishli taklif emas!"
+msgstr ""
+
+#: build/views.py:691 build/views.py:720
+msgid "Bu taklifga allaqachon javob berilgan!"
+msgstr ""
+
+#: build/views.py:693
+msgid "Siz eng ko'pi bilan 2 ta jamoaga a'zo bo'lishingiz mumkin!"
+msgstr ""
+
+#: build/views.py:701
+msgid "🤝 Men jamoangizga qo'shilish taklifini qabul qildim!"
+msgstr ""
+
+#: build/views.py:705
+#, python-brace-format
+msgid "🚀 {name} Jamoasi"
+msgstr ""
+
+#: build/views.py:716
+msgid "Jamoaga qo'shildingiz!"
+msgstr ""
+
+#: build/views.py:725
+msgid "❌ Men jamoangizga qo'shilish taklifini rad etdim."
+msgstr ""
+
+#: build/views.py:728
+msgid "Taklif rad etildi!"
+msgstr ""
+
+#: build/views.py:730
+msgid "Noto'g'ri so'rov."
+msgstr ""
+
+#: build/views.py:738
+msgid "Siz ushbu e'lon muallifi emassiz!"
+msgstr ""
+
+#: build/views.py:744
+msgid "Eʼloningiz muvaffaqiyatli yangilandi!"
+msgstr ""
+
+#: build/views.py:761
+msgid "Eʼlon muvaffaqiyatli oʻchirildi!"
+msgstr ""
+
+#: build/views.py:872
+msgid "Jamoa nomi kiritilmagan!"
+msgstr ""
+
+#: build/views.py:876
+msgid "Jamoa nomi muvaffaqiyatli saqlandi!"
+msgstr ""
+
+#: conf/settings.py:183
+msgid "O'zbekcha"
+msgstr ""
+
+#: conf/settings.py:184
+msgid "Русский"
+msgstr ""
+
+#: conf/settings.py:185
+msgid "English"
+msgstr ""
+
+#: templates/build/builder_list.html:451
 msgid "Kirish"
 msgstr "Kirish"
 
+#: templates/build/builder_list.html:488 templates/build/dashboard.html:593
+#: templates/build/network.html:543
+msgid "Navigator"
+msgstr "Navigator"
+
+#: templates/build/builder_list.html:490 templates/build/dashboard.html:596
+#: templates/build/network.html:546
+msgid "Bosh sahifa"
+msgstr "Bosh sahifa"
+
+#: templates/build/builder_list.html:491 templates/build/network.html:547
+#: templates/chat/chat.html:392
+msgid "Hamkasblar"
+msgstr ""
+
+#: templates/build/builder_list.html:492 templates/build/dashboard.html:597
+#: templates/build/network.html:548 templates/chat/chat.html:393
+msgid "Market Pro (B2B)"
+msgstr ""
+
+#: templates/build/builder_list.html:493 templates/build/dashboard.html:598
+#: templates/build/network.html:549 templates/chat/chat.html:394
+msgid "Usta Qidirish"
+msgstr "Usta Qidirish"
+
+#: templates/build/builder_list.html:494 templates/build/dashboard.html:599
+#: templates/build/network.html:550 templates/chat/chat.html:395
+msgid "Xabarlar"
+msgstr "Xabarlar"
+
+#: templates/build/builder_list.html:495 templates/build/dashboard.html:600
+#: templates/build/network.html:551 templates/chat/chat.html:396
+#, fuzzy
+#| msgid "Premium"
+msgid "Premium Obuna"
+msgstr "Premium"
+
+#: templates/build/builder_list.html:499 templates/build/dashboard.html:604
+#: templates/build/network.html:555
+msgid "Tizim"
+msgstr "Tizim"
+
+#: templates/build/builder_list.html:501 templates/build/dashboard.html:606
+#: templates/build/network.html:557
+msgid "Ish jarayonlari"
+msgstr "Ish jarayonlari"
+
+#: templates/build/builder_list.html:511
+msgid "Kalit so'z / Ism"
+msgstr "Kalit so'z / Ism"
+
+#: templates/build/builder_list.html:512
+#, fuzzy
+#| msgid "Usta ismi yoki kalit so'z..."
+msgid "Usta ismi yoki kalit so\\"
+msgstr "Usta ismi yoki kalit so'z..."
+
+#: templates/build/builder_list.html:516
+msgid "Mutaxassislik"
+msgstr "Mutaxassislik"
+
+#: templates/build/builder_list.html:518 templates/build/builder_list.html:540
+#: templates/build/builder_list.html:561
+msgid "Barchasi"
+msgstr "Barchasi"
+
+#: templates/build/builder_list.html:519
+msgid "Elektrik"
+msgstr ""
+
+#: templates/build/builder_list.html:520
+msgid "Santexnik"
+msgstr ""
+
+#: templates/build/builder_list.html:521
+msgid "Betonchi / Armaturachi"
+msgstr ""
+
+#: templates/build/builder_list.html:522
+msgid "Suvoqchi / Malyar"
+msgstr ""
+
+#: templates/build/builder_list.html:523
+msgid "Kafelchi (Plitkach)"
+msgstr ""
+
+#: templates/build/builder_list.html:524
+msgid "Payvandchi (Svarshik)"
+msgstr ""
+
+#: templates/build/builder_list.html:525
+msgid "Tom yopuvchi (Tomchi)"
+msgstr ""
+
+#: templates/build/builder_list.html:526
+msgid "G'isht quyuvchi (G'ishtchi)"
+msgstr ""
+
+#: templates/build/builder_list.html:527
+msgid "Duradgor / Yog'och ustasi"
+msgstr ""
+
+#: templates/build/builder_list.html:528
+msgid "Gipsokartonchi"
+msgstr ""
+
+#: templates/build/builder_list.html:529
+msgid "Isitish va Sovutish (HVAC)"
+msgstr ""
+
+#: templates/build/builder_list.html:530
+msgid "Loyiha muhandisi (Prorab)"
+msgstr ""
+
+#: templates/build/builder_list.html:531
+msgid "Fasad ustasi"
+msgstr ""
+
+#: templates/build/builder_list.html:532
+msgid "Demontaj / Buzish ishlari"
+msgstr ""
+
+#: templates/build/builder_list.html:533
+msgid "Umumiy quruvchi"
+msgstr ""
+
+#: templates/build/builder_list.html:538
+msgid "Shahar / Viloyat"
+msgstr "Shahar / Viloyat"
+
+#: templates/build/builder_list.html:551
+#, fuzzy
+#| msgid "Shahar / Viloyat"
+msgid "Samarqand viloyati"
+msgstr "Shahar / Viloyat"
+
+#: templates/build/builder_list.html:559
+msgid "Minimal Reyting"
+msgstr "Minimal Reyting"
+
+#: templates/build/builder_list.html:562
+msgid "Premium"
+msgstr "Premium"
+
+#: templates/build/builder_list.html:563
+msgid "Yuqori"
+msgstr "Yuqori"
+
+#: templates/build/builder_list.html:564
+msgid "Yaxshi"
+msgstr "Yaxshi"
+
+#: templates/build/builder_list.html:569 templates/build/home.html:482
+#: templates/build/network.html:682
+msgid "Qidirish"
+msgstr "Qidirish"
+
+#: templates/build/builder_list.html:606
+msgid "Gamifikatsiya"
+msgstr ""
+
+#: templates/build/builder_list.html:614
+msgid "Reyting"
+msgstr "Reyting"
+
+#: templates/build/builder_list.html:622 templates/build/home.html:544
+#: templates/build/network.html:761
+msgid "Bog'lanish"
+msgstr "Bog'lanish"
+
+#: templates/build/builder_list.html:628
+msgid "Hech qanday usta topilmadi"
+msgstr "Hech qanday usta topilmadi"
+
+#: templates/build/builder_list.html:629
+msgid "Qidiruv shartlariga mos keladigan Quruvchilar hozircha mavjud emas."
+msgstr "Qidiruv shartlariga mos keladigan Quruvchilar hozircha mavjud emas."
+
+#: templates/build/builder_list.html:736 templates/build/dashboard.html:816
+#: templates/build/home.html:716 templates/build/network.html:901
+msgid "Bu e'lonning muallifi mavjud emas."
+msgstr ""
+
+#: templates/build/builder_list.html:743 templates/build/dashboard.html:806
+#: templates/build/dashboard.html:823 templates/build/home.html:723
+#: templates/build/home.html:892 templates/build/home.html:923
+#: templates/build/network.html:860 templates/build/network.html:891
+#: templates/build/network.html:908
+msgid "Iltimos, oldin tizimga kiring!"
+msgstr ""
+
+#: templates/build/builder_list.html:748 templates/build/builder_list.html:818
+#: templates/build/dashboard.html:828 templates/build/dashboard.html:898
+#: templates/build/home.html:728 templates/build/home.html:798
+#: templates/build/network.html:913 templates/build/network.html:983
+msgid "Xatolik yuz berdi!"
+msgstr ""
+
+#: templates/build/dashboard.html:537 templates/build/home.html:413
+#: templates/build/network.html:487 templates/build/post_create.html:332
+msgid "Post yaratish"
+msgstr ""
+
+#: templates/build/dashboard.html:817 templates/build/home.html:717
+#: templates/build/network.html:902
+msgid "Bu sizning o'z e'loningiz!"
+msgstr ""
+
+#: templates/build/home.html:480 templates/build/network.html:680
+msgid "Kerakli e\\"
+msgstr ""
+
+#: templates/build/network.html:399 templates/build/profile.html:344
+msgid "Kritik amalni tasdiqlang"
+msgstr ""
+
+#: templates/build/network.html:400 templates/build/profile.html:345
+msgid ""
+"Ushbu e'lonni butunlay o'chirib tashlamoqchimisiz? Bu amalni ortga qaytarib "
+"bo'lmaydi."
+msgstr ""
+
+#: templates/build/network.html:402 templates/build/profile.html:347
+#: templates/chat/chat.html:721
+msgid "Bekor qilish"
+msgstr ""
+
+#: templates/build/network.html:405 templates/build/profile.html:350
+#, fuzzy
+#| msgid "Kirish"
+msgid "O'chirish"
+msgstr "Kirish"
+
+#: templates/build/network.html:693
+#, fuzzy
+#| msgid "Ish jarayonlari"
+msgid "Boshqa mijozlar e'lonlari"
+msgstr "Ish jarayonlari"
+
+#: templates/build/network.html:699
+msgid "Hamkasblar e'lonlari"
+msgstr ""
+
+#: templates/build/network.html:717
+msgid "oldin"
+msgstr ""
+
+#: templates/build/post_create.html:284 templates/build/profile_edit.html:298
+msgid "Orqaga"
+msgstr ""
+
+#: templates/build/post_create.html:337
+msgid "Post matni:"
+msgstr ""
+
+#: templates/build/post_create.html:342
+msgid "Rasm yuklash:"
+msgstr ""
+
+#: templates/build/post_create.html:346
+msgid "Postni joylash"
+msgstr ""
+
+#: templates/build/profile.html:410
+msgid "Ortga"
+msgstr ""
+
+#: templates/build/profile.html:414 templates/build/profile.html:763
+#: templates/build/profile_edit.html:358 templates/build/profile_edit.html:475
+msgid "Bildirishnomalar"
+msgstr ""
+
+#: templates/build/profile.html:783
+msgid "Sizda yangi bildirishnomalar yo'q."
+msgstr ""
+
+#: templates/build/profile_edit.html:349
 msgid "Sozlamalar"
 msgstr "Sozlamalar"
 
+#: templates/build/profile_edit.html:352
+msgid "Shaxsiy ma'lumotlar"
+msgstr ""
+
+#: templates/build/profile_edit.html:355 templates/build/profile_edit.html:456
+msgid "Xavfsizlik va Parol"
+msgstr ""
+
+#: templates/build/profile_edit.html:361
+msgid "EasyBuild Premium"
+msgstr ""
+
+#: templates/build/profile_edit.html:366
+#, fuzzy
+#| msgid "Profil Sozlamalari"
+msgid "Jamoa sozlamalari"
+msgstr "Profil Sozlamalari"
+
+#: templates/build/profile_edit.html:371 templates/build/profile_edit.html:1192
+#, fuzzy
+#| msgid "Rejimni o'zgartirish"
+msgid "Tilni o'zgartirish"
+msgstr "Rejimni o'zgartirish"
+
+#: templates/build/profile_edit.html:376
 msgid "Tizimdan chiqish"
 msgstr "Tizimdan chiqish"
+
+#: templates/build/profile_edit.html:381
+msgid "Profilni tahrirlash"
+msgstr ""
+
+#: templates/build/profile_edit.html:408
+msgid "Telefon raqam"
+msgstr ""
+
+#: templates/build/profile_edit.html:412
+msgid "Hudud"
+msgstr ""
+
+#: templates/build/profile_edit.html:420
+msgid "Men haqimda (Bio)"
+msgstr ""
+
+#: templates/build/profile_edit.html:424
+msgid "Ijtimoiy tarmoqlar"
+msgstr ""
+
+#: templates/build/profile_edit.html:449 templates/chat/chat.html:722
+msgid "Saqlash"
+msgstr ""
+
+#: templates/build/profile_edit.html:457
+msgid ""
+"Bu bo'limda parolingizni yoki xavfsizlik sozlamalarini o'zgartirishingiz "
+"mumkin (Tez kunda ishga tushadi)."
+msgstr ""
+
+#: templates/build/profile_edit.html:460
+msgid "Joriy parol"
+msgstr ""
+
+#: templates/build/profile_edit.html:464
+msgid "Yangi parol"
+msgstr ""
+
+#: templates/build/profile_edit.html:468
+msgid "Yangi parolni takrorlang"
+msgstr ""
+
+#: templates/build/profile_edit.html:471
+msgid "Parolni yangilash"
+msgstr ""
+
+#: templates/build/profile_edit.html:476
+msgid "Sizga qanday bildirishnomalar kelishini boshqaring."
+msgstr ""
+
+#: templates/build/profile_edit.html:487
+msgid "Birov sizga xabar yozganda email orqali bildirishnoma jo'natish"
+msgstr ""
+
+#: templates/build/profile_edit.html:500
+msgid "Sizga yangi ish taklif qilinganda xabarnoma jo'natish"
+msgstr ""
+
+#: templates/build/profile_edit.html:513
+msgid "Xavfsizlik, parolni o'zgartirish va tizim yangilanishlari"
+msgstr ""
+
+#: templates/build/profile_edit.html:526
+msgid "EasyBuild tizimidagi chegirmalar, yangiliklar va maxsus takliflar"
+msgstr ""
+
+#: templates/build/profile_edit.html:535
+#, fuzzy
+#| msgid "Sozlamalar"
+msgid "Sozlamalarni saqlash"
+msgstr "Sozlamalar"
+
+#: templates/build/profile_edit.html:656
+msgid "Verifikatsiya & Obunalar"
+msgstr ""
+
+#: templates/build/profile_edit.html:1095
+#, fuzzy
+#| msgid "Profil Sozlamalari"
+msgid "Jamoa Sozlamalari"
+msgstr "Profil Sozlamalari"
+
+#: templates/build/profile_edit.html:1131
+msgid "Men a'zo bo'lgan jamoalar"
+msgstr ""
+
+#: templates/build/profile_edit.html:1196
+msgid "Platformadan foydalanish uchun o'zingizga qulay tilni tanlang."
+msgstr ""
+
+#: templates/build/profile_edit.html:1223
+msgid "Tilni saqlash"
+msgstr ""
+
+#~ msgid "Chatlar"
+#~ msgstr "Chatlar"
+
+#~ msgid "Ish tajribasi"
+#~ msgstr "Ish tajribasi"
+
+#~ msgid "yil"
+#~ msgstr "yil"

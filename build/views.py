@@ -15,7 +15,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 
 from accounts.models import Profile
 from accounts.form import ProfileEditForm
-from build.models import Post, BuilderProfile, PostLike, PostBookmark, TeamInvitation
+from build.models import Post, BuilderProfile, PostLike, PostBookmark, TeamInvitation, ProjectOrder, ProjectBid
 from chat.models import ChatRoom, Message
 from .form import PostCreateForm
 
@@ -41,11 +41,27 @@ class HomeView(ListView):
             try:
                 user_role = self.request.user.profile.role
                 if user_role == 'client':
-                    # Oddiy user: faqat ustalar qo'ygan postlar
                     qs = qs.filter(author__profile__role__in=['builder', 'team'])
                 elif user_role in ['builder', 'team']:
-                    # Usta/Jamoa: faqat oddiy userlar qo'ygan postlar
                     qs = qs.filter(author__profile__role='client')
+            except Exception:
+                pass
+
+            # ⭐ Premium ustalar postlari feed tepasida — AI Score bilan birga
+            try:
+                user_city = self.request.user.profile.city
+                qs = qs.annotate(
+                    premium_score=Case(
+                        When(author__profile__is_premium=True, then=500),
+                        default=0,
+                        output_field=IntegerField()
+                    ),
+                    city_score=Case(
+                        When(author__profile__city=user_city, then=200),
+                        default=0,
+                        output_field=IntegerField()
+                    )
+                )
             except Exception:
                 pass
 
@@ -303,7 +319,14 @@ def post_create_view(request):
 
 
 def builder_list_view(request):
-    builders = BuilderProfile.objects.filter(is_available=True)
+    # ⭐ Premium ustalar qidiruv natijalarida BIRINCHI chiqadi
+    builders = BuilderProfile.objects.filter(is_available=True).annotate(
+        premium_boost=Case(
+            When(profile__is_premium=True, then=1000),
+            default=0,
+            output_field=IntegerField()
+        )
+    ).order_by('-premium_boost', '-rating_cache')
 
     # ⚡️ URL dan kelayotgan qiymatlarni o'qib olamiz
     profession = request.GET.get('profession', '').strip()
@@ -926,15 +949,32 @@ def process_verification(request, request_id, action):
         sub_request.save()
         
         plan = Plan.objects.filter(name=sub_request.plan_name).first()
-        
+        duration_days = plan.duration_days if plan else 30
+
         bp.is_temp_active = False
         bp.subscription_status = True
         bp.subscription_plan = plan
+        bp.subscription_start = timezone.now()
+        bp.subscription_end = timezone.now() + timezone.timedelta(days=duration_days)
         bp.pending_plan = None
         bp.save()
+
+        # ✅ Profile'da is_premium ni ham yoqamiz
+        builder_profile_obj = builder_user.profile
+        builder_profile_obj.is_premium = True
+        builder_profile_obj.save(update_fields=['is_premium'])
+
+        # ✅ Bildirishnoma yuboramiz
+        from accounts.models import Notification
+        Notification.objects.create(
+            user=builder_user,
+            title="✅ Obuna faollashtirildi!",
+            message=f"Tabriklaymiz! Sizning '{sub_request.plan_name}' obunangiz admin tomonidan tasdiqlandi va faollashtirildi. Endi barcha Premium imkoniyatlardan foydalanishingiz mumkin.",
+            icon='fa-solid fa-crown',
+        )
         
         # Send system message & broadcast via WebSocket
-        content_msg = f"Tizim: To'lov tasdiqlandi. {sub_request.plan_name} tarifi doimiy faollashtirildi!"
+        content_msg = f"✅ Tizim: To'lov tasdiqlandi. {sub_request.plan_name} tarifi doimiy faollashtirildi! Endi siz barcha Premium imkoniyatlardan foydalanishingiz mumkin."
         msg = Message.objects.create(room=room, sender=request.user, content=content_msg)
         
         channel_layer = get_channel_layer()
@@ -960,9 +1000,23 @@ def process_verification(request, request_id, action):
         bp.subscription_status = False
         bp.subscription_plan = None
         bp.save()
+
+        # ❌ Profile'da is_premium ni o'chiramiz
+        builder_profile_obj = builder_user.profile
+        builder_profile_obj.is_premium = False
+        builder_profile_obj.save(update_fields=['is_premium'])
+
+        # ❌ Rad etish bildirishnomasini yuboramiz
+        from accounts.models import Notification
+        Notification.objects.create(
+            user=builder_user,
+            title="❌ To'lov tasdiqlanmadi",
+            message="Afsuski, yuborgan to'lov chekingiz tasdiqlanmadi. Iltimos, to'g'ri to'lov chekini yuboring yoki admin bilan bog'laning.",
+            icon='fa-solid fa-circle-xmark',
+        )
         
-        # Automatic warning notification posting: "To'lov tasdiqlanmadi"
-        content_msg = "To'lov tasdiqlanmadi"
+        # Automatic warning notification posting
+        content_msg = "❌ To'lov tasdiqlanmadi. Iltimos, to'g'ri to'lov chekini yuboring yoki admin bilan bog'laning."
         msg = Message.objects.create(room=room, sender=request.user, content=content_msg)
         
         channel_layer = get_channel_layer()
@@ -1072,3 +1126,134 @@ def payment_dashboard(request):
         'plans': plans,
         'admin_user': admin_user
     })
+
+
+# =============================================================================
+# SUBSCRIPTION BACKEND: BID, PRO GRANT, STATUS CHECK
+# =============================================================================
+
+class PlaceBidAPIView(APIView):
+    """Faqat aktiv obunali ustalar buyurtmaga taklif bera oladi."""
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, order_id):
+        bp = getattr(request.user.profile, 'builder_info', None)
+        if not bp:
+            return Response({'error': 'Siz usta profiliga ega emassiz.'}, status=403)
+
+        # Obuna tekshiruvi
+        if not bp.has_active_subscription:
+            return Response({
+                'error': 'subscription_required',
+                'message': 'Bu funksiyadan foydalanish uchun Standard yoki Pro obuna talab etiladi.',
+                'redirect': '/uz/payment-dashboard/'
+            }, status=402)  # 402 Payment Required
+
+        order = get_object_or_404(ProjectOrder, id=order_id, status='open')
+
+        # Allaqachon taklif berganmi?
+        if ProjectBid.objects.filter(order=order, builder=bp).exists():
+            return Response({'error': 'Siz bu buyurtmaga allaqachon taklif bergansiz.'}, status=400)
+
+        proposed_price = request.data.get('proposed_price')
+        message = request.data.get('message', '')
+
+        if not proposed_price:
+            return Response({'error': 'Taklif narxini kiriting.'}, status=400)
+
+        bid = ProjectBid.objects.create(
+            order=order,
+            builder=bp,
+            proposed_price=proposed_price,
+            message=message
+        )
+
+        # Mijozga bildirishnoma
+        from accounts.models import Notification
+        builder_name = request.user.get_full_name() or request.user.username
+        Notification.objects.create(
+            user=order.client.user,
+            title=f"📋 Yangi taklif: {order.title}",
+            message=f"{builder_name} sizning '{order.title}' buyurtmangizga {proposed_price} so'm narxida taklif berdi.",
+            icon='fa-solid fa-file-invoice',
+            url=f'/uz/workflow/',
+        )
+
+        return Response({'success': True, 'bid_id': bid.id, 'message': 'Taklifingiz muvaffaqiyatli yuborildi!'})
+
+
+class GrantProStatusAPIView(APIView):
+    """Admin tomonidan foydalanuvchiga PRO maqom beradi."""
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, user_id):
+        if not (request.user.is_superuser or request.user.is_staff):
+            return Response({'error': 'Faqat adminlar uchun.'}, status=403)
+
+        target_user = get_object_or_404(User, id=user_id)
+        bp = getattr(target_user.profile, 'builder_info', None)
+        if not bp:
+            bp, _ = BuilderProfile.objects.get_or_create(profile=target_user.profile)
+
+        action = request.data.get('action', 'grant')  # 'grant' yoki 'revoke'
+
+        if action == 'grant':
+            # PRO plan topamiz yoki yaratamiz
+            pro_plan, _ = Plan.objects.get_or_create(
+                name='PRO',
+                defaults={'price': 0, 'description': 'Admin tomonidan berilgan PRO maqom', 'duration_days': 36500}
+            )
+            bp.subscription_status = True
+            bp.subscription_plan = pro_plan
+            bp.is_temp_active = False
+            bp.save()
+
+            target_user.profile.is_premium = True
+            target_user.profile.save(update_fields=['is_premium'])
+
+            from accounts.models import Notification
+            Notification.objects.create(
+                user=target_user,
+                title="👑 Siz PRO Usta maqomini oldingiz!",
+                message="Tabriklaymiz! Admin tomonidan sizga EasyBuild platformasining eng yuqori — PRO Usta maqomi berildi. Bu maqom faqat eng sara va ishonchli ustalarga beriladi.",
+                icon='fa-solid fa-crown',
+            )
+
+            # Admin bilan chat orqali xabar
+            room, _ = ChatRoom.get_or_create_for(target_user, request.user)
+            msg = Message.objects.create(
+                room=room, sender=request.user,
+                content="👑 Tabriklaymiz! Sizga EasyBuild platformasining PRO Usta maqomi berildi! Siz endi platformamizning eng ishonchli ustalari qatoriga kirdingiz."
+            )
+
+            return Response({'success': True, 'message': f"{target_user.username} ga PRO maqom berildi."})
+
+        elif action == 'revoke':
+            bp.subscription_status = False
+            bp.subscription_plan = None
+            bp.save()
+
+            target_user.profile.is_premium = False
+            target_user.profile.save(update_fields=['is_premium'])
+
+            return Response({'success': True, 'message': f"{target_user.username} dan PRO maqom olindi."})
+
+        return Response({'error': 'action must be grant or revoke'}, status=400)
+
+
+class CheckSubscriptionStatusAPIView(APIView):
+    """Joriy foydalanuvchining obuna holatini qaytaradi."""
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        profile = request.user.profile
+        bp = getattr(profile, 'builder_info', None)
+
+        data = {
+            'is_premium': profile.is_premium,
+            'has_active_subscription': bp.has_active_subscription if bp else False,
+            'subscription_plan': bp.subscription_plan.name if (bp and bp.subscription_plan) else None,
+            'is_temp_active': bp.is_temp_active if bp else False,
+            'temp_active_until': bp.temp_active_until.isoformat() if (bp and bp.temp_active_until) else None,
+        }
+        return Response(data)

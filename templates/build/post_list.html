@@ -1,10 +1,11 @@
+{% load i18n %}
 {% load i18n static humanize %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE|default:'uz' }}" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
-<title>Easy Build — Market Pro</title>
+<title>{% trans "Easy Build" %}</title>
 <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg?v=2">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -146,7 +147,7 @@ body { overflow-x: hidden !important; width: 100% !important; max-width: 100vw !
 
 <!-- HEADER -->
 <header>
-  <a href="{% url 'build:home' %}" class="logo">EasyBuild.<span>uz</span> <i class="fa-solid fa-helmet-safety" style="font-size:17px;"></i></a>
+  <a href="{% url 'build:home' %}" class="logo">EasyBuild <i class="fa-solid fa-helmet-safety" style="font-size:17px;"></i></a>
   <div class="hdr-right">
     <button class="hdr-btn" id="themeBtn"><i class="fa-solid fa-moon"></i></button>
     {% if user.is_authenticated %}
@@ -258,27 +259,27 @@ body { overflow-x: hidden !important; width: 100% !important; max-width: 100vw !
       <div class="cs-badge"><i class="fa-solid fa-clock"></i> Ishlab chiqilmoqda</div>
 
       <!-- Title -->
-      <h1 class="cs-title">Market Pro — <span>Tez Kunda!</span></h1>
+      <h1 class="cs-title">Market Pro — <span>{% trans "Tez Kunda!" %}</span></h1>
 
       <!-- Description -->
-      <p class="cs-desc">O'zbekistonning eng innovatsion qurilish mollari va xizmatlari platformasi tayyorlanmoqda. Birinchilardan bo'ling!</p>
+      <p class="cs-desc">{% trans "O'zbekistonning eng innovatsion qurilish mollari va xizmatlari platformasi tayyorlanmoqda. Birinchilardan bo'ling!" %}</p>
 
       <!-- Countdown -->
       <div class="cs-countdown">
-        <div class="cs-cd-box"><div class="cs-cd-num" id="cd-days">30</div><div class="cs-cd-lbl">Kun</div></div>
+        <div class="cs-cd-box"><div class="cs-cd-num" id="cd-days">30</div><div class="cs-cd-lbl">{% trans "Kun" %}</div></div>
         <div class="cs-sep">:</div>
-        <div class="cs-cd-box"><div class="cs-cd-num" id="cd-hours">00</div><div class="cs-cd-lbl">Soat</div></div>
+        <div class="cs-cd-box"><div class="cs-cd-num" id="cd-hours">00</div><div class="cs-cd-lbl">{% trans "Soat" %}</div></div>
         <div class="cs-sep">:</div>
-        <div class="cs-cd-box"><div class="cs-cd-num" id="cd-mins">00</div><div class="cs-cd-lbl">Daqiqa</div></div>
+        <div class="cs-cd-box"><div class="cs-cd-num" id="cd-mins">00</div><div class="cs-cd-lbl">{% trans "Daqiqa" %}</div></div>
         <div class="cs-sep">:</div>
-        <div class="cs-cd-box"><div class="cs-cd-num" id="cd-secs">00</div><div class="cs-cd-lbl">Soniya</div></div>
+        <div class="cs-cd-box"><div class="cs-cd-num" id="cd-secs">00</div><div class="cs-cd-lbl">{% trans "Soniya" %}</div></div>
       </div>
 
       <!-- Features -->
       <div class="cs-features">
-        <div class="cs-feat"><i class="fa-solid fa-layer-group"></i><span>Qurilish materiallari</span></div>
-        <div class="cs-feat"><i class="fa-solid fa-truck"></i><span>Yetkazib berish</span></div>
-        <div class="cs-feat"><i class="fa-solid fa-shield-halved"></i><span>Xavfsiz to'lov</span></div>
+        <div class="cs-feat"><i class="fa-solid fa-layer-group"></i><span>{% trans "Qurilish materiallari" %}</span></div>
+        <div class="cs-feat"><i class="fa-solid fa-truck"></i><span>{% trans "Yetkazib berish" %}</span></div>
+        <div class="cs-feat"><i class="fa-solid fa-shield-halved"></i><span>{% trans "Xavfsiz to'lov" %}</span></div>
       </div>
 
       <!-- Notification form -->
@@ -333,11 +334,11 @@ body { overflow-x: hidden !important; width: 100% !important; max-width: 100vw !
     <div class="widget">
       <div class="widget-title"><i class="fa-solid fa-chart-simple" style="color:var(--accent);"></i> Statistika</div>
       <div class="stat-row">
-        <div class="stat-lbl">Jami e'lonlar</div>
+        <div class="stat-lbl">{% trans "Jami e'lonlar" %}</div>
         <div class="stat-num">{{ posts|length }}</div>
       </div>
       <div class="stat-row">
-        <div class="stat-lbl">Faol ustalar</div>
+        <div class="stat-lbl">{% trans "Faol ustalar" %}</div>
         <div class="stat-num" style="color:#10b981;">✓</div>
       </div>
     </div>

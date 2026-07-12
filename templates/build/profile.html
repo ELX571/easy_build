@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load i18n humanize static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE|default:'uz' }}" data-theme="dark">
@@ -6,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
     <meta name="theme-color" content="#05070c" media="(prefers-color-scheme: dark)">
     <meta name="theme-color" content="#f4f6fa" media="(prefers-color-scheme: light)">
-    <title>EasyBuild.uz - Shaxsiy Kabinet</title>
+    <title>{% trans "Easy Build" %}</title>
     <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg?v=2">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -360,9 +361,9 @@
                 <i class="fa-solid fa-bars menu-hamburger"></i>
             </div>
             <div class="header-center">
-                <a href="{% url 'build:home' %}" class="logo">
-                    EasyBuild.<span>uz</span> <i class="fa-solid fa-helmet-safety"></i>
-                </a>
+                <div class="logo" id="logoText" style="cursor: pointer; user-select: none;">
+                    EasyBuild <i class="fa-solid fa-helmet-safety"></i>
+                </div>
             </div>
             <div class="header-right">
                 <a href="{% url 'build:profile_edit' %}" style="width: 44px; height: 44px; border-radius: 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 18px; text-decoration: none; transition: 0.2s;">
@@ -375,18 +376,31 @@
     <!-- Sidebar (Desktop) -->
     <div class="sidebar-container">
         <div class="icon-rail">
-            <a href="{% url 'build:home' %}" class="rail-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}" title="{% trans 'Bosh sahifa' %}"><i class="fa-solid fa-house"></i></a>
-            <a href="{% url 'build:network' %}" class="rail-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}" title="{% trans 'Hamkasblar' %}"><i class="fa-solid fa-users"></i></a>
+            <a href="{% url 'build:home' %}" class="rail-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}" data-title="Bosh sahifa"><i class="fa-solid fa-house"></i></a>
+            <a href="{% url 'build:network' %}" class="rail-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}" data-title="Hamkasblar"><i class="fa-solid fa-users"></i></a>
             <a href="{% url 'build:market' %}" class="rail-item {% if request.resolver_match.url_name == 'market' %}active{% endif %}" data-title="Market Pro"><i class="fa-solid fa-store"></i></a>
-            <a href="{% url 'build:builder_list' %}" class="rail-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" title="{% trans 'Usta Qidirish' %}"><i class="fa-solid fa-helmet-safety"></i></a>
-            <a href="{% url 'build:post_create' %}" class="rail-item {% if request.resolver_match.url_name == 'post_create' %}active{% endif %}" title="{% trans 'Post yaratish' %}"><i class="fa-solid fa-plus"></i></a>
-            <a href="{% url 'chat:chat' %}" class="rail-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}" title="{% trans 'Chatlar' %}">
+            <a href="{% url 'build:builder_list' %}" class="rail-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" data-title="Usta Qidirish"><i class="fa-solid fa-helmet-safety"></i></a>
+            <a href="{% url 'chat:chat' %}" class="rail-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}" data-title="Chatlar">
                 <i class="fa-regular fa-comment-dots"></i>
-                {% if unread_chat_count > 0 %}<span style="position:absolute; top:8px; right:8px; background:var(--active-text-blue); color:white; font-size:10px; font-weight:800; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center;">{{ unread_chat_count }}</span>{% endif %}
+                {% if unread_chat_count > 0 %}
+                <span style="position:absolute; top:8px; right:8px; background:var(--active-text-blue); color:white; font-size:10px; font-weight:800; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center;">{{ unread_chat_count }}</span>
+                {% endif %}
             </a>
             <a href="{% url 'build:payment_dashboard' %}" class="rail-item {% if request.resolver_match.url_name == 'payment_dashboard' %}active{% endif %}" data-title="Premium"><i class="fa-solid fa-gem"></i></a>
-            
-            
+            <a href="{% url 'build:notifications_list' %}" class="rail-item {% if request.resolver_match.url_name == 'notifications_list' %}active{% endif %}" data-title="Bildirishnomalar">
+                <i class="fa-solid fa-bell"></i>
+                {% if unread_notifications_count > 0 %}
+                    <span style="position:absolute; top:8px; right:8px; background:#ef4444; color:white; font-size:10px; font-weight:800; border-radius:50%; width:16px; height:16px; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-panel);">{{ unread_notifications_count }}</span>
+                {% endif %}
+            </a>
+            <div class="rail-divider"></div>
+            <a href="{% url 'build:profile' %}" class="rail-item">
+                {% if request.user.profile.avatar %}
+                    <img src="{{ request.user.profile.get_avatar_url }}" style="width:100%; height:100%; border-radius:14px; object-fit:cover;">
+                {% else %}
+                    <i class="fa-regular fa-user"></i>
+                {% endif %}
+            </a>
         </div>
     </div>
 
@@ -450,10 +464,10 @@
 
         <div class="profile-tabs">
             <div class="tab-node active-tab" onclick="switchProfileTab(event, 'my-posts-panel')">{% if is_own_profile %}E'lonlarim{% else %}E'lonlar{% endif %}</div>
-            <div class="tab-node" onclick="switchProfileTab(event, 'rating-stats-panel')">Reyting & Statistika</div>
+            <div class="tab-node" onclick="switchProfileTab(event, 'rating-stats-panel')">{% trans "Reyting & Statistika" %}</div>
             {% if is_own_profile %}
-            <div class="tab-node" onclick="switchProfileTab(event, 'liked-posts-panel')">Yoqqanlar</div>
-            <div class="tab-node" onclick="switchProfileTab(event, 'bookmarked-posts-panel')">Saqlanganlar</div>
+            <div class="tab-node" onclick="switchProfileTab(event, 'liked-posts-panel')">{% trans "Yoqqanlar" %}</div>
+            <div class="tab-node" onclick="switchProfileTab(event, 'bookmarked-posts-panel')">{% trans "Saqlanganlar" %}</div>
             {% endif %}
         </div>
 
@@ -468,7 +482,7 @@
                                 <strong style="color: var(--text-main); font-size: 16px; display:flex; align-items:center; gap:4px;">
                                     {{ post.author.get_full_name|default:post.author.username }}
                                     {% if post.author.profile.is_premium %}
-                                        <i class="fa-solid fa-circle-check" style="color: #3b82f6; font-size: 14px;"></i>
+                                        <i class="fa-solid fa-crown" style="color: #f97316; font-size: 14px; margin-left: 4px; filter: drop-shadow(0 0 4px rgba(249,115,22,0.5));" title="Premium Usta"></i>
                                     {% elif post.author.profile.is_verified %}
                                         <i class="fa-solid fa-circle-check" style="color: #10b981; font-size: 14px;"></i>
                                     {% endif %}
@@ -502,7 +516,7 @@
                     </div>
                 </div>
             {% empty %}
-                <div class="no-data-msg" style="text-align:center; padding: 40px; color: var(--text-muted);">Siz hali biror marta e'lon joylashtirmadingiz.</div>
+                <div class="no-data-msg" style="text-align:center; padding: 40px; color: var(--text-muted);">{% trans "Siz hali biror marta e'lon joylashtirmadingiz." %}</div>
             {% endfor %}
         </div>
 
@@ -515,13 +529,13 @@
                     <div>
                         <div class="trust-label"><i class="fa-solid fa-shield-halved"></i> &nbsp;Ishonch Indeksi</div>
                         <div class="trust-score-big" id="trustScoreNum">0</div>
-                        <div style="font-size:13px; color:var(--text-muted); margin-top:4px;">/ 100 ball</div>
+                        <div style="font-size:13px; color:var(--text-muted); margin-top:4px;">{% trans "/ 100 ball" %}</div>
                         <div class="trust-bar-track">
                             <div class="trust-bar-fill" id="trustBarFill" style="width:0%"></div>
                         </div>
                     </div>
                     <div style="text-align:right;">
-                        <div class="trust-label">Gamifikatsiya statusi</div>
+                        <div class="trust-label">{% trans "Gamifikatsiya statusi" %}</div>
                         {% with status=profile.builder_info.gamification_status|default:'Newbie' %}
                         <div class="gamification-badge
                             {% if status == 'Elite' %}badge-elite
@@ -574,7 +588,7 @@
                 {% if profile.builder_info.is_needs_improvement %}
                 <div style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.25); padding:16px 20px; border-radius:16px; color:#ef4444; font-size:14px; font-weight:600; display:flex; align-items:center; gap:12px;">
                     <i class="fa-solid fa-triangle-exclamation" style="font-size:20px;"></i>
-                    <span>Reytinging 3.0 dan past. Iltimos, admin bilan bog'laning yoki sifatni oshiring.</span>
+                    <span>{% trans "Reytinging 3.0 dan past. Iltimos, admin bilan bog'laning yoki sifatni oshiring." %}</span>
                 </div>
                 {% endif %}
 
@@ -656,8 +670,8 @@
             {% else %}
                 <div style="text-align:center; padding:60px 20px; color:var(--text-muted);">
                     <i class="fa-solid fa-user" style="font-size:48px; opacity:0.2; display:block; margin-bottom:16px;"></i>
-                    <h3 style="font-size:18px; font-weight:700; color:var(--text-main); margin-bottom:8px;">Siz mijozsiz</h3>
-                    <p style="font-size:14px;">Ustalarning reytingini <a href="{% url 'build:builder_list' %}" style="color:var(--active-text-blue);">Usta Qidirish</a> sahifasida ko'ring.</p>
+                    <h3 style="font-size:18px; font-weight:700; color:var(--text-main); margin-bottom:8px;">{% trans "Siz mijozsiz" %}</h3>
+                    <p style="font-size:14px;">Ustalarning reytingini <a href="{% url 'build:builder_list' %}" style="color:var(--active-text-blue);">{% trans "Usta Qidirish" %}</a> sahifasida ko'ring.</p>
                 </div>
             {% endif %}
         </div>
@@ -698,7 +712,7 @@
                     </div>
                 </div>
             {% empty %}
-                <div class="no-data-msg" style="text-align:center; padding: 40px; color: var(--text-muted);">Sizga yoqqan e'lonlar hozircha mavjud emas.</div>
+                <div class="no-data-msg" style="text-align:center; padding: 40px; color: var(--text-muted);">{% trans "Sizga yoqqan e'lonlar hozircha mavjud emas." %}</div>
             {% endfor %}
         </div>
 
@@ -738,7 +752,7 @@
                     </div>
                 </div>
             {% empty %}
-                <div class="no-data-msg" style="text-align:center; padding: 40px; color: var(--text-muted);">Saqlab qo'yilgan e'lonlaringiz hozircha mavjud emas.</div>
+                <div class="no-data-msg" style="text-align:center; padding: 40px; color: var(--text-muted);">{% trans "Saqlab qo'yilgan e'lonlaringiz hozircha mavjud emas." %}</div>
             {% endfor %}
         </div>
     </div>
@@ -891,6 +905,21 @@
             origSwitch(event, panelId);
             if (panelId === 'rating-stats-panel') animateTrustPanel();
         };
+        // Theme Toggle (Dark/Light)
+        document.addEventListener('DOMContentLoaded', () => {
+            const logoText = document.getElementById('logoText');
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+
+            document.documentElement.setAttribute('data-theme', currentTheme);
+
+            window.toggleTheme = function() {
+                let theme = document.documentElement.getAttribute('data-theme');
+                let newTheme = theme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+            }
+            if (logoText) logoText.addEventListener('click', toggleTheme);
+        });
     </script>
 
 

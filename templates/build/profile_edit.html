@@ -6,7 +6,7 @@
           <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
     <meta name="theme-color" content="#05070c" media="(prefers-color-scheme: dark)">
     <meta name="theme-color" content="#f4f6fa" media="(prefers-color-scheme: light)">
-      <title>{% trans "Profilni Tahrirlash" %} | EasyBuild</title>
+      <title>{% trans "Easy Build" %}</title>
       <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg?v=2">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
       <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -299,9 +299,9 @@
                 </a>
             </div>
             <div style="display: flex; justify-content: center;">
-                <a href="{% url 'build:home' %}" style="font-size: 24px; font-weight: 800; color: var(--active-text-blue); text-decoration: none; letter-spacing: -0.8px; display: flex; align-items: center; gap: 6px;">
-                    EasyBuild.<span style="color: var(--text-main); font-weight: 500;">uz</span> <i class="fa-solid fa-helmet-safety"></i>
-                </a>
+                <div id="logoText" style="cursor: pointer; user-select: none; font-size: 24px; font-weight: 800; color: var(--active-text-blue); letter-spacing: -0.8px; display: flex; align-items: center; gap: 6px;">
+                    EasyBuild <i class="fa-solid fa-helmet-safety"></i>
+                </div>
             </div>
             <div style="display: flex; justify-content: flex-end; align-items: center; gap: 20px;">
                 <a href="{% url 'build:profile' %}">
@@ -313,19 +313,31 @@
 
     <div class="sidebar-container">
         <div class="icon-rail">
-            <a href="{% url 'build:home' %}" class="rail-item" data-title="{% trans 'Bosh sahifa' %}"><i class="fa-solid fa-house"></i></a>
-            <a href="{% url 'build:network' %}" class="rail-item" data-title="{% trans 'Hamkasblar' %}"><i class="fa-solid fa-users"></i></a>
+            <a href="{% url 'build:home' %}" class="rail-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}" data-title="Bosh sahifa"><i class="fa-solid fa-house"></i></a>
+            <a href="{% url 'build:network' %}" class="rail-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}" data-title="Hamkasblar"><i class="fa-solid fa-users"></i></a>
             <a href="{% url 'build:market' %}" class="rail-item {% if request.resolver_match.url_name == 'market' %}active{% endif %}" data-title="Market Pro"><i class="fa-solid fa-store"></i></a>
-            <a href="{% url 'build:builder_list' %}" class="rail-item" data-title="{% trans 'Usta Qidirish' %}"><i class="fa-solid fa-helmet-safety"></i></a>
-            <a href="{% url 'build:post_create' %}" class="rail-item active" data-title="{% trans 'Post yaratish' %}"><i class="fa-solid fa-plus"></i></a>
-            <a href="{% url 'chat:chat' %}" class="rail-item" data-title="{% trans 'Chatlar' %}">
+            <a href="{% url 'build:builder_list' %}" class="rail-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" data-title="Usta Qidirish"><i class="fa-solid fa-helmet-safety"></i></a>
+            <a href="{% url 'chat:chat' %}" class="rail-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}" data-title="Chatlar">
                 <i class="fa-regular fa-comment-dots"></i>
+                {% if unread_chat_count > 0 %}
+                <span style="position:absolute; top:8px; right:8px; background:var(--active-text-blue); color:white; font-size:10px; font-weight:800; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center;">{{ unread_chat_count }}</span>
+                {% endif %}
             </a>
             <a href="{% url 'build:payment_dashboard' %}" class="rail-item {% if request.resolver_match.url_name == 'payment_dashboard' %}active{% endif %}" data-title="Premium"><i class="fa-solid fa-gem"></i></a>
-            
-            
+            <a href="{% url 'build:notifications_list' %}" class="rail-item {% if request.resolver_match.url_name == 'notifications_list' %}active{% endif %}" data-title="Bildirishnomalar">
+                <i class="fa-solid fa-bell"></i>
+                {% if unread_notifications_count > 0 %}
+                    <span style="position:absolute; top:8px; right:8px; background:#ef4444; color:white; font-size:10px; font-weight:800; border-radius:50%; width:16px; height:16px; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-panel);">{{ unread_notifications_count }}</span>
+                {% endif %}
+            </a>
             <div class="rail-divider"></div>
-            <a href="{% url 'build:profile' %}" class="rail-item" data-title="{% trans 'Profil sozlamalari' %}"><i class="fa-regular fa-user"></i></a>
+            <a href="{% url 'build:profile' %}" class="rail-item">
+                {% if request.user.profile.avatar %}
+                    <img src="{{ request.user.profile.get_avatar_url }}" style="width:100%; height:100%; border-radius:14px; object-fit:cover;">
+                {% else %}
+                    <i class="fa-regular fa-user"></i>
+                {% endif %}
+            </a>
         </div>
     </div>
 
@@ -354,6 +366,11 @@
                 <i class="fa-solid fa-users" style="color: #f97316;"></i> {% trans "Jamoa sozlamalari" %}
             </a>
             {% endif %}
+            
+            <a href="javascript:void(0)" class="s-menu-item" onclick="switchSettingTab('language')">
+                <i class="fa-solid fa-globe" style="color: #10b981;"></i> {% trans "Tilni o'zgartirish" %}
+            </a>
+
             <div style="height: 1px; background: var(--border-color); margin: 15px 0;"></div>
             <a href="{% url 'accounts:logout' %}" class="s-menu-item" style="color: #ef4444;">
                 <i class="fa-solid fa-right-from-bracket"></i> {% trans "Tizimdan chiqish" %}
@@ -638,274 +655,437 @@
             <div class="verif-title">
                 <i class="fa-solid fa-wallet"></i> {% trans "Verifikatsiya & Obunalar" %}
             </div>
-            
-            <style>
-        .bg-watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 70vh; color: var(--watermark-color); opacity: var(--watermark-opacity); z-index: -2; pointer-events: none; transition: all 0.4s ease; }
-            .verif-title {
-                font-size: 22px;
-                font-weight: 800;
-                color: #f8fafc;
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                margin-bottom: 30px;
-            }
-            .verif-title i { color: #f97316; }
-            .billing-toggle {
-                display: flex;
-                justify-content: center;
-                margin-bottom: 40px;
-            }
-            .bt-container {
-                display: inline-flex;
-                background: #1e293b;
-                border-radius: 100px;
-                padding: 6px;
-                position: relative;
-            }
-            .bt-btn {
-                padding: 10px 32px;
-                border-radius: 100px;
-                font-size: 14px;
-                font-weight: 700;
-                color: #94a3b8;
-                cursor: pointer;
-                transition: 0.3s;
-                position: relative;
-                border: none;
-                background: transparent;
-            }
-            .bt-btn.active {
-                background: #f97316;
-                color: #fff;
-                box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
-            }
-            .badge-discount {
-                position: absolute;
-                top: -12px;
-                right: -10px;
-                background: #10b981;
-                color: #fff;
-                font-size: 11px;
-                padding: 3px 8px;
-                border-radius: 20px;
-                font-weight: 800;
-            }
-            .pricing-cards {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 20px;
-            }
-            .p-card {
-                background: #0f172a;
-                border: 1px solid rgba(255,255,255,0.05);
-                border-radius: 24px;
-                padding: 32px 24px;
-                display: flex;
-                flex-direction: column;
-                position: relative;
-                transition: 0.3s;
-            }
-            .p-card.pro {
-                border-color: rgba(59, 130, 246, 0.5);
-                background: linear-gradient(180deg, rgba(59, 130, 246, 0.15) 0%, #0f172a 100%);
-                box-shadow: 0 4px 24px rgba(59, 130, 246, 0.1);
-            }
-            .p-card.vip {
-                border-color: rgba(251, 191, 36, 0.6);
-                background: linear-gradient(180deg, rgba(251, 191, 36, 0.15) 0%, #0f172a 100%);
-                box-shadow: 0 4px 24px rgba(251, 191, 36, 0.15);
-            }
-            .pc-icon {
-                width: 36px;
-                height: 36px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 16px;
-                margin-bottom: 24px;
-            }
-            .basic .pc-icon { background: #10b981; color: #fff; }
-            .pro .pc-icon { background: #3b82f6; color: #fff; }
-            .vip .pc-icon { background: #fbbf24; color: #fff; }
-            .pc-name {
-                font-size: 18px;
-                font-weight: 800;
-                color: #f8fafc;
-                margin-bottom: 8px;
-            }
-            .pc-price {
-                font-size: 28px;
-                font-weight: 900;
-                color: #fff;
-                margin-bottom: 12px;
-                display: flex;
-                align-items: baseline;
-                gap: 6px;
-            }
-            .pc-price span {
-                font-size: 14px;
-                font-weight: 500;
-                color: #94a3b8;
-            }
-            .basic .pc-price { font-size: 22px; }
-            .pc-desc {
-                font-size: 13px;
-                color: #94a3b8;
-                line-height: 1.5;
-                margin-bottom: 24px;
-                min-height: 58px;
-            }
-            .pc-features {
-                list-style: none;
-                padding: 0;
-                margin: 0 0 32px 0;
-                flex: 1;
-            }
-            .pc-features li {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                font-size: 13px;
-                color: #cbd5e1;
-                margin-bottom: 16px;
-            }
-            .basic .pc-features i { color: #10b981; font-size: 14px; }
-            .pro .pc-features i { color: #3b82f6; font-size: 14px; }
-            .vip .pc-features i { color: #fbbf24; font-size: 14px; }
-            .pc-btn {
-                width: 100%;
-                padding: 14px;
-                border-radius: 12px;
-                font-size: 15px;
-                font-weight: 800;
-                border: none;
-                cursor: pointer;
-                transition: 0.3s;
-                text-align: center;
-            }
-            .basic .pc-btn {
-                background: rgba(255,255,255,0.05);
-                color: #94a3b8;
-                cursor: default;
-            }
-            .pro .pc-btn {
-                background: #3b82f6;
-                color: #fff;
-            }
-            .pro .pc-btn:hover { background: #2563eb; }
-            .vip .pc-btn {
-                background: #fbbf24;
-                color: #1e293b;
-            }
-            .vip .pc-btn:hover { background: #f59e0b; }
-            .vip-badge {
-                position: absolute;
-                top: 24px;
-                right: 24px;
-                background: rgba(251, 191, 36, 0.2);
-                color: #fbbf24;
-                font-size: 10px;
-                font-weight: 800;
-                padding: 4px 10px;
-                border-radius: 12px;
-                letter-spacing: 0.5px;
-            }
-            @media(max-width: 900px){ .pricing-cards { grid-template-columns: 1fr; } }
-            </style>
 
-            <div class="billing-toggle">
-                <div class="bt-container">
-                    <button class="bt-btn active" id="btn-oylik" onclick="setBilling('monthly')">Oylik</button>
-                    <button class="bt-btn" id="btn-yillik" onclick="setBilling('yearly')">
-                        Yillik
-                        <span class="badge-discount">-15%</span>
-                    </button>
+            <div class="current-subscription-widget" style="background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; margin-bottom: 30px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    {% if sub_plan_type == 'pro' %}
+                        <div style="width: 50px; height: 50px; border-radius: 12px; background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(234, 88, 12, 0.1)); display: flex; align-items: center; justify-content: center; color: #f97316; font-size: 24px; border: 1px solid rgba(249, 115, 22, 0.3);">
+                            <i class="fa-solid fa-crown"></i>
+                        </div>
+                    {% elif sub_plan_type == 'standard' %}
+                        <div style="width: 50px; height: 50px; border-radius: 12px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(37, 99, 235, 0.1)); display: flex; align-items: center; justify-content: center; color: #3b82f6; font-size: 24px; border: 1px solid rgba(59, 130, 246, 0.3);">
+                            <i class="fa-solid fa-gem"></i>
+                        </div>
+                    {% else %}
+                        <div style="width: 50px; height: 50px; border-radius: 12px; background: rgba(148, 163, 184, 0.1); display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 24px; border: 1px solid rgba(148, 163, 184, 0.2);">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                    {% endif %}
+                    
+                    <div>
+                        <div style="color: var(--text-muted); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">{% trans "Joriy Ta'rifingiz" %}</div>
+                        <div style="color: var(--text-main); font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                            {% if sub_plan_type == 'pro' %}
+                                PRO Obuna 
+                                <span style="background: rgba(249, 115, 22, 0.2); color: #f97316; font-size: 10px; padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(249, 115, 22, 0.3);">{% trans "Cheksiz" %}</span>
+                            {% elif sub_plan_type == 'standard' %}
+                                Standard
+                                {% if sub_days_remaining %}
+                                    <span style="background: rgba(16, 185, 129, 0.2); color: #10b981; font-size: 10px; padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.3);">{{ sub_days_remaining }} kun qoldi</span>
+                                {% endif %}
+                            {% else %}
+                                Bepul <span style="background: rgba(148, 163, 184, 0.1); color: var(--text-muted); font-size: 10px; padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(148, 163, 184, 0.2);">{% trans "Asosiy imkoniyatlar" %}</span>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="pricing-cards">
-                <!-- Basic Card -->
-                <div class="p-card basic">
-                    <div class="pc-icon"><i class="fa-solid fa-check"></i></div>
-                    <div class="pc-name">Boshlang'ich</div>
-                    <div class="pc-price">Bepul</div>
-                    <div class="pc-desc">Tizimga kirgan barcha foydalanuvchilar uchun standart imkoniyatlar.</div>
-                    <ul class="pc-features">
-                        <li><i class="fa-solid fa-check"></i> Yashil tasdiq belgisi</li>
-                        <li><i class="fa-solid fa-check"></i> E'lonlarni ko'rish</li>
-                        <li><i class="fa-solid fa-check"></i> Chatdan foydalanish</li>
-                    </ul>
-                    <button type="button" class="pc-btn">✓ Faol</button>
-                </div>
-
-                <!-- PRO Card -->
-                <div class="p-card pro">
-                    <div class="pc-icon"><i class="fa-solid fa-check"></i></div>
-                    <div class="pc-name">PRO Obuna</div>
-                    <div class="pc-price" id="price-pro">49,000 <span id="period-pro">so'm / oy</span></div>
-                    <div class="pc-desc">Jiddiy ishlaydigan ustalar uchun kengaytirilgan qulayliklar.</div>
-                    <ul class="pc-features">
-                        <li><i class="fa-solid fa-check"></i> Ko'k tasdiq belgisi</li>
-                        <li><i class="fa-solid fa-check"></i> O'z jamoasini yaratish</li>
-                        <li><i class="fa-solid fa-check"></i> Mijozlarga aloqaga chiqish</li>
-                    </ul>
-                    <form method="POST" action="{% url 'build:profile_verify' %}" style="margin: 0;">
-                        {% csrf_token %}
-                        <input type="hidden" name="plan" id="plan-input-pro" value="pro">
-                        <button type="button" class="pc-btn" onclick="openPayModal(document.getElementById('plan-input-pro').value)">Sotib olish</button>
-                    </form>
-                </div>
-
-                <!-- VIP Card -->
-                <div class="p-card vip">
-                    <div class="vip-badge">VIP</div>
-                    <div class="pc-icon"><i class="fa-solid fa-crown"></i></div>
-                    <div class="pc-name">Premium VIP</div>
-                    <div class="pc-price" id="price-vip">Cheksiz</div>
-                    <div class="pc-desc">Eng yuqori darajadagi ustalar va yirik qurilish kompaniyalari uchun.</div>
-                    <ul class="pc-features">
-                        <li><i class="fa-solid fa-check"></i> Oltin tasdiq belgisi</li>
-                        <li><i class="fa-solid fa-check"></i> Top ro'yxatlarda turish</li>
-                        <li><i class="fa-solid fa-check"></i> Cheksiz e'lon joylash</li>
-                        <li><i class="fa-solid fa-check"></i> Maxsus VIP yordam</li>
-                    </ul>
-                    <form method="POST" action="{% url 'build:profile_verify' %}" style="margin: 0;">
-                        {% csrf_token %}
-                        <input type="hidden" name="plan" id="plan-input-vip" value="vip">
-                        <button type="button" class="pc-btn" onclick="openPayModal(document.getElementById('plan-input-vip').value)">Sotib olish</button>
-                    </form>
-                </div>
-            </div>
-
-            <script>
-            function setBilling(period) {
-                const btnOylik = document.getElementById('btn-oylik');
-                const btnYillik = document.getElementById('btn-yillik');
-                const pricePro = document.getElementById('price-pro');
-                const priceVip = document.getElementById('price-vip');
-                const inputPro = document.getElementById('plan-input-pro');
-                const inputVip = document.getElementById('plan-input-vip');
                 
-                if (period === 'yearly') {
-                    btnOylik.classList.remove('active');
-                    btnYillik.classList.add('active');
-                    pricePro.innerHTML = '499,800 <span id="period-pro">so\'m / yil</span>';
-                    priceVip.innerHTML = 'Cheksiz';
-                    inputPro.value = 'pro_yearly';
-                    inputVip.value = 'vip_yearly';
-                } else {
-                    btnYillik.classList.remove('active');
-                    btnOylik.classList.add('active');
-                    pricePro.innerHTML = '49,000 <span id="period-pro">so\'m / oy</span>';
-                    priceVip.innerHTML = 'Cheksiz';
-                    inputPro.value = 'pro';
-                    inputVip.value = 'vip';
-                }
-            }
-            </script>
+                {% if sub_is_temp %}
+                <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2); padding: 10px 15px; border-radius: 8px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-clock-rotate-left" style="color: #f59e0b;"></i>
+                    <div style="color: #fbbf24; font-size: 13px;">{% trans "To'lov chekingiz admin tomonidan tekshirilmoqda." %}</div>
+                </div>
+                {% endif %}
+                
+                {% if not sub_is_active and not sub_is_temp %}
+                <a href="#plans-section" onclick="document.getElementById('plans-section').scrollIntoView({behavior: 'smooth'})" style="background: #3b82f6; color: white; padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; text-decoration: none; transition: all 0.3s ease;">
+                    <i class="fa-solid fa-arrow-up-right-dots"></i> {% trans "Yangilash" %}
+                </a>
+                {% endif %}
+            </div>
+            <!-- /JORIY OBUNA HOLATI WIDGETI -->
+
+
+    <style>
+    .bg-watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 70vh; color: var(--watermark-color); opacity: var(--watermark-opacity); z-index: -2; pointer-events: none; transition: all 0.4s ease; }
+    .verif-title {
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--text-main);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 30px;
+    }
+    .verif-title i { color: #f97316; }
+    
+    /* New Plan Cards CSS */
+    .plan-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    @media (min-width: 1024px) {
+        .plan-cards { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .plan-card {
+        cursor: pointer;
+        position: relative;
+        display: block;
+        margin: 0;
+        height: 100%;
+        text-decoration: none;
+    }
+
+    /* 1. SINOV MUDDATI (Silver/Glass) */
+    .plan-card:nth-child(1) .plan-card-content {
+        background: linear-gradient(145deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.6));
+        border: 1px dashed rgba(148, 163, 184, 0.3);
+        border-radius: 20px;
+        padding: 1.5rem 1.2rem;
+        transition: all 0.4s ease;
+        display: flex; flex-direction: column; height: 100%; position: relative;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        backdrop-filter: blur(20px);
+    }
+    .plan-card:nth-child(1):hover .plan-card-content {
+        transform: translateY(-5px);
+        border-color: rgba(148, 163, 184, 0.5);
+    }
+    [data-theme="light"] .plan-card:nth-child(1) .plan-card-content {
+        background: linear-gradient(145deg, #ffffff, #f8fafc);
+        border: 1px dashed rgba(148, 163, 184, 0.5);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    /* 2. STANDARD (Electric Blue) */
+    .plan-card:nth-child(2) .plan-card-content {
+        background: linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(30, 58, 138, 0.2));
+        border: 1px solid rgba(59, 130, 246, 0.4);
+        border-radius: 20px;
+        padding: 1.5rem 1.2rem;
+        transition: all 0.4s ease;
+        display: flex; flex-direction: column; height: 100%; position: relative;
+        box-shadow: 0 10px 30px rgba(59, 130, 246, 0.1);
+        backdrop-filter: blur(20px);
+    }
+    .plan-card:nth-child(2):hover .plan-card-content {
+        transform: translateY(-8px);
+        border-color: rgba(59, 130, 246, 0.8);
+        box-shadow: 0 15px 40px rgba(59, 130, 246, 0.2);
+    }
+    [data-theme="light"] .plan-card:nth-child(2) .plan-card-content {
+        background: linear-gradient(145deg, #ffffff, #eff6ff);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        box-shadow: 0 10px 30px rgba(59, 130, 246, 0.08);
+    }
+
+    /* 3. PRO (Cyber Orange / Gold) */
+    .plan-card:nth-child(3) .plan-card-content {
+        background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(124, 45, 18, 0.25));
+        border: 1px solid #ea580c;
+        border-radius: 20px;
+        padding: 1.5rem 1.2rem;
+        transition: all 0.4s ease;
+        display: flex; flex-direction: column; height: 100%; position: relative;
+        box-shadow: 0 10px 40px rgba(234, 88, 12, 0.15);
+        backdrop-filter: blur(20px);
+    }
+    .plan-card:nth-child(3):hover .plan-card-content {
+        transform: translateY(-10px);
+        border-color: #f97316;
+        box-shadow: 0 20px 50px rgba(234, 88, 12, 0.3);
+    }
+    [data-theme="light"] .plan-card:nth-child(3) .plan-card-content {
+        background: linear-gradient(145deg, #ffffff, #fff7ed);
+        border: 1px solid #ea580c;
+        box-shadow: 0 10px 40px rgba(234, 88, 12, 0.1);
+    }
+
+    /* Badge */
+    .plan-badge {
+        position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+        background: linear-gradient(135deg, #f97316, #ea580c);
+        color: white; font-size: 0.65rem; font-weight: 800; padding: 4px 12px;
+        border-radius: 20px; text-transform: uppercase; letter-spacing: 1px;
+        box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4); z-index: 2; white-space: nowrap;
+    }
+
+    /* Titles */
+    .plan-name-top {
+        font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px;
+        font-weight: 700; margin-bottom: 0.8rem; font-style: italic;
+    }
+    .plan-card:nth-child(1) .plan-name-top { color: #94a3b8; }
+    .plan-card:nth-child(2) .plan-name-top { color: #60a5fa; }
+    .plan-card:nth-child(3) .plan-name-top { color: #fb923c; }
+    [data-theme="light"] .plan-card:nth-child(1) .plan-name-top { color: #64748b; }
+    [data-theme="light"] .plan-card:nth-child(2) .plan-name-top { color: #3b82f6; }
+    [data-theme="light"] .plan-card:nth-child(3) .plan-name-top { color: #ea580c; }
+
+    /* Prices */
+    .plan-price-large {
+        font-weight: 800; line-height: 1; margin-bottom: 0.2rem;
+        display: flex; align-items: baseline; gap: 0.5rem;
+    }
+    .plan-card:nth-child(1) .plan-price-large { color: #e2e8f0; font-size: 2.2rem; }
+    .plan-card:nth-child(2) .plan-price-large { color: #ffffff; font-size: 2.2rem; }
+    .plan-card:nth-child(3) .plan-price-large { 
+        font-size: 1.8rem; 
+        background: linear-gradient(135deg, #fbd38d, #f6ad55); 
+        -webkit-background-clip: text; 
+        -webkit-text-fill-color: transparent; 
+    }
+    [data-theme="light"] .plan-card:nth-child(1) .plan-price-large { color: #0f172a; }
+    [data-theme="light"] .plan-card:nth-child(2) .plan-price-large { color: #1e3a8a; }
+    [data-theme="light"] .plan-card:nth-child(3) .plan-price-large { 
+        background: linear-gradient(135deg, #ea580c, #9a3412); 
+        -webkit-background-clip: text; 
+        -webkit-text-fill-color: transparent; 
+    }
+    
+    .plan-price-period { font-size: 0.85rem; font-weight: 600; color: #64748b; }
+    .plan-card:nth-child(3) .plan-price-period { color: #f6ad55; -webkit-text-fill-color: #f6ad55; }
+    [data-theme="light"] .plan-card:nth-child(3) .plan-price-period { color: #ea580c; -webkit-text-fill-color: #ea580c; }
+
+    /* Descriptions */
+    .plan-desc {
+        font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+        margin-top: 0.8rem; margin-bottom: 1rem; padding-bottom: 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .plan-card:nth-child(1) .plan-desc { color: #94a3b8; border-bottom-color: rgba(148, 163, 184, 0.2); }
+    .plan-card:nth-child(2) .plan-desc { color: #3b82f6; border-bottom-color: rgba(59, 130, 246, 0.2); }
+    .plan-card:nth-child(3) .plan-desc { color: #f97316; border-bottom-color: rgba(249, 115, 22, 0.2); }
+    [data-theme="light"] .plan-card:nth-child(1) .plan-desc { color: #64748b; border-bottom-color: rgba(148, 163, 184, 0.3); }
+    [data-theme="light"] .plan-card:nth-child(2) .plan-desc { color: #1d4ed8; border-bottom-color: rgba(59, 130, 246, 0.3); }
+    [data-theme="light"] .plan-card:nth-child(3) .plan-desc { color: #c2410c; border-bottom-color: rgba(249, 115, 22, 0.3); }
+
+    /* Features */
+    .plan-features { flex-grow: 1; display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.5rem; }
+    .feature-item { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.8rem; font-weight: 600; }
+    .plan-card:nth-child(1) .feature-item { color: #94a3b8; }
+    .plan-card:nth-child(2) .feature-item { color: #e2e8f0; }
+    .plan-card:nth-child(3) .feature-item { color: #fed7aa; }
+    [data-theme="light"] .plan-card:nth-child(1) .feature-item { color: #475569; }
+    [data-theme="light"] .plan-card:nth-child(2) .feature-item { color: #334155; }
+    [data-theme="light"] .plan-card:nth-child(3) .feature-item { color: #7c2d12; }
+    
+    .feature-icon { font-size: 0.9rem; margin-top: 2px; }
+    .plan-card:nth-child(1) .feature-icon { color: #64748b; }
+    .plan-card:nth-child(2) .feature-icon { color: #38bdf8; filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.4)); }
+    .plan-card:nth-child(3) .feature-icon { color: #f97316; filter: drop-shadow(0 0 5px rgba(249, 115, 22, 0.4)); }
+
+    /* Buttons */
+    .plan-btn {
+        width: 100%; padding: 0.8rem; border-radius: 12px; font-size: 0.9rem; font-weight: 800; text-align: center; transition: all 0.3s ease; cursor: pointer;
+    }
+    .plan-card:nth-child(1) .plan-btn {
+        background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(255,255,255,0.1); color: #94a3b8;
+    }
+    .plan-card:nth-child(1) .plan-btn:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255,255,255,0.3); }
+    [data-theme="light"] .plan-card:nth-child(1) .plan-btn {
+        background: rgba(0, 0, 0, 0.03); border: 1px dashed rgba(0,0,0,0.2); color: #475569;
+    }
+    [data-theme="light"] .plan-card:nth-child(1) .plan-btn:hover { background: rgba(0, 0, 0, 0.06); border-color: rgba(0,0,0,0.3); }
+    
+    .plan-card:nth-child(2) .plan-btn {
+        background: linear-gradient(135deg, #2563eb, #1d4ed8); border: none; color: white; box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+    }
+    .plan-card:nth-child(2) .plan-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(37, 99, 235, 0.5); }
+    
+    .plan-card:nth-child(3) .plan-btn {
+        background: rgba(15, 23, 42, 0.8) !important; color: #f97316 !important; border: 1px solid rgba(249, 115, 22, 0.3) !important; box-shadow: none !important; cursor: not-allowed !important; opacity: 0.9;
+    }
+    [data-theme="light"] .plan-card:nth-child(3) .plan-btn {
+        background: #fff7ed !important; color: #ea580c !important; border: 1px solid rgba(234, 88, 12, 0.3) !important;
+    }
+    /* Billing Toggle */
+    .billing-toggle {
+        display: flex; justify-content: center; align-items: center; margin-bottom: 2.5rem; gap: 15px; margin-top: -10px;
+    }
+    .toggle-label {
+        font-size: 1rem; font-weight: 700; color: #94a3b8; cursor: pointer; transition: color 0.3s; display: flex; align-items: center;
+    }
+    .toggle-label.active { color: var(--text-main); }
+    .toggle-switch {
+        position: relative; width: 60px; height: 32px; background: rgba(0, 0, 0, 0.05); border-radius: 20px; cursor: pointer;
+        border: 1px solid var(--border-color); transition: all 0.3s ease;
+    }
+    [data-theme="dark"] .toggle-switch { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); }
+    .toggle-slider {
+        position: absolute; top: 2px; left: 2px; width: 26px; height: 26px; background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        border-radius: 50%; transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1); box-shadow: 0 4px 10px rgba(37, 99, 235, 0.4);
+    }
+    .billing-toggle.yearly .toggle-slider {
+        transform: translateX(28px); background: linear-gradient(135deg, #f97316, #ea580c); box-shadow: 0 4px 10px rgba(234, 88, 12, 0.4);
+    }
+    .discount-badge {
+        background: rgba(16, 185, 129, 0.15); color: #34d399; font-size: 0.7rem; padding: 3px 8px; border-radius: 10px; font-weight: 800; margin-left: 8px; border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    </style>
+    
+    <div class="billing-toggle" id="billingToggle">
+        <span class="toggle-label active" id="labelMonthly" onclick="toggleBilling('monthly')">{% trans "Oylik" %}</span>
+        <div class="toggle-switch" onclick="toggleBilling('toggle')">
+            <div class="toggle-slider"></div>
         </div>
+        <span class="toggle-label" id="labelYearly" onclick="toggleBilling('yearly')">{% trans "Yillik" %} <span class="discount-badge">{% trans "-20% foyda" %}</span></span>
+    </div>
+    
+    <script>
+        let isYearly = false;
+        function toggleBilling(type) {
+            const toggleContainer = document.getElementById('billingToggle');
+            const labelMonthly = document.getElementById('labelMonthly');
+            const labelYearly = document.getElementById('labelYearly');
+            const stdPrice = document.getElementById('stdPriceAmount');
+            const stdPeriod = document.getElementById('stdPricePeriod');
+            
+            if (type === 'toggle') { isYearly = !isYearly; } 
+            else { isYearly = (type === 'yearly'); }
+            
+            if (isYearly) {
+                toggleContainer.classList.add('yearly');
+                labelMonthly.classList.remove('active');
+                labelYearly.classList.add('active');
+                stdPrice.innerText = '470,000';
+                stdPeriod.innerText = "so'm/yil";
+            } else {
+                toggleContainer.classList.remove('yearly');
+                labelMonthly.classList.add('active');
+                labelYearly.classList.remove('active');
+                stdPrice.innerText = '49,000';
+                stdPeriod.innerText = "so'm/oy";
+            }
+        }
+    </script>
+    
+    <div class="plan-cards">
+        <!-- 1. Boshlang'ich -->
+        <div class="plan-card">
+            <div class="plan-card-content">
+                <div class="plan-name-top">{% trans "SINOV MUDDATI" %}</div>
+                <div class="plan-price-large">
+                    0<span class="plan-price-period">{% trans "so'm/3 kun" %}</span>
+                </div>
+                <div class="plan-desc">{% trans "Tizimni to'liq sinash" %}</div>
+                
+                <div class="plan-features">
+                    <div class="feature-item">
+                        <i class="fa-solid fa-circle-check feature-icon"></i>
+                        <span>{% trans "Profilni ko'rish va tahrirlash" %}</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-circle-check feature-icon"></i>
+                        <span>{% trans "Asosiy post joylash (bepul e'lon)" %}</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-circle-check feature-icon"></i>
+                        <span>{% trans "Chat orqali muloqot" %}</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-circle-check feature-icon"></i>
+                        <span>{% trans "Jamoa yaratish va a'zo qo'shish" %}</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-circle-check feature-icon"></i>
+                        <span>{% trans "Loyihalar ro'yxatini ko'rish" %}</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-circle-xmark feature-icon" style="color:#475569;"></i>
+                        <span style="color:#475569;">{% trans "Buyurtmalarga taklif berish — yo'q" %}</span>
+                    </div>
+                </div>
+                
+                <button class="plan-btn" style="background: rgba(255,255,255,0.05); color: #94a3b8; cursor: default; border: 1px dashed #cbd5e1;">{% trans "✓ Faol" %}</button>
+            </div>
+        </div>
+
+        <!-- 2. Standard -->
+        <div class="plan-card">
+            <div class="plan-card-content">
+                <div class="plan-name-top">{% trans "STANDARD" %}</div>
+                <div class="plan-price-large">
+                    <span id="stdPriceAmount">49,000</span><span class="plan-price-period" id="stdPricePeriod">{% trans "so'm/oy" %}</span>
+                </div>
+                <div class="plan-desc">{% trans "Barcha asosiy funksiyalar" %}</div>
+                
+                <div class="plan-features">
+                    <div class="feature-item">
+                        <i class="fa-solid fa-circle-check feature-icon"></i>
+                        <span>{% trans "Ko'k tasdiq belgisi (profilda ko'rinadi)" %}</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-circle-check feature-icon"></i>
+                        <span>{% trans "Barcha loyihalarga taklif (bid) berish" %}</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-circle-check feature-icon"></i>
+                        <span>{% trans "Mijozlar bilan bevosita bog'lanish" %}</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-circle-check feature-icon"></i>
+                        <span>{% trans "Chat bo'limida ko'proq qulayliklar" %}</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-circle-check feature-icon"></i>
+                        <span>{% trans "E'lon va loyihalar tez rekomendatsiyaga chiqishi" %}</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-circle-check feature-icon"></i>
+                        <span>{% trans "SINOV MUDDATI barcha funksiyalari" %}</span>
+                    </div>
+                </div>
+                
+                <button type="button" class="plan-btn" onclick="openPayModal('pro')">{% trans "Sotib olish" %}</button>
+            </div>
+        </div>
+
+        <!-- 3. Pro -->
+        <div class="plan-card">
+            <div class="plan-card-content" style="cursor: default;">
+                <div class="plan-badge">{% trans "TOP USTALARGA" %}</div>
+                <div class="plan-name-top">{% trans "PRO" %}</div>
+                <div class="plan-price-large">
+                    MAXSUS<span class="plan-price-period" style="margin-left:8px;">{% trans "maqom" %}</span>
+                </div>
+                <div class="plan-desc">{% trans "Faqat adminlar taqdim etadi" %}</div>
+                
+                <div class="plan-features">
+                    <div class="feature-item">
+                        <i class="fa-solid fa-circle-check feature-icon"></i>
+                        <span>{% trans "Oltin PRO tasdiq belgisi (profilda ko'rinadi)" %}</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-circle-check feature-icon"></i>
+                        <span>{% trans "Qidiruv natijalarida eng yuqori o'rin (Boost)" %}</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-circle-check feature-icon"></i>
+                        <span>{% trans "STANDARD ning barcha imkoniyatlari" %}</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-circle-check feature-icon"></i>
+                        <span>{% trans "Admin tomonidan shaxsiy tavsiya etilish" %}</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-circle-check feature-icon"></i>
+                        <span>{% trans "Faqat eng sara, ishonchli ustalarga beriladi" %}</span>
+                    </div>
+                </div>
+                
+                <button type="button" class="plan-btn" style="background: rgba(15, 23, 42, 0.8); color: #f97316; border: 1px solid rgba(249, 115, 22, 0.3); box-shadow: none; cursor: not-allowed; opacity: 0.9;" disabled>
+                    <i class="fa-solid fa-lock" style="margin-right: 6px;"></i> Sotuvda yo'q
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
 
 
 
@@ -920,30 +1100,30 @@
                     <div class="ttc-icon"><i class="fa-solid fa-users"></i></div>
                     <div class="ttc-inputs">
                         <input type="text" id="teamNameInput" value="{{ request.user.first_name }}" placeholder="Jamoa nomi">
-                        <button type="button" class="btn-submit" style="width: auto; padding: 10px 20px; font-size: 14px;" onclick="updateTeamName()">Saqlash</button>
+                        <button type="button" class="btn-submit" style="width: auto; padding: 10px 20px; font-size: 14px;" onclick="updateTeamName()">{% trans "Saqlash" %}</button>
                     </div>
                 </div>
                 <div class="ttc-right">
                     {% if profile.builder_info.group_chat_room %}
                     <a href="{% url 'chat:chat' %}?room={{ profile.builder_info.group_chat_room.id }}" class="ttc-btn btn-outline" style="text-decoration: none;"><i class="fa-regular fa-comments"></i> Guruhga o'tish</a>
                     {% endif %}
-                    <button type="button" class="ttc-btn btn-orange" onclick="openAddMemberModal()"><i class="fa-solid fa-user-plus"></i> A'zo qo'shish</button>
+                    <button type="button" class="ttc-btn btn-orange" onclick="openAddMemberModal()"><i class="fa-solid fa-user-plus"></i> {% trans "A'zo qo'shish" %}</button>
                 </div>
             </div>
-            <p style="color: var(--text-muted); font-size: 13px; margin: -10px 0 30px 60px;">Jamoangiz nomi va a'zolarini shu yerdan boshqaring</p>
+            <p style="color: var(--text-muted); font-size: 13px; margin: -10px 0 30px 60px;">{% trans "Jamoangiz nomi va a'zolarini shu yerdan boshqaring" %}</p>
 
             <div class="team-members-grid">
                 {% for member in profile.builder_info.members.all %}
                 <div class="tm-card" id="team-member-{{ member.id }}">
                     <img src="{{ member.profile.get_avatar_url }}" alt="Avatar">
                     <div class="tm-name">{{ member.get_full_name|default:member.username }}</div>
-                    <div class="tm-role">Qurilish jamoasi</div>
+                    <div class="tm-role">{% trans "Qurilish jamoasi" %}</div>
                     <button class="tm-remove-btn" onclick="removeTeamMember({{ member.id }}, '{{ member.get_full_name|default:member.username }}')">
                         <i class="fa-solid fa-user-xmark"></i> JAMOADAN O'CHIRISH
                     </button>
                 </div>
                 {% empty %}
-                <div style="color: var(--text-muted); font-size: 14px;">Hozircha jamoangizda a'zolar yo'q.</div>
+                <div style="color: var(--text-muted); font-size: 14px;">{% trans "Hozircha jamoangizda a'zolar yo'q." %}</div>
                 {% endfor %}
             </div>
 
@@ -956,11 +1136,11 @@
                 <div class="tm-card">
                     <img src="{{ joined_team.profile.get_avatar_url }}" alt="Avatar">
                     <div class="tm-name">{{ joined_team.profile.user.first_name }}</div>
-                    <div class="tm-role">Jamoa sardori</div>
-                    <div style="margin-top: 15px; font-size: 13px; color: var(--text-muted);"><i class="fa-solid fa-check"></i> Faol a'zo</div>
+                    <div class="tm-role">{% trans "Jamoa sardori" %}</div>
+                    <div style="margin-top: 15px; font-size: 13px; color: var(--text-muted);"><i class="fa-solid fa-check"></i> {% trans "Faol a'zo" %}</div>
                 </div>
                 {% empty %}
-                <div style="color: var(--text-muted); font-size: 14px;">Siz hech qaysi jamoaga a'zo emassiz.</div>
+                <div style="color: var(--text-muted); font-size: 14px;">{% trans "Siz hech qaysi jamoaga a'zo emassiz." %}</div>
                 {% endfor %}
             </div>
 
@@ -995,8 +1175,78 @@
                     .ttc-btn { justify-content: center; padding: 12px 10px; font-size: 13px; }
                 }
             </style>
+            <style>
+                .lang-option { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; cursor: pointer; transition: 0.3s; }
+                .lang-option:hover { background: rgba(255, 255, 255, 0.08); }
+                .lang-option.active-lang { border-color: #10b981; background: rgba(16, 185, 129, 0.1); }
+                
+                [data-theme="light"] .lang-option { background: rgba(0, 0, 0, 0.02); border: 1px solid rgba(0, 0, 0, 0.08); }
+                [data-theme="light"] .lang-option:hover { background: rgba(0, 0, 0, 0.05); }
+                [data-theme="light"] .lang-option.active-lang { border-color: #10b981; background: rgba(16, 185, 129, 0.1); }
+            </style>
         </div>
         {% endif %}
+
+        <div class="settings-content" id="setting-language" style="display: none;">
+            <div class="verif-title" style="margin-bottom: 20px;">
+                <i class="fa-solid fa-globe" style="color: #10b981;"></i> {% trans "Tilni o'zgartirish" %}
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 20px;">
+                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">{% trans "Platformadan foydalanish uchun o'zingizga qulay tilni tanlang." %}</p>
+                
+                <form action="{% url 'set_language' %}" method="post" id="languageForm" onsubmit="handleLanguageSubmit(event)">
+                    {% csrf_token %}
+                    <input name="next" type="hidden" value="{{ request.path }}">
+                    
+                    <div style="display: flex; flex-direction: column; gap: 15px;">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        
+                        {% for language in languages %}
+                        <label class="lang-option {% if language.code == LANGUAGE_CODE %}active-lang{% endif %}">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <span style="font-size: 24px;">
+                                    {% if language.code == 'uz' %}🇺🇿
+                                    {% elif language.code == 'ru' %}🇷🇺
+                                    {% elif language.code == 'en' %}🇬🇧
+                                    {% endif %}
+                                </span>
+                                <span style="font-size: 15px; font-weight: 700; color: var(--text-main);">{{ language.name_local|title }}</span>
+                            </div>
+                            <input type="radio" name="language" value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %}checked{% endif %} style="accent-color: #10b981; width: 18px; height: 18px;">
+                        </label>
+                        {% endfor %}
+                    </div>
+                    
+                    <button type="submit" class="btn-submit" style="margin-top: 25px; background: #10b981; box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3); border: none;"><i class="fa-solid fa-check"></i> {% trans "Tilni saqlash" %}</button>
+                </form>
+                
+                <script>
+                function handleLanguageSubmit(e) {
+                    e.preventDefault();
+                    const form = e.target;
+                    const formData = new FormData(form);
+                    const selectedLang = formData.get('language');
+                    
+                    localStorage.setItem('return_to_lang_tab', 'true');
+                    
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: formData
+                    }).then(() => {
+                        const currentPath = window.location.pathname;
+                        // O'zbek (uz), Rus (ru) yoki Ingliz (en) prefiksini topib yangisiga almashtiramiz
+                        const newPath = currentPath.replace(/^\/(uz|ru|en)\//, '/' + selectedLang + '/');
+                        window.location.href = newPath;
+                    }).catch(() => {
+                        form.submit();
+                    });
+                }
+                </script>
+            </div>
+        </div>
 
     </div>
 
@@ -1020,7 +1270,11 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             let hash = window.location.hash;
-            if(hash && hash.startsWith('#tab-')) {
+            if(localStorage.getItem('return_to_lang_tab') === 'true') {
+                localStorage.removeItem('return_to_lang_tab');
+                switchSettingTab('language');
+            }
+            else if(hash && hash.startsWith('#tab-')) {
                 let tabName = hash.replace('#tab-', '');
                 switchSettingTab(tabName);
             }
@@ -1045,7 +1299,16 @@
             
             // Update active state in sidebar
             document.querySelectorAll('.s-menu-item').forEach(el => el.classList.remove('active'));
-            event.currentTarget.classList.add('active');
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
+            
+            // Update the URL hash without scrolling immediately
+            if (history.pushState) {
+                history.pushState(null, null, '#tab-' + tabId);
+            } else {
+                window.location.hash = '#tab-' + tabId;
+            }
             
             // On mobile, scroll up slightly so content is visible
             if (window.innerWidth <= 768) {
@@ -1099,8 +1362,8 @@ document.addEventListener('DOMContentLoaded', () => {
 <div id="addMemberOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(12px);z-index:99990;align-items:center;justify-content:center;padding:16px;">
     <div style="background:var(--bg-panel);border:1px solid var(--border-color);border-radius:24px;width:100%;max-width:500px;padding:30px;box-shadow:0 30px 60px rgba(0,0,0,0.3);position:relative;">
         <button type="button" onclick="closeAddMemberModal()" style="position:absolute;top:20px;right:20px;background:rgba(255,255,255,0.05);border:none;color:#94a3b8;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-xmark"></i></button>
-        <h3 style="color:#f8fafc;font-size:20px;font-weight:800;margin-bottom:10px;"><i class="fa-solid fa-user-plus" style="color:#f97316;"></i> Yangi a'zo qo'shish</h3>
-        <p style="color:#94a3b8;font-size:14px;margin-bottom:20px;">Foydalanuvchini username yoki telefon raqami bo'yicha qidiring.</p>
+        <h3 style="color:#f8fafc;font-size:20px;font-weight:800;margin-bottom:10px;"><i class="fa-solid fa-user-plus" style="color:#f97316;"></i> {% trans "Yangi a'zo qo'shish" %}</h3>
+        <p style="color:#94a3b8;font-size:14px;margin-bottom:20px;">{% trans "Foydalanuvchini username yoki telefon raqami bo'yicha qidiring." %}</p>
         
         <div style="display:flex;gap:10px;margin-bottom:20px;">
             <input type="text" id="memberSearchInput" placeholder="Qidiruv..." style="flex:1;padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(0,0,0,0.2);color:#fff;font-size:15px;outline:none;" onkeyup="if(event.key === 'Enter' || this.value.length >= 2) searchTeamMember()">
@@ -1188,7 +1451,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <div style="color:var(--text-muted);font-size:12px;">@${user.username} - ${user.role}</div>
                             </div>
                         </div>
-                        <button onclick="inviteTeamMember(${user.id}, this)" class="btn-submit" style="width:auto;padding:8px 16px;font-size:13px;"><i class="fa-solid fa-paper-plane"></i> Taklif</button>
+                        <button onclick="inviteTeamMember(${user.id}, this)" class="btn-submit" style="width:auto;padding:8px 16px;font-size:13px;"><i class="fa-solid fa-paper-plane"></i> {% trans "Taklif" %}</button>
                     </div>
                 `;
             });
@@ -1216,6 +1479,24 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+</script>
+
+<script>
+    // Theme Toggle (Dark/Light)
+    document.addEventListener('DOMContentLoaded', () => {
+        const logoText = document.getElementById('logoText');
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+
+        document.documentElement.setAttribute('data-theme', currentTheme);
+
+        window.toggleTheme = function() {
+            let theme = document.documentElement.getAttribute('data-theme');
+            let newTheme = theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+        if (logoText) logoText.addEventListener('click', toggleTheme);
+    });
 </script>
 
 </body>

@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
     <meta name="theme-color" content="#05070c" media="(prefers-color-scheme: dark)">
     <meta name="theme-color" content="#f4f6fa" media="(prefers-color-scheme: light)">
-    <title>EasyBuild.uz</title>
+    <title>{% trans "Easy Build" %}</title>
     <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg?v=2">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -295,7 +295,7 @@
 
     <div id="superAppLoader" class="super-app-loader">
         <div class="loader-content">
-            <div class="loader-logo">EasyBuild.<span>uz</span></div>
+            <div class="loader-logo">{% trans "EasyBuild" %}</div>
             <div class="loader-subtext"><i class="fa-solid fa-store"></i> Market Pro B2B</div>
             <div class="loader-progress-track">
                 <div class="loader-progress-bar"></div>
@@ -319,12 +319,12 @@
                         <div id="cModal-role" style="font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(59,130,246,0.2));color:#818cf8;padding:3px 12px;border-radius:20px;display:inline-block;border:1px solid rgba(99,102,241,0.25);"></div>
                     </div>
                 </div>
-                <button onclick="closeContactModal()" style="position:absolute;top:20px;right:20px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:50%;width:38px;height:38px;cursor:pointer;color:rgba(255,255,255,0.5);font-size:20px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.14)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.07)';this.style.color='rgba(255,255,255,0.5)'">&times;</button>
+                <button onclick="closeContactModal()" style="position:absolute;top:20px;right:20px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:50%;width:38px;height:38px;cursor:pointer;color:rgba(255,255,255,0.5);font-size:20px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.14)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.07)';this.style.color='rgba(255,255,255,0.5)'">{% trans "&times;" %}</button>
             </div>
             <div style="padding:0 28px; margin-bottom:16px;">
                 <div style="display:flex;align-items:center;gap:10px;">
                     <div style="flex:1;height:1px;background:rgba(255,255,255,0.07);"></div>
-                    <span style="font-size:11px;color:rgba(255,255,255,0.3);font-weight:600;letter-spacing:1px;text-transform:uppercase;">Aloqa usullari</span>
+                    <span style="font-size:11px;color:rgba(255,255,255,0.3);font-weight:600;letter-spacing:1px;text-transform:uppercase;">{% trans "Aloqa usullari" %}</span>
                     <div style="flex:1;height:1px;background:rgba(255,255,255,0.07);"></div>
                 </div>
             </div>
@@ -414,18 +414,18 @@
 <header>
         <div class="header-container">
             <div class="header-left"><i class="fa-solid fa-bars menu-hamburger"></i></div>
-            <div class="header-center"><div class="logo">EasyBuild.<span>uz</span></div></div>
+            <div class="header-center"><div class="logo">{% trans "EasyBuild" %}</div></div>
             <div class="header-right">
 
                 <!-- ⚡️ KAFOLATLI ISHLAYDIGAN NATIVE TILLAR FORMASI -->
                 <div style="position: relative;">
     <button type="button" id="lang-btn" onclick="document.getElementById('lang-menu').classList.toggle('show-lang')">
         {% if request.LANGUAGE_CODE == 'ru' %}
-            <img src="https://flagcdn.com/w80/ru.png" class="flag-icon"> <span>Русский</span>
+            <img src="https://flagcdn.com/w80/ru.png" class="flag-icon"> <span>{% trans "Русский" %}</span>
         {% elif request.LANGUAGE_CODE == 'en' %}
-            <img src="https://flagcdn.com/w80/us.png" class="flag-icon"> <span>English</span>
+            <img src="https://flagcdn.com/w80/us.png" class="flag-icon"> <span>{% trans "English" %}</span>
         {% else %}
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Flag_of_Uzbekistan.svg" class="flag-icon" style="object-position: 20% 50%;"> <span>O'zbekcha</span>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Flag_of_Uzbekistan.svg" class="flag-icon" style="object-position: 20% 50%;"> <span>{% trans "O'zbekcha" %}</span>
         {% endif %}
         <i class="fa-solid fa-chevron-down" style="font-size: 11px; margin-left: 2px;"></i>
     </button>
@@ -456,29 +456,31 @@
 
     <div class="sidebar-container">
         <div class="icon-rail">
-            <a href="{% url 'build:home' %}" class="rail-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}" data-title="{% trans 'Bosh sahifa' %}"><i class="fa-solid fa-house"></i></a>
-            <a href="{% url 'build:network' %}" class="rail-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}" data-title="{% trans 'Hamkasblar' %}"><i class="fa-solid fa-users"></i></a>
+            <a href="{% url 'build:home' %}" class="rail-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}" data-title="Bosh sahifa"><i class="fa-solid fa-house"></i></a>
+            <a href="{% url 'build:network' %}" class="rail-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}" data-title="Hamkasblar"><i class="fa-solid fa-users"></i></a>
             <a href="{% url 'build:market' %}" class="rail-item {% if request.resolver_match.url_name == 'market' %}active{% endif %}" data-title="Market Pro"><i class="fa-solid fa-store"></i></a>
-            <a href="{% url 'build:builder_list' %}" class="rail-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" data-title="{% trans 'Usta Qidirish' %}"><i class="fa-solid fa-helmet-safety"></i></a>
-            <a href="{% url 'build:post_create' %}" class="rail-item {% if request.resolver_match.url_name == 'post_create' %}active{% endif %}" data-title="{% trans 'Post yaratish' %}"><i class="fa-solid fa-plus"></i></a>
-            <a href="{% url 'chat:chat' %}" class="rail-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}" data-title="{% trans 'Chatlar' %}">
+            <a href="{% url 'build:builder_list' %}" class="rail-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" data-title="Usta Qidirish"><i class="fa-solid fa-helmet-safety"></i></a>
+            <a href="{% url 'chat:chat' %}" class="rail-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}" data-title="Chatlar">
                 <i class="fa-regular fa-comment-dots"></i>
                 {% if unread_chat_count > 0 %}
-                <span style="position:absolute; top:8px; right:8px; background:var(--active-text-blue); color:white; font-size:10px; font-weight:800; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-panel);">{{ unread_chat_count }}</span>
+                <span style="position:absolute; top:8px; right:8px; background:var(--active-text-blue); color:white; font-size:10px; font-weight:800; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center;">{{ unread_chat_count }}</span>
                 {% endif %}
             </a>
             <a href="{% url 'build:payment_dashboard' %}" class="rail-item {% if request.resolver_match.url_name == 'payment_dashboard' %}active{% endif %}" data-title="Premium"><i class="fa-solid fa-gem"></i></a>
-            
-            
-            <div class="rail-item" id="themeToggleBtn" data-title="{% trans 'Rejimni o\'zgartirish' %}"><i class="fa-solid fa-moon"></i></div>
             <a href="{% url 'build:notifications_list' %}" class="rail-item {% if request.resolver_match.url_name == 'notifications_list' %}active{% endif %}" data-title="Bildirishnomalar">
-    <i class="fa-solid fa-bell"></i>
-    {% if unread_notifications_count > 0 %}
-        <span style="position:absolute; top:8px; right:8px; background:#ef4444; color:white; font-size:10px; font-weight:800; border-radius:50%; width:16px; height:16px; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-panel);">{{ unread_notifications_count }}</span>
-    {% endif %}
-</a>
+                <i class="fa-solid fa-bell"></i>
+                {% if unread_notifications_count > 0 %}
+                    <span style="position:absolute; top:8px; right:8px; background:#ef4444; color:white; font-size:10px; font-weight:800; border-radius:50%; width:16px; height:16px; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-panel);">{{ unread_notifications_count }}</span>
+                {% endif %}
+            </a>
             <div class="rail-divider"></div>
-            <a href="{% url 'build:profile' %}" class="rail-item {% if request.resolver_match.url_name == 'profile' %}active{% endif %}" data-title="{% trans 'Profil sozlamalari' %}"><i class="fa-regular fa-user"></i></a>
+            <a href="{% url 'build:profile' %}" class="rail-item">
+                {% if request.user.profile.avatar %}
+                    <img src="{{ request.user.profile.get_avatar_url }}" style="width:100%; height:100%; border-radius:14px; object-fit:cover;">
+                {% else %}
+                    <i class="fa-regular fa-user"></i>
+                {% endif %}
+            </a>
         </div>
 
         <div class="expanded-menu">
@@ -691,7 +693,7 @@
             document.documentElement.setAttribute('data-theme', currentTheme);
             updateToggleIcon(currentTheme);
 
-            themeToggleBtn.addEventListener('click', () => {
+            if(themeToggleBtn) themeToggleBtn.addEventListener('click', () => {
                 let theme = document.documentElement.getAttribute('data-theme');
                 if (theme === 'dark') {
                     document.documentElement.setAttribute('data-theme', 'light');
@@ -705,8 +707,10 @@
             });
 
             function updateToggleIcon(theme) {
-                const icon = themeToggleBtn.querySelector('i');
-                icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+                if (themeToggleBtn) {
+                    const icon = themeToggleBtn.querySelector('i');
+                    if (icon) icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+                }
             }
 
             if (hamburgerBtn && sidebar && mainContent) {

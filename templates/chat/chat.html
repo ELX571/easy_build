@@ -6,14 +6,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
     <meta name="theme-color" content="#05070c" media="(prefers-color-scheme: dark)">
     <meta name="theme-color" content="#f4f6fa" media="(prefers-color-scheme: light)">
-<title>Easy Build</title>
+<title>{% trans "Easy Build" %}</title>
     <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg?v=2">
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
         .bg-watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 70vh; color: var(--watermark-color); opacity: var(--watermark-opacity); z-index: -2; pointer-events: none; transition: all 0.4s ease; }
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Plus Jakarta Sans',sans-serif}
 :root{--watermark-color: var(--orange); --watermark-opacity: 0.03; --bg:#07090f;--sb:#0d1117;--border:rgba(255,255,255,.07);--text:#f1f5f9;--muted:#94a3b8;--label:#475569;--orange:#ff6b00;--ora:rgba(255,107,0,.13);--in:#1a2235;--divider:rgba(255,255,255,.05);--shadow:0 2px 16px rgba(0,0,0,.5)}
+[data-theme="light"] {
+    --bg:#f8fafc;
+    --sb:#ffffff;
+    --border:rgba(0,0,0,.08);
+    --text:#0f172a;
+    --muted:#64748b;
+    --label:#94a3b8;
+    --in:#ffffff;
+    --divider:rgba(0,0,0,.06);
+    --shadow:0 10px 30px rgba(0,0,0,.05);
+    --watermark-color: #ea580c;
+    --watermark-opacity: 0.08;
+}
+[data-theme="light"] .shell { border: 1px solid var(--border); box-shadow: var(--shadow); }
+[data-theme="light"] .sb { background: var(--sb); border-right: 1px solid var(--border); }
+[data-theme="light"] .ch { background: rgba(255,255,255,0.95); border-bottom: 1px solid rgba(0,0,0,0.06); box-shadow: 0 4px 20px rgba(0,0,0,0.03); backdrop-filter: blur(12px); }
+[data-theme="light"] .sb-head { background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); border-bottom: 1px solid rgba(0,0,0,0.06); box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+[data-theme="light"] .hbtn { background: #ffffff; border-color: rgba(0,0,0,0.1); box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+[data-theme="light"] .hbtn:hover { background: rgba(234, 88, 12, 0.08); border-color: rgba(234, 88, 12, 0.3); color: #ea580c; }
+[data-theme="light"] .si { background: #ffffff; border: 1px solid rgba(0,0,0,0.1); box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
+[data-theme="light"] .si:focus-within { border-color: #ea580c; background: #fffaf5; box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.1); }
+[data-theme="light"] .ci { border-bottom: 1px solid rgba(0,0,0,0.02); }
+[data-theme="light"] .ci:hover { background: #f8fafc; }
+[data-theme="light"] .ci.active { background: linear-gradient(90deg, rgba(234, 88, 12, 0.08), rgba(234, 88, 12, 0.02)); border-right: none; }
+[data-theme="light"] .ci.active::before { background: linear-gradient(180deg, #ea580c, #f97316); box-shadow: 0 0 8px rgba(234, 88, 12, 0.4); }
+[data-theme="light"] .av { border: 2px solid #ffffff; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+[data-theme="light"] .ib { background: #ffffff; border-color: rgba(0,0,0,0.1); box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
+[data-theme="light"] .ib:focus-within { border-color: #ea580c; box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.1); }
+[data-theme="light"] .attach-btn { background: #ffffff; border-color: rgba(0,0,0,0.1); box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
+[data-theme="light"] .msg-act-btn { background: #ffffff; border-color: rgba(0,0,0,0.1); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+[data-theme="light"] .bottom-nav { background: rgba(255,255,255,0.9); border-color: var(--border); box-shadow: 0 -5px 25px rgba(0,0,0,0.05); }
+[data-theme="light"] .bottom-nav-item:hover:not(.add-btn) { background: rgba(0,0,0,0.05); color: var(--text); }
+[data-theme="light"] .bub.in { box-shadow: 0 2px 8px rgba(0,0,0,.04); border: 1px solid rgba(0,0,0,.04); }
+[data-theme="light"] .empty h3 { background: linear-gradient(135deg, #0f172a, #475569); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+[data-theme="light"] .empty-cta { background: linear-gradient(135deg, rgba(234, 88, 12, 0.1), rgba(234, 88, 12, 0.05)); border: 1px solid rgba(234, 88, 12, 0.3); color: #ea580c; }
+[data-theme="light"] .empty-cta:hover { background: linear-gradient(135deg, rgba(234, 88, 12, 0.15), rgba(234, 88, 12, 0.08)); box-shadow: 0 8px 24px rgba(234, 88, 12, 0.15); }
+[data-theme="light"] .ei { background: linear-gradient(135deg, rgba(234, 88, 12, 0.15), rgba(234, 88, 12, 0.05)); border-color: rgba(234, 88, 12, 0.2); box-shadow: 0 0 0 16px rgba(234, 88, 12, 0.04), 0 0 0 32px rgba(234, 88, 12, 0.02); color: #ea580c; }
+[data-theme="light"] .ei-ripple { border-color: rgba(234, 88, 12, 0.2); }
+[data-theme="light"] .nc-panel { background: #ffffff; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.05); }
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
 @keyframes float{0%,100%{transform:translateY(0px)}50%{transform:translateY(-12px)}}
 @keyframes float2{0%,100%{transform:translateY(0px) rotate(0deg)}50%{transform:translateY(-18px) rotate(5deg)}}
@@ -309,36 +354,32 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
 <body>
 <div class="sidebar-container">
     <div class="icon-rail">
-        <a href="{% url 'build:home' %}" class="rail-item" data-title="{% trans 'Bosh sahifa' %}"><i class="fa-solid fa-house"></i></a>
-        <a href="{% url 'build:network' %}" class="rail-item" data-title="{% trans 'Hamkasblar' %}"><i class="fa-solid fa-users"></i></a>
-        <a href="{% url 'build:market' %}" class="rail-item {% if request.resolver_match.url_name == 'market' %}active{% endif %}" data-title="Market Pro"><i class="fa-solid fa-store"></i></a>
-        <a href="{% url 'build:builder_list' %}" class="rail-item" data-title="{% trans 'Usta Qidirish' %}"><i class="fa-solid fa-helmet-safety"></i></a>
-        <a href="{% url 'build:post_create' %}" class="rail-item" data-title="{% trans 'Post yaratish' %}"><i class="fa-solid fa-plus"></i></a>
-        <a href="{% url 'chat:chat' %}" class="rail-item active" data-title="{% trans 'Chatlar' %}">
-            <i class="fa-regular fa-comment-dots"></i>
-            {% if unread_chat_count > 0 %}
-            <span style="position:absolute; top:8px; right:8px; background:var(--orange); color:white; font-size:10px; font-weight:800; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center; border:2px solid var(--sb);">{{ unread_chat_count }}</span>
-            {% endif %}
-        </a>
+            <a href="{% url 'build:home' %}" class="rail-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}" data-title="Bosh sahifa"><i class="fa-solid fa-house"></i></a>
+            <a href="{% url 'build:network' %}" class="rail-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}" data-title="Hamkasblar"><i class="fa-solid fa-users"></i></a>
+            <a href="{% url 'build:market' %}" class="rail-item {% if request.resolver_match.url_name == 'market' %}active{% endif %}" data-title="Market Pro"><i class="fa-solid fa-store"></i></a>
+            <a href="{% url 'build:builder_list' %}" class="rail-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" data-title="Usta Qidirish"><i class="fa-solid fa-helmet-safety"></i></a>
+            <a href="{% url 'chat:chat' %}" class="rail-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}" data-title="Chatlar">
+                <i class="fa-regular fa-comment-dots"></i>
+                {% if unread_chat_count > 0 %}
+                <span style="position:absolute; top:8px; right:8px; background:var(--active-text-blue); color:white; font-size:10px; font-weight:800; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center;">{{ unread_chat_count }}</span>
+                {% endif %}
+            </a>
             <a href="{% url 'build:payment_dashboard' %}" class="rail-item {% if request.resolver_match.url_name == 'payment_dashboard' %}active{% endif %}" data-title="Premium"><i class="fa-solid fa-gem"></i></a>
-            
-            
-        <div class="rail-item" id="themeToggleBtn" data-title="{% trans 'Rejimni o\'zgartirish' %}"><i class="fa-solid fa-moon"></i></div>
             <a href="{% url 'build:notifications_list' %}" class="rail-item {% if request.resolver_match.url_name == 'notifications_list' %}active{% endif %}" data-title="Bildirishnomalar">
-    <i class="fa-solid fa-bell"></i>
-    {% if unread_notifications_count > 0 %}
-        <span style="position:absolute; top:8px; right:8px; background:#ef4444; color:white; font-size:10px; font-weight:800; border-radius:50%; width:16px; height:16px; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-panel);">{{ unread_notifications_count }}</span>
-    {% endif %}
-</a>
-        <div class="rail-divider"></div>
-        <a href="{% url 'build:profile' %}" class="rail-item" data-title="Mening Profilim">
-            {% if request.user.profile.avatar %}
-                <img src="{{ request.user.profile.get_avatar_url }}" style="width:100%; height:100%; border-radius:14px; object-fit:cover;">
-            {% else %}
-                <i class="fa-regular fa-user"></i>
-            {% endif %}
-        </a>
-    </div>
+                <i class="fa-solid fa-bell"></i>
+                {% if unread_notifications_count > 0 %}
+                    <span style="position:absolute; top:8px; right:8px; background:#ef4444; color:white; font-size:10px; font-weight:800; border-radius:50%; width:16px; height:16px; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-panel);">{{ unread_notifications_count }}</span>
+                {% endif %}
+            </a>
+            <div class="rail-divider"></div>
+            <a href="{% url 'build:profile' %}" class="rail-item">
+                {% if request.user.profile.avatar %}
+                    <img src="{{ request.user.profile.get_avatar_url }}" style="width:100%; height:100%; border-radius:14px; object-fit:cover;">
+                {% else %}
+                    <i class="fa-regular fa-user"></i>
+                {% endif %}
+            </a>
+        </div>
 
     <div class="expanded-menu">
         <div class="menu-col">
@@ -368,7 +409,7 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
   <div class="sb-head">
     <div class="logo">
       <div class="logo-icon"><i class="fa-solid fa-layer-group"></i></div>
-      <span class="logo-text">EasyBuild.<em>uz</em></span>
+      <span class="logo-text">{% trans "EasyBuild" %}</span>
     </div>
     <button class="hbtn" onclick="openNewChat()" title="Yangi chat"><i class="fa-solid fa-pen-to-square"></i></button>
     <a href="/" class="hbtn" title="Bosh sahifa"><i class="fa-solid fa-house"></i></a>
@@ -379,7 +420,7 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
       <input id="srch" placeholder="Qidirish..." oninput="filterContacts(this.value)">
     </div>
   </div>
-  <div class="contacts" id="contacts"><div class="sec">Suhbatlar</div></div>
+  <div class="contacts" id="contacts"><div class="sec">{% trans "Suhbatlar" %}</div></div>
 </div>
 
 <!-- MAIN -->
@@ -399,7 +440,7 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
               <i class="fa-solid fa-pen"></i>
           </button>
       </div>
-      <div class="cs" id="cst">online</div>
+      <div class="cs" id="cst">{% trans "online" %}</div>
     </div>
     <div style="display:flex;gap:6px;margin-left:auto">
       <button class="hbtn" onclick="startCall('audio')" title="Ovozli qo'ng'iroq"><i class="fa-solid fa-phone"></i></button>
@@ -411,7 +452,7 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
   <div id="payment-status-banner" style="display:none; position:relative; z-index:2; background:rgba(255, 107, 0, 0.1); border-bottom:1px solid rgba(255, 107, 0, 0.15); padding:10px 16px; font-size:13px; color:#ff6b00; font-weight:600; justify-content:space-between; align-items:center; gap:12px;">
       <div style="display:flex; align-items:center; gap:8px;">
           <i class="fa-solid fa-gem" style="color:#ff6b00;"></i>
-          <span id="payment-status-text">Faol obuna turi: ...</span>
+          <span id="payment-status-text">{% trans "Faol obuna turi: ..." %}</span>
       </div>
       <div id="payment-status-actions" style="display:flex; gap:8px;"></div>
   </div>
@@ -426,15 +467,15 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
         <div class="ei-ripple"></div>
         <div class="ei"><i class="fa-solid fa-comments"></i></div>
       </div>
-      <h3>Chatni tanlang</h3>
-      <p>Chap tomondagi ro'yxatdan suhbat tanlang yoki yangi suhbat boshlang</p>
+      <h3>{% trans "Chatni tanlang" %}</h3>
+      <p>{% trans "Chap tomondagi ro'yxatdan suhbat tanlang yoki yangi suhbat boshlang" %}</p>
       <a class="empty-cta" onclick="openNewChat()" href="#">
         <i class="fa-solid fa-pen-to-square"></i> Yangi suhbat
       </a>
     </div>
   </div>
 
-  <div class="typing" id="typing">✍️ yozmoqda...</div>
+  <div class="typing" id="typing">{% trans "✍️ yozmoqda..." %}</div>
 
   <div class="input-area" id="ia" style="display:none; position:relative; z-index:2;">
     <!-- Action Banner for Edit / Reply -->
@@ -451,7 +492,7 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
     <div id="media-preview" style="display:none; align-items:center; gap:12px; margin-bottom:10px; padding:10px 14px; background:rgba(16, 185, 129, 0.05); border-radius:12px; border:1px solid rgba(16, 185, 129, 0.2); position:relative;">
         <div id="preview-icon" style="font-size:24px;"></div>
         <div style="flex:1; min-width:0;">
-            <div style="font-size:12px; font-weight:700; color:#10b981; margin-bottom:2px;">Tayyor</div>
+            <div style="font-size:12px; font-weight:700; color:#10b981; margin-bottom:2px;">{% trans "Tayyor" %}</div>
             <div id="preview-name" style="font-size:13px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></div>
         </div>
         <button onclick="clearMedia()" style="background:none; border:none; color:var(--muted); cursor:pointer; font-size:16px; transition:0.2s;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='var(--muted)'"><i class="fa-solid fa-trash"></i></button>
@@ -517,7 +558,7 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
         <!-- Members List -->
         <div style="padding:0 24px 24px 24px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                <h4 style="margin:0; font-size:11px; color:#94a3b8; font-weight:800; letter-spacing:1px; text-transform:uppercase;">A'zolar ro'yxati</h4>
+                <h4 style="margin:0; font-size:11px; color:#94a3b8; font-weight:800; letter-spacing:1px; text-transform:uppercase;">{% trans "A'zolar ro'yxati" %}</h4>
             </div>
             <div id="csm-members" style="display:flex; flex-direction:column; gap:8px; max-height:180px; overflow-y:auto; padding-right:4px;"></div>
         </div>
@@ -558,7 +599,7 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
                 <div class="psm-media-tab" onclick="showToast('Tez kunda! 🚀')">
                     <div style="display:flex; align-items:center; gap:12px;">
                         <div style="width:36px; height:36px; border-radius:10px; background:rgba(59, 130, 246, 0.1); color:#3b82f6; display:flex; align-items:center; justify-content:center; font-size:16px;"><i class="fa-solid fa-image"></i></div>
-                        <div style="font-size:14px; font-weight:600; color:#fff;">Media (Rasm / Video)</div>
+                        <div style="font-size:14px; font-weight:600; color:#fff;">{% trans "Media (Rasm / Video)" %}</div>
                     </div>
                     <div style="color:var(--muted); font-size:13px; display:flex; align-items:center; gap:6px;"><span id="psm-count-media">0</span> <i class="fa-solid fa-chevron-right" style="font-size:10px;"></i></div>
                 </div>
@@ -566,7 +607,7 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
                 <div class="psm-media-tab" onclick="showToast('Tez kunda! 🚀')">
                     <div style="display:flex; align-items:center; gap:12px;">
                         <div style="width:36px; height:36px; border-radius:10px; background:rgba(245, 158, 11, 0.1); color:#f59e0b; display:flex; align-items:center; justify-content:center; font-size:16px;"><i class="fa-solid fa-file-lines"></i></div>
-                        <div style="font-size:14px; font-weight:600; color:#fff;">Fayllar</div>
+                        <div style="font-size:14px; font-weight:600; color:#fff;">{% trans "Fayllar" %}</div>
                     </div>
                     <div style="color:var(--muted); font-size:13px; display:flex; align-items:center; gap:6px;"><span id="psm-count-files">0</span> <i class="fa-solid fa-chevron-right" style="font-size:10px;"></i></div>
                 </div>
@@ -574,7 +615,7 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
                 <div class="psm-media-tab" onclick="showToast('Tez kunda! 🚀')">
                     <div style="display:flex; align-items:center; gap:12px;">
                         <div style="width:36px; height:36px; border-radius:10px; background:rgba(16, 185, 129, 0.1); color:#10b981; display:flex; align-items:center; justify-content:center; font-size:16px;"><i class="fa-solid fa-microphone"></i></div>
-                        <div style="font-size:14px; font-weight:600; color:#fff;">Ovozli xabarlar</div>
+                        <div style="font-size:14px; font-weight:600; color:#fff;">{% trans "Ovozli xabarlar" %}</div>
                     </div>
                     <div style="color:var(--muted); font-size:13px; display:flex; align-items:center; gap:6px;"><span id="psm-count-audio">0</span> <i class="fa-solid fa-chevron-right" style="font-size:10px;"></i></div>
                 </div>
@@ -671,7 +712,7 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
 <div id="rename-group-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; z-index:10000; background:rgba(0,0,0,0.6); backdrop-filter:blur(8px); justify-content:center; align-items:center;">
     <div style="background:linear-gradient(145deg, rgba(30, 35, 50, 0.95), rgba(15, 17, 26, 0.95)); width:90%; max-width:340px; border-radius:24px; border:1px solid rgba(255, 107, 0, 0.2); box-shadow:0 15px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1); overflow:hidden; display:flex; flex-direction:column; animation: fadeScale 0.2s ease;">
         <div style="padding:20px 24px; border-bottom:1px solid rgba(255,255,255,0.05);">
-            <h3 style="margin:0; font-size:16px; font-weight:800; color:#fff;">Guruh nomini o'zgartirish</h3>
+            <h3 style="margin:0; font-size:16px; font-weight:800; color:#fff;">{% trans "Guruh nomini o'zgartirish" %}</h3>
         </div>
         <div style="padding:24px;">
             <input type="text" id="rename-group-input" style="width:100%; padding:14px 16px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); border-radius:12px; color:#fff; font-size:15px; outline:none; transition:0.2s;" onfocus="this.style.borderColor='var(--active-text-blue)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'" placeholder="Yangi nomni kiriting...">
@@ -691,7 +732,7 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
 <!-- CALL OVERLAY -->
 <div id="call-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(10,13,20,0.85); z-index:999999; backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); flex-direction:column; align-items:center; justify-content:center; color:#fff;">
   <div style="position:absolute; top:40px; text-align:center;">
-      <div id="call-status" style="font-size:22px; font-weight:800; margin-bottom:8px; color:var(--orange);">Qo'ng'iroq...</div>
+      <div id="call-status" style="font-size:22px; font-weight:800; margin-bottom:8px; color:var(--orange);">{% trans "Qo'ng'iroq..." %}</div>
       <div id="call-user-name" style="font-size:16px; color:rgba(255,255,255,0.7); font-weight:600;">—</div>
   </div>
   <div style="position:relative; width:90%; max-width:900px; height:70vh; background:rgba(0,0,0,0.4); border-radius:32px; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,0.6); display:flex; justify-content:center; align-items:center; border: 1px solid rgba(255,255,255,0.05);">
@@ -851,10 +892,10 @@ async function loadContacts(){
 function renderContacts(list){
   const el=document.getElementById('contacts');
   if(!list.length){
-    el.innerHTML='<div class="sec">Suhbatlar</div><div style="text-align:center;padding:40px 16px;color:var(--muted);font-size:12px">Hali suhbat yo\'q.<br>Yangi chat boshlang ✏️</div>';
+    el.innerHTML='<div class="sec">{% trans "Suhbatlar" %}</div><div style="text-align:center;padding:40px 16px;color:var(--muted);font-size:12px">Hali suhbat yo\'q.<br>Yangi chat boshlang ✏️</div>';
     return;
   }
-  el.innerHTML='<div class="sec">Suhbatlar</div>';
+  el.innerHTML='<div class="sec">{% trans "Suhbatlar" %}</div>';
   list.forEach(c=>{
     const cl=col(c.room_id),in2=ini(c.name),ac=roomId===c.room_id;
     
@@ -1966,7 +2007,7 @@ async function openNewChat(){
   w.innerHTML='';
   const p=document.createElement('div');
   p.id='nc';p.className='nc-panel';
-  p.innerHTML=`<h3>Yangi suhbat</h3><div class="si" style="border-radius:12px;background:rgba(255,255,255,.03);border:1px solid var(--border)"><i class="fa-solid fa-magnifying-glass" style="color:var(--label)"></i><input id="uq" placeholder="Foydalanuvchi qidirish..." oninput="searchU(this.value)" style="border:none;background:transparent;outline:none;font-size:13px;color:var(--text);width:100%"></div><div class="ur" id="ur"></div>`;
+  p.innerHTML=`<h3>{% trans "Yangi suhbat" %}</h3><div class="si" style="border-radius:12px;background:rgba(255,255,255,.03);border:1px solid var(--border)"><i class="fa-solid fa-magnifying-glass" style="color:var(--label)"></i><input id="uq" placeholder="Foydalanuvchi qidirish..." oninput="searchU(this.value)" style="border:none;background:transparent;outline:none;font-size:13px;color:var(--text);width:100%"></div><div class="ur" id="ur"></div>`;
   w.appendChild(p);
   setTimeout(()=>document.getElementById('uq')?.focus(),50);
   searchU('');

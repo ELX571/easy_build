@@ -107,18 +107,31 @@ class UserLoginSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True)
 
     def validate(self, data):
-        username = data.get('username', '').strip()
+        username_or_email = data.get('username', '').strip()
         password = data.get('password', '')
 
-        if not username:
-            raise serializers.ValidationError({'username': 'Username kiritish majburiy!'})
+        if not username_or_email:
+            raise serializers.ValidationError({'username': 'Foydalanuvchi nomi yoki emailni kiritish majburiy!'})
         if not password:
-            raise serializers.ValidationError({'password': 'Parol kiritish majburiy!'})
+            raise serializers.ValidationError({'password': 'Parolni kiritish majburiy!'})
 
-        user = authenticate(username=username, password=password)
+        # Barcha authenticate backendlarini (ham model, ham allauth) ishlatish uchun request uzatish
+        request = self.context.get('request')
+        
+        # Allauth backend'i username orqali emailni ham tekshiradi, lekin aniq ishlashi uchun:
+        user = authenticate(request=request, username=username_or_email, password=password)
+        
+        # Agar odatiy usul topmasa, email orqali qo'lda qidirib ko'ramiz
+        if user is None and '@' in username_or_email:
+            try:
+                user_obj = User.objects.get(email=username_or_email)
+                user = authenticate(request=request, username=user_obj.username, password=password)
+            except User.DoesNotExist:
+                pass
+
         if user is None:
             raise serializers.ValidationError(
-                {'non_field_errors': 'Username yoki parol noto\'g\'ri!'}
+                {'non_field_errors': 'Foydalanuvchi nomi/email yoki parol noto\'g\'ri!'}
             )
         if not user.is_active:
             raise serializers.ValidationError(

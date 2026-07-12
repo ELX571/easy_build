@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="uz" data-theme="light">
 
@@ -6,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
     <meta name="theme-color" content="#05070c" media="(prefers-color-scheme: dark)">
     <meta name="theme-color" content="#f4f6fa" media="(prefers-color-scheme: light)">
-    <title>Easy Build</title>
+    <title>{% trans "Easy Build" %}</title>
     <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg?v=2">
     <meta name="description" content="EasyBuild profilingizni to'ldiring.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -813,24 +814,24 @@
         <!-- Logo -->
         <div class="logo">
             <div class="logo-icon"><i class="fa-solid fa-layer-group"></i></div>
-            <span class="logo-text">EasyBuild.<em>uz</em></span>
+            <span class="logo-text">{% trans "EasyBuild" %}</span>
         </div>
 
         <!-- Stepper -->
         <div class="stepper">
             <div class="step-node">
                 <div class="step-circle done"><i class="fa-solid fa-check" style="font-size:12px;"></i></div>
-                <span class="step-lbl done">Yo'nalish</span>
+                <span class="step-lbl done">{% trans "Yo'nalish" %}</span>
             </div>
             <div class="step-line done"></div>
             <div class="step-node">
                 <div class="step-circle done"><i class="fa-solid fa-check" style="font-size:12px;"></i></div>
-                <span class="step-lbl done">Hisob</span>
+                <span class="step-lbl done">{% trans "Hisob" %}</span>
             </div>
             <div class="step-line done"></div>
             <div class="step-node">
                 <div class="step-circle active">3</div>
-                <span class="step-lbl active">Profil</span>
+                <span class="step-lbl active">{% trans "Profil" %}</span>
             </div>
         </div>
 
@@ -856,34 +857,34 @@
             <!-- City + Phone -->
             <div class="form-row">
                 <div class="form-group">
-                    <label>Shahar / Viloyat</label>
+                    <label>{% trans "Shahar / Viloyat" %}</label>
                     <div class="input-wrap custom-select-wrap" id="customCitySelect">
                         <i class="fa-solid fa-location-dot input-icon"></i>
                         <input type="hidden" id="city" name="city" value="tashkent_sh">
                         <div class="custom-select-trigger">
-                            <span class="custom-select-text">Toshkent shahri</span>
+                            <span class="custom-select-text">{% trans "Toshkent shahri" %}</span>
                         </div>
                         <i class="fa-solid fa-chevron-down select-arrow"></i>
                         <div class="custom-options">
-                            <div class="custom-option selected" data-value="tashkent_sh">Toshkent shahri</div>
-                            <div class="custom-option" data-value="tashkent_v">Toshkent viloyati</div>
-                            <div class="custom-option" data-value="andijan">Andijon viloyati</div>
-                            <div class="custom-option" data-value="bukhara">Buxoro viloyati</div>
-                            <div class="custom-option" data-value="fergana">Farg'ona viloyati</div>
-                            <div class="custom-option" data-value="jizzakh">Jizzax viloyati</div>
-                            <div class="custom-option" data-value="namangan">Namangan viloyati</div>
-                            <div class="custom-option" data-value="navoiy">Navoiy viloyati</div>
-                            <div class="custom-option" data-value="kashkadarya">Qashqadaryo viloyati</div>
-                            <div class="custom-option" data-value="samarkand">Samarkand viloyati</div>
-                            <div class="custom-option" data-value="sirdaryo">Sirdaryo viloyati</div>
-                            <div class="custom-option" data-value="surxondaryo">Surxondaryo viloyati</div>
-                            <div class="custom-option" data-value="khorezm">Xorazm viloyati</div>
-                            <div class="custom-option" data-value="karakalpakstan">Qoraqalpog'iston</div>
+                            <div class="custom-option selected" data-value="tashkent_sh">{% trans "Toshkent shahri" %}</div>
+                            <div class="custom-option" data-value="tashkent_v">{% trans "Toshkent viloyati" %}</div>
+                            <div class="custom-option" data-value="andijan">{% trans "Andijon viloyati" %}</div>
+                            <div class="custom-option" data-value="bukhara">{% trans "Buxoro viloyati" %}</div>
+                            <div class="custom-option" data-value="fergana">{% trans "Farg'ona viloyati" %}</div>
+                            <div class="custom-option" data-value="jizzakh">{% trans "Jizzax viloyati" %}</div>
+                            <div class="custom-option" data-value="namangan">{% trans "Namangan viloyati" %}</div>
+                            <div class="custom-option" data-value="navoiy">{% trans "Navoiy viloyati" %}</div>
+                            <div class="custom-option" data-value="kashkadarya">{% trans "Qashqadaryo viloyati" %}</div>
+                            <div class="custom-option" data-value="samarkand">{% trans "Samarkand viloyati" %}</div>
+                            <div class="custom-option" data-value="sirdaryo">{% trans "Sirdaryo viloyati" %}</div>
+                            <div class="custom-option" data-value="surxondaryo">{% trans "Surxondaryo viloyati" %}</div>
+                            <div class="custom-option" data-value="khorezm">{% trans "Xorazm viloyati" %}</div>
+                            <div class="custom-option" data-value="karakalpakstan">{% trans "Qoraqalpog'iston" %}</div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>Telefon raqami</label>
+                    <label>{% trans "Telefon raqami" %}</label>
                     <div class="input-wrap">
                         <i class="fa-solid fa-phone input-icon"></i>
                         <input type="text" id="phone" placeholder="+998 90 123 45 67" required>
@@ -893,7 +894,7 @@
 
             <!-- Email -->
             <div class="form-group" style="margin-top: 16px;">
-                <label>Email manzil (ixtiyoriy)</label>
+                <label>{% trans "Email manzil (ixtiyoriy)" %}</label>
                 <div class="input-wrap">
                     <i class="fa-regular fa-envelope input-icon"></i>
                     <input type="email" id="email" placeholder="Siz bilan bog'lanish uchun email...">
@@ -902,7 +903,7 @@
 
             <!-- Bio -->
             <div class="form-group">
-                <label>Bio — o'zingiz haqida</label>
+                <label>{% trans "Bio — o'zingiz haqida" %}</label>
                 <div class="textarea-wrap">
                     <i class="fa-solid fa-pen-to-square input-icon"></i>
                     <textarea id="bio"
@@ -913,7 +914,7 @@
 
 
             <button type="submit" class="btn-submit" id="submitBtn">
-                <span id="btnText">Saqlash va Yakunlash 🚀</span>
+                <span id="btnText">{% trans "Saqlash va Yakunlash 🚀" %}</span>
                 <div class="spinner" id="spinner"></div>
             </button>
         </form>

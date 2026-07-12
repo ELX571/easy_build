@@ -1,0 +1,385 @@
+[templates/build/profile.html] &nbsp;Ishonch Indeksi
+[templates/build/builder_list.html] &times;
+[templates/build/dashboard.html] &times;
+[templates/build/home.html] &times;
+[templates/build/marketb2bpro.html] &times;
+[templates/build/network.html] &times;
+[templates/build/verification.html] &times;
+[templates/build/profile.html] / 100 ball
+[templates/accounts/register.html] 8-30 tagacha belgi kiritilishi kerak
+[templates/build/profile_edit.html] = 2) searchTeamMember()">
+[templates/static_src/node_modules/@tailwindcss/forms/index.html] @tailwindcss/forms examples
+[templates/chat/chat.html] A'zolar ro'yxati
+[templates/static_src/node_modules/@tailwindcss/forms/index.html] Additional details
+[templates/build/payment_dashboard.html] Admin bilan suhbat hali boshlanmagan.
+[templates/accounts/login.html] Akkauntingiz yo'qmi?
+[templates/accounts/register.html] Allaqachon akkauntingiz bormi?
+[templates/accounts/step1_register.html] Allaqachon akkauntingiz bormi?
+[templates/build/builder_list.html] Aloqa usullari
+[templates/build/dashboard.html] Aloqa usullari
+[templates/build/home.html] Aloqa usullari
+[templates/build/network.html] Aloqa usullari
+[templates/static_src/node_modules/@tailwindcss/forms/index.html] An opinionated form reset designed to make form elements easy to style with utility
+            classes.
+[templates/accounts/second_register.html] Andijon viloyati
+[templates/accounts/register.html] Asosiy
+                    ma'lumotlarni kiriting
+[templates/accounts/step1_register.html] Asosiy ma'lumotlar
+[templates/build/profile_edit.html] Asosiy post joylash (bepul e'lon)
+[templates/build/plans.html] Ayni vaqtda tarif rejalari mavjud emas. Iltimos, keyinroq urinib ko'ring.
+[templates/build/dashboard.html] B2B Shartnomalar
+[templates/build/marketb2bpro.html] B2B Shartnomalar
+[templates/accounts/step1_register.html] B2B marketda ishtirok etish va katta loyihalarni bajarish uchun.
+[templates/build/workflow_list.html] Baho berish
+[templates/build/profile.html] Bajarildi
+[templates/build/notifications.html] Barcha bildirishnomalaringiz va so'nggi yangiliklar
+[templates/build/plans.html] Barcha buyurtmalarni ko'rish
+[templates/build/profile_edit.html] Barcha loyihalarga taklif (bid) berish
+[templates/build/dashboard.html] Barchasi
+[templates/build/marketb2bpro.html] Barchasi
+[templates/build/profile.html] Bekor
+[templates/build/workflow_list.html] Bekor qilish
+[templates/build/notifications.html] Bildirishnomalar
+[templates/accounts/second_register.html] Bio — o'zingiz haqida
+[templates/static_src/node_modules/@tailwindcss/forms/index.html] Birthday
+[templates/chat/chat.html] Bloklash
+[templates/build/marketb2bpro.html] Bog'lanish
+[templates/build/post_list.html] Bosh sahifa
+[templates/build/dashboard.html] Bosh sahifaga qaytish
+[templates/build/workflow_list.html] Bosqich kutilmoqda
+[templates/build/profile.html] Builder Pro Reytingi
+[templates/accounts/second_register.html] Buxoro viloyati
+[templates/build/profile_edit.html] Buyurtmalarga taklif berish — yo'q
+[templates/build/workflow_list.html] Byudjet:
+[templates/chat/chat.html] Chap tomondagi ro'yxatdan suhbat tanlang yoki yangi suhbat boshlang
+[templates/build/profile_edit.html] Chat bo'limida ko'proq qulayliklar
+[templates/build/verification.html] Chatni ochish
+[templates/chat/chat.html] Chatni tanlang
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Checkboxes
+[templates/static_src/node_modules/@tailwindcss/forms/index.html] Corporate event
+[templates/build/post_list.html] Daqiqa
+[templates/static_src/node_modules/@tailwindcss/forms/index.html] Documentation
+[templates/build/post_list.html] Duradgor
+[templates/build/profile_edit.html] E'lon va loyihalar tez rekomendatsiyaga chiqishi
+[templates/build/payment_dashboard.html] EASYBUILD.UZ (MCHJ)
+[templates/accounts/login.html] Easy Build
+[templates/accounts/register.html] Easy Build
+[templates/accounts/second_register.html] Easy Build
+[templates/accounts/step1_register.html] Easy Build
+[templates/base.html] Easy Build
+[templates/build/builder_list.html] Easy Build
+[templates/build/dashboard.html] Easy Build
+[templates/build/home.html] Easy Build
+[templates/build/marketb2bpro.html] Easy Build
+[templates/build/network.html] Easy Build
+[templates/build/notifications.html] Easy Build
+[templates/build/post_create.html] Easy Build
+[templates/build/post_list.html] Easy Build
+[templates/build/profile.html] Easy Build
+[templates/build/profile_edit.html] Easy Build
+[templates/build/workflow_list.html] Easy Build
+[templates/chat/chat.html] Easy Build
+[templates/static_src/node_modules/@tailwindcss/forms/index.html] Easy Build
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Easy Build
+[templates/accounts/login.html] EasyBuild
+[templates/accounts/register.html] EasyBuild
+[templates/accounts/second_register.html] EasyBuild
+[templates/accounts/step1_register.html] EasyBuild
+[templates/build/builder_list.html] EasyBuild
+[templates/build/dashboard.html] EasyBuild
+[templates/build/home.html] EasyBuild
+[templates/build/marketb2bpro.html] EasyBuild
+[templates/build/network.html] EasyBuild
+[templates/build/notifications.html] EasyBuild
+[templates/build/payment_dashboard.html] EasyBuild
+[templates/build/post_create.html] EasyBuild
+[templates/build/post_list.html] EasyBuild
+[templates/build/profile.html] EasyBuild
+[templates/build/profile_edit.html] EasyBuild
+[templates/build/workflow_list.html] EasyBuild
+[templates/chat/chat.html] EasyBuild
+[templates/build/marketb2bpro.html] Ekskavator, kran va og'ir qurilish texnikalarini ishonchli ijaraga olish.
+[templates/build/dashboard.html] Ekskavator, kran va qurilish texnikasi
+[templates/build/post_list.html] Elektrik
+[templates/static_src/node_modules/@tailwindcss/forms/index.html] Email address
+[templates/accounts/second_register.html] Email manzil (ixtiyoriy)
+[templates/static_src/node_modules/@tailwindcss/forms/index.html] Email me news and special offers
+[templates/accounts/login.html] Eng yaxshi ustalar va buyurtmachilarni bir platformada birlashtirdik. Ro'yxatdan o'ting va bugun boshlang.
+[templates/build/payment_dashboard.html] Eng zo'r ustalar uchun
+[templates/build/builder_list.html] English
+[templates/build/profile_edit.html] Facebook
+[templates/accounts/register.html] Familiya
+[templates/accounts/login.html] Faol foydalanuvchi
+[templates/build/plans.html] Faol obuna
+[templates/chat/chat.html] Faol obuna turi: ...
+[templates/build/post_list.html] Faol ustalar
+[templates/build/profile_edit.html] Faqat eng sara, ishonchli ustalarga beriladi
+[templates/accounts/second_register.html] Farg'ona viloyati
+[templates/chat/chat.html] Fayllar
+[templates/chat/chat.html] Foydalanuvchi Ma'lumotlari
+[templates/accounts/login.html] Foydalanuvchi nomi yoki Email
+[templates/build/profile_edit.html] Foydalanuvchini username yoki telefon raqami bo'yicha qidiring.
+[templates/static_src/node_modules/@tailwindcss/forms/index.html] Full name
+[templates/build/profile.html] Gamifikatsiya statusi
+[templates/accounts/login.html] Google bilan kirish
+[templates/chat/chat.html] Guruh Ma'lumotlari
+[templates/chat/chat.html] Guruh nomini o'zgartirish
+[templates/build/profile_edit.html] Guruhga o'tish
+[templates/chat/chat.html] Guruhni tark etish
+[templates/build/payment_dashboard.html] HUMO
+[templates/build/network.html] Hech qanday e'lon topilmadi
+[templates/accounts/second_register.html] Hisob
+[templates/accounts/login.html] Hisobingizga kiring va davom eting
+[templates/chat/chat.html] Home
+[templates/build/payment_dashboard.html] Hozircha hech qanday to'lov so'rovi yubormagansiz.
+[templates/build/workflow_list.html] Hozircha ish jarayonlari mavjud emas
+[templates/build/profile.html] Hozircha izohlar yo'q
+[templates/build/profile_edit.html] Hozircha jamoangizda a'zolar yo'q.
+[templates/build/notifications.html] Hozircha sizga kelgan xabarlar mavjud emas. Yangi bildirishnomalar shu yerda ko'rinadi.
+[templates/build/verification.html] Hozircha verifikatsiya qilinishi kerak bo'lgan to'lov screenshotlari yuborilmagan.
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Input (color)
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Input (date)
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Input (datetime-local)
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Input (email)
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Input (email, multiple)
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Input (file)
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Input (file, multiple)
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Input (month)
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Input (number)
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Input (password)
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Input (range)
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Input (search)
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Input (tel)
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Input (text)
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Input (time)
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Input (url)
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Input (week)
+[templates/build/profile_edit.html] Instagram
+[templates/build/notifications.html] Ish jarayonlari
+[templates/build/workflow_list.html] Ish jarayonlari
+[templates/build/workflow_list.html] Ish jarayonlari boshqaruv paneli
+[templates/build/profile.html] Ish sifati (O'rtacha)
+[templates/build/post_list.html] Ishlab chiqilmoqda
+[templates/build/workflow_list.html] Ishni qabul qilish
+[templates/build/workflow_list.html] Ishni topshirish
+[templates/accounts/register.html] Ism
+[templates/build/profile_edit.html] JAMOADAN O'CHIRISH
+[templates/build/post_list.html] Jami e'lonlar
+[templates/build/profile_edit.html] Jamoa yaratish va a'zo qo'shish
+[templates/build/profile_edit.html] Jamoangiz nomi va a'zolarini shu yerdan boshqaring
+[templates/accounts/second_register.html] Jizzax viloyati
+[templates/build/plans.html] Joriy tarif
+[templates/build/post_list.html] Kafelchi
+[templates/build/plans.html] Kafolatlangan buyurtmalar oqimi
+[templates/accounts/step1_register.html] Keyingi qadam
+[templates/accounts/login.html] Kirish
+[templates/build/dashboard.html] Kirish
+[templates/build/home.html] Kirish
+[templates/build/network.html] Kirish
+[templates/build/payment_dashboard.html] Kirish
+[templates/static_src/node_modules/@tailwindcss/forms/index.html] Kitchen Sink
+[templates/build/profile_edit.html] Ko'k tasdiq belgisi (profilda ko'rinadi)
+[templates/build/network.html] Ko'rinmaydigan qilish
+[templates/build/dashboard.html] Kompaniyalar o'rtasida qurilish bitimlari
+[templates/build/marketb2bpro.html] Kompaniyalar o'rtasida to'g'ridan-to'g'ri ishonchli shartnomalar tuzish imkoniyati.
+[templates/build/post_list.html] Kun
+[templates/build/profile_edit.html] Loyihalar ro'yxatini ko'rish
+[templates/build/plans.html] Loyihalaringiz ko'lamiga mos tarif rejasini tanlang va qo'shimcha imtiyozlarga ega bo'ling
+[templates/build/profile_edit.html] MAXSUS
+[templates/build/dashboard.html] Market Pro (B2B)
+[templates/build/marketb2bpro.html] Market Pro (B2B)
+[templates/build/notifications.html] Market Pro (B2B)
+[templates/build/workflow_list.html] Market Pro (B2B)
+[templates/build/builder_list.html] Market Pro B2B
+[templates/build/post_list.html] Market Pro —
+[templates/build/post_list.html] Mashhur bo'limlar
+[templates/build/dashboard.html] Materiallar bozori
+[templates/build/marketb2bpro.html] Materiallar bozori
+[templates/chat/chat.html] Media (Rasm / Video)
+[templates/chat/chat.html] Mening Profilim
+[templates/build/profile.html] Mijozlar Izohlari
+[templates/build/profile_edit.html] Mijozlar bilan bevosita bog'lanish
+[templates/build/plans.html] Mijozlar bilan to'g'ridan-to'g'ri aloqa
+[templates/build/workflow_list.html] Muddat:
+[templates/accounts/second_register.html] Namangan viloyati
+[templates/build/notifications.html] Navigator
+[templates/build/workflow_list.html] Navigator
+[templates/chat/chat.html] Navigator
+[templates/accounts/second_register.html] Navoiy viloyati
+[templates/chat/chat.html] Nomni o'zgartirish
+[templates/build/network.html] Nusxa olish
+[templates/build/payment_dashboard.html] Nusxalash
+[templates/build/network.html] O'chirish
+[templates/build/profile.html] O'chirish
+[templates/accounts/step1_register.html] O'z xizmatlaringizni taklif qilish va buyurtmalar olish uchun.
+[templates/accounts/step1_register.html] O'z yo'nalishingizni tanlang. EasyBuild sizga mos vositalarni taqdim etadi.
+[templates/build/builder_list.html] O'zbekcha
+[templates/build/post_list.html] O'zbekistonning eng innovatsion qurilish mollari va xizmatlari platformasi tayyorlanmoqda. Birinchilardan bo'ling!
+[templates/accounts/step1_register.html] Oddiy Mijoz (Buyurtmachi)
+[templates/build/profile_edit.html] Oltin PRO tasdiq belgisi (profilda ko'rinadi)
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Option 1
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Option 2
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Option 3
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Option 4
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Option 5
+[templates/static_src/node_modules/@tailwindcss/forms/index.html] Other
+[templates/chat/chat.html] Ovozli xabarlar
+[templates/build/payment_dashboard.html] Oxirgi so'rovingiz:
+[templates/build/payment_dashboard.html] PNG, JPG yoki PDF formatida
+[templates/build/profile_edit.html] PRO
+[templates/accounts/login.html] Parol
+[templates/accounts/register.html] Parol
+[templates/accounts/register.html] Parolni tasdiqlang
+[templates/accounts/login.html] Parolni unutdingizmi?
+[templates/accounts/step1_register.html] Platformada qaysi maqsadlarda foydalanmoqchisiz?
+[templates/build/dashboard.html] Post yaratish
+[templates/build/dashboard.html] Professional qurilish materiallari va texnika ijarasi bozori
+[templates/build/marketb2bpro.html] Professional qurilish materiallari va texnika ijarasi bozori tez kunda ishga tushadi.
+[templates/accounts/second_register.html] Profil
+[templates/build/plans.html] Profil reytingini oshirish
+[templates/accounts/register.html] Profilingizni to'ldiring
+[templates/accounts/step1_register.html] Profilingizni to'ldiring
+[templates/build/profile_edit.html] Profilni ko'rish va tahrirlash
+[templates/build/verification.html] Qabul qilish
+[templates/accounts/step1_register.html] Qadam 1 / 3: Yo'nalish tanlash
+[templates/accounts/register.html] Qadam 2 / 3: Shaxsiy ma'lumotlar
+[templates/accounts/second_register.html] Qashqadaryo viloyati
+[templates/build/profile_edit.html] Qidiruv natijalarida eng yuqori o'rin (Boost)
+[templates/chat/chat.html] Qo'ng'iroq...
+[templates/accounts/second_register.html] Qoraqalpog'iston
+[templates/accounts/step1_register.html] Qurilish Jamoasi / Kompaniya
+[templates/accounts/login.html] Qurilish loyihangizni boshqaring
+[templates/build/post_list.html] Qurilish materiallari
+[templates/accounts/register.html] Qurilish platformasiga qo'shiling
+[templates/accounts/step1_register.html] Qurilish platformasiga qo'shiling
+[templates/build/plans.html] Quruvchilar obuna paketlari
+[templates/build/verification.html] Rad etish
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Radio Buttons
+[templates/build/payment_dashboard.html] Rasmni o'zgartirish
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Reset styles
+[templates/build/profile.html] Reyting & Statistika
+[templates/build/profile.html] Reytinging 3.0 dan past. Iltimos, admin bilan bog'laning yoki sifatni oshiring.
+[templates/accounts/login.html] Ro'yxatdan o'ting
+[templates/accounts/register.html] Ro'yxatdan o'tish →
+[templates/build/profile.html] Ro'yxatdan olib tashlash
+[templates/build/workflow_list.html] Roli:
+[templates/accounts/second_register.html] Samarkand viloyati
+[templates/build/post_list.html] Santexnik
+[templates/build/profile.html] Saqlab qo'yilgan e'lonlaringiz hozircha mavjud emas.
+[templates/build/profile.html] Saqlanganlar
+[templates/accounts/second_register.html] Saqlash va Yakunlash 🚀
+[templates/build/profile.html] Saqlashni bekor qilish
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Select
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Select (multiple)
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Select (multiple, with size)
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Select (single, with size)
+[templates/build/marketb2bpro.html] Sement, g'isht, armatura va qurilish materiallarining eng katta bazasi.
+[templates/build/dashboard.html] Sement, g'isht, armatury va boshqalar
+[templates/accounts/second_register.html] Shahar / Viloyat
+[templates/build/plans.html] Shaxsiy menejer va tezkor qo'llab-quvvatlash
+[templates/build/home.html] Shikoyat qilish
+[templates/build/network.html] Shikoyat qilish
+[templates/build/profile.html] Sifat Diagrammasi
+[templates/static_src/node_modules/@tailwindcss/forms/index.html] Simple
+[templates/accounts/second_register.html] Sirdaryo viloyati
+[templates/build/payment_dashboard.html] Siz
+[templates/build/profile.html] Siz hali biror marta e'lon joylashtirmadingiz.
+[templates/build/profile_edit.html] Siz hech qaysi jamoaga a'zo emassiz.
+[templates/accounts/step1_register.html] Siz kimsiz?
+[templates/build/profile.html] Siz mijozsiz
+[templates/build/network.html] Siz qidirgan toifada yoki hududda hozircha qurilish e'lonlari mavjud emas.
+[templates/build/workflow_list.html] Sizda hech qanday faol shartnoma yoki jarayondagi qurilish loyihalari topilmadi.
+[templates/build/notifications.html] Sizda yangi bildirishnomalar yo'q
+[templates/build/profile.html] Sizga yoqqan e'lonlar hozircha mavjud emas.
+[templates/build/profile.html] Sizning javobingiz
+[templates/build/verification.html] So'ralgan Plan:
+[templates/build/post_list.html] Soat
+[templates/static_src/node_modules/@tailwindcss/forms/index.html] Solid
+[templates/build/post_list.html] Soniya
+[templates/build/profile_edit.html] Sotuvda yo'q
+[templates/build/post_list.html] Statistika
+[templates/chat/chat.html] Suhbatlar
+[templates/build/verification.html] Suhbatlar / So'rovlar mavjud emas
+[templates/accounts/second_register.html] Surxondaryo viloyati
+[templates/build/post_list.html] Suvoqchi
+[templates/build/home.html] Tahrirlash
+[templates/build/network.html] Tahrirlash
+[templates/build/profile.html] Tahrirlash
+[templates/build/plans.html] Tanlash
+[templates/build/plans.html] Tasdiqlanish kutilmoqda
+[templates/build/plans.html] Tavsiya etiladi
+[templates/build/plans.html] Tavsiya etilgan quruvchilar ro'yxatida ko'rinish
+[templates/chat/chat.html] Tayyor
+[templates/accounts/second_register.html] Telefon raqami
+[templates/build/profile_edit.html] Telegram
+[templates/build/dashboard.html] Texnika ijarasi
+[templates/build/marketb2bpro.html] Texnika ijarasi
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Textarea
+[templates/build/post_list.html] Tez Kunda!
+[templates/build/dashboard.html] Tez kunda
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] These are form elements this plugin styles by default.
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] These are form elements we don't handle (yet?), but we use this to make sure we haven't
+          accidentally styled them by mistake.
+[templates/static_src/node_modules/@tailwindcss/forms/index.html] This is how form elements look out of the box.
+[templates/build/notifications.html] Tizim
+[templates/build/workflow_list.html] Tizim
+[templates/accounts/register.html] Tizimga kirish
+[templates/accounts/step1_register.html] Tizimga kirish
+[templates/build/profile_edit.html] Tizimni to'liq sinash
+[templates/build/profile_edit.html] To'lov chekingiz admin tomonidan tekshirilmoqda.
+[templates/build/payment_dashboard.html] To'lov haqida savollaringiz bo'lsa bu yerga yozing.
+[templates/build/verification.html] To'lovlarni Tasdiqlash Dashbordi
+[templates/build/payment_dashboard.html] To'lovni tasdiqlash
+[templates/accounts/second_register.html] Toshkent shahri
+[templates/accounts/second_register.html] Toshkent viloyati
+[templates/build/builder_list.html] Trust Index
+[templates/accounts/login.html] Tugallangan loyiha
+[templates/build/payment_dashboard.html] UZCARD
+[templates/static_src/node_modules/@tailwindcss/forms/index.html] Underline
+[templates/static_src/node_modules/@tailwindcss/forms/index.html] Unstyled
+[templates/static_src/node_modules/@tailwindcss/forms/kitchen-sink.html] Untouched
+[templates/accounts/register.html] Username
+[templates/accounts/step1_register.html] Usta (Quruvchi)
+[templates/build/notifications.html] Usta Qidirish
+[templates/build/profile.html] Usta Qidirish
+[templates/build/workflow_list.html] Usta Qidirish
+[templates/build/post_list.html] Usta Topish
+[templates/accounts/register.html] Usta yoki mijoz — ikki bosqichda ro'yxatdan o'ting va darhol ishni boshlang.
+[templates/build/post_list.html] Ustalar
+[templates/accounts/step1_register.html] Ustalarni izlash, e'lonlarni ko'rish va xizmat buyurtma qilish uchun.
+[templates/build/profile.html] Ustalarning reytingini
+[templates/build/workflow_list.html] Ustani baholash
+[templates/build/plans.html] VIP takliflar va eksklyuziv buyurtmalar
+[templates/build/payment_dashboard.html] VISA
+[templates/build/profile.html] Vaqtga rioya
+[templates/static_src/node_modules/@tailwindcss/forms/index.html] Wedding
+[templates/static_src/node_modules/@tailwindcss/forms/index.html] What type of event is it?
+[templates/build/profile_edit.html] WhatsApp
+[templates/static_src/node_modules/@tailwindcss/forms/index.html] When is your event?
+[templates/chat/chat.html] Xabar yozish
+[templates/build/post_list.html] Xabardor qiling
+[templates/build/notifications.html] Xabarlar
+[templates/build/workflow_list.html] Xabarlar
+[templates/build/post_list.html] Xavfsiz to'lov
+[templates/accounts/second_register.html] Xorazm viloyati
+[templates/accounts/login.html] Xush kelibsiz! 👋
+[templates/build/profile.html] Xushmuomalalik
+[templates/build/workflow_list.html] Yakunlangan
+[templates/build/post_list.html] Yangi E'lon
+[templates/chat/chat.html] Yangi suhbat
+[templates/build/post_list.html] Yetkazib berish
+[templates/accounts/second_register.html] Yo'nalish
+[templates/accounts/step1_register.html] Yo'nalishni tanlang
+[templates/build/profile.html] Yoqqanlar
+[templates/build/workflow_list.html] Yuborish
+[templates/chat/chat.html] online
+[templates/build/profile.html] sahifasida ko'ring.
+[templates/build/profile_edit.html] so'm/3 kun
+[templates/build/profile_edit.html] so'm/oy
+[templates/build/dashboard.html] tez kunda ishga tushadi.
+[templates/accounts/login.html] yoki
+[templates/build/workflow_list.html] | Loyihalaringizning CRM va Kanban tracking holati
+[templates/build/builder_list.html] Русский
+[templates/chat/chat.html] ✍️ yozmoqda...
+[templates/build/profile_edit.html] ✓ Faol
+[templates/build/verification.html] 🔍 Kattalashtirish

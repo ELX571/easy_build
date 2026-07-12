@@ -7,7 +7,10 @@ class BuildConfig(AppConfig):
     def ready(self):
         import os
         from django.conf import settings
-        
+
+        # Signallarni ro'yxatdan o'tkazamiz
+        import build.signals  # noqa: F401
+
         # Prevent running thread twice in dev (runserver starts 2 processes by default)
         if os.environ.get('RUN_MAIN', None) == 'true' or not settings.DEBUG:
             from .keep_alive import start_keep_alive

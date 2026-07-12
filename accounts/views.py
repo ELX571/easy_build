@@ -39,7 +39,7 @@ class AuthViewSet(viewsets.GenericViewSet):
     # ── LOGIN ─────────────────────────────────────────────────────────────────
     @action(methods=['post'], detail=False, url_path='login', url_name='login-api')
     def login_api(self, request):
-        serializer = UserLoginSerializer(data=request.data)
+        serializer = UserLoginSerializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         auth_login(request, user)

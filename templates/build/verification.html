@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block title %}Verifikatsiya Dashbordi - Easy Build{% endblock %}
 
@@ -255,7 +256,7 @@
 
 <div class="verification-container">
     <div class="dashboard-header">
-        <h1>To'lovlarni Tasdiqlash Dashbordi</h1>
+        <h1>{% trans "To'lovlarni Tasdiqlash Dashbordi" %}</h1>
         <span style="font-weight: 600; color: #64748b; background-color: #f1f5f9; padding: 0.5rem 1rem; border-radius: 9999px;">
             Jami so'rovlar: {{ requests.count }}
         </span>
@@ -285,7 +286,7 @@
                         
                         <!-- Requested Plan -->
                         <div class="plan-info">
-                            <span class="plan-info-label">So'ralgan Plan:</span>
+                            <span class="plan-info-label">{% trans "So'ralgan Plan:" %}</span>
                             <span class="plan-info-val">{{ req.plan_name }} ({{ req.amount|floatformat:0 }} so'm)</span>
                         </div>
                         
@@ -325,8 +326,8 @@
             </div>
         {% empty %}
             <div style="grid-column: 1/-1; text-align: center; color: #64748b; padding: 5rem 0;">
-                <h2 style="margin-bottom: 0.5rem;">Suhbatlar / So'rovlar mavjud emas</h2>
-                <p>Hozircha verifikatsiya qilinishi kerak bo'lgan to'lov screenshotlari yuborilmagan.</p>
+                <h2 style="margin-bottom: 0.5rem;">{% trans "Suhbatlar / So'rovlar mavjud emas" %}</h2>
+                <p>{% trans "Hozircha verifikatsiya qilinishi kerak bo'lgan to'lov screenshotlari yuborilmagan." %}</p>
             </div>
         {% endfor %}
     </div>
@@ -334,7 +335,7 @@
 
 <!-- Image Lightbox Modal -->
 <div class="lightbox" id="image-lightbox" onclick="closeLightbox()">
-    <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+    <span class="close-lightbox" onclick="closeLightbox()">{% trans "&times;" %}</span>
     <img src="" id="lightbox-image">
 </div>
 

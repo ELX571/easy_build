@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block title %}Tarif Rejalari - Easy Build{% endblock %}
 
@@ -213,8 +214,8 @@
 
 <div class="pricing-container">
     <div class="pricing-header">
-        <h1>Quruvchilar obuna paketlari</h1>
-        <p>Loyihalaringiz ko'lamiga mos tarif rejasini tanlang va qo'shimcha imtiyozlarga ega bo'ling</p>
+        <h1>{% trans "Quruvchilar obuna paketlari" %}</h1>
+        <p>{% trans "Loyihalaringiz ko'lamiga mos tarif rejasini tanlang va qo'shimcha imtiyozlarga ega bo'ling" %}</p>
     </div>
     
     <div class="plans-grid">
@@ -224,9 +225,9 @@
             
             <div class="plan-card {% if is_current %}active{% elif forloop.counter == 2 %}featured{% endif %}">
                 {% if is_current %}
-                    <span class="active-badge">Joriy tarif</span>
+                    <span class="active-badge">{% trans "Joriy tarif" %}</span>
                 {% elif forloop.counter == 2 %}
-                    <span class="featured-badge">Tavsiya etiladi</span>
+                    <span class="featured-badge">{% trans "Tavsiya etiladi" %}</span>
                 {% endif %}
                 
                 <div>
@@ -238,25 +239,25 @@
                     <p class="plan-description">{{ plan.description|default:"Quruvchilar uchun mukammal imkoniyatlar to'plami." }}</p>
                     
                     <ul class="plan-features">
-                        <li>Barcha buyurtmalarni ko'rish</li>
-                        <li>Mijozlar bilan to'g'ridan-to'g'ri aloqa</li>
-                        <li>Profil reytingini oshirish</li>
+                        <li>{% trans "Barcha buyurtmalarni ko'rish" %}</li>
+                        <li>{% trans "Mijozlar bilan to'g'ridan-to'g'ri aloqa" %}</li>
+                        <li>{% trans "Profil reytingini oshirish" %}</li>
                         {% if plan.price > 10 %}
-                            <li>VIP takliflar va eksklyuziv buyurtmalar</li>
-                            <li>Tavsiya etilgan quruvchilar ro'yxatida ko'rinish</li>
+                            <li>{% trans "VIP takliflar va eksklyuziv buyurtmalar" %}</li>
+                            <li>{% trans "Tavsiya etilgan quruvchilar ro'yxatida ko'rinish" %}</li>
                         {% endif %}
                         {% if plan.price > 30 %}
-                            <li>Shaxsiy menejer va tezkor qo'llab-quvvatlash</li>
-                            <li>Kafolatlangan buyurtmalar oqimi</li>
+                            <li>{% trans "Shaxsiy menejer va tezkor qo'llab-quvvatlash" %}</li>
+                            <li>{% trans "Kafolatlangan buyurtmalar oqimi" %}</li>
                         {% endif %}
                     </ul>
                 </div>
                 
                 <div class="plan-action">
                     {% if is_current %}
-                        <span class="btn-choose active-plan">Faol obuna</span>
+                        <span class="btn-choose active-plan">{% trans "Faol obuna" %}</span>
                     {% elif is_pending %}
-                        <span class="btn-choose pending-plan">Tasdiqlanish kutilmoqda</span>
+                        <span class="btn-choose pending-plan">{% trans "Tasdiqlanish kutilmoqda" %}</span>
                     {% else %}
                         <a href="{% url 'build:choose_plan' plan.id %}" class="btn-choose {% if forloop.counter == 2 %}primary{% else %}standard{% endif %}">
                             Tanlash
@@ -265,7 +266,7 @@
                 </div>
             </div>
         {% empty %}
-            <p style="text-align: center; grid-column: 1/-1; color: #64748b; font-size: 1.1rem;">Ayni vaqtda tarif rejalari mavjud emas. Iltimos, keyinroq urinib ko'ring.</p>
+            <p style="text-align: center; grid-column: 1/-1; color: #64748b; font-size: 1.1rem;">{% trans "Ayni vaqtda tarif rejalari mavjud emas. Iltimos, keyinroq urinib ko'ring." %}</p>
         {% endfor %}
     </div>
 </div>

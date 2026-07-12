@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="uz" data-theme="dark">
 <head>
@@ -5,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
     <meta name="theme-color" content="#05070c" media="(prefers-color-scheme: dark)">
     <meta name="theme-color" content="#f4f6fa" media="(prefers-color-scheme: light)">
-    <title>EasyBuild - Ish jarayonlari</title>
+    <title>{% trans "Easy Build" %}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -330,12 +331,12 @@
     <header>
         <div class="header-container">
             <div class="header-left"><i class="fa-solid fa-bars menu-hamburger"></i></div>
-            <div class="header-center"><div class="logo">EasyBuild.<span>uz</span></div></div>
+            <div class="header-center"><div class="logo">{% trans "EasyBuild" %}</div></div>
             <div class="header-right">
                 <div class="profile-wrapper">
                     <a href="{% url 'build:profile' %}">
                         {% if user.profile.avatar %}<img src="{{ user.profile.avatar.url }}" class="profile-avatar">
-                        {% else %}<img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150" class="profile-avatar">{% endif %}
+                        {% else %}<img src="/static/images/default_avatar.svg" class="profile-avatar">{% endif %}
                     </a>
                 </div>
             </div>
@@ -344,18 +345,31 @@
 
     <div class="sidebar-container">
         <div class="icon-rail">
-            <a href="{% url 'build:home' %}" class="rail-item" title="Bosh sahifa"><i class="fa-solid fa-house"></i></a>
+            <a href="{% url 'build:home' %}" class="rail-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}" data-title="Bosh sahifa"><i class="fa-solid fa-house"></i></a>
+            <a href="{% url 'build:network' %}" class="rail-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}" data-title="Hamkasblar"><i class="fa-solid fa-users"></i></a>
             <a href="{% url 'build:market' %}" class="rail-item {% if request.resolver_match.url_name == 'market' %}active{% endif %}" data-title="Market Pro"><i class="fa-solid fa-store"></i></a>
-            <div class="rail-item" title="Chatlar"><i class="fa-regular fa-comment-dots"></i></div>
-            <div class="rail-item" id="themeToggleBtn" title="Rejimni o'zgartirish"><i class="fa-solid fa-moon"></i></div>
+            <a href="{% url 'build:builder_list' %}" class="rail-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" data-title="Usta Qidirish"><i class="fa-solid fa-helmet-safety"></i></a>
+            <a href="{% url 'chat:chat' %}" class="rail-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}" data-title="Chatlar">
+                <i class="fa-regular fa-comment-dots"></i>
+                {% if unread_chat_count > 0 %}
+                <span style="position:absolute; top:8px; right:8px; background:var(--active-text-blue); color:white; font-size:10px; font-weight:800; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center;">{{ unread_chat_count }}</span>
+                {% endif %}
+            </a>
+            <a href="{% url 'build:payment_dashboard' %}" class="rail-item {% if request.resolver_match.url_name == 'payment_dashboard' %}active{% endif %}" data-title="Premium"><i class="fa-solid fa-gem"></i></a>
             <a href="{% url 'build:notifications_list' %}" class="rail-item {% if request.resolver_match.url_name == 'notifications_list' %}active{% endif %}" data-title="Bildirishnomalar">
-    <i class="fa-solid fa-bell"></i>
-    {% if unread_notifications_count > 0 %}
-        <span style="position:absolute; top:8px; right:8px; background:#ef4444; color:white; font-size:10px; font-weight:800; border-radius:50%; width:16px; height:16px; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-panel);">{{ unread_notifications_count }}</span>
-    {% endif %}
-</a>
+                <i class="fa-solid fa-bell"></i>
+                {% if unread_notifications_count > 0 %}
+                    <span style="position:absolute; top:8px; right:8px; background:#ef4444; color:white; font-size:10px; font-weight:800; border-radius:50%; width:16px; height:16px; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-panel);">{{ unread_notifications_count }}</span>
+                {% endif %}
+            </a>
             <div class="rail-divider"></div>
-            <a href="{% url 'build:profile' %}" class="rail-item" title="Profil Sozlamalari"><i class="fa-regular fa-user"></i></a>
+            <a href="{% url 'build:profile' %}" class="rail-item">
+                {% if request.user.profile.avatar %}
+                    <img src="{{ request.user.profile.get_avatar_url }}" style="width:100%; height:100%; border-radius:14px; object-fit:cover;">
+                {% else %}
+                    <i class="fa-regular fa-user"></i>
+                {% endif %}
+            </a>
         </div>
 
         <div class="expanded-menu">
@@ -366,7 +380,7 @@
                     <li><a href="{% url 'build:market' %}" class="{% if request.resolver_match.url_name == 'market' %}active-link{% endif %}"><i class="fa-solid fa-store main-icon"></i> Market Pro (B2B)</a></li>
                     <li><a href="#"><i class="fa-regular fa-comment-dots main-icon"></i> Xabarlar <span class="badge">3</span></a></li>
                 </ul>
-                <div class="section-label">Tizim</div>
+                <div class="section-label">{% trans "Tizim" %}</div>
                 <ul class="menu-list">
                     <li><a href="{% url 'build:workflow' %}" class="active-link"><i class="fa-solid fa-layer-group main-icon"></i> Ish jarayonlari</a></li>
                 </ul>
@@ -383,7 +397,7 @@
                     </div>
                     Bildirishnomalar
                 </h2>
-                <p style="font-size: 15px; color: var(--text-muted); font-weight: 500;">Barcha bildirishnomalaringiz va so'nggi yangiliklar</p>
+                <p style="font-size: 15px; color: var(--text-muted); font-weight: 500;">{% trans "Barcha bildirishnomalaringiz va so'nggi yangiliklar" %}</p>
             </div>
 
             <div class="workflow-grid" style="display: flex; flex-direction: column; gap: 16px; width: 100%;">
@@ -409,8 +423,8 @@
                             <i class="fa-regular fa-bell-slash"></i>
                             <div style="position: absolute; inset: -20px; border: 1px dashed var(--border-color); border-radius: 50%; animation: spin 20s linear infinite;"></div>
                         </div>
-                        <h1 style="font-size: 24px; font-weight: 800; margin-bottom: 12px; color: var(--text-main); letter-spacing: -0.5px;">Sizda yangi bildirishnomalar yo'q</h1>
-                        <p style="font-size: 15px; color: var(--text-muted); max-width: 320px; line-height: 1.6;">Hozircha sizga kelgan xabarlar mavjud emas. Yangi bildirishnomalar shu yerda ko'rinadi.</p>
+                        <h1 style="font-size: 24px; font-weight: 800; margin-bottom: 12px; color: var(--text-main); letter-spacing: -0.5px;">{% trans "Sizda yangi bildirishnomalar yo'q" %}</h1>
+                        <p style="font-size: 15px; color: var(--text-muted); max-width: 320px; line-height: 1.6;">{% trans "Hozircha sizga kelgan xabarlar mavjud emas. Yangi bildirishnomalar shu yerda ko'rinadi." %}</p>
                     </div>
                 {% endfor %}
             </div>
@@ -451,7 +465,7 @@
             const currentTheme = localStorage.getItem('theme') || 'dark';
             document.documentElement.setAttribute('data-theme', currentTheme);
 
-            themeToggleBtn.addEventListener('click', () => {
+            if(themeToggleBtn) themeToggleBtn.addEventListener('click', () => {
                 let theme = document.documentElement.getAttribute('data-theme');
                 if (theme === 'dark') {
                     document.documentElement.setAttribute('data-theme', 'light');

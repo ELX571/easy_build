@@ -56,6 +56,8 @@ class BuilderProfile(models.Model):
     members = models.ManyToManyField(User, related_name='joined_teams', blank=True)
     subscription_status = models.BooleanField(default=False)
     subscription_plan = models.ForeignKey(Plan, on_delete=models.SET_NULL, null=True, blank=True, related_name='builders')
+    subscription_start = models.DateTimeField(null=True, blank=True, verbose_name='Obuna boshlangan sana')
+    subscription_end = models.DateTimeField(null=True, blank=True, verbose_name='Obuna tugash sanasi')
     is_temp_active = models.BooleanField(default=False)
     temp_active_until = models.DateTimeField(null=True, blank=True)
     pending_plan = models.ForeignKey(Plan, on_delete=models.SET_NULL, null=True, blank=True, related_name='pending_builders')
@@ -63,10 +65,31 @@ class BuilderProfile(models.Model):
     @property
     def has_active_subscription(self):
         if self.subscription_status:
+            # Muddatli obuna uchun tugash sanasini tekshiramiz
+            if self.subscription_end and self.subscription_end < timezone.now():
+                return False  # Muddati o'tgan
             return True
         if self.is_temp_active and self.temp_active_until and self.temp_active_until > timezone.now():
             return True
         return False
+
+    @property
+    def days_remaining(self):
+        """Obuna muddati qancha qolganini kunlarda qaytaradi."""
+        if self.subscription_end and self.subscription_status:
+            delta = self.subscription_end - timezone.now()
+            return max(0, delta.days)
+        return None
+
+    @property
+    def plan_type(self):
+        """Standard yoki PRO ekanligini aniqlaydi."""
+        if self.subscription_plan:
+            name = self.subscription_plan.name.upper()
+            if 'PRO' in name:
+                return 'pro'
+            return 'standard'
+        return 'free'
     rating_cache = models.FloatField(
         default=0.0,
         validators=[MinValueValidator(0.0), MaxValueValidator(7.0)]
@@ -312,3 +335,41 @@ class SubscriptionRequest(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.plan_name} (${self.amount}) - {self.status}"
+
+
+class SubscriptionHistory(models.Model):
+    """
+    Barcha obuna voqealarini kuzatish uchun tarix jurnali.
+    Har bir o'zgarish (faollashtirish, bekor qilish, PRO berish va h.k.) shu yerga yoziladi.
+    """
+    EVENT_CHOICES = (
+        ('activated', 'Faollashtirildi'),
+        ('expired',   'Muddati tugadi'),
+        ('revoked',   'Bekor qilindi'),
+        ('pro_granted', 'PRO berildi'),
+        ('pro_revoked', 'PRO olindi'),
+        ('temp_activated', 'Vaqtincha faollashtirildi'),
+        ('temp_expired', 'Vaqtincha muddati tugadi'),
+        ('renewed',   'Yangilandi'),
+    )
+
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='subscription_history'
+    )
+    event = models.CharField(max_length=30, choices=EVENT_CHOICES)
+    plan_name = models.CharField(max_length=100, blank=True, null=True)
+    note = models.TextField(blank=True, null=True, help_text='Admin izohi yoki sabab')
+    performed_by = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='subscription_actions',
+        help_text='Kim tomonidan amalga oshirildi (admin yoki tizim)'
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Obuna tarixi'
+        verbose_name_plural = 'Obuna tarixi'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.user.username} | {self.get_event_display()} | {self.plan_name or '—'}"
