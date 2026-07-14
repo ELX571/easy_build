@@ -95,6 +95,17 @@ class UserContactInfoAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, user_id):
+        # Active subscription check for builders
+        if hasattr(request.user, 'profile') and request.user.profile.role == 'builder':
+            bp = getattr(request.user.profile, 'builder_info', None)
+            if not bp or not bp.has_active_subscription:
+                from django.utils.translation import get_language
+                from django.utils.translation import gettext as _
+                return Response({
+                    'error': _("Bu funksiyadan foydalanish uchun faol obuna talab qilinadi."),
+                    'redirect': f"/{get_language()}/payment-dashboard/"
+                }, status=status.HTTP_402_PAYMENT_REQUIRED)
+
         from django.contrib.auth.models import User as DjangoUser
         user = get_object_or_404(DjangoUser, id=user_id)
         

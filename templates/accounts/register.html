@@ -1,6 +1,6 @@
 {% load i18n %}
 <!DOCTYPE html>
-<html lang="uz" data-theme="light">
+<html lang="{{ request.LANGUAGE_CODE|default:'uz' }}" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
@@ -737,11 +737,10 @@
             </div>
             <ul class="brand-steps">
                 <li>
-                    <div class="step-num done"><i class="fa-solid fa-check" style="font-size:10px"></i></div> Asosiy
-                    ma'lumotlarni kiriting
+                    <div class="step-num done"><i class="fa-solid fa-check" style="font-size:10px"></i></div> {% trans "Asosiy ma'lumotlarni kiriting" %}
                 </li>
                 <li>
-                    <div class="step-num">2</div> Profilingizni to'ldiring
+                    <div class="step-num">2</div> {% trans "Profilingizni to'ldiring" %}
                 </li>
             </ul>
         </div>
@@ -772,14 +771,14 @@
                         <label>{% trans "Ism" %}</label>
                         <div class="input-wrap">
                             <i class="fa-regular fa-id-card input-icon"></i>
-                            <input type="text" id="first_name" placeholder="Ismingiz">
+                            <input type="text" id="first_name" placeholder="{% trans 'Ismingiz' %}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label>{% trans "Familiya" %}</label>
                         <div class="input-wrap">
                             <i class="fa-regular fa-id-card input-icon"></i>
-                            <input type="text" id="last_name" placeholder="Familiyangiz">
+                            <input type="text" id="last_name" placeholder="{% trans 'Familiyangiz' %}">
                         </div>
                     </div>
                 </div>
@@ -789,7 +788,7 @@
                     <label>{% trans "Username" %}</label>
                     <div class="input-wrap">
                         <i class="fa-solid fa-at input-icon"></i>
-                        <input type="text" id="username" placeholder="username kiriting" required
+                        <input type="text" id="username" placeholder="{% trans 'username kiriting' %}" required
                             autocomplete="username">
                     </div>
                 </div>
@@ -800,7 +799,7 @@
                     <label>{% trans "Parol" %}</label>
                     <div class="input-wrap">
                         <i class="fa-solid fa-lock input-icon"></i>
-                        <input type="password" id="password" placeholder="Kuchli parol o'ylab toping" required>
+                        <input type="password" id="password" placeholder="{% trans 'Kuchli parol o\'ylab toping' %}" required>
                         <i class="fa-regular fa-eye toggle-pass" id="tp1"></i>
                     </div>
                     <!-- Segmented Password Strength Meter -->
@@ -812,7 +811,7 @@
                     <div class="pw-text" id="pwText"></div>
 
                     <ul class="pw-rules" id="pwRules">
-                        <li id="r1"><i class="fa-solid fa-circle-dot"></i> 8-30 tagacha belgi kiritilishi kerak</li>
+                        <li id="r1"><i class="fa-solid fa-circle-dot"></i> {% trans "8-30 tagacha belgi kiritilishi kerak" %}</li>
                     </ul>
                 </div>
 
@@ -821,7 +820,7 @@
                     <label>{% trans "Parolni tasdiqlang" %}</label>
                     <div class="input-wrap">
                         <i class="fa-solid fa-shield-halved input-icon"></i>
-                        <input type="password" id="re_password" placeholder="Parolni qayta kiriting" required>
+                        <input type="password" id="re_password" placeholder="{% trans 'Parolni qayta kiriting' %}" required>
                         <i class="fa-regular fa-eye toggle-pass" id="tp2"></i>
                     </div>
                 </div>
@@ -833,7 +832,7 @@
             </form>
 
             <div class="card-footer">
-                Allaqachon akkauntingiz bormi? <a href="{% url 'accounts:login' %}">{% trans "Tizimga kirish" %}</a>
+                {% trans "Allaqachon akkauntingiz bormi?" %} <a href="{% url 'accounts:login' %}">{% trans "Tizimga kirish" %}</a>
             </div>
         </div>
     </div>
@@ -956,7 +955,7 @@
             if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(v)) score += 1;
             
             if (score <= 2) {
-                showAlert('error', "Parol kuchsiz! Iltimos, murakkabroq parol (raqam yoki belgi aralashtirib) kiriting.");
+                showAlert('error', "{% trans "Parol kuchsiz! Iltimos, murakkabroq parol (raqam yoki belgi aralashtirib) kiriting." %}");
                 return;
             }
             
@@ -976,12 +975,12 @@
                 });
                 const json = await res.json();
                 if (res.ok) {
-                    showAlert('success', json.detail || "Ro'yxatdan o'tdingiz!");
+                    showAlert('success', json.detail || "{% trans "Ro'yxatdan o'tdingiz!" %}");
                     setTimeout(() => { window.location.href = '{% url "accounts:second_register" %}'; }, 900);
                 } else {
                     showAlert('error', Object.values(json).flat().join(' '));
                 }
-            } catch { showAlert('error', "Serverga ulanib bo'lmadi."); }
+            } catch { showAlert('error', "{% trans "Serverga ulanib bo'lmadi." %}"); }
             finally { setLoading(false); }
         });
     </script>

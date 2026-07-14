@@ -1,6 +1,6 @@
 {% load i18n %}
 <!DOCTYPE html>
-<html lang="uz" data-theme="light">
+<html lang="{{ request.LANGUAGE_CODE|default:'uz' }}" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
@@ -897,7 +897,7 @@
                 <label>{% trans "Email manzil (ixtiyoriy)" %}</label>
                 <div class="input-wrap">
                     <i class="fa-regular fa-envelope input-icon"></i>
-                    <input type="email" id="email" placeholder="Siz bilan bog'lanish uchun email...">
+                    <input type="email" id="email" placeholder="{% trans 'Siz bilan bog\'lanish uchun email...' %}">
                 </div>
             </div>
 
@@ -907,7 +907,7 @@
                 <div class="textarea-wrap">
                     <i class="fa-solid fa-pen-to-square input-icon"></i>
                     <textarea id="bio"
-                        placeholder="Qisqacha o'zingiz, tajribangiz yoki qiziqishlaringiz haqida yozing..."></textarea>
+                        placeholder="{% trans 'Qisqacha o\'zingiz, tajribangiz yoki qiziqishlaringiz haqida yozing...' %}"></textarea>
                 </div>
             </div>
 
@@ -994,7 +994,7 @@
             
             const phone = document.getElementById('phone').value.trim();
             if (!phone) {
-                showAlert('error', 'Iltimos, telefon raqamingizni kiriting!');
+                showAlert('error', '{% trans "Iltimos, telefon raqamingizni kiriting!" %}');
                 return;
             }
             
@@ -1012,12 +1012,12 @@
                 });
                 const json = await res.json();
                 if (res.ok) {
-                    showAlert('success', json.detail || 'Profil saqlandi!');
+                    showAlert('success', json.detail || '{% trans "Profil saqlandi!" %}');
                     setTimeout(() => { window.location.href = '{% url "build:home" %}'; }, 900);
                 } else {
                     showAlert('error', Object.values(json).flat().join(' '));
                 }
-            } catch { showAlert('error', "Serverga ulanib bo'lmadi."); }
+            } catch { showAlert('error', "{% trans "Serverga ulanib bo'lmadi." %}"); }
             finally { setLoading(false); }
         });
     </script>

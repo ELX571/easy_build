@@ -63,6 +63,11 @@ class BuilderProfile(models.Model):
     pending_plan = models.ForeignKey(Plan, on_delete=models.SET_NULL, null=True, blank=True, related_name='pending_builders')
 
     @property
+    def translated_profession(self):
+        from django.utils.translation import gettext as _
+        return _(self.profession)
+
+    @property
     def has_active_subscription(self):
         if self.subscription_status:
             # Muddatli obuna uchun tugash sanasini tekshiramiz

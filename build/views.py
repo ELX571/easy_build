@@ -360,43 +360,88 @@ def builder_list_view(request):
     # ⚡️ Shaharlar tarjimasi lug'ati
     city_mapping = {
         'ru': {
-            'Город Ташкент': 'Toshkent shahri', 'Ташкентская область': 'Toshkent viloyati',
-            'Андижанская область': 'Andijon viloyati', 'Бухарская область': 'Buxoro viloyati',
-            'Ферганская область': 'Farg\'ona viloyati', 'Джизакская область': 'Jizzax viloyati',
-            'Хорезмская область': 'Xorazm viloyati', 'Наманганская область': 'Наманган viloyati',
-            'Навоийская область': 'Navoiy viloyati', 'Кашкадарьинская область': 'Qashqadaryo viloyati',
-            'Самаркандская область': 'Samarqand viloyati', 'Сырдарьинская область': 'Sirdaryo viloyati',
+            'Ташкент (город)': 'Toshkent shahri',
+            'Город Ташкент': 'Toshkent shahri',
+            'Ташкентская область': 'Toshkent viloyati',
+            'Андижанская область': 'Andijon viloyati',
+            'Бухарская область': 'Buxoro viloyati',
+            'Ферганская область': "Farg'ona viloyati",
+            'Джизакская область': 'Jizzax viloyati',
+            'Хорезмская область': 'Xorazm viloyati',
+            'Наманганская область': 'Namangan viloyati',
+            'Навоийская область': 'Navoiy viloyati',
+            'Кашкадарьинская область': 'Qashqadaryo viloyati',
+            'Самаркандская область': 'Samarkand viloyati',
+            'Самарканд': 'Samarkand viloyati',
+            'Сырдарьинская область': 'Sirdaryo viloyati',
             'Сурхандарьинская область': 'Surxondaryo viloyati',
-            'Республика Каракалпакстан': 'Qoraqalpog\'iston Respublikasi'
+            'Республика Каракалпакстан': "Qoraqalpog'iston Respublikasi"
         },
         'en': {
-            'Tashkent City': 'Toshkent shahri', 'Tashkent Region': 'Toshkent viloyati',
-            'Andijan Region': 'Andijon viloyati', 'Bukhara Region': 'Buxoro viloyati',
-            'Fergana Region': 'Farg\'ona viloyati', 'Jizzakh Region': 'Jizzax viloyati',
-            'Khorezm Region': 'Xorazm viloyati', 'Namangan Region': 'Namangan viloyati',
-            'Navoiy Region': 'Navoiy viloyati', 'Qashqadaryo Region': 'Qashqadaryo viloyati',
-            'Samarkand Region': 'Samarqand viloyati', 'Syrdarya Region': 'Sirdaryo viloyati',
-            'Surxondaryo Region': 'Surxondaryo viloyati', 'Republic of Karakalpakstan': 'Qoraqalpog\'iston Respublikasi'
+            'Tashkent City': 'Toshkent shahri',
+            'Tashkent Region': 'Toshkent viloyati',
+            'Andijan Region': 'Andijon viloyati',
+            'Bukhara Region': 'Buxoro viloyati',
+            'Fergana Region': "Farg'ona viloyati",
+            'Jizzakh Region': 'Jizzax viloyati',
+            'Khorezm Region': 'Xorazm viloyati',
+            'Namangan Region': 'Namangan viloyati',
+            'Navoiy Region': 'Navoiy viloyati',
+            'Qashqadaryo Region': 'Qashqadaryo viloyati',
+            'Samarkand Region': 'Samarkand viloyati',
+            'Syrdarya Region': 'Sirdaryo viloyati',
+            'Surxondaryo Region': 'Surxondaryo viloyati',
+            'Republic of Karakalpakstan': "Qoraqalpog'iston Respublikasi"
         }
+    }
+
+    uz_city_to_key = {
+        'Toshkent shahri': 'tashkent_sh',
+        'Toshkent viloyati': 'tashkent_v',
+        'Andijon viloyati': 'andijan',
+        'Buxoro viloyati': 'bukhara',
+        "Farg'ona viloyati": 'fergana',
+        'Jizzax viloyati': 'jizzakh',
+        'Namangan viloyati': 'namangan',
+        'Navoiy viloyati': 'navoiy',
+        'Qashqadaryo viloyati': 'kashkadarya',
+        'Samarkand viloyati': 'samarkand',
+        'Sirdaryo viloyati': 'sirdaryo',
+        'Surxondaryo viloyati': 'surxondaryo',
+        'Xorazm viloyati': 'khorezm',
+        "Qoraqalpog'iston Respublikasi": 'karakalpakstan'
     }
 
     mapped_profession = profession_mapping.get(current_lang, {}).get(profession, profession)
     mapped_city = city_mapping.get(current_lang, {}).get(city, city)
+    db_city = uz_city_to_key.get(mapped_city, mapped_city)
 
     if mapped_profession:
         builders = builders.filter(profession__icontains=mapped_profession)
-    if mapped_city:
-        builders = builders.filter(profile__city=mapped_city)
+    if db_city:
+        builders = builders.filter(profile__city=db_city)
 
     search_query = request.GET.get('search', '').strip()
     if search_query:
-        from django.contrib.postgres.search import TrigramSimilarity
-        builders = builders.annotate(
-            similarity=TrigramSimilarity('profile__user__first_name', search_query) +
-                       TrigramSimilarity('profile__user__last_name', search_query) +
-                       TrigramSimilarity('profile__user__username', search_query) +
-                       TrigramSimilarity('bio', search_query)
-        ).filter(Q(similarity__gt=0.1) | Q(profile__user__first_name__icontains=search_query) | Q(profile__user__last_name__icontains=search_query) | Q(profile__user__username__icontains=search_query)).order_by('-similarity')
+        try:
+            from django.contrib.postgres.search import TrigramSimilarity
+            temp_builders = builders.annotate(
+                similarity=TrigramSimilarity('profile__user__first_name', search_query) +
+                           TrigramSimilarity('profile__user__last_name', search_query) +
+                           TrigramSimilarity('profile__user__username', search_query) +
+                           TrigramSimilarity('bio', search_query)
+            ).filter(Q(similarity__gt=0.1) | Q(profile__user__first_name__icontains=search_query) | Q(profile__user__last_name__icontains=search_query) | Q(profile__user__username__icontains=search_query)).order_by('-similarity')
+            # Trigger evaluation to check if pg_trgm is supported
+            list(temp_builders[:1])
+            builders = temp_builders
+        except Exception:
+            # Fallback to standard filters for sqlite/lack of pg_trgm
+            builders = builders.filter(
+                Q(profile__user__first_name__icontains=search_query) |
+                Q(profile__user__last_name__icontains=search_query) |
+                Q(profile__user__username__icontains=search_query) |
+                Q(bio__icontains=search_query)
+            )
 
     min_rating = request.GET.get('min_rating', '').strip()
     if min_rating:
@@ -405,6 +450,27 @@ def builder_list_view(request):
             builders = builders.filter(rating_cache__gte=rating_val)
         except ValueError:
             pass
+
+    # ⚡️ Agar AJAX so'rov bo'lsa, ro'yxatni JsonResponse ko'rinishida qaytaramiz
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest' or request.GET.get('ajax') == '1':
+        from django.http import JsonResponse
+        builders_data = []
+        for builder in builders:
+            builders_data.append({
+                'id': builder.id,
+                'user_id': builder.profile.user.id,
+                'full_name': builder.profile.user.get_full_name() or builder.profile.user.username,
+                'username': builder.profile.user.username,
+                'avatar_url': builder.profile.get_avatar_url(),
+                'is_premium': builder.profile.is_premium,
+                'is_verified': builder.profile.is_verified,
+                'profession': builder.translated_profession,
+                'bio': builder.bio or "",
+                'trust_index': builder.profile.trust_index or 0,
+                'gamification_status': builder.gamification_status or "Newbie",
+                'rating_cache': float(builder.rating_cache) if builder.rating_cache else 0.0,
+            })
+        return JsonResponse({'builders': builders_data})
 
     posts = Post.objects.select_related('author__profile').annotate(
         likes_count=Count('likes', distinct=True)
@@ -530,6 +596,16 @@ class UserContactInfoAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, user_id):
+        # Active subscription check for builders
+        if hasattr(request.user, 'profile') and request.user.profile.role == 'builder':
+            bp = getattr(request.user.profile, 'builder_info', None)
+            if not bp or not bp.has_active_subscription:
+                from django.utils.translation import get_language
+                return Response({
+                    'error': _("Bu funksiyadan foydalanish uchun faol obuna talab qilinadi."),
+                    'redirect': f"/{get_language()}/payment-dashboard/"
+                }, status=status.HTTP_402_PAYMENT_REQUIRED)
+
         from django.contrib.auth.models import User as DjangoUser
         user = get_object_or_404(DjangoUser, id=user_id)
 
@@ -995,16 +1071,29 @@ def process_verification(request, request_id, action):
     elif action == 'reject':
         sub_request.status = 'rejected'
         sub_request.save()
-        
+
+        # ❌ Barcha obuna imtiyozlarini darhol tortib olamiz
         bp.is_temp_active = False
+        bp.temp_active_until = None
         bp.subscription_status = False
         bp.subscription_plan = None
+        bp.pending_plan = None
         bp.save()
 
         # ❌ Profile'da is_premium ni o'chiramiz
         builder_profile_obj = builder_user.profile
         builder_profile_obj.is_premium = False
         builder_profile_obj.save(update_fields=['is_premium'])
+
+        # 📋 Obuna tarixiga yozamiz
+        from build.models import SubscriptionHistory
+        SubscriptionHistory.objects.create(
+            user=builder_user,
+            event='revoked',
+            plan_name=sub_request.plan_name,
+            note=f"Admin tomonidan rad etildi (SubscriptionRequest #{sub_request.id})",
+            performed_by=request.user,
+        )
 
         # ❌ Rad etish bildirishnomasini yuboramiz
         from accounts.models import Notification
@@ -1041,6 +1130,13 @@ def process_verification(request, request_id, action):
 
 @login_required
 def chat_room_redirect(request, user_id):
+    # Active subscription check for builders
+    if hasattr(request.user, 'profile') and request.user.profile.role == 'builder':
+        bp = getattr(request.user.profile, 'builder_info', None)
+        if not bp or not bp.has_active_subscription:
+            from django.utils.translation import get_language
+            return redirect(f"/{get_language()}/payment-dashboard/")
+
     other_user = get_object_or_404(User, id=user_id)
     room, _ = ChatRoom.get_or_create_for(other_user, request.user)
     return redirect(f"/chat/?room_id={room.id}")
@@ -1063,6 +1159,14 @@ def payment_dashboard(request):
         screenshot = request.FILES.get('screenshot')
         
         if not plan_name or not screenshot:
+            return redirect('build:payment_dashboard')
+
+        # ⛔ Double-payment protection: pending so'rov allaqachon bormi?
+        existing_pending = SubscriptionRequest.objects.filter(
+            user=request.user, status='pending'
+        ).exists()
+        if existing_pending:
+            # Frontend modal ko'rsatadi, lekin backend ham himoyalangan
             return redirect('build:payment_dashboard')
             
         try:
@@ -1118,13 +1222,62 @@ def payment_dashboard(request):
     latest_request = SubscriptionRequest.objects.filter(user=request.user).order_by('-created_at').first()
     plans = Plan.objects.all().order_by('price')
     
+    # ⚡️ Narxlar Matritsasi va Dinamik URL Parametrlarni Qayta Ishlash
+    PRICING_MATRIX = {
+        'pro': {
+            'monthly': {'price': 49000,  'text_uz': "PRO Obuna (Oylik)",      'text_ru': "PRO Подписка (Месячная)",  'text_en': "PRO Subscription (Monthly)"},
+            'yearly':  {'price': 441000, 'text_uz': "PRO Obuna (Yillik)",      'text_ru': "PRO Подписка (Годовая)",   'text_en': "PRO Subscription (Yearly)"}
+        },
+        'vip': {
+            'monthly': {'price': 99000,  'text_uz': "Premium VIP (Oylik)",     'text_ru': "Premium VIP (Месячная)",  'text_en': "Premium VIP (Monthly)"},
+            'yearly':  {'price': 891000, 'text_uz': "Premium VIP (Yillik)",    'text_ru': "Premium VIP (Годовая)",   'text_en': "Premium VIP (Yearly)"}
+        }
+    }
+    
+    plan_key = request.GET.get('plan', '').strip().lower()
+    period_key = request.GET.get('period', '').strip().lower()
+    
+    selected_plan = plan_key if plan_key in PRICING_MATRIX else 'pro'
+    selected_period = period_key if period_key in ['monthly', 'yearly'] else 'monthly'
+    
+    plan_info = PRICING_MATRIX[selected_plan][selected_period]
+    price = plan_info['price']
+    
+    current_lang = get_language()
+    if current_lang == 'ru':
+        plan_display_name = plan_info['text_ru']
+    elif current_lang == 'en':
+        plan_display_name = plan_info['text_en']
+    else:
+        plan_display_name = plan_info['text_uz']
+        
+    if latest_request and latest_request.plan_name:
+        is_yearly = any(x in latest_request.plan_name.lower() for x in ["yillik", "yearly", "годовая"])
+        is_vip = any(x in latest_request.plan_name.lower() for x in ["vip", "crown"])
+        req_key = 'vip' if is_vip else 'pro'
+        req_period = 'yearly' if is_yearly else 'monthly'
+        
+        req_info = PRICING_MATRIX[req_key][req_period]
+        if current_lang == 'ru':
+            latest_request.translated_plan_name = req_info['text_ru']
+        elif current_lang == 'en':
+            latest_request.translated_plan_name = req_info['text_en']
+        else:
+            latest_request.translated_plan_name = req_info['text_uz']
+    elif latest_request:
+        latest_request.translated_plan_name = latest_request.plan_name
+
     return render(request, 'build/payment_dashboard.html', {
         'room': room,
         'messages': messages_list,
         'bp': bp,
         'latest_request': latest_request,
         'plans': plans,
-        'admin_user': admin_user
+        'admin_user': admin_user,
+        'selected_plan': selected_plan,
+        'selected_period': selected_period,
+        'selected_price': price,
+        'plan_display_name': plan_display_name,
     })
 
 

@@ -932,7 +932,7 @@
         <div class="toggle-switch" onclick="toggleBilling('toggle')">
             <div class="toggle-slider"></div>
         </div>
-        <span class="toggle-label" id="labelYearly" onclick="toggleBilling('yearly')">{% trans "Yillik" %} <span class="discount-badge">{% trans "-20% foyda" %}</span></span>
+        <span class="toggle-label" id="labelYearly" onclick="toggleBilling('yearly')">{% trans "Yillik" %} <span class="discount-badge">{% trans "-25% foyda" %}</span></span>
     </div>
     
     <script>
@@ -951,7 +951,7 @@
                 toggleContainer.classList.add('yearly');
                 labelMonthly.classList.remove('active');
                 labelYearly.classList.add('active');
-                stdPrice.innerText = '470,000';
+                stdPrice.innerText = '441,000';
                 stdPeriod.innerText = "so'm/yil";
             } else {
                 toggleContainer.classList.remove('yearly');
@@ -1338,13 +1338,10 @@ function showMarketToast() {
 <!-- ═══════════════ PAYMENT MODAL ═══════════════ -->
 <script>
 function openPayModal(plan) {
-    let name = "PRO Obuna";
-    if (plan === 'vip' || plan === 'vip_yearly' || plan.includes('vip')) {
-        name = "Premium VIP";
-    } else if (plan === 'pro' || plan === 'pro_yearly' || plan.includes('pro')) {
-        name = "PRO Obuna";
-    }
-    window.location.href = `/uz/payment-dashboard/?plan_name=${encodeURIComponent(name)}`;
+    const lang = window.location.pathname.split('/')[1] || 'uz';
+    const planKey = (plan === 'vip' || plan.includes('vip')) ? 'vip' : 'pro';
+    const periodKey = isYearly ? 'yearly' : 'monthly';
+    window.location.href = `/${lang}/payment-dashboard/?plan=${planKey}&period=${periodKey}`;
 }
 
 document.addEventListener('DOMContentLoaded', () => {

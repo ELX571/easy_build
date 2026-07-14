@@ -726,7 +726,13 @@
             return;
         }
         const d = await res.json();
-        if (!res.ok) { showToast('error', d.error || `{% trans 'Xatolik yuz berdi!'|escapejs %}`); return; }
+        if (!res.ok) {
+            showToast('error', d.error || `{% trans 'Xatolik yuz berdi!'|escapejs %}`);
+            if (d.redirect) {
+                setTimeout(() => { window.location.href = d.redirect; }, 1500);
+            }
+            return;
+        }
 
         document.getElementById('cModal-avatar').src = d.avatar || '/static/images/default_avatar.svg';
         document.getElementById('cModal-name').textContent = d.full_name;

@@ -101,6 +101,14 @@ def _format_contact_data(room, user, request, unread_count=None):
 @login_required
 def chat_view(request):
     """Renders the main chat application page."""
+    # Active subscription check for builders
+    if hasattr(request.user, 'profile') and request.user.profile.role == 'builder':
+        bp = getattr(request.user.profile, 'builder_info', None)
+        if not bp or not bp.has_active_subscription:
+            from django.utils.translation import get_language
+            from django.shortcuts import redirect
+            return redirect(f"/{get_language()}/payment-dashboard/")
+
     my_rooms = (
         ChatRoom.objects
         .filter(participants=request.user)
@@ -210,6 +218,17 @@ def api_messages(request, room_id):
 @require_POST
 def api_start_chat(request):
     """Initiates a new direct chat room with another user."""
+    # Active subscription check for builders
+    if hasattr(request.user, 'profile') and request.user.profile.role == 'builder':
+        bp = getattr(request.user.profile, 'builder_info', None)
+        if not bp or not bp.has_active_subscription:
+            from django.utils.translation import get_language
+            from django.utils.translation import gettext as _
+            return JsonResponse({
+                'error': _("Bu funksiyadan foydalanish uchun faol obuna talab qilinadi."),
+                'redirect': f"/{get_language()}/payment-dashboard/"
+            }, status=402)
+
     try:
         body = json.loads(request.body)
         other_id = int(body.get('user_id', 0))

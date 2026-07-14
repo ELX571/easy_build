@@ -509,51 +509,51 @@
             <form method="GET" class="search-grid-form">
                 <div class="input-box-group">
                     <label><i class="fa-solid fa-magnifying-glass"></i> {% translate "Kalit so'z / Ism" %}</label>
-                    <input type="text" name="search" value="{{ request.GET.search }}" placeholder="{% translate 'Usta ismi yoki kalit so\'z...' %}" class="search-input-field">
+                    <input type="text" name="search" value="{{ request.GET.search }}" placeholder="{% translate "Usta ismi yoki kalit so'zi..." %}" class="search-input-field">
                 </div>
 
                 <div class="input-box-group">
                     <label><i class="fa-solid fa-helmet-safety"></i> {% translate "Mutaxassislik" %}</label>
                     <select name="profession" class="search-input-field" style="cursor: pointer;">
                         <option value="">{% translate "Barchasi" %}</option>
-                        <option value="Elektrik" {% if request.GET.profession == "Elektrik" %}selected{% endif %}>{% translate "Elektrik" %}</option>
-                        <option value="Santexnik" {% if request.GET.profession == "Santexnik" %}selected{% endif %}>{% translate "Santexnik" %}</option>
-                        <option value="Betonchi / Armaturachi" {% if request.GET.profession == "Betonchi / Armaturachi" %}selected{% endif %}>{% translate "Betonchi / Armaturachi" %}</option>
-                        <option value="Suvoqchi / Malyar" {% if request.GET.profession == "Suvoqchi / Malyar" %}selected{% endif %}>{% translate "Suvoqchi / Malyar" %}</option>
-                        <option value="Kafelchi (Plitkach)" {% if request.GET.profession == "Kafelchi (Plitkach)" %}selected{% endif %}>{% translate "Kafelchi (Plitkach)" %}</option>
-                        <option value="Payvandchi (Svarshik)" {% if request.GET.profession == "Payvandchi (Svarshik)" %}selected{% endif %}>{% translate "Payvandchi (Svarshik)" %}</option>
-                        <option value="Tom yopuvchi (Tomchi)" {% if request.GET.profession == "Tom yopuvchi (Tomchi)" %}selected{% endif %}>{% translate "Tom yopuvchi (Tomchi)" %}</option>
-                        <option value="G'isht quyuvchi (G'ishtchi)" {% if request.GET.profession == "G'isht quyuvchi (G'ishtchi)" %}selected{% endif %}>{% translate "G'isht quyuvchi (G'ishtchi)" %}</option>
-                        <option value="Duradgor / Yog'och ustasi" {% if request.GET.profession == "Duradgor / Yog'och ustasi" %}selected{% endif %}>{% translate "Duradgor / Yog'och ustasi" %}</option>
-                        <option value="Gipsokartonchi" {% if request.GET.profession == "Gipsokartonchi" %}selected{% endif %}>{% translate "Gipsokartonchi" %}</option>
-                        <option value="Isitish va Sovutish (HVAC)" {% if request.GET.profession == "Isitish va Sovutish (HVAC)" %}selected{% endif %}>{% translate "Isitish va Sovutish (HVAC)" %}</option>
-                        <option value="Loyiha muhandisi (Prorab)" {% if request.GET.profession == "Loyiha muhandisi (Prorab)" %}selected{% endif %}>{% translate "Loyiha muhandisi (Prorab)" %}</option>
-                        <option value="Fasad ustasi" {% if request.GET.profession == "Fasad ustasi" %}selected{% endif %}>{% translate "Fasad ustasi" %}</option>
-                        <option value="Demontaj / Buzish ishlari" {% if request.GET.profession == "Demontaj / Buzish ishlari" %}selected{% endif %}>{% translate "Demontaj / Buzish ishlari" %}</option>
-                        <option value="Umumiy quruvchi" {% if request.GET.profession == "Umumiy quruvchi" %}selected{% endif %}>{% translate "Umumiy quruvchi" %}</option>
+                        <option value="{% translate 'Elektrik' %}" {% if request.GET.profession == "Elektrik" or request.GET.profession == "Электрик" or request.GET.profession == "Electrician" %}selected{% endif %}>{% translate "Elektrik" %}</option>
+                        <option value="{% translate 'Santexnik' %}" {% if request.GET.profession == "Santexnik" or request.GET.profession == "Сантехник" or request.GET.profession == "Plumber" %}selected{% endif %}>{% translate "Santexnik" %}</option>
+                        <option value="{% translate 'Betonchi / Armaturachi' %}" {% if request.GET.profession == "Betonchi / Armaturachi" or request.GET.profession == "Бетонщик / Арматурщик" or request.GET.profession == "Concrete worker / Reinforcer" %}selected{% endif %}>{% translate "Betonchi / Armaturachi" %}</option>
+                        <option value="{% translate 'Suvoqchi / Malyar' %}" {% if request.GET.profession == "Suvoqchi / Malyar" or request.GET.profession == "Штукатур / Маляр" or request.GET.profession == "Plasterer / Painter" %}selected{% endif %}>{% translate "Suvoqchi / Malyar" %}</option>
+                        <option value="{% translate 'Kafelchi (Plitkach)' %}" {% if request.GET.profession == "Kafelchi (Plitkach)" or request.GET.profession == "Плиточник" or request.GET.profession == "Tiler" %}selected{% endif %}>{% translate "Kafelchi (Plitkach)" %}</option>
+                        <option value="{% translate 'Payvandchi (Svarshik)' %}" {% if request.GET.profession == "Payvandchi (Svarshik)" or request.GET.profession == "Сварщик" or request.GET.profession == "Welder" %}selected{% endif %}>{% translate "Payvandchi (Svarshik)" %}</option>
+                        <option value="{% translate 'Tom yopuvchi (Tomchi)' %}" {% if request.GET.profession == "Tom yopuvchi (Tomchi)" or request.GET.profession == "Кровельщик" or request.GET.profession == "Roofer" %}selected{% endif %}>{% translate "Tom yopuvchi (Tomchi)" %}</option>
+                        <option value="{% translate 'G\'isht quyuvchi (G\'ishtchi)' %}" {% if request.GET.profession == "G'isht quyuvchi (G'ishtchi)" or request.GET.profession == "Каменщик" or request.GET.profession == "Bricklayer" %}selected{% endif %}>{% translate "G'isht quyuvchi (G'ishtchi)" %}</option>
+                        <option value="{% translate 'Duradgor / Yog\'och ustasi' %}" {% if request.GET.profession == "Duradgor / Yog'och ustasi" or request.GET.profession == "Плотник" or request.GET.profession == "Carpenter" %}selected{% endif %}>{% translate "Duradgor / Yog'och ustasi" %}</option>
+                        <option value="{% translate 'Gipsokartonchi' %}" {% if request.GET.profession == "Gipsokartonchi" or request.GET.profession == "Гипсокартонщик" or request.GET.profession == "Drywaller" %}selected{% endif %}>{% translate "Gipsokartonchi" %}</option>
+                        <option value="{% translate 'Isitish va Sovutish (HVAC)' %}" {% if request.GET.profession == "Isitish va Sovutish (HVAC)" or request.GET.profession == "Отопление и охлаждение (HVAC)" or request.GET.profession == "Heating and Cooling (HVAC)" %}selected{% endif %}>{% translate "Isitish va Sovutish (HVAC)" %}</option>
+                        <option value="{% translate 'Loyiha muhandisi (Prorab)' %}" {% if request.GET.profession == "Loyiha muhandisi (Prorab)" or request.GET.profession == "Инженер проекта (Прораб)" or request.GET.profession == "Project Engineer (Prorab)" %}selected{% endif %}>{% translate "Loyiha muhandisi (Prorab)" %}</option>
+                        <option value="{% translate 'Fasad ustasi' %}" {% if request.GET.profession == "Fasad ustasi" or request.GET.profession == "Мастер фасада" or request.GET.profession == "Facade Master" %}selected{% endif %}>{% translate "Fasad ustasi" %}</option>
+                        <option value="{% translate 'Demontaj / Buzish ishlari' %}" {% if request.GET.profession == "Demontaj / Buzish ishlari" or request.GET.profession == "Демонтаж / Снос" or request.GET.profession == "Demolition / Dismantling" %}selected{% endif %}>{% translate "Demontaj / Buzish ishlari" %}</option>
+                        <option value="{% translate 'Umumiy quruvchi' %}" {% if request.GET.profession == "Umumiy quruvchi" or request.GET.profession == "Общий строитель" or request.GET.profession == "General Builder" %}selected{% endif %}>{% translate "Umumiy quruvchi" %}</option>
                     </select>
                 </div>
 
                 <div class="input-box-group">
-    <label><i class="fa-solid fa-location-dot"></i> {% translate "Shahar / Viloyat" %}</label>
-    <select name="city" class="search-input-field" style="cursor: pointer;">
-        <option value="">{% translate "Barchasi" %}</option>
-        <option value="Toshkent shahri" {% if request.GET.city == "Toshkent shahri" %}selected{% endif %}>{% translate "Toshkent shahri" %}</option>
-        <option value="Toshkent viloyati" {% if request.GET.city == "Toshkent viloyati" %}selected{% endif %}>{% translate "Toshkent viloyati" %}</option>
-        <option value="Andijon viloyati" {% if request.GET.city == "Andijon viloyati" %}selected{% endif %}>{% translate "Andijon viloyati" %}</option>
-        <option value="Buxoro viloyati" {% if request.GET.city == "Buxoro viloyati" %}selected{% endif %}>{% translate "Buxoro viloyati" %}</option>
-        <option value="Farg'ona viloyati" {% if request.GET.city == "Farg'ona viloyati" %}selected{% endif %}>{% translate "Farg'ona viloyati" %}</option>
-        <option value="Jizzax viloyati" {% if request.GET.city == "Jizzax viloyati" %}selected{% endif %}>{% translate "Jizzax viloyati" %}</option>
-        <option value="Xorazm viloyati" {% if request.GET.city == "Xorazm viloyati" %}selected{% endif %}>{% translate "Xorazm viloyati" %}</option>
-        <option value="Namangan viloyati" {% if request.GET.city == "Namangan viloyati" %}selected{% endif %}>{% translate "Namangan viloyati" %}</option>
-        <option value="Navoiy viloyati" {% if request.GET.city == "Navoiy viloyati" %}selected{% endif %}>{% translate "Navoiy viloyati" %}</option>
-        <option value="Qashqadaryo viloyati" {% if request.GET.city == "Qashqadaryo viloyati" %}selected{% endif %}>{% translate "Qashqadaryo viloyati" %}</option>
-        <option value="Samarqand viloyati" {% if request.GET.city == "Samarqand viloyati" %}selected{% endif %}>{% translate "Samarqand viloyati" %}</option>
-        <option value="Sirdaryo viloyati" {% if request.GET.city == "Sirdaryo viloyati" %}selected{% endif %}>{% translate "Sirdaryo viloyati" %}</option>
-        <option value="Surxondaryo viloyati" {% if request.GET.city == "Surxondaryo viloyati" %}selected{% endif %}>{% translate "Surxondaryo viloyati" %}</option>
-        <option value="Qoraqalpog'iston Respublikasi" {% if request.GET.city == "Qoraqalpog'iston Respublikasi" %}selected{% endif %}>{% translate "Qoraqalpog'iston Respublikasi" %}</option>
-    </select>
-</div>
+                    <label><i class="fa-solid fa-location-dot"></i> {% translate "Shahar / Viloyat" %}</label>
+                    <select name="city" class="search-input-field" style="cursor: pointer;">
+                        <option value="">{% translate "Barchasi" %}</option>
+                        <option value="{% translate 'Toshkent shahri' %}" {% if request.GET.city == "Toshkent shahri" or request.GET.city == "Ташкент (город)" or request.GET.city == "Город Ташкент" or request.GET.city == "Tashkent City" %}selected{% endif %}>{% translate "Toshkent shahri" %}</option>
+                        <option value="{% translate 'Toshkent viloyati' %}" {% if request.GET.city == "Toshkent viloyati" or request.GET.city == "Ташкентская область" or request.GET.city == "Tashkent Region" %}selected{% endif %}>{% translate "Toshkent viloyati" %}</option>
+                        <option value="{% translate 'Andijon viloyati' %}" {% if request.GET.city == "Andijon viloyati" or request.GET.city == "Андижанская область" or request.GET.city == "Andijan Region" %}selected{% endif %}>{% translate "Andijon viloyati" %}</option>
+                        <option value="{% translate 'Buxoro viloyati' %}" {% if request.GET.city == "Buxoro viloyati" or request.GET.city == "Бухарская область" or request.GET.city == "Bukhara Region" %}selected{% endif %}>{% translate "Buxoro viloyati" %}</option>
+                        <option value="{% translate 'Farg\'ona viloyati' %}" {% if request.GET.city == "Farg'ona viloyati" or request.GET.city == "Ферганская область" or request.GET.city == "Fergana Region" %}selected{% endif %}>{% translate "Farg'ona viloyati" %}</option>
+                        <option value="{% translate 'Jizzax viloyati' %}" {% if request.GET.city == "Jizzax viloyati" or request.GET.city == "Джизакская область" or request.GET.city == "Jizzakh Region" %}selected{% endif %}>{% translate "Jizzax viloyati" %}</option>
+                        <option value="{% translate 'Xorazm viloyati' %}" {% if request.GET.city == "Xorazm viloyati" or request.GET.city == "Хорезмская область" or request.GET.city == "Khorezm Region" %}selected{% endif %}>{% translate "Xorazm viloyati" %}</option>
+                        <option value="{% translate 'Namangan viloyati' %}" {% if request.GET.city == "Namangan viloyati" or request.GET.city == "Наманганская область" or request.GET.city == "Namangan Region" %}selected{% endif %}>{% translate "Namangan viloyati" %}</option>
+                        <option value="{% translate 'Navoiy viloyati' %}" {% if request.GET.city == "Navoiy viloyati" or request.GET.city == "Навоийская область" or request.GET.city == "Navoiy Region" %}selected{% endif %}>{% translate "Navoiy viloyati" %}</option>
+                        <option value="{% translate 'Qashqadaryo viloyati' %}" {% if request.GET.city == "Qashqadaryo viloyati" or request.GET.city == "Кашкадарьинская область" or request.GET.city == "Qashqadaryo Region" %}selected{% endif %}>{% translate "Qashqadaryo viloyati" %}</option>
+                        <option value="{% translate 'Samarkand viloyati' %}" {% if request.GET.city == "Samarqand viloyati" or request.GET.city == "Samarkand viloyati" or request.GET.city == "Самаркандская область" or request.GET.city == "Samarkand Region" %}selected{% endif %}>{% translate "Samarqand viloyati" %}</option>
+                        <option value="{% translate 'Sirdaryo viloyati' %}" {% if request.GET.city == "Sirdaryo viloyati" or request.GET.city == "Сырдарьинская область" or request.GET.city == "Syrdarya Region" %}selected{% endif %}>{% translate "Sirdaryo viloyati" %}</option>
+                        <option value="{% translate 'Surxondaryo viloyati' %}" {% if request.GET.city == "Surxondaryo viloyati" or request.GET.city == "Сурхандарьинская область" or request.GET.city == "Surxondaryo Region" %}selected{% endif %}>{% translate "Surxondaryo viloyati" %}</option>
+                        <option value="{% translate 'Qoraqalpog\'iston Respublikasi' %}" {% if request.GET.city == "Qoraqalpog'iston Respublikasi" or request.GET.city == "Республика Каракалпакстан" or request.GET.city == "Republic of Karakalpakstan" %}selected{% endif %}>{% translate "Qoraqalpog'iston Respublikasi" %}</option>
+                    </select>
+                </div>
 
                 <div class="input-box-group">
                     <label><i class="fa-solid fa-star"></i> {% translate "Minimal Reyting" %}</label>
@@ -588,9 +588,13 @@
                             <span>@{{ builder.profile.user.username }}</span>
                         </div>
                     </div>
-                    <span class="profession-badge-tag">{{ builder.profession }}</span>
+                    <span class="profession-badge-tag">{{ builder.translated_profession }}</span>
                     <p class="builder-bio-text">
-                        {{ builder.bio|default:"Usta o'zi haqida ma'lumot qoldirmagan."|truncatewords:18 }}
+                        {% if builder.bio %}
+                            {{ builder.bio|truncatewords:18 }}
+                        {% else %}
+                            {% translate "Usta o'zi haqida ma'lumot qoldirmagan." %}
+                        {% endif %}
                     </p>
                     <div class="builder-stats-box">
                         <div class="stat-meta-info" style="grid-column: 1 / -1; margin-bottom: 8px;">
@@ -745,7 +749,13 @@ async function contactUser(event, userId) {
             return;
         }
         const d = await res.json();
-        if (!res.ok) { showToast('error', d.error || `{% trans 'Xatolik yuz berdi!'|escapejs %}`); return; }
+        if (!res.ok) {
+            showToast('error', d.error || `{% trans 'Xatolik yuz berdi!'|escapejs %}`);
+            if (d.redirect) {
+                setTimeout(() => { window.location.href = d.redirect; }, 1500);
+            }
+            return;
+        }
 
         document.getElementById('cModal-avatar').src = d.avatar || '/static/images/default_avatar.svg';
         document.getElementById('cModal-name').textContent = d.full_name;
@@ -949,6 +959,9 @@ function showToast(type, message) {
                     optionsContainer.querySelectorAll('.custom-option').forEach(o => o.classList.remove('selected'));
                     this.classList.add('selected');
                     customSelect.classList.remove('open');
+                    
+                    // Manually dispatch change event to trigger AJAX filter
+                    select.dispatchEvent(new Event('change'));
                 });
                 
                 optionsContainer.appendChild(customOption);
@@ -972,6 +985,160 @@ function showToast(type, message) {
                 sel.classList.remove('open');
             });
         });
+
+        // ⚡️ AJAX / Fetch API Real-Time Dynamic Search & Filter Logic
+        const UI_LANG = {
+            contactBtn: "{% translate 'Bog\'lanish' %}",
+            gamification: "{% translate 'Gamifikatsiya' %}",
+            rating: "{% translate 'Reyting' %}",
+            noBuilders: "{% translate 'Hech qanday usta topilmadi' %}",
+            noBuildersDesc: "{% translate 'Qidiruv shartlariga mos keladigan Quruvchilar hozircha mavjud emas.' %}",
+            defaultBio: "{% translate 'Usta o\'zi haqida ma\'lumot qoldirmagan.' %}"
+        };
+        const trans = UI_LANG;
+
+        let debounceTimer;
+        const form = document.querySelector('.search-grid-form');
+        if (form) {
+            const searchInput = form.querySelector('input[name="search"]');
+            const selectInputs = form.querySelectorAll('select');
+            const buildersGrid = document.querySelector('.builders-grid-layout');
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                performSearch();
+            });
+
+            if (searchInput) {
+                searchInput.addEventListener('input', () => {
+                    clearTimeout(debounceTimer);
+                    debounceTimer = setTimeout(() => {
+                        performSearch();
+                    }, 300);
+                });
+            }
+
+            selectInputs.forEach(select => {
+                select.addEventListener('change', () => {
+                    performSearch();
+                });
+            });
+
+            function performSearch() {
+                const formData = new FormData(form);
+                const params = new URLSearchParams();
+                
+                for (const [key, value] of formData.entries()) {
+                    if (value) {
+                        params.append(key, value);
+                    }
+                }
+                
+                params.append('ajax', '1');
+                
+                const newUrl = `${window.location.pathname}?${params.toString().replace('&ajax=1', '').replace('ajax=1', '')}`;
+                window.history.replaceState({}, '', newUrl);
+
+                fetch(`${window.location.pathname}?${params.toString()}`, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    renderBuilders(data.builders);
+                })
+                .catch(err => console.error('Qidiruvda xatolik:', err));
+            }
+
+            function renderBuilders(builders) {
+                buildersGrid.innerHTML = '';
+                
+                if (!builders || builders.length === 0) {
+                    buildersGrid.innerHTML = `
+                        <div class="dashboard-card" style="grid-column: 1 / -1; margin: 0 auto; width: 100%;">
+                            <h1>${UI_LANG.noBuilders}</h1>
+                            <p>${UI_LANG.noBuildersDesc}</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                builders.forEach(builder => {
+                    let premiumBadge = '';
+                    if (builder.is_premium) {
+                        premiumBadge = `<i class="fa-solid fa-circle-check" style="color: #3b82f6; font-size: 14px;" title="EasyBuild Premium"></i>`;
+                    } else if (builder.is_verified) {
+                        premiumBadge = `<i class="fa-solid fa-circle-check" style="color: #10b981; font-size: 14px;" title="Tasdiqlangan"></i>`;
+                    }
+                    
+                    let truncatedBio = builder.bio || UI_LANG.defaultBio;
+                    const words = truncatedBio.split(/\s+/);
+                    if (words.length > 18) {
+                        truncatedBio = words.slice(0, 18).join(' ') + '...';
+                    }
+                    
+                    let gamificationColor = 'var(--text-main)';
+                    let gamificationIcon = '';
+                    if (builder.gamification_status === 'Elite') {
+                        gamificationColor = '#eab308';
+                        gamificationIcon = '<i class="fa-solid fa-crown"></i> ';
+                    } else if (builder.gamification_status === 'Pro') {
+                        gamificationColor = '#3b82f6';
+                        gamificationIcon = '<i class="fa-solid fa-circle-check"></i> ';
+                    }
+                    
+                    const cardHtml = `
+                        <div class="builder-premium-card">
+                            <div class="builder-header-flex">
+                                <img src="${builder.avatar_url}" class="builder-card-avatar" alt="Usta">
+                                <div class="builder-identity">
+                                    <h3 style="display:flex; align-items:center; gap:4px;">
+                                        ${builder.full_name}
+                                        ${premiumBadge}
+                                    </h3>
+                                    <span>@${builder.username}</span>
+                                </div>
+                            </div>
+                            <span class="profession-badge-tag">${builder.profession}</span>
+                            <p class="builder-bio-text">
+                                ${truncatedBio}
+                            </p>
+                            <div class="builder-stats-box">
+                                <div class="stat-meta-info" style="grid-column: 1 / -1; margin-bottom: 8px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span class="st-lbl" style="color: var(--active-text-blue);"><i class="fa-solid fa-shield-halved"></i> Trust Index</span>
+                                        <span class="st-val" style="color: var(--active-text-blue);">${builder.trust_index}/100</span>
+                                    </div>
+                                    <div style="height: 6px; background: rgba(255,107,0,0.1); border-radius: 3px; overflow: hidden; margin-top: 4px;">
+                                        <div style="height: 100%; width: ${builder.trust_index}%; background: var(--active-text-blue);"></div>
+                                    </div>
+                                </div>
+                                <div class="stat-meta-info">
+                                    <span class="st-lbl">${UI_LANG.gamification}</span>
+                                    <span class="st-val" style="color: ${gamificationColor};">
+                                        ${gamificationIcon}${builder.gamification_status}
+                                    </span>
+                                </div>
+                                <div class="stat-meta-info">
+                                    <span class="st-lbl">${UI_LANG.rating}</span>
+                                    <span class="st-val rating-stars-gold">
+                                        <i class="fa-solid fa-star"></i> ${builder.rating_cache.toFixed(1)}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="builder-footer-actions">
+                                <a href="#" onclick="contactUser(event, ${builder.user_id})" class="action-hub-btn btn-orange-glow">
+                                    <i class="fa-regular fa-comment"></i> ${UI_LANG.contactBtn}
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                    
+                    buildersGrid.insertAdjacentHTML('beforeend', cardHtml);
+                });
+            }
+        }
     });
 </script>
 

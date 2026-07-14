@@ -212,19 +212,90 @@
     }
 </style>
 
+<style>
+    /* Toggle switch styling */
+    .switch-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 3rem;
+        user-select: none;
+    }
+    .period-label {
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+    .period-label.active {
+        color: #ff6b00;
+    }
+    .period-label.inactive {
+        color: #64748b;
+    }
+    .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 52px;
+        height: 28px;
+    }
+    .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background-color: #cbd5e1;
+        transition: 0.4s;
+        border-radius: 34px;
+    }
+    .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 20px;
+        width: 20px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .toggle-switch input:checked + .toggle-slider {
+        background-color: #ff6b00;
+    }
+    .toggle-switch input:checked + .toggle-slider:before {
+        transform: translateX(24px);
+    }
+</style>
+
 <div class="pricing-container">
     <div class="pricing-header">
         <h1>{% trans "Quruvchilar obuna paketlari" %}</h1>
         <p>{% trans "Loyihalaringiz ko'lamiga mos tarif rejasini tanlang va qo'shimcha imtiyozlarga ega bo'ling" %}</p>
     </div>
     
+    <!-- Billing toggle switch -->
+    <div class="switch-container">
+        <span id="label-monthly" class="period-label active">{% trans "Oylik" %}</span>
+        <label class="toggle-switch">
+            <input type="checkbox" id="billing-toggle">
+            <span class="toggle-slider"></span>
+        </label>
+        <span id="label-yearly" class="period-label inactive" style="display: flex; align-items: center; gap: 6px;">
+            {% trans "Yillik" %}
+            <span style="font-size: 11px; background: rgba(22, 163, 74, 0.1); color: #16a34a; padding: 2px 8px; border-radius: 20px; font-weight: 700;">-20% {% trans "Chegirma" %}</span>
+        </span>
+    </div>
+    
     <div class="plans-grid">
         {% for plan in plans %}
-            {% is_current = profile.subscription_plan == plan %}
-            {% is_pending = profile.pending_plan == plan %}
-            
-            <div class="plan-card {% if is_current %}active{% elif forloop.counter == 2 %}featured{% endif %}">
-                {% if is_current %}
+            <div class="plan-card {% if profile.subscription_plan == plan %}active{% elif forloop.counter == 2 %}featured{% endif %}">
+                {% if profile.subscription_plan == plan %}
                     <span class="active-badge">{% trans "Joriy tarif" %}</span>
                 {% elif forloop.counter == 2 %}
                     <span class="featured-badge">{% trans "Tavsiya etiladi" %}</span>
@@ -233,8 +304,19 @@
                 <div>
                     <h2 class="plan-name">{{ plan.name }}</h2>
                     <div class="plan-price">
-                        <span class="price-value">${{ plan.price }}</span>
-                        <span class="price-period">/ {{ plan.duration_days }} kun</span>
+                        {% if plan.name == "PRO Obuna" %}
+                            <span class="price-value" id="price-pro">49,000</span>
+                            <span class="price-currency">{% trans "so'm" %}</span>
+                            <span class="price-period" id="period-pro">/ {% trans "30 kun" %}</span>
+                        {% elif plan.name == "Premium VIP" %}
+                            <span class="price-value" id="price-vip">99,000</span>
+                            <span class="price-currency">{% trans "so'm" %}</span>
+                            <span class="price-period" id="period-vip">/ {% trans "30 kun" %}</span>
+                        {% else %}
+                            <span class="price-value">{{ plan.price|floatformat:0 }}</span>
+                            <span class="price-currency">{% trans "so'm" %}</span>
+                            <span class="price-period">/ {{ plan.duration_days }} {% trans "kun" %}</span>
+                        {% endif %}
                     </div>
                     <p class="plan-description">{{ plan.description|default:"Quruvchilar uchun mukammal imkoniyatlar to'plami." }}</p>
                     
@@ -254,14 +336,24 @@
                 </div>
                 
                 <div class="plan-action">
-                    {% if is_current %}
+                    {% if profile.subscription_plan == plan %}
                         <span class="btn-choose active-plan">{% trans "Faol obuna" %}</span>
-                    {% elif is_pending %}
+                    {% elif profile.pending_plan == plan %}
                         <span class="btn-choose pending-plan">{% trans "Tasdiqlanish kutilmoqda" %}</span>
                     {% else %}
-                        <a href="{% url 'build:choose_plan' plan.id %}" class="btn-choose {% if forloop.counter == 2 %}primary{% else %}standard{% endif %}">
-                            Tanlash
-                        </a>
+                        {% if plan.name == "PRO Obuna" %}
+                            <a href="" id="btn-pro" class="btn-choose {% if forloop.counter == 2 %}primary{% else %}standard{% endif %}">
+                                {% trans "Tanlash" %}
+                            </a>
+                        {% elif plan.name == "Premium VIP" %}
+                            <a href="" id="btn-vip" class="btn-choose {% if forloop.counter == 2 %}primary{% else %}standard{% endif %}">
+                                {% trans "Tanlash" %}
+                            </a>
+                        {% else %}
+                            <a href="{% url 'build:choose_plan' plan.id %}" class="btn-choose {% if forloop.counter == 2 %}primary{% else %}standard{% endif %}">
+                                {% trans "Tanlash" %}
+                            </a>
+                        {% endif %}
                     {% endif %}
                 </div>
             </div>
@@ -270,4 +362,73 @@
         {% endfor %}
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const toggle = document.getElementById("billing-toggle");
+        const labelMonthly = document.getElementById("label-monthly");
+        const labelYearly = document.getElementById("label-yearly");
+        
+        const pricePro = document.getElementById("price-pro");
+        const priceVip = document.getElementById("price-vip");
+        const periodPro = document.getElementById("period-pro");
+        const periodVip = document.getElementById("period-vip");
+        
+        const btnPro = document.getElementById("btn-pro");
+        const btnVip = document.getElementById("btn-vip");
+        
+        const langPrefix = "/{{ request.LANGUAGE_CODE }}";
+        
+        function updatePricing() {
+            const isYearly = toggle.checked;
+            
+            if (isYearly) {
+                labelMonthly.className = "period-label inactive";
+                labelYearly.className = "period-label active";
+                
+                if (pricePro) pricePro.textContent = "470,400";
+                if (priceVip) priceVip.textContent = "950,400";
+                
+                if (periodPro) periodPro.textContent = "/ " + "{% trans 'yillik' %}";
+                if (periodVip) periodVip.textContent = "/ " + "{% trans 'yillik' %}";
+                
+                if (btnPro) btnPro.href = `${langPrefix}/payment-dashboard/?plan=pro&period=yearly`;
+                if (btnVip) btnVip.href = `${langPrefix}/payment-dashboard/?plan=vip&period=yearly`;
+            } else {
+                labelMonthly.className = "period-label active";
+                labelYearly.className = "period-label inactive";
+                
+                if (pricePro) pricePro.textContent = "49,000";
+                if (priceVip) priceVip.textContent = "99,000";
+                
+                if (periodPro) periodPro.textContent = "/ " + "{% trans '30 kun' %}";
+                if (periodVip) periodVip.textContent = "/ " + "{% trans '30 kun' %}";
+                
+                if (btnPro) btnPro.href = `${langPrefix}/payment-dashboard/?plan=pro&period=monthly`;
+                if (btnVip) btnVip.href = `${langPrefix}/payment-dashboard/?plan=vip&period=monthly`;
+            }
+        }
+        
+        if (toggle) {
+            toggle.addEventListener("change", updatePricing);
+        }
+        
+        if (labelMonthly) {
+            labelMonthly.addEventListener("click", () => {
+                toggle.checked = false;
+                updatePricing();
+            });
+        }
+        
+        if (labelYearly) {
+            labelYearly.addEventListener("click", () => {
+                toggle.checked = true;
+                updatePricing();
+            });
+        }
+        
+        // Initial call
+        updatePricing();
+    });
+</script>
 {% endblock %}

@@ -1,6 +1,6 @@
 {% load i18n %}
 <!DOCTYPE html>
-<html lang="uz" data-theme="light">
+<html lang="{{ request.LANGUAGE_CODE|default:'uz' }}" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
@@ -296,9 +296,9 @@
                 <p>{% trans "O'z yo'nalishingizni tanlang. EasyBuild sizga mos vositalarni taqdim etadi." %}</p>
             </div>
             <ul class="brand-steps">
-                <li><div class="step-num active">1</div> Yo'nalishni tanlang</li>
-                <li><div class="step-num">2</div> Asosiy ma'lumotlar</li>
-                <li><div class="step-num">3</div> Profilingizni to'ldiring</li>
+                <li><div class="step-num active">1</div> {% trans "Yo'nalishni tanlang" %}</li>
+                <li><div class="step-num">2</div> {% trans "Asosiy ma'lumotlar" %}</li>
+                <li><div class="step-num">3</div> {% trans "Profilingizni to'ldiring" %}</li>
             </ul>
         </div>
 
@@ -346,7 +346,7 @@
                 </div>
 
                 <button type="submit" class="btn-submit">
-                    Keyingi qadam <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
+                    {% trans "Keyingi qadam" %} <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
                 </button>
             </form>
             

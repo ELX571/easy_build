@@ -435,7 +435,7 @@
                     <div>
                         <h2 style="font-size:22px; font-weight:800; letter-spacing:-0.4px; display:flex; align-items:center; gap:6px;">
                             {{ target_user.get_full_name|default:target_user.username }}
-                            {% if profile.is_premium %}
+                            {% if profile.is_premium and profile.builder_info.has_active_subscription %}
                                 <i class="fa-solid fa-circle-check" style="color: #3b82f6; font-size: 18px;" title="EasyBuild Premium"></i>
                             {% elif profile.is_verified %}
                                 <i class="fa-solid fa-circle-check" style="color: #10b981; font-size: 18px;" title="Tasdiqlangan foydalanuvchi"></i>

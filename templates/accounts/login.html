@@ -1,6 +1,6 @@
 {% load i18n %}
 <!DOCTYPE html>
-<html lang="uz" data-theme="light">
+<html lang="{{ request.LANGUAGE_CODE|default:'uz' }}" data-theme="light">
 <head>
     <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
@@ -372,7 +372,7 @@
 
         <a href="{% url 'google_login' %}?process=login" class="btn-google">
             <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20" alt="Google">
-            Google bilan kirish
+            {% trans "Google bilan kirish" %}
         </a>
 
         <div class="divider">{% trans "yoki" %}</div>
@@ -387,7 +387,7 @@
                 <label for="username">{% trans "Foydalanuvchi nomi yoki Email" %}</label>
                 <div class="input-wrap">
                     <i class="fa-regular fa-user input-icon"></i>
-                    <input type="text" id="username" name="username" placeholder="Email yoki username kiriting" required autocomplete="username">
+                    <input type="text" id="username" name="username" placeholder="{% trans 'Email yoki username kiriting' %}" required autocomplete="username">
                 </div>
             </div>
 
@@ -395,7 +395,7 @@
                 <label for="password">{% trans "Parol" %}</label>
                 <div class="input-wrap">
                     <i class="fa-solid fa-lock input-icon"></i>
-                    <input type="password" id="password" name="password" placeholder="Parolni kiriting" required autocomplete="current-password">
+                    <input type="password" id="password" name="password" placeholder="{% trans 'Parolni kiriting' %}" required autocomplete="current-password">
                     <i class="fa-regular fa-eye toggle-pass" id="togglePass"></i>
                 </div>
             </div>
@@ -409,7 +409,7 @@
         </form>
 
         <div class="card-footer">
-            Akkauntingiz yo'qmi? <a href="{% url 'accounts:register' %}">{% trans "Ro'yxatdan o'ting" %}</a>
+            {% trans "Akkauntingiz yo'qmi?" %} <a href="{% url 'accounts:register' %}">{% trans "Ro'yxatdan o'ting" %}</a>
         </div>
     </div>
 </div>
@@ -469,13 +469,13 @@
             });
             const json = await res.json();
             if (res.ok) {
-                showAlert('success', json.detail || 'Muvaffaqiyatli kirdingiz!');
+                showAlert('success', json.detail || '{% trans "Muvaffaqiyatli kirdingiz!" %}');
                 setTimeout(() => { window.location.href = '{% url "build:home" %}'; }, 800);
             } else {
                 const msgs = Object.values(json).flat().join(' ');
                 showAlert('error', msgs);
             }
-        } catch { showAlert('error', "Serverga ulanib bo'lmadi."); }
+        } catch { showAlert('error', "{% trans "Serverga ulanib bo'lmadi." %}"); }
         finally  { setLoading(false); }
     });
 </script>
