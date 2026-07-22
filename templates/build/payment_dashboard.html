@@ -1139,75 +1139,34 @@
         <!-- CHAP USTUN: VIRTUAL KARTA VA TARIX -->
         <div class="left-col" style="display: flex; flex-direction: column; gap: 1.25rem;">
 
-            <!-- Real Karta -->
-            <div class="virtual-card" id="premiumCard" onclick="copyCardText('5614 6846 0745 9599')" style="cursor: pointer; margin-bottom: 0;">
-                <div class="vc-top">
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <img src="https://media.licdn.com/dms/image/v2/D4E0BAQGodFELsNsWlg/company-logo_200_200/B4EZvlDmjtH8AM-/0/1769074486918/national_bankof_uzbekistan_logo?e=2147483647&v=beta&t=oR1STjdK0nX_8QgK1ChytXwLHjxbJitdlgD4s6kH9Lc" 
-                             alt="NBU" 
-                             style="width: 36px; height: 36px; border-radius: 8px; object-fit: cover; border: 1.5px solid rgba(255, 255, 255, 0.15);" />
-                        <div style="display: flex; flex-direction: column;">
-                            <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #ffffff; font-weight: 800; font-family: 'Plus Jakarta Sans', sans-serif;">NBU</span>
-                            <span style="font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-muted); font-weight: 500;">Milliy Bank</span>
-                        </div>
-                    </div>
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhx4Pc74crdf6y0D0lJhYXjd4LEw1o04z3dP-amoSU_lqxWlhF9xX5XOwh&s=10" 
-                         alt="UZCARD" 
-                         class="uzcard-img-glow" 
-                         style="width: 90px; height: auto; object-fit: contain; border-radius: 8px;" />
+            <!-- Texnik ishlar xabari (Karta o'rnida) -->
+            <div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(245, 158, 11, 0.08)); border: 1.5px solid rgba(245, 158, 11, 0.35); border-radius: 20px; padding: 1.75rem 1.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(245, 158, 11, 0.18); border: 2px solid rgba(245, 158, 11, 0.5); display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.75rem; color: #f59e0b;"></i>
                 </div>
-
-                <div style="margin-top: 1rem; display: flex; align-items: center; justify-content: space-between;">
-                    <div class="vc-chip"></div>
+                <div style="font-size: 0.95rem; font-weight: 800; color: #f8fafc; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.4;">
+                    {% trans "TO'LOV TIZIMI VAQTINCHALIK ISHLAMAYABDI, TEXNIK ISHLAR OLIB BORILMOQDA" %}
                 </div>
-
-                <div class="vc-middle" style="margin-top: 1rem;">
-                    <div class="vc-number" id="cardNumberText" style="font-size: 1.45rem;">5614 6846 0745 9599</div>
-                </div>
-                <div class="vc-bottom" style="margin-top: 0.8rem;">
-                    <div style="display: flex; flex-direction: column;">
-                        <span style="font-size: 0.65rem; color: var(--color-text-muted); letter-spacing: 1px;">{% trans "KARTA EGASI" %}</span>
-                        <div class="vc-name" style="font-size: 0.85rem; font-weight: 700; letter-spacing: 1.5px; margin-top: 2px;">I.G (EASYBUILD.UZ)</div>
-                    </div>
-                    <button class="vc-copy-btn" onclick="event.stopPropagation(); copyCardText('5614 6846 0745 9599')">
-                        <i class="fa-regular fa-copy"></i> Nusxalash
-                    </button>
+                <div style="font-size: 0.8rem; color: var(--color-text-muted); line-height: 1.4;">
+                    {% trans "Keltirilgan noqulayliklar uchun uzr so'raymiz. Tez orada to'lov tizimi qayta tiklanadi." %}
                 </div>
             </div>
 
-            <!-- Tezkor To'lov Tugmagari Bloki -->
-            <div id="payment-buttons-row" style="display: flex; flex-direction: row; gap: 20px; width: 100%; justify-content: center; align-items: center; position: relative;">
-                {% if latest_request and latest_request.status == 'pending' %}
-                <div id="payment-pending-overlay" onclick="showPendingModal()" style="
-                    position: absolute; inset: 0; z-index: 10; cursor: not-allowed;
-                    background: rgba(0,0,0,0.55); border-radius: 18px;
-                    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
-                    backdrop-filter: blur(2px);">
-                    <i class="fa-solid fa-clock" style="font-size: 1.6rem; color: #f59e0b;"></i>
-                    <span style="font-size: 0.75rem; font-weight: 700; color: #fbbf24; text-align: center; max-width: 140px; line-height: 1.3;">{% trans "Tekshirilmoqda..." %}</span>
-                </div>
-                {% endif %}
+            <!-- Tezkor To'lov Tugmagari Bloki (Nofaol / Greyed out) -->
+            <div id="payment-buttons-row" style="display: flex; flex-direction: row; gap: 20px; width: 100%; justify-content: center; align-items: center; position: relative; opacity: 0.45; filter: grayscale(1); pointer-events: none; cursor: not-allowed; user-select: none;">
                 <!-- CLICK Tugmasi -->
-                <a id="click-link" href="https://my.click.uz/clickp2p/10BFB8F38DBF2939E4D54848D7AA43A236BB856AA74FFA07D2C2DE3663B1F7E6" 
-                   target="_blank" 
-                   style="display: flex; align-items: center; justify-content: center; width: 160px; height: 80px; text-decoration: none; transition: transform 0.2s ease, filter 0.2s ease;"
-                   onmouseover="this.style.transform='translateY(-3px) scale(1.05)'; this.style.filter='drop-shadow(0 8px 16px rgba(0, 163, 255, 0.4))';"
-                   onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.filter='none';"
-                   onmousedown="this.style.transform='translateY(1px) scale(0.98)';"
-                   onmouseup="this.style.transform='translateY(-3px) scale(1.05)';">
+                <a id="click-link" href="javascript:void(0)" 
+                   onclick="return false;"
+                   style="display: flex; align-items: center; justify-content: center; width: 160px; height: 80px; text-decoration: none; pointer-events: none; cursor: not-allowed;">
                     <img src="https://www.uznews.uz/storage/uploads/2025/7/31/file_688b109dd4abc_orig.jpg" 
                          alt="CLICK" 
                          style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 14px;" />
                 </a>
 
                 <!-- Uzum Bank Tugmasi -->
-                <a id="uzum-link" href="https://b.2u.uz/ttc?qr=Nzk5MzoxMjU1OTIwNzowMUtQVjQ1MUYxUEZFU1RTOFQ5MVdDMDE1UzpBcy9WREZmaXJlWExSVlM2VzJncDZaRVA0cDQ9" 
-                   target="_blank" 
-                   style="display: flex; align-items: center; justify-content: center; width: 160px; height: 80px; text-decoration: none; transition: transform 0.2s ease, filter 0.2s ease;"
-                   onmouseover="this.style.transform='translateY(-3px) scale(1.05)'; this.style.filter='drop-shadow(0 8px 16px rgba(124, 58, 237, 0.4))';"
-                   onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.filter='none';"
-                   onmousedown="this.style.transform='translateY(1px) scale(0.98)';"
-                   onmouseup="this.style.transform='translateY(-3px) scale(1.05)';">
+                <a id="uzum-link" href="javascript:void(0)" 
+                   onclick="return false;"
+                   style="display: flex; align-items: center; justify-content: center; width: 160px; height: 80px; text-decoration: none; pointer-events: none; cursor: not-allowed;">
                     <img src="https://bank.uz/upload/iblock/809/ex3h2e6g2nohuqmg5429lihq1q7mdduy.png" 
                          alt="Uzum Bank" 
                          style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 14px;" />

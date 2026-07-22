@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-14 15:31+0500\n"
+"POT-Creation-Date: 2026-07-22 15:33+0500\n"
 "Language: en\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -685,11 +685,15 @@ msgid ""
 "ko'rinadi."
 msgstr ""
 
-msgid "KARTA EGASI"
-msgstr ""
+msgid "TO'LOV TIZIMI VAQTINCHALIK ISHLAMAYABDI, TEXNIK ISHLAR OLIB BORILMOQDA"
+msgstr "PAYMENT SYSTEM IS TEMPORARILY DOWN, TECHNICAL MAINTENANCE IN PROGRESS"
 
-msgid "Tekshirilmoqda..."
+msgid ""
+"Keltirilgan noqulayliklar uchun uzr so'raymiz. Tez orada to'lov tizimi qayta "
+"tiklanadi."
 msgstr ""
+"We apologize for the inconvenience. The payment system will be restored "
+"shortly."
 
 msgid "Oxirgi so'rovingiz:"
 msgstr "Your last request:"
@@ -786,6 +790,9 @@ msgstr "PNG, JPG or PDF format"
 
 msgid "Rasmni o'zgartirish"
 msgstr "Toggle theme"
+
+msgid "Tekshirilmoqda..."
+msgstr ""
 
 msgid "To'lovni tasdiqlash"
 msgstr "Confirm payment"
@@ -1058,8 +1065,9 @@ msgstr "Your payment receipt is being verified by an admin."
 msgid "Yangilash"
 msgstr "Edit"
 
-#, python-format
-msgid "-20%% foyda"
+#, fuzzy, python-format
+#| msgid "-20%% foyda"
+msgid "-25%% foyda"
 msgstr "-20%% profit"
 
 msgid "SINOV MUDDATI"
