@@ -511,7 +511,7 @@
                                 {% if post.author == request.user %}
                                     <a href="{% url 'build:post_edit' post.id %}"><i class="fa-regular fa-pen-to-square"></i> Tahrirlash</a>
                                 {% else %}
-                                    <a href="javascript:void(0)" onclick="alert('Shikoyat qabul qilindi!')" class="text-warning"><i class="fa-solid fa-flag"></i> Shikoyat qilish</a>
+                                    <a href="javascript:void(0)" onclick="alert('Shikoyat qabul qilindi!')" class="text-warning"><i class="fa-solid fa-flag"></i> {% translate "Shikoyat qilish" %}</a>
                                 {% endif %}
                             </div>
                         </div>

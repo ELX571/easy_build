@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 10:05+0500\n"
+"POT-Creation-Date: 2026-07-23 10:06+0500\n"
 "Language: en\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -338,8 +338,9 @@ msgstr "Repeat Password"
 msgid "Ro'yxatdan o'tish →"
 msgstr "Sign Up"
 
-msgid "Allaqachon akkauntingiz bormi?"
-msgstr "Already have an account?"
+#, python-format
+msgid "{%% translate "
+msgstr "{%% translate "
 
 msgid "Tizimga kirish"
 msgstr "Sign Out"
@@ -435,6 +436,9 @@ msgstr "To participate in the B2B market and to complete large projects."
 msgid "Keyingi qadam"
 msgstr "Next step"
 
+msgid "Allaqachon akkauntingiz bormi?"
+msgstr "Already have an account?"
+
 msgid "&times;"
 msgstr "&times;"
 
@@ -454,7 +458,6 @@ msgstr "Market Pro"
 msgid "Usta Qidirish"
 msgstr "Find a Builder"
 
-#| msgid "Suhbatlar"
 msgid "Chatlar"
 msgstr "Chats"
 
@@ -569,7 +572,6 @@ msgstr "Search"
 msgid "EasyBuild Premium"
 msgstr "EasyBuild Premium"
 
-#| msgid "Tasdiqlangan usta"
 msgid "Tasdiqlangan"
 msgstr "Verified builder"
 
@@ -609,6 +611,12 @@ msgstr "Usta o"
 msgid "Post yaratish"
 msgstr "Create Post"
 
+#| msgid ""
+#| "Professional qurilish materiallari va texnika ijarasi bozori tez kunda "
+#| "ishga tushadi."
+msgid "Professional qurilish materiallari va texnika ijarasi bozori"
+msgstr "Professional building materials and equipment rental market is launching soon."
+
 msgid "tez kunda ishga tushadi."
 msgstr "will be launched soon."
 
@@ -633,6 +641,11 @@ msgstr "B2B Contracts"
 msgid "Kompaniyalar o'rtasida qurilish bitimlari"
 msgstr "Construction contracts between companies"
 
+# Navigation
+#| msgid "Bosh sahifa"
+msgid "Bosh sahifaga qaytish"
+msgstr "Home"
+
 msgid "Bu sizning o'z e'loningiz!"
 msgstr "This is your own listing!"
 
@@ -642,19 +655,17 @@ msgstr "Required e\\"
 msgid "Avatar"
 msgstr "Avatar"
 
-#| msgid "Premium"
 msgid "Premium Usta"
 msgstr "Premium"
 
+# Common
+#| msgid "Bekor qilish"
+msgid "Shikoyat qilish"
+msgstr "Cancel"
+
 # Team
-#| msgid "Jamoa Sozlamalari"
 msgid "Profil Sozlamalari"
 msgstr "Team Settings"
-
-msgid ""
-"Professional qurilish materiallari va texnika ijarasi bozori tez kunda ishga "
-"tushadi."
-msgstr "Professional building materials and equipment rental market is launching soon."
 
 msgid "Sement, g'isht, armatura va qurilish materiallarining eng katta bazasi."
 msgstr "The largest database of cement, bricks, fittings and building materials."
@@ -696,6 +707,13 @@ msgstr "Colleague listings"
 msgid "oldin"
 msgstr "ago"
 
+#| msgid "Nusxalash"
+msgid "Nusxa olish"
+msgstr "Choose"
+
+msgid "Ko'rinmaydigan qilish"
+msgstr "Ko'rinmaydigan qilish"
+
 msgid "Hech qanday e'lon topilmadi"
 msgstr "Nothing found"
 
@@ -714,14 +732,12 @@ msgid ""
 "ko'rinadi."
 msgstr "No messages received yet. New notifications will appear here."
 
-#| msgid "Jamoa sozlamalari"
 msgid "Profil sozlamalari"
 msgstr "Team Settings"
 
 msgid "KARTA EGASI"
 msgstr "KARTA EGASI"
 
-#| msgid "Tanlash"
 msgid "Nusxalash"
 msgstr "Choose"
 
@@ -923,7 +939,6 @@ msgstr "Upload image:"
 msgid "Postni joylash"
 msgstr "Post Listing"
 
-#| msgid "Faol ustalar"
 msgid "Ustalar"
 msgstr "Builders"
 
@@ -956,7 +971,6 @@ msgstr "Delivery"
 msgid "Xavfsiz to'lov"
 msgstr "Security & Password"
 
-#| msgid "Email manzil (ixtiyoriy)"
 msgid "Email manzilingiz..."
 msgstr "Email (Optional)"
 
@@ -969,7 +983,6 @@ msgstr "Builders"
 msgid "Ortga"
 msgstr "Back"
 
-#| msgid "Faol foydalanuvchi"
 msgid "Tasdiqlangan foydalanuvchi"
 msgstr "Username"
 
@@ -985,8 +998,14 @@ msgstr "Verified builder"
 msgid "avatar"
 msgstr "avatar"
 
+msgid "Tahrirlash"
+msgstr "Choose"
+
 msgid "Siz hali biror marta e'lon joylashtirmadingiz."
 msgstr "You have not posted an ad yet."
+
+msgid "Ishonch Indeksi"
+msgstr "Ishonch Indeksi"
 
 msgid "/ 100 ball"
 msgstr "/ 100 points"
@@ -994,16 +1013,51 @@ msgstr "/ 100 points"
 msgid "Gamifikatsiya statusi"
 msgstr "Gamification"
 
+msgid "ta muvaffaqiyatli buyurtma"
+msgstr "ta muvaffaqiyatli buyurtma"
+
+msgid "Builder Pro Reytingi"
+msgstr "Builder Pro Reytingi"
+
+msgid "Bajarildi"
+msgstr "Bajarildi"
+
+msgid "Bekor"
+msgstr "Bekor"
+
 msgid ""
 "Reytinging 3.0 dan past. Iltimos, admin bilan bog'laning yoki sifatni "
 "oshiring."
 msgstr "Your rating is below 3.0. Please contact support or improve service quality."
 
+msgid "Sifat Diagrammasi"
+msgstr "Sifat Diagrammasi"
+
+msgid "Ish sifati (O'rtacha)"
+msgstr "Ish sifati (O'rtacha)"
+
+msgid "Vaqtga rioya"
+msgstr "Vaqtga rioya"
+
+msgid "Xushmuomalalik"
+msgstr "Xushmuomalalik"
+
+#| msgid "Mijozlar e'lonlari"
+msgid "Mijozlar Izohlari"
+msgstr "Client listings"
+
 msgid "Siz mijozsiz"
 msgstr "You are the customer"
 
+#| msgid "Ro'yxatdan o'tish →"
+msgid "Ro'yxatdan olib tashlash"
+msgstr "Sign Up"
+
 msgid "Sizga yoqqan e'lonlar hozircha mavjud emas."
 msgstr "Builders matching the search criteria are not available yet."
+
+msgid "Saqlashni bekor qilish"
+msgstr "Unsave"
 
 msgid "Saqlab qo'yilgan e'lonlaringiz hozircha mavjud emas."
 msgstr "Your saved ads are currently unavailable."
@@ -1091,6 +1145,9 @@ msgstr "Your Current Plan"
 
 msgid "Cheksiz"
 msgstr "Unlimited"
+
+msgid "kun qoldi"
+msgstr "kun qoldi"
 
 # Profile edit page
 msgid "Asosiy imkoniyatlar"
@@ -1197,9 +1254,12 @@ msgstr "It is given only to the best, most reliable masters"
 msgid "Jamoa Sozlamalari"
 msgstr "Team Settings"
 
-#| msgid "Jamoa sardori"
 msgid "Jamoa nomi"
 msgstr "Team Settings"
+
+#| msgid "Guruhni tark etish"
+msgid "Guruhga o'tish"
+msgstr "Go to Group"
 
 msgid "A'zo qo'shish"
 msgstr "Add Member"
@@ -1207,6 +1267,9 @@ msgstr "Add Member"
 # Team tab
 msgid "Jamoangiz nomi va a'zolarini shu yerdan boshqaring"
 msgstr "Manage your team name and members from here"
+
+msgid "JAMOADAN O'CHIRISH"
+msgstr "JAMOADAN O'CHIRISH"
 
 msgid "Hozircha jamoangizda a'zolar yo'q."
 msgstr "There are no members in your team yet."
@@ -1236,7 +1299,6 @@ msgid "Foydalanuvchini username yoki telefon raqami bo'yicha qidiring."
 msgstr "Search for a user by username or phone number."
 
 # Home page
-#| msgid "Qidirish..."
 msgid "Qidiruv..."
 msgstr "Search..."
 
@@ -1283,7 +1345,6 @@ msgstr "Ustaning ishidan qoniqdingizmi? Fikringizni qoldiring..."
 msgid "Yuborish"
 msgstr "Send"
 
-#| msgid "Yangi suhbat"
 msgid "Yangi chat"
 msgstr "Edit"
 
@@ -1294,7 +1355,6 @@ msgstr "Search..."
 msgid "Suhbatlar"
 msgstr "Chats"
 
-#| msgid "Sozlamalar"
 msgid "Sozlamalarga o\\"
 msgstr "Settings"
 
@@ -1325,22 +1385,18 @@ msgstr "Ready"
 msgid "Fayl, rasm yoki video jo\\"
 msgstr "Fayl, rasm yoki video jo"
 
-#| msgid "Xabar yozish"
 msgid "Xabar yozing..."
 msgstr "Send Message"
 
 msgid "A'zolar ro'yxati"
 msgstr "List of members"
 
-#| msgid "Rasmni o'zgartirish"
 msgid "Nomni o'zgartirish"
 msgstr "Toggle theme"
 
-#| msgid "Guruhga o'tish"
 msgid "Guruhni tark etish"
 msgstr "Go to Group"
 
-#| msgid "Foydalanuvchi nomi"
 msgid "Foydalanuvchi Ma'lumotlari"
 msgstr "Username"
 
@@ -1362,7 +1418,6 @@ msgstr "Bloklash"
 msgid "Guruh nomini o'zgartirish"
 msgstr "Change Language"
 
-#| msgid "Parolni kiriting"
 msgid "Yangi nomni kiriting..."
 msgstr "Repeat Password"
 
@@ -1382,18 +1437,15 @@ msgid "To\\"
 msgstr "To"
 
 # Chat
-#| msgid "Yozing..."
 msgid "kuting..."
 msgstr "Type a message..."
 
 msgid "Obuna faol emas"
 msgstr "Obuna faol emas"
 
-#| msgid "Telefon raqam"
 msgid "Telefon"
 msgstr "Phone:"
 
-#| msgid "Telefon raqam"
 msgid "Telegram"
 msgstr "Phone:"
 
@@ -1409,13 +1461,8 @@ msgstr "Facebook"
 msgid "Tezlik"
 msgstr "Tezlik"
 
-#| msgid "Yetkazib berish"
 msgid "Javob berish"
 msgstr "Delivery"
-
-#| msgid "Tanlash"
-msgid "Tahrirlash"
-msgstr "Choose"
 
 msgid "Ulashish"
 msgstr "Ulashish"
@@ -1752,9 +1799,3 @@ msgstr "Edit"
 
 #~ msgid "Ustalar e'lonlari"
 #~ msgstr "Builder listings"
-
-#~ msgid "Mijozlar e'lonlari"
-#~ msgstr "Client listings"
-
-#~ msgid "Saqlashni bekor qilish"
-#~ msgstr "Unsave"

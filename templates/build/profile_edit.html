@@ -681,7 +681,7 @@
                             {% elif sub_plan_type == 'standard' %}
                                 Standard
                                 {% if sub_days_remaining %}
-                                    <span style="background: rgba(16, 185, 129, 0.2); color: #10b981; font-size: 10px; padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.3);">{{ sub_days_remaining }} kun qoldi</span>
+                                    <span style="background: rgba(16, 185, 129, 0.2); color: #10b981; font-size: 10px; padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.3);">{{ sub_days_remaining }} {% translate "kun qoldi" %}</span>
                                 {% endif %}
                             {% else %}
                                 Bepul <span style="background: rgba(148, 163, 184, 0.1); color: var(--text-muted); font-size: 10px; padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(148, 163, 184, 0.2);">{% trans "Asosiy imkoniyatlar" %}</span>
@@ -1105,7 +1105,7 @@
                 </div>
                 <div class="ttc-right">
                     {% if profile.builder_info.group_chat_room %}
-                    <a href="{% url 'chat:chat' %}?room={{ profile.builder_info.group_chat_room.id }}" class="ttc-btn btn-outline" style="text-decoration: none;"><i class="fa-regular fa-comments"></i> Guruhga o'tish</a>
+                    <a href="{% url 'chat:chat' %}?room={{ profile.builder_info.group_chat_room.id }}" class="ttc-btn btn-outline" style="text-decoration: none;"><i class="fa-regular fa-comments"></i> {% translate "Guruhga o'tish" %}</a>
                     {% endif %}
                     <button type="button" class="ttc-btn btn-orange" onclick="openAddMemberModal()"><i class="fa-solid fa-user-plus"></i> {% trans "A'zo qo'shish" %}</button>
                 </div>
@@ -1119,7 +1119,7 @@
                     <div class="tm-name">{{ member.get_full_name|default:member.username }}</div>
                     <div class="tm-role">{% trans "Qurilish jamoasi" %}</div>
                     <button class="tm-remove-btn" onclick="removeTeamMember({{ member.id }}, '{{ member.get_full_name|default:member.username }}')">
-                        <i class="fa-solid fa-user-xmark"></i> JAMOADAN O'CHIRISH
+                        <i class="fa-solid fa-user-xmark"></i> {% translate "JAMOADAN O'CHIRISH" %}
                     </button>
                 </div>
                 {% empty %}

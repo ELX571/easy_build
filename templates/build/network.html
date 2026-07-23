@@ -724,10 +724,10 @@
                                     <a href="{% url 'build:post_edit' post.id %}"><i class="fa-regular fa-pen-to-square"></i> Tahrirlash</a>
                                     <a href="javascript:void(0)" onclick="openDeleteModal('{% url 'build:post_delete' post.id %}')" class="text-danger"><i class="fa-regular fa-trash-can"></i> O'chirish</a>
                                 {% else %}
-                                    <a href="javascript:void(0)" onclick="navigator.clipboard.writeText('{{ request.scheme }}://{{ request.get_host }}{% url 'build:home' %}#post-{{ post.id }}'); alert('Havola nusxalandi!')"><i class="fa-solid fa-link"></i> Nusxa olish</a>
-                                    <a href="javascript:void(0)" onclick="document.getElementById('post-{{ post.id }}').style.display='none'"><i class="fa-solid fa-eye-slash"></i> Ko'rinmaydigan qilish</a>
+                                    <a href="javascript:void(0)" onclick="navigator.clipboard.writeText('{{ request.scheme }}://{{ request.get_host }}{% url 'build:home' %}#post-{{ post.id }}'); alert('Havola nusxalandi!')"><i class="fa-solid fa-link"></i> {% translate "Nusxa olish" %}</a>
+                                    <a href="javascript:void(0)" onclick="document.getElementById('post-{{ post.id }}').style.display='none'"><i class="fa-solid fa-eye-slash"></i> {% translate "Ko'rinmaydigan qilish" %}</a>
                                     <div class="divider"></div>
-                                    <a href="javascript:void(0)" onclick="alert('Shikoyat qabul qilindi! Oliy darajadagi administratorlar tez orada ko'rib chiqadi.')" class="text-warning"><i class="fa-solid fa-flag"></i> Shikoyat qilish</a>
+                                    <a href="javascript:void(0)" onclick="alert('Shikoyat qabul qilindi! Oliy darajadagi administratorlar tez orada ko'rib chiqadi.')" class="text-warning"><i class="fa-solid fa-flag"></i> {% translate "Shikoyat qilish" %}</a>
                                 {% endif %}
                             </div>
                         </div>
