@@ -523,8 +523,8 @@
                         <option value="{% translate 'Kafelchi (Plitkach)' %}" {% if request.GET.profession == "Kafelchi (Plitkach)" or request.GET.profession == "Плиточник" or request.GET.profession == "Tiler" %}selected{% endif %}>{% translate "Kafelchi (Plitkach)" %}</option>
                         <option value="{% translate 'Payvandchi (Svarshik)' %}" {% if request.GET.profession == "Payvandchi (Svarshik)" or request.GET.profession == "Сварщик" or request.GET.profession == "Welder" %}selected{% endif %}>{% translate "Payvandchi (Svarshik)" %}</option>
                         <option value="{% translate 'Tom yopuvchi (Tomchi)' %}" {% if request.GET.profession == "Tom yopuvchi (Tomchi)" or request.GET.profession == "Кровельщик" or request.GET.profession == "Roofer" %}selected{% endif %}>{% translate "Tom yopuvchi (Tomchi)" %}</option>
-                        <option value="{% translate 'G\'isht quyuvchi (G\'ishtchi)' %}" {% if request.GET.profession == "G'isht quyuvchi (G'ishtchi)" or request.GET.profession == "Каменщик" or request.GET.profession == "Bricklayer" %}selected{% endif %}>{% translate "G'isht quyuvchi (G'ishtchi)" %}</option>
-                        <option value="{% translate 'Duradgor / Yog\'och ustasi' %}" {% if request.GET.profession == "Duradgor / Yog'och ustasi" or request.GET.profession == "Плотник" or request.GET.profession == "Carpenter" %}selected{% endif %}>{% translate "Duradgor / Yog'och ustasi" %}</option>
+                        <option value="{% translate "G'isht quyuvchi (G'ishtchi)" %}" {% if request.GET.profession == "G'isht quyuvchi (G'ishtchi)" or request.GET.profession == "Каменщик" or request.GET.profession == "Bricklayer" %}selected{% endif %}>{% translate "G'isht quyuvchi (G'ishtchi)" %}</option>
+                        <option value="{% translate "Duradgor / Yog'och ustasi" %}" {% if request.GET.profession == "Duradgor / Yog'och ustasi" or request.GET.profession == "Плотник" or request.GET.profession == "Carpenter" %}selected{% endif %}>{% translate "Duradgor / Yog'och ustasi" %}</option>
                         <option value="{% translate 'Gipsokartonchi' %}" {% if request.GET.profession == "Gipsokartonchi" or request.GET.profession == "Гипсокартонщик" or request.GET.profession == "Drywaller" %}selected{% endif %}>{% translate "Gipsokartonchi" %}</option>
                         <option value="{% translate 'Isitish va Sovutish (HVAC)' %}" {% if request.GET.profession == "Isitish va Sovutish (HVAC)" or request.GET.profession == "Отопление и охлаждение (HVAC)" or request.GET.profession == "Heating and Cooling (HVAC)" %}selected{% endif %}>{% translate "Isitish va Sovutish (HVAC)" %}</option>
                         <option value="{% translate 'Loyiha muhandisi (Prorab)' %}" {% if request.GET.profession == "Loyiha muhandisi (Prorab)" or request.GET.profession == "Инженер проекта (Прораб)" or request.GET.profession == "Project Engineer (Prorab)" %}selected{% endif %}>{% translate "Loyiha muhandisi (Prorab)" %}</option>
@@ -542,7 +542,7 @@
                         <option value="{% translate 'Toshkent viloyati' %}" {% if request.GET.city == "Toshkent viloyati" or request.GET.city == "Ташкентская область" or request.GET.city == "Tashkent Region" %}selected{% endif %}>{% translate "Toshkent viloyati" %}</option>
                         <option value="{% translate 'Andijon viloyati' %}" {% if request.GET.city == "Andijon viloyati" or request.GET.city == "Андижанская область" or request.GET.city == "Andijan Region" %}selected{% endif %}>{% translate "Andijon viloyati" %}</option>
                         <option value="{% translate 'Buxoro viloyati' %}" {% if request.GET.city == "Buxoro viloyati" or request.GET.city == "Бухарская область" or request.GET.city == "Bukhara Region" %}selected{% endif %}>{% translate "Buxoro viloyati" %}</option>
-                        <option value="{% translate 'Farg\'ona viloyati' %}" {% if request.GET.city == "Farg'ona viloyati" or request.GET.city == "Ферганская область" or request.GET.city == "Fergana Region" %}selected{% endif %}>{% translate "Farg'ona viloyati" %}</option>
+                        <option value="{% translate "Farg'ona viloyati" %}" {% if request.GET.city == "Farg'ona viloyati" or request.GET.city == "Ферганская область" or request.GET.city == "Fergana Region" %}selected{% endif %}>{% translate "Farg'ona viloyati" %}</option>
                         <option value="{% translate 'Jizzax viloyati' %}" {% if request.GET.city == "Jizzax viloyati" or request.GET.city == "Джизакская область" or request.GET.city == "Jizzakh Region" %}selected{% endif %}>{% translate "Jizzax viloyati" %}</option>
                         <option value="{% translate 'Xorazm viloyati' %}" {% if request.GET.city == "Xorazm viloyati" or request.GET.city == "Хорезмская область" or request.GET.city == "Khorezm Region" %}selected{% endif %}>{% translate "Xorazm viloyati" %}</option>
                         <option value="{% translate 'Namangan viloyati' %}" {% if request.GET.city == "Namangan viloyati" or request.GET.city == "Наманганская область" or request.GET.city == "Namangan Region" %}selected{% endif %}>{% translate "Namangan viloyati" %}</option>
@@ -551,7 +551,7 @@
                         <option value="{% translate 'Samarkand viloyati' %}" {% if request.GET.city == "Samarqand viloyati" or request.GET.city == "Samarkand viloyati" or request.GET.city == "Самаркандская область" or request.GET.city == "Samarkand Region" %}selected{% endif %}>{% translate "Samarqand viloyati" %}</option>
                         <option value="{% translate 'Sirdaryo viloyati' %}" {% if request.GET.city == "Sirdaryo viloyati" or request.GET.city == "Сырдарьинская область" or request.GET.city == "Syrdarya Region" %}selected{% endif %}>{% translate "Sirdaryo viloyati" %}</option>
                         <option value="{% translate 'Surxondaryo viloyati' %}" {% if request.GET.city == "Surxondaryo viloyati" or request.GET.city == "Сурхандарьинская область" or request.GET.city == "Surxondaryo Region" %}selected{% endif %}>{% translate "Surxondaryo viloyati" %}</option>
-                        <option value="{% translate 'Qoraqalpog\'iston Respublikasi' %}" {% if request.GET.city == "Qoraqalpog'iston Respublikasi" or request.GET.city == "Республика Каракалпакстан" or request.GET.city == "Republic of Karakalpakstan" %}selected{% endif %}>{% translate "Qoraqalpog'iston Respublikasi" %}</option>
+                        <option value="{% translate "Qoraqalpog'iston Respublikasi" %}" {% if request.GET.city == "Qoraqalpog'iston Respublikasi" or request.GET.city == "Республика Каракалпакстан" or request.GET.city == "Republic of Karakalpakstan" %}selected{% endif %}>{% translate "Qoraqalpog'iston Respublikasi" %}</option>
                     </select>
                 </div>
 
@@ -988,12 +988,12 @@ function showToast(type, message) {
 
         // ⚡️ AJAX / Fetch API Real-Time Dynamic Search & Filter Logic
         const UI_LANG = {
-            contactBtn: "{% translate 'Bog\'lanish' %}",
+            contactBtn: "{% translate "Bog'lanish" %}",
             gamification: "{% translate 'Gamifikatsiya' %}",
             rating: "{% translate 'Reyting' %}",
             noBuilders: "{% translate 'Hech qanday usta topilmadi' %}",
             noBuildersDesc: "{% translate 'Qidiruv shartlariga mos keladigan Quruvchilar hozircha mavjud emas.' %}",
-            defaultBio: "{% translate 'Usta o\'zi haqida ma\'lumot qoldirmagan.' %}"
+            defaultBio: "{% translate "Usta o'zi haqida ma'lumot qoldirmagan." %}"
         };
         const trans = UI_LANG;
 

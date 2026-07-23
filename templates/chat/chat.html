@@ -428,7 +428,7 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
     <i class="fa-solid fa-helmet-safety bg-watermark" style="position: absolute; z-index: 0;"></i>
   <div class="ch" id="ch" style="display:none; position:relative; z-index:2;">
     <button class="hbtn bk" id="bk" onclick="closeSidebar()" style="display:none"><i class="fa-solid fa-arrow-left"></i></button>
-    <div class="ca-wrap" style="cursor:pointer;" onclick="goToSettings()" title="{% translate 'Sozlamalarga o\'tish' %}">
+    <div class="ca-wrap" style="cursor:pointer;" onclick="goToSettings()" title="{% translate "Sozlamalarga o'tish" %}">
       <img src="" class="ca" id="ca" onerror="this.style.display='none';document.getElementById('cap').style.display='flex'">
       <div class="avp ca" id="cap" style="display:none;width:40px;height:40px;font-size:15px"></div>
       <div class="con-dot" id="cdot" style="display:none"></div>
@@ -443,8 +443,8 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
       <div class="cs" id="cst">{% trans "online" %}</div>
     </div>
     <div style="display:flex;gap:6px;margin-left:auto">
-      <button class="hbtn" onclick="startCall('audio')" title="{% translate 'Ovozli qo\'ng\'iroq' %}"><i class="fa-solid fa-phone"></i></button>
-      <button class="hbtn" onclick="startCall('video')" title="{% translate 'Video qo\'ng\'iroq' %}"><i class="fa-solid fa-video"></i></button>
+      <button class="hbtn" onclick="startCall('audio')" title="{% translate "Ovozli qo'ng'iroq" %}"><i class="fa-solid fa-phone"></i></button>
+      <button class="hbtn" onclick="startCall('video')" title="{% translate "Video qo'ng'iroq" %}"><i class="fa-solid fa-video"></i></button>
     </div>
   </div>
 
@@ -499,7 +499,7 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
     </div>
 
     <div class="ir">
-      <label class="attach-btn" id="attach-btn" title="{% translate 'Fayl, rasm yoki video jo\'natish' %}">
+      <label class="attach-btn" id="attach-btn" title="{% translate "Fayl, rasm yoki video jo'natish" %}">
          <input type="file" id="file-input" style="display:none" accept="image/*,video/*,audio/*,.pdf,.doc,.docx" onchange="if(this.files[0]) { window.uploadFile(this.files[0]); this.value=''; }">
          <i class="fa-solid fa-paperclip"></i>
       </label>
@@ -955,7 +955,7 @@ async function openRoom(id){
     }
     
     // Add click handler to navigate to settings
-    document.getElementById('cn').innerHTML = `<span style="cursor:pointer;" onclick="goToSettings()" title="{% translate 'Sozlamalarga o\'tish' %}">${esc(contact.name)}</span>`;
+    document.getElementById('cn').innerHTML = `<span style="cursor:pointer;" onclick="goToSettings()" title="{% translate "Sozlamalarga o'tish" %}">${esc(contact.name)}</span>`;
     
     const cap=document.getElementById('cap');
     const ca=document.getElementById('ca');
@@ -996,9 +996,9 @@ async function openRoom(id){
       } else if (info.is_temp_active) {
           statusStr = "{% translate 'Vaqtinchalik kirish faol' %} (" + (info.pending_plan || '') + ") — {% translate '24 soatlik tekshiruvda' %}";
       } else if (info.request_status === 'rejected') {
-          statusStr = "{% translate 'To\'lov rad etilgan' %} (" + (info.pending_plan || '') + ")";
+          statusStr = "{% translate "To'lov rad etilgan" %} (" + (info.pending_plan || '') + ")";
       } else if (info.request_status === 'pending') {
-          statusStr = "{% translate 'To\'lov tekshirilmoqda' %} (" + (info.pending_plan || '') + ") — {% translate 'kuting...' %}";
+          statusStr = "{% translate "To'lov tekshirilmoqda" %} (" + (info.pending_plan || '') + ") — {% translate 'kuting...' %}";
       } else {
           statusStr = "{% translate 'Obuna faol emas' %}";
       }
@@ -1352,7 +1352,7 @@ function appendMsg(m,scroll=true,isNew=false){
       <button class="msg-act-btn reply" title="{% translate 'Javob berish' %}" onclick="startReply('${mid}')"><i class="fa-solid fa-reply"></i></button>
       ${isOut && !m.file_url ? `<button class="msg-act-btn edit" title="{% translate 'Tahrirlash' %}" onclick="startEdit('${mid}')"><i class="fa-solid fa-pen"></i></button>` : ''}
       <button class="msg-act-btn" title="{% translate 'Ulashish' %}" onclick="shareMessage('${mid}')"><i class="fa-solid fa-share-nodes"></i></button>
-      ${isOut ? `<button class="msg-act-btn delete" title="{% translate 'O\'chirish' %}" onclick="deleteMessage('${mid}')"><i class="fa-solid fa-trash"></i></button>` : ''}
+      ${isOut ? `<button class="msg-act-btn delete" title="{% translate "O'chirish" %}" onclick="deleteMessage('${mid}')"><i class="fa-solid fa-trash"></i></button>` : ''}
     </div>
   `;
   
@@ -2235,7 +2235,7 @@ async function updateGroupData(data) {
         const resp = await res.json();
         if (resp.success) {
             if (data.name) {
-                document.getElementById('cn').innerHTML = `<span style="cursor:pointer;" onclick="goToSettings()" title="{% translate 'Sozlamalarga o\'tish' %}">${esc(resp.new_name)}</span>`;
+                document.getElementById('cn').innerHTML = `<span style="cursor:pointer;" onclick="goToSettings()" title="{% translate "Sozlamalarga o'tish" %}">${esc(resp.new_name)}</span>`;
                 document.getElementById('csm-name').textContent = resp.new_name;
                 contact.name = resp.new_name;
                 const item = document.getElementById('ci_' + roomId);

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 10:17+0500\n"
+"POT-Creation-Date: 2026-07-23 10:19+0500\n"
 "PO-Revision-Date: 2026-06-23 10:00+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Uzbek <uz@li.org>\n"
@@ -322,7 +322,8 @@ msgstr "Username"
 msgid "username kiriting"
 msgstr "username kiriting"
 
-msgid "Kuchli parol o\\"
+#| msgid "Kuchli parol o\\"
+msgid "Kuchli parol o'ylab toping"
 msgstr "Kuchli parol o"
 
 msgid "8-30 tagacha belgi kiritilishi kerak"
@@ -375,14 +376,14 @@ msgstr "Telefon raqami"
 msgid "Email manzil (ixtiyoriy)"
 msgstr "Email manzil (ixtiyoriy)"
 
-msgid "Siz bilan bog\\"
-msgstr "Siz bilan bog"
+msgid "Siz bilan bog'lanish uchun email..."
+msgstr "Siz bilan bog'lanish uchun email..."
 
 msgid "Bio — o'zingiz haqida"
 msgstr "Bio — o'zingiz haqida"
 
-msgid "Qisqacha o\\"
-msgstr "Qisqacha o"
+msgid "Qisqacha o'zingiz, tajribangiz yoki qiziqishlaringiz haqida yozing..."
+msgstr "Qisqacha o'zingiz, tajribangiz yoki qiziqishlaringiz haqida yozing..."
 
 msgid "Saqlash va Yakunlash 🚀"
 msgstr "Saqlash va Yakunlash 🚀"
@@ -511,14 +512,8 @@ msgstr "Payvandchi (Svarshik)"
 msgid "Tom yopuvchi (Tomchi)"
 msgstr "Tom yopuvchi (Tomchi)"
 
-msgid "G\\"
-msgstr "G"
-
 msgid "G'isht quyuvchi (G'ishtchi)"
 msgstr "G'isht quyuvchi (G'ishtchi)"
-
-msgid "Duradgor / Yog\\"
-msgstr "Duradgor / Yog"
 
 msgid "Duradgor / Yog'och ustasi"
 msgstr "Duradgor / Yog'och ustasi"
@@ -541,14 +536,8 @@ msgstr "Demontaj / Buzish ishlari"
 msgid "Umumiy quruvchi"
 msgstr "Umumiy quruvchi"
 
-msgid "Farg\\"
-msgstr "Farg"
-
 msgid "Samarqand viloyati"
 msgstr "Shahar / Viloyat"
-
-msgid "Qoraqalpog\\"
-msgstr "Qoraqalpog"
 
 msgid "Minimal Reyting"
 msgstr "Minimal Reyting"
@@ -595,12 +584,6 @@ msgstr "Iltimos, oldin tizimga kiring!"
 msgid "Xatolik yuz berdi!"
 msgstr "Xatolik yuz berdi!"
 
-msgid "Bog\\"
-msgstr "Bog"
-
-msgid "Usta o\\"
-msgstr "Usta o"
-
 msgid "Post yaratish"
 msgstr "Post yaratish"
 
@@ -636,8 +619,9 @@ msgstr "Bosh sahifa"
 msgid "Bu sizning o'z e'loningiz!"
 msgstr "Bu sizning o'z e'loningiz!"
 
-msgid "Kerakli e\\"
-msgstr "Kerakli e"
+#| msgid "Yangi nomni kiriting..."
+msgid "Kerakli e'lonni qidiring..."
+msgstr "Parolni kiriting"
 
 msgid "Avatar"
 msgstr "Avatar"
@@ -766,18 +750,18 @@ msgstr "Siz <b>%(plan_name)s</b> tarifi uchun so'rov yuborgansiz."
 msgid "Tarif paketini tanlang:"
 msgstr "Tarif paketini tanlang:"
 
-#| msgid "PRO Obuna"
 msgid "PRO Obuna (Yillik)"
 msgstr "Premium"
 
-#| msgid "PRO Obuna"
 msgid "PRO Obuna (Oylik)"
 msgstr "Premium"
 
 msgid "so'm"
 msgstr "so'm"
 
-msgid "Ushbu tarif sotilmaydi, faqat adminlar tomonidan sovg\\"
+#| msgid "Ushbu tarif sotilmaydi, faqat adminlar tomonidan sovg\\"
+msgid ""
+"Ushbu tarif sotilmaydi, faqat adminlar tomonidan sovg'a sifatida beriladi"
 msgstr "Ushbu tarif sotilmaydi, faqat adminlar tomonidan sovg"
 
 msgid "Maxsus"
@@ -854,11 +838,9 @@ msgstr "To'lov haqida savollaringiz bo'lsa bu yerga yozing."
 msgid "Xabaringizni yozing..."
 msgstr "Xabaringizni yozing..."
 
-#| msgid "Premium VIP"
 msgid "Premium VIP (Oylik)"
 msgstr "Premium"
 
-#| msgid "Premium VIP"
 msgid "Premium VIP (Yillik)"
 msgstr "Premium"
 
@@ -1341,16 +1323,19 @@ msgstr "Qidirish"
 msgid "Suhbatlar"
 msgstr "Chatlar"
 
-msgid "Sozlamalarga o\\"
+#| msgid "Sozlamalarga o\\"
+msgid "Sozlamalarga o'tish"
 msgstr "Sozlamalar"
 
 msgid "online"
 msgstr "online"
 
-msgid "Ovozli qo\\"
+#| msgid "Ovozli qo\\"
+msgid "Ovozli qo'ng'iroq"
 msgstr "Ovozli qo"
 
-msgid "Video qo\\"
+#| msgid "Video qo\\"
+msgid "Video qo'ng'iroq"
 msgstr "Video qo"
 
 msgid "Faol obuna turi: ..."
@@ -1368,7 +1353,8 @@ msgstr "✍️ yozmoqda..."
 msgid "Tayyor"
 msgstr "Tayyor"
 
-msgid "Fayl, rasm yoki video jo\\"
+#| msgid "Fayl, rasm yoki video jo\\"
+msgid "Fayl, rasm yoki video jo'natish"
 msgstr "Fayl, rasm yoki video jo"
 
 msgid "Xabar yozing..."
@@ -1422,8 +1408,13 @@ msgstr "Vaqtinchalik kirish faol"
 msgid "24 soatlik tekshiruvda"
 msgstr "24 soatlik tekshiruvda"
 
-msgid "To\\"
-msgstr "To"
+#| msgid "To'lovni tasdiqlash"
+msgid "To'lov rad etilgan"
+msgstr "To'lovlarni Tasdiqlash Dashbordi"
+
+#| msgid "Tekshirilmoqda..."
+msgid "To'lov tekshirilmoqda"
+msgstr "Tekshirilmoqda..."
 
 msgid "kuting..."
 msgstr "kuting..."
@@ -1455,11 +1446,41 @@ msgstr "Yetkazib berish"
 msgid "Ulashish"
 msgstr "Ulashish"
 
-msgid "O\\"
-msgstr "O"
-
 msgid "Yangi suhbat"
 msgstr "Xabarlar"
+
+#~ msgid "Siz bilan bog\\"
+#~ msgstr "Siz bilan bog"
+
+#~ msgid "Qisqacha o\\"
+#~ msgstr "Qisqacha o"
+
+#~ msgid "G\\"
+#~ msgstr "G"
+
+#~ msgid "Duradgor / Yog\\"
+#~ msgstr "Duradgor / Yog"
+
+#~ msgid "Farg\\"
+#~ msgstr "Farg"
+
+#~ msgid "Qoraqalpog\\"
+#~ msgstr "Qoraqalpog"
+
+#~ msgid "Bog\\"
+#~ msgstr "Bog"
+
+#~ msgid "Usta o\\"
+#~ msgstr "Usta o"
+
+#~ msgid "Kerakli e\\"
+#~ msgstr "Kerakli e"
+
+#~ msgid "To\\"
+#~ msgstr "To"
+
+#~ msgid "O\\"
+#~ msgstr "O"
 
 #, python-format
 #~ msgid "{%% translate "
