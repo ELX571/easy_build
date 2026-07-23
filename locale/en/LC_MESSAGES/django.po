@@ -452,7 +452,7 @@ msgid "Market Pro"
 msgstr "Market Pro"
 
 msgid "Usta Qidirish"
-msgstr "Find a Builder"
+msgstr "Search builders"
 
 msgid "Chatlar"
 msgstr "Chats"
@@ -605,7 +605,7 @@ msgid "Usta o\\"
 msgstr "Usta o"
 
 msgid "Post yaratish"
-msgstr "Create Post"
+msgstr "Create post"
 
 #| msgid "Professional qurilish materiallari va texnika ijarasi bozori"
 msgid ""
@@ -614,7 +614,7 @@ msgid ""
 msgstr "Professional building materials and equipment rental market is launching soon."
 
 msgid "Materiallar bozori"
-msgstr "Material market"
+msgstr "Materials market"
 
 msgid "Sement, g'isht, armatury va boshqalar"
 msgstr "Cement, brick, rebar, etc"
@@ -636,7 +636,7 @@ msgstr "Construction contracts between companies"
 
 # Navigation
 msgid "Bosh sahifaga qaytish"
-msgstr "Home"
+msgstr "Return to home"
 
 msgid "Bu sizning o'z e'loningiz!"
 msgstr "This is your own listing!"
@@ -652,11 +652,11 @@ msgstr "Premium"
 
 # Common
 msgid "Shikoyat qilish"
-msgstr "Cancel"
+msgstr "Report"
 
 # Team
 msgid "Profil Sozlamalari"
-msgstr "Team Settings"
+msgstr "Profile Settings"
 
 msgid "Sement, g'isht, armatura va qurilish materiallarining eng katta bazasi."
 msgstr "The largest database of cement, bricks, fittings and building materials."
@@ -671,7 +671,7 @@ msgid ""
 msgstr "Opportunity to conclude direct reliable contracts between companies."
 
 msgid "Chat boshlashda xatolik yuz berdi!"
-msgstr "An error occurred!"
+msgstr "An error occurred while starting the chat!"
 
 msgid "Kritik amalni tasdiqlang"
 msgstr "Confirm Password:"
@@ -699,10 +699,10 @@ msgid "oldin"
 msgstr "ago"
 
 msgid "Nusxa olish"
-msgstr "Choose"
+msgstr "Copy"
 
 msgid "Ko'rinmaydigan qilish"
-msgstr "Ko'rinmaydigan qilish"
+msgstr "Hide"
 
 msgid "Hech qanday e'lon topilmadi"
 msgstr "Nothing found"
@@ -712,7 +712,7 @@ msgid ""
 msgstr "There are currently no construction listings in the searched category or region."
 
 msgid "Barcha bildirishnomalaringiz va so'nggi yangiliklar"
-msgstr "All your notifications and latest news"
+msgstr "All your notifications and latest updates"
 
 msgid "Sizda yangi bildirishnomalar yo'q"
 msgstr "You have no new notifications."
@@ -723,7 +723,7 @@ msgid ""
 msgstr "No messages received yet. New notifications will appear here."
 
 msgid "Profil sozlamalari"
-msgstr "Team Settings"
+msgstr "Profile Settings"
 
 msgid "KARTA EGASI"
 msgstr "KARTA EGASI"
@@ -804,10 +804,10 @@ msgid "Umumiy to'lov summasi"
 msgstr "Total payment amount"
 
 msgid "Yillik obuna"
-msgstr "Yearly"
+msgstr "Yearly subscription"
 
 msgid "Oylik obuna"
-msgstr "Active"
+msgstr "Monthly subscription"
 
 msgid "Oyiga bor-yo'g'i 36,750 so'm"
 msgstr "Only 36,750 UZS / month"
@@ -989,13 +989,13 @@ msgid "avatar"
 msgstr "avatar"
 
 msgid "Tahrirlash"
-msgstr "Choose"
+msgstr "Edit"
 
 msgid "Siz hali biror marta e'lon joylashtirmadingiz."
 msgstr "You have not posted an ad yet."
 
 msgid "Ishonch Indeksi"
-msgstr "Ishonch Indeksi"
+msgstr "Trust Index"
 
 msgid "/ 100 ball"
 msgstr "/ 100 points"
@@ -1004,16 +1004,16 @@ msgid "Gamifikatsiya statusi"
 msgstr "Gamification"
 
 msgid "ta muvaffaqiyatli buyurtma"
-msgstr "ta muvaffaqiyatli buyurtma"
+msgstr "successful orders"
 
 msgid "Builder Pro Reytingi"
-msgstr "Builder Pro Reytingi"
+msgstr "Builder Pro Rating"
 
 msgid "Bajarildi"
-msgstr "Bajarildi"
+msgstr "Completed"
 
 msgid "Bekor"
-msgstr "Bekor"
+msgstr "Canceled"
 
 msgid ""
 "Reytinging 3.0 dan past. Iltimos, admin bilan bog'laning yoki sifatni "
@@ -1021,25 +1021,25 @@ msgid ""
 msgstr "Your rating is below 3.0. Please contact support or improve service quality."
 
 msgid "Sifat Diagrammasi"
-msgstr "Sifat Diagrammasi"
+msgstr "Quality Chart"
 
 msgid "Ish sifati (O'rtacha)"
-msgstr "Ish sifati (O'rtacha)"
+msgstr "Quality of work (Avg)"
 
 msgid "Vaqtga rioya"
-msgstr "Vaqtga rioya"
+msgstr "Punctuality"
 
 msgid "Xushmuomalalik"
-msgstr "Xushmuomalalik"
+msgstr "Politeness"
 
 msgid "Mijozlar Izohlari"
-msgstr "Client listings"
+msgstr "Customer Reviews"
 
 msgid "Siz mijozsiz"
 msgstr "You are the customer"
 
 msgid "Ro'yxatdan olib tashlash"
-msgstr "Sign Up"
+msgstr "Remove from list"
 
 msgid "Sizga yoqqan e'lonlar hozircha mavjud emas."
 msgstr "Builders matching the search criteria are not available yet."
@@ -1135,7 +1135,7 @@ msgid "Cheksiz"
 msgstr "Unlimited"
 
 msgid "kun qoldi"
-msgstr "kun qoldi"
+msgstr "days remaining"
 
 # Profile edit page
 msgid "Asosiy imkoniyatlar"
@@ -1149,7 +1149,7 @@ msgstr "Edit"
 
 #, python-format
 msgid "-25%% foyda"
-msgstr "-20%% profit"
+msgstr "-25% discount"
 
 msgid "SINOV MUDDATI"
 msgstr "TRIAL PERIOD"
@@ -1246,7 +1246,7 @@ msgid "Jamoa nomi"
 msgstr "Team Settings"
 
 msgid "Guruhga o'tish"
-msgstr "Go to Group"
+msgstr "Go to group"
 
 msgid "A'zo qo'shish"
 msgstr "Add Member"
@@ -1256,7 +1256,7 @@ msgid "Jamoangiz nomi va a'zolarini shu yerdan boshqaring"
 msgstr "Manage your team name and members from here"
 
 msgid "JAMOADAN O'CHIRISH"
-msgstr "JAMOADAN O'CHIRISH"
+msgstr "REMOVE FROM TEAM"
 
 msgid "Hozircha jamoangizda a'zolar yo'q."
 msgstr "There are no members in your team yet."
@@ -1379,13 +1379,13 @@ msgid "A'zolar ro'yxati"
 msgstr "List of members"
 
 msgid "Nomni o'zgartirish"
-msgstr "Toggle theme"
+msgstr "Rename"
 
 msgid "Guruhni tark etish"
-msgstr "Go to Group"
+msgstr "Leave group"
 
 msgid "Foydalanuvchi Ma'lumotlari"
-msgstr "Username"
+msgstr "User Information"
 
 msgid "Media (Rasm / Video)"
 msgstr "Media (Picture / Video)"
@@ -1397,10 +1397,10 @@ msgid "Ovozli xabarlar"
 msgstr "New Password:"
 
 msgid "Xabar yozish"
-msgstr "Send Message"
+msgstr "Send message"
 
 msgid "Bloklash"
-msgstr "Bloklash"
+msgstr "Block"
 
 msgid "Guruh nomini o'zgartirish"
 msgstr "Change Language"
@@ -1412,23 +1412,23 @@ msgid "Qo'ng'iroq..."
 msgstr "Call..."
 
 msgid "Doimiy obuna faol"
-msgstr "Doimiy obuna faol"
+msgstr "Permanent subscription active"
 
 msgid "Vaqtinchalik kirish faol"
-msgstr "Vaqtinchalik kirish faol"
+msgstr "Temporary access active"
 
 msgid "24 soatlik tekshiruvda"
-msgstr "24 soatlik tekshiruvda"
+msgstr "under 24-hour verification"
 
 msgid "To\\"
 msgstr "To"
 
 # Chat
 msgid "kuting..."
-msgstr "Type a message..."
+msgstr "please wait..."
 
 msgid "Obuna faol emas"
-msgstr "Obuna faol emas"
+msgstr "Subscription not active"
 
 msgid "Telefon"
 msgstr "Phone:"

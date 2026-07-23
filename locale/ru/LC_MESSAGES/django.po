@@ -452,10 +452,10 @@ msgid "Hamkasblar"
 msgstr "Коллеги"
 
 msgid "Market Pro"
-msgstr "Market Pro"
+msgstr "Маркет Про"
 
 msgid "Usta Qidirish"
-msgstr "Поиск мастера"
+msgstr "Поиск мастеров"
 
 msgid "Chatlar"
 msgstr "Чаты"
@@ -626,7 +626,7 @@ msgid "Tez kunda"
 msgstr "Скоро"
 
 msgid "Texnika ijarasi"
-msgstr "Аренда оборудования"
+msgstr "Аренда техники"
 
 msgid "Ekskavator, kran va qurilish texnikasi"
 msgstr "Экскаватор, кран и строительная техника"
@@ -639,7 +639,7 @@ msgstr "Договоры подряда между компаниями"
 
 # Navigation
 msgid "Bosh sahifaga qaytish"
-msgstr "Главная"
+msgstr "Вернуться на главную"
 
 msgid "Bu sizning o'z e'loningiz!"
 msgstr "Это ваше собственное объявление!"
@@ -655,11 +655,11 @@ msgstr "Премиум"
 
 # Common
 msgid "Shikoyat qilish"
-msgstr "Отмена"
+msgstr "Пожаловаться"
 
 # Team
 msgid "Profil Sozlamalari"
-msgstr "Настройки команды"
+msgstr "Настройки профиля"
 
 msgid "Sement, g'isht, armatura va qurilish materiallarining eng katta bazasi."
 msgstr "Самая большая база данных цемента, кирпича, арматуры и строительных материалов."
@@ -674,7 +674,7 @@ msgid ""
 msgstr "Возможность заключения прямых надежных договоров между компаниями."
 
 msgid "Chat boshlashda xatolik yuz berdi!"
-msgstr "Произошла ошибка!"
+msgstr "Произошла ошибка при запуске чата!"
 
 msgid "Kritik amalni tasdiqlang"
 msgstr "Подтвердите пароль:"
@@ -702,10 +702,10 @@ msgid "oldin"
 msgstr "назад"
 
 msgid "Nusxa olish"
-msgstr "Редактировать"
+msgstr "Скопировать"
 
 msgid "Ko'rinmaydigan qilish"
-msgstr "Ko'rinmaydigan qilish"
+msgstr "Скрыть"
 
 msgid "Hech qanday e'lon topilmadi"
 msgstr "Ничего не найдено"
@@ -726,7 +726,7 @@ msgid ""
 msgstr "Пока у вас нет сообщений. Новые уведомления появятся здесь."
 
 msgid "Profil sozlamalari"
-msgstr "Настройки команды"
+msgstr "Настройки профиля"
 
 msgid "KARTA EGASI"
 msgstr "KARTA EGASI"
@@ -807,10 +807,10 @@ msgid "Umumiy to'lov summasi"
 msgstr "Общая сумма оплаты"
 
 msgid "Yillik obuna"
-msgstr "Ежегодно"
+msgstr "Годовая подписка"
 
 msgid "Oylik obuna"
-msgstr "Активен"
+msgstr "Ежемесячная подписка"
 
 msgid "Oyiga bor-yo'g'i 36,750 so'm"
 msgstr "Всего 36 750 сум в месяц"
@@ -998,7 +998,7 @@ msgid "Siz hali biror marta e'lon joylashtirmadingiz."
 msgstr "Вы еще не разместили объявление."
 
 msgid "Ishonch Indeksi"
-msgstr "Ishonch Indeksi"
+msgstr "Индекс доверия"
 
 msgid "/ 100 ball"
 msgstr "/ 100 баллов"
@@ -1007,16 +1007,16 @@ msgid "Gamifikatsiya statusi"
 msgstr "Геймификация"
 
 msgid "ta muvaffaqiyatli buyurtma"
-msgstr "ta muvaffaqiyatli buyurtma"
+msgstr "успешных заказов"
 
 msgid "Builder Pro Reytingi"
-msgstr "Builder Pro Reytingi"
+msgstr "Рейтинг Builder Pro"
 
 msgid "Bajarildi"
-msgstr "Bajarildi"
+msgstr "Выполнено"
 
 msgid "Bekor"
-msgstr "Bekor"
+msgstr "Отменено"
 
 msgid ""
 "Reytinging 3.0 dan past. Iltimos, admin bilan bog'laning yoki sifatni "
@@ -1024,25 +1024,25 @@ msgid ""
 msgstr "Ваш рейтинг ниже 3.0. Пожалуйста, свяжитесь с администратором или повысьте качество услуг."
 
 msgid "Sifat Diagrammasi"
-msgstr "Sifat Diagrammasi"
+msgstr "Диаграмма качества"
 
 msgid "Ish sifati (O'rtacha)"
-msgstr "Ish sifati (O'rtacha)"
+msgstr "Качество работы (Средний)"
 
 msgid "Vaqtga rioya"
-msgstr "Vaqtga rioya"
+msgstr "Пунктуальность"
 
 msgid "Xushmuomalalik"
-msgstr "Xushmuomalalik"
+msgstr "Вежливость"
 
 msgid "Mijozlar Izohlari"
-msgstr "Объявления клиентов"
+msgstr "Отзывы клиентов"
 
 msgid "Siz mijozsiz"
 msgstr "Вы клиент"
 
 msgid "Ro'yxatdan olib tashlash"
-msgstr "Регистрация"
+msgstr "Удалить из списка"
 
 msgid "Sizga yoqqan e'lonlar hozircha mavjud emas."
 msgstr "Строителей, соответствующих условиям поиска, пока нет."
@@ -1139,7 +1139,7 @@ msgid "Cheksiz"
 msgstr "Безлимитно"
 
 msgid "kun qoldi"
-msgstr "kun qoldi"
+msgstr "дней осталось"
 
 # Profile edit tabs
 msgid "Asosiy imkoniyatlar"
@@ -1153,7 +1153,7 @@ msgstr "Редактировать"
 
 #, python-format
 msgid "-25%% foyda"
-msgstr "-20%% прибыль"
+msgstr "-25% выгода"
 
 msgid "SINOV MUDDATI"
 msgstr "ПРОБНЫЙ ПЕРИОД"
@@ -1260,7 +1260,7 @@ msgid "Jamoangiz nomi va a'zolarini shu yerdan boshqaring"
 msgstr "Управляйте названием и участниками своей команды здесь"
 
 msgid "JAMOADAN O'CHIRISH"
-msgstr "JAMOADAN O'CHIRISH"
+msgstr "УДАЛИТЬ ИЗ КОМАНДЫ"
 
 msgid "Hozircha jamoangizda a'zolar yo'q."
 msgstr "В вашей команде пока нет участников."
@@ -1383,13 +1383,13 @@ msgid "A'zolar ro'yxati"
 msgstr "Список участников"
 
 msgid "Nomni o'zgartirish"
-msgstr "Переключить тему"
+msgstr "Изменить название"
 
 msgid "Guruhni tark etish"
-msgstr "Перейти в группу"
+msgstr "Покинуть группу"
 
 msgid "Foydalanuvchi Ma'lumotlari"
-msgstr "Имя пользователя"
+msgstr "Информация о пользователе"
 
 msgid "Media (Rasm / Video)"
 msgstr "Медиа (Изображение/Видео)"
@@ -1404,7 +1404,7 @@ msgid "Xabar yozish"
 msgstr "Написать сообщение"
 
 msgid "Bloklash"
-msgstr "Bloklash"
+msgstr "Заблокировать"
 
 msgid "Guruh nomini o'zgartirish"
 msgstr "Сменить язык"
@@ -1416,23 +1416,23 @@ msgid "Qo'ng'iroq..."
 msgstr "Вызов..."
 
 msgid "Doimiy obuna faol"
-msgstr "Doimiy obuna faol"
+msgstr "Постоянная подписка активна"
 
 msgid "Vaqtinchalik kirish faol"
-msgstr "Vaqtinchalik kirish faol"
+msgstr "Временный доступ активен"
 
 msgid "24 soatlik tekshiruvda"
-msgstr "24 soatlik tekshiruvda"
+msgstr "на 24-часовой проверке"
 
 msgid "To\\"
 msgstr "To"
 
 # Chat
 msgid "kuting..."
-msgstr "Напишите..."
+msgstr "подождите..."
 
 msgid "Obuna faol emas"
-msgstr "Obuna faol emas"
+msgstr "Подписка не активна"
 
 msgid "Telefon"
 msgstr "Телефон:"
