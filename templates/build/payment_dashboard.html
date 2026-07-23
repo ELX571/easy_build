@@ -1404,13 +1404,13 @@
 <!-- ═══════════════════════════════════════════════════════ -->
 <div id="pending-payment-modal" style="
     display: none; position: fixed; inset: 0; z-index: 9999;
-    background: rgba(0,0,0,0.75); backdrop-filter: blur(6px);
+    background: rgba(0,0,0,0.75); backdrop-filter: blur(8px);
     align-items: center; justify-content: center;">
     <div style="
         background: linear-gradient(145deg, #1c1c2e, #16213e);
         border: 1.5px solid rgba(245,158,11,0.4);
-        border-radius: 20px; padding: 2rem 2rem 1.5rem;
-        max-width: 420px; width: 90%; position: relative;
+        border-radius: 24px; padding: 2rem 2rem 1.8rem;
+        max-width: 440px; width: 90%; position: relative;
         box-shadow: 0 25px 60px rgba(0,0,0,0.6);
         animation: modalPop 0.35s cubic-bezier(0.16,1,0.3,1);">
         <!-- Yopish tugmasi -->
@@ -1425,29 +1425,30 @@
         <!-- Ikon -->
         <div style="text-align: center; margin-bottom: 1.2rem;">
             <div style="
-                width: 68px; height: 68px; border-radius: 50%;
+                width: 72px; height: 72px; border-radius: 50%;
                 background: rgba(245,158,11,0.15); border: 2px solid rgba(245,158,11,0.4);
                 display: inline-flex; align-items: center; justify-content: center;
+                box-shadow: 0 0 25px rgba(245,158,11,0.3);
                 animation: pulseWarning 2s infinite;">
-                <i class="fa-solid fa-clock" style="font-size: 1.8rem; color: #f59e0b;"></i>
+                <i class="fa-solid fa-clock-rotate-left" style="font-size: 2rem; color: #f59e0b;"></i>
             </div>
         </div>
         <!-- Matn -->
-        <h3 style="text-align: center; font-size: 1.1rem; font-weight: 800;
-            color: var(--color-text-main); margin-bottom: 0.7rem; letter-spacing: -0.3px;">
-            {% trans "Sizda kutilayotgan to'lov bor!" %}
+        <h3 style="text-align: center; font-size: 1.2rem; font-weight: 800;
+            color: var(--color-text-main); margin-bottom: 0.8rem; letter-spacing: -0.3px;">
+            {% translate "Sizda tekshirilayotgan to'lov cheki bor!" %}
         </h3>
-        <p style="text-align: center; font-size: 0.85rem; color: var(--color-text-muted);
-            line-height: 1.6; margin-bottom: 1.5rem;">
-            {% trans "Siz yuborgan chek hozirda admin tomonidan tekshirilmoqda. Iltimos, u tasdiqlanguncha biroz kuting va qaytadan to'lov qilishga urinmang." %}
+        <p style="text-align: center; font-size: 0.9rem; color: var(--color-text-muted);
+            line-height: 1.6; margin-bottom: 1.6rem; font-weight: 500;">
+            {% translate "Sizga PRO imkoniyatlar faollashtirildi. Biroq, oxirgi yuborgan to'lov chekingiz admin tomonidan tekshirilmoqda. U ko'rib chiqilmaguncha qayta to'lov qilolmaysiz." %}
         </p>
         <!-- Tugma -->
         <button onclick="closePendingModal()" style="
-            width: 100%; padding: 0.85rem; border: none;
-            border-radius: 12px; font-size: 0.95rem; font-weight: 700;
+            width: 100%; padding: 0.9rem; border: none;
+            border-radius: 14px; font-size: 0.95rem; font-weight: 700;
             cursor: pointer; background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #fff; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">
-            {% trans "Tushunarli" %}
+            color: #fff; transition: opacity 0.2s; box-shadow: 0 6px 20px rgba(245,158,11,0.3);" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+            {% translate "Tushunarli" %}
         </button>
     </div>
 </div>

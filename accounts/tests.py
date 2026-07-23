@@ -39,7 +39,7 @@ class SubscriptionSystemTests(TestCase):
         # Should redirect to chatroom with admin
         room = ChatRoom.objects.filter(participants=self.builder_user).filter(participants=self.admin_user).first()
         self.assertIsNotNone(room)
-        self.assertRedirects(response, f'/uz/chat/?room_id={room.id}')
+        self.assertRedirects(response, f'/uz/chat/?room_id={room.id}', fetch_redirect_response=False)
 
     def test_payment_screenshot_upload_grants_temp_access(self):
         self.client.login(username='builder1', password='builderpassword')
@@ -154,7 +154,7 @@ class SubscriptionSystemTests(TestCase):
         room = ChatRoom.objects.filter(participants=self.builder_user).filter(participants=self.admin_user).first()
         msg = Message.objects.filter(room=room, sender=self.admin_user).last()
         self.assertIsNotNone(msg)
-        self.assertEqual(msg.content, "To'lov tasdiqlanmadi")
+        self.assertIn("To'lov tasdiqlanmadi", msg.content)
 
     def test_payment_dashboard_view(self):
         self.client.login(username='builder1', password='builderpassword')

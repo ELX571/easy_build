@@ -63,14 +63,16 @@ class SubscriptionRequestAdmin(admin.ModelAdmin):
 
     @admin.action(description='✅ Tanlangan so\'rovlarni tasdiqlash')
     def approve_selected(self, request, queryset):
-        from build.models import BuilderProfile
+        from build.models import BuilderProfile, Plan, SubscriptionHistory
         from accounts.models import Notification
         count = 0
         for sub_req in queryset.filter(status='pending'):
             builder_user = sub_req.user
             bp, _ = BuilderProfile.objects.get_or_create(profile=builder_user.profile)
             plan = Plan.objects.filter(name=sub_req.plan_name).first()
-            duration_days = plan.duration_days if plan else 30
+            
+            is_yearly = any(x in sub_req.plan_name.lower() for x in ["yillik", "yearly", "годовая"])
+            duration_days = 365 if is_yearly else (plan.duration_days if plan else 30)
 
             sub_req.status = 'accepted'
             sub_req.save()
@@ -80,14 +82,26 @@ class SubscriptionRequestAdmin(admin.ModelAdmin):
             bp.subscription_start = timezone.now()
             bp.subscription_end = timezone.now() + timezone.timedelta(days=duration_days)
             bp.is_temp_active = False
+            bp.temp_active_until = None
             bp.pending_plan = None
-            bp.save()  # signals handle is_premium sync
+            bp.save()
+
+            profile_obj = builder_user.profile
+            profile_obj.is_premium = True
+            profile_obj.save(update_fields=['is_premium'])
+
+            SubscriptionHistory.objects.create(
+                user=builder_user,
+                event='activated',
+                plan_name=sub_req.plan_name,
+                note=f"Admin panel orqali tasdiqlandi (SubscriptionRequest #{sub_req.id})",
+                performed_by=request.user,
+            )
 
             Notification.objects.create(
                 user=builder_user,
                 title="✅ Obuna faollashtirildi!",
-                message=f"'{sub_req.plan_name}' obunangiz admin tomonidan tasdiqlandi. "
-                        "Barcha Premium imkoniyatlardan foydalanishingiz mumkin!",
+                message=f"Tabriklaymiz! Sizning '{sub_req.plan_name}' obunangiz admin tomonidan tasdiqlandi va faollashtirildi.",
                 icon='fa-solid fa-crown',
             )
             count += 1
@@ -95,7 +109,7 @@ class SubscriptionRequestAdmin(admin.ModelAdmin):
 
     @admin.action(description='❌ Tanlangan so\'rovlarni rad etish')
     def reject_selected(self, request, queryset):
-        from build.models import BuilderProfile
+        from build.models import BuilderProfile, SubscriptionHistory
         from accounts.models import Notification
         count = 0
         for sub_req in queryset.filter(status='pending'):
@@ -106,13 +120,28 @@ class SubscriptionRequestAdmin(admin.ModelAdmin):
             sub_req.save()
 
             bp.is_temp_active = False
-            bp.save()  # signals handle is_premium=False sync
+            bp.temp_active_until = None
+            bp.subscription_status = False
+            bp.subscription_plan = None
+            bp.pending_plan = None
+            bp.save()
+
+            profile_obj = builder_user.profile
+            profile_obj.is_premium = False
+            profile_obj.save(update_fields=['is_premium'])
+
+            SubscriptionHistory.objects.create(
+                user=builder_user,
+                event='revoked',
+                plan_name=sub_req.plan_name,
+                note=f"Admin panel orqali rad etildi (SubscriptionRequest #{sub_req.id})",
+                performed_by=request.user,
+            )
 
             Notification.objects.create(
                 user=builder_user,
                 title="❌ To'lov tasdiqlanmadi",
-                message="Yuborgan to'lov chekingiz tasdiqlanmadi. "
-                        "To'g'ri chek bilan qaytadan urinib ko'ring.",
+                message="Afsuski, yuborgan to'lov chekingiz tasdiqlanmadi. Iltimos, to'g'ri to'lov chekini yuboring yoki admin bilan bog'laning.",
                 icon='fa-solid fa-circle-xmark',
             )
             count += 1

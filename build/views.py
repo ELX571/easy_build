@@ -1190,6 +1190,9 @@ def payment_dashboard(request):
         bp.pending_plan = plan
         bp.save()
         
+        request.user.profile.is_premium = True
+        request.user.profile.save(update_fields=['is_premium'])
+        
         # Create chat message: "To'lov cheki yuborildi"
         msg = Message.objects.create(
             room=room,

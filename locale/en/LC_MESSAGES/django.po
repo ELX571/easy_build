@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 10:30+0500\n"
+"POT-Creation-Date: 2026-07-23 10:38+0500\n"
 "Language: en\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -819,16 +819,18 @@ msgstr "Toggle theme"
 msgid "To'lovni tasdiqlash"
 msgstr "Confirm payment"
 
-msgid "Sizda kutilayotgan to'lov bor!"
-msgstr "You have a pending payment!"
+#| msgid "Sizda kutilayotgan to'lov bor!"
+msgid "Sizda tekshirilayotgan to'lov cheki bor!"
+msgstr "You have a payment receipt under review!"
 
 msgid ""
-"Siz yuborgan chek hozirda admin tomonidan tekshirilmoqda. Iltimos, u "
-"tasdiqlanguncha biroz kuting va qaytadan to'lov qilishga urinmang."
-msgstr "The receipt you sent is currently being verified by the admin. Please wait until it is approved and do not try to pay again."
+"Sizga PRO imkoniyatlar faollashtirildi. Biroq, oxirgi yuborgan to'lov "
+"chekingiz admin tomonidan tekshirilmoqda. U ko'rib chiqilmaguncha qayta "
+"to'lov qilolmaysiz."
+msgstr "PRO features are activated for you. However, your last submitted payment receipt is being reviewed by the admin. You cannot make another payment until it is reviewed."
 
 msgid "Tushunarli"
-msgstr "Got it"
+msgstr "Understood"
 
 msgid "Premium Sotib Olish Chati"
 msgstr "Premium Purchase Chat"
@@ -1151,7 +1153,6 @@ msgstr "Basic Info"
 msgid "To'lov chekingiz admin tomonidan tekshirilmoqda."
 msgstr "Your payment receipt is being verified by an admin."
 
-#| msgid "Tilni o'zgartirish"
 msgid "Tarifni o'zgartirish"
 msgstr "Change plan"
 
@@ -1159,7 +1160,6 @@ msgstr "Change plan"
 msgid "-25%% foyda"
 msgstr "-25% discount"
 
-#| msgid "so'm / yil"
 msgid "so'm/yil"
 msgstr "sum/year"
 
@@ -1511,6 +1511,13 @@ msgstr "Ulashish"
 
 msgid "Yangi suhbat"
 msgstr "Edit"
+
+#~ msgid ""
+#~ "Siz yuborgan chek hozirda admin tomonidan tekshirilmoqda. Iltimos, u "
+#~ "tasdiqlanguncha biroz kuting va qaytadan to'lov qilishga urinmang."
+#~ msgstr ""
+#~ "The receipt you sent is currently being verified by the admin. Please "
+#~ "wait until it is approved and do not try to pay again."
 
 #~ msgid "Yangilash"
 #~ msgstr "Edit"
