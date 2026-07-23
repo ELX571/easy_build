@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 10:22+0500\n"
+"POT-Creation-Date: 2026-07-23 10:25+0500\n"
 "PO-Revision-Date: 2026-06-23 10:00+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Uzbek <uz@li.org>\n"
@@ -957,8 +957,19 @@ msgstr "Faol ustalar"
 msgid "Ortga"
 msgstr "Ortga"
 
+msgid "Tahrirlash"
+msgstr "Xabarlar"
+
 msgid "Tasdiqlangan foydalanuvchi"
 msgstr "Faol foydalanuvchi"
+
+#| msgid "Jami e'lonlar"
+msgid "E'lonlarim"
+msgstr "Ish jarayonlari"
+
+#| msgid "Jami e'lonlar"
+msgid "E'lonlar"
+msgstr "Ish jarayonlari"
 
 msgid "Reyting & Statistika"
 msgstr "Reyting & Statistika"
@@ -971,9 +982,6 @@ msgstr "Saqlanganlar"
 
 msgid "avatar"
 msgstr "avatar"
-
-msgid "Tahrirlash"
-msgstr "Xabarlar"
 
 msgid "Siz hali biror marta e'lon joylashtirmadingiz."
 msgstr "Siz hali biror marta e'lon joylashtirmadingiz."
@@ -1018,6 +1026,13 @@ msgstr "Xushmuomalalik"
 
 msgid "Mijozlar Izohlari"
 msgstr "Ish jarayonlari"
+
+msgid "Sizning javobingiz"
+msgstr "Sizning javobingiz"
+
+#| msgid "Hozircha jamoangizda a'zolar yo'q."
+msgid "Hozircha izohlar yo'q."
+msgstr "Hozircha jamoangizda a'zolar yo'q."
 
 msgid "Siz mijozsiz"
 msgstr "Siz mijozsiz"
@@ -1288,7 +1303,6 @@ msgid ""
 "yuborilmagan."
 msgstr "Hozircha verifikatsiya qilinishi kerak bo'lgan to'lov screenshotlari yuborilmagan."
 
-#| msgid "Ish jarayonlari"
 msgid "Ish jarayonlari boshqaruv paneli"
 msgstr "Ish jarayonlari"
 
@@ -1304,37 +1318,30 @@ msgstr "Byudjet:"
 msgid "Muddat:"
 msgstr "Muddat:"
 
-#| msgid "Quruvchi (Usta)"
 msgid "Ijrochi Usta:"
 msgstr "Quruvchi (Usta)"
 
-#| msgid "Buyurtmachi (Mijoz)"
 msgid "Buyurtmachi Mijoz:"
 msgstr "Buyurtmachi (Mijoz)"
 
 msgid "Usta biriktirilmagan"
 msgstr "Usta biriktirilmagan"
 
-#| msgid "Taklif"
 msgid "Takliflar"
 msgstr "Taklif"
 
 msgid "Ishni topshirish"
 msgstr "Ishni topshirish"
 
-#| msgid "Saqlashni bekor qilish"
 msgid "Ishni qabul qilish"
 msgstr "Bekor qilish"
 
-#| msgid "Javob berish"
 msgid "Baho berish"
 msgstr "Yetkazib berish"
 
-#| msgid "Tasdiqlangan"
 msgid "Yakunlangan"
 msgstr "Tasdiqlangan usta"
 
-#| msgid "Tasdiqlanish kutilmoqda"
 msgid "Bosqich kutilmoqda"
 msgstr "Tasdiqlanish kutilmoqda"
 

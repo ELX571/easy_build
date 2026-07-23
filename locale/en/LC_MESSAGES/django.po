@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 10:22+0500\n"
+"POT-Creation-Date: 2026-07-23 10:25+0500\n"
 "Language: en\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -968,8 +968,18 @@ msgstr "Builders"
 msgid "Ortga"
 msgstr "Back"
 
+msgid "Tahrirlash"
+msgstr "Edit"
+
 msgid "Tasdiqlangan foydalanuvchi"
 msgstr "Username"
+
+#| msgid "E'lonlar"
+msgid "E'lonlarim"
+msgstr "My listings"
+
+msgid "E'lonlar"
+msgstr "Listings"
 
 msgid "Reyting & Statistika"
 msgstr "Ranking & Statistics"
@@ -982,9 +992,6 @@ msgstr "Verified builder"
 
 msgid "avatar"
 msgstr "avatar"
-
-msgid "Tahrirlash"
-msgstr "Edit"
 
 msgid "Siz hali biror marta e'lon joylashtirmadingiz."
 msgstr "You have not posted an ad yet."
@@ -1029,6 +1036,13 @@ msgstr "Politeness"
 
 msgid "Mijozlar Izohlari"
 msgstr "Customer Reviews"
+
+msgid "Sizning javobingiz"
+msgstr "Sizning javobingiz"
+
+#| msgid "Hozircha jamoangizda a'zolar yo'q."
+msgid "Hozircha izohlar yo'q."
+msgstr "No reviews yet."
 
 msgid "Siz mijozsiz"
 msgstr "You are the customer"
@@ -1304,7 +1318,6 @@ msgid ""
 "yuborilmagan."
 msgstr "No payment screenshots submitted for verification yet."
 
-#| msgid "Ish jarayonlari"
 msgid "Ish jarayonlari boshqaruv paneli"
 msgstr "Workflow Dashboard"
 
@@ -1320,38 +1333,31 @@ msgstr "Budget:"
 msgid "Muddat:"
 msgstr "Term:"
 
-#| msgid "Quruvchi (Usta)"
 msgid "Ijrochi Usta:"
 msgstr "Assigned Builder:"
 
 # Role choices
-#| msgid "Buyurtmachi (Mijoz)"
 msgid "Buyurtmachi Mijoz:"
 msgstr "Client Customer:"
 
 msgid "Usta biriktirilmagan"
 msgstr "No builder assigned"
 
-#| msgid "Taklif"
 msgid "Takliflar"
 msgstr "Offers"
 
 msgid "Ishni topshirish"
 msgstr "Submit work"
 
-#| msgid "Saqlashni bekor qilish"
 msgid "Ishni qabul qilish"
 msgstr "Accept work"
 
-#| msgid "Javob berish"
 msgid "Baho berish"
 msgstr "Rate work"
 
-#| msgid "Tasdiqlangan"
 msgid "Yakunlangan"
 msgstr "Completed"
 
-#| msgid "Tasdiqlanish kutilmoqda"
 msgid "Bosqich kutilmoqda"
 msgstr "Stage pending"
 
@@ -1733,9 +1739,6 @@ msgstr "Edit"
 # Dashboard
 #~ msgid "Dashboard"
 #~ msgstr "Dashboard"
-
-#~ msgid "E'lonlar"
-#~ msgstr "Listings"
 
 #~ msgid "Yangi e'lon"
 #~ msgstr "New Listing"

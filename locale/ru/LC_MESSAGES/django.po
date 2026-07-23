@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 10:22+0500\n"
+"POT-Creation-Date: 2026-07-23 10:25+0500\n"
 "Language: ru\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -971,8 +971,20 @@ msgstr "Мастера"
 msgid "Ortga"
 msgstr "Назад"
 
+msgid "Tahrirlash"
+msgstr "Редактировать"
+
 msgid "Tasdiqlangan foydalanuvchi"
 msgstr "Имя пользователя"
+
+# Dashboard
+#| msgid "E'lonlar"
+msgid "E'lonlarim"
+msgstr "Мои объявления"
+
+# Dashboard
+msgid "E'lonlar"
+msgstr "Объявления"
 
 msgid "Reyting & Statistika"
 msgstr "Рейтинг и статистика"
@@ -985,9 +997,6 @@ msgstr "Проверенный мастер"
 
 msgid "avatar"
 msgstr "avatar"
-
-msgid "Tahrirlash"
-msgstr "Редактировать"
 
 msgid "Siz hali biror marta e'lon joylashtirmadingiz."
 msgstr "Вы еще не разместили объявление."
@@ -1032,6 +1041,13 @@ msgstr "Вежливость"
 
 msgid "Mijozlar Izohlari"
 msgstr "Отзывы клиентов"
+
+msgid "Sizning javobingiz"
+msgstr "Sizning javobingiz"
+
+#| msgid "Hozircha jamoangizda a'zolar yo'q."
+msgid "Hozircha izohlar yo'q."
+msgstr "Пока нет отзывов."
 
 msgid "Siz mijozsiz"
 msgstr "Вы клиент"
@@ -1308,7 +1324,6 @@ msgid ""
 "yuborilmagan."
 msgstr "Пока не отправлены скриншоты платежей для верификации."
 
-#| msgid "Ish jarayonlari"
 msgid "Ish jarayonlari boshqaruv paneli"
 msgstr "Панель управления рабочими процессами"
 
@@ -1324,38 +1339,31 @@ msgstr "Бюджет:"
 msgid "Muddat:"
 msgstr "Срок:"
 
-#| msgid "Quruvchi (Usta)"
 msgid "Ijrochi Usta:"
 msgstr "Исполнитель-Мастер:"
 
 # Role choices
-#| msgid "Buyurtmachi (Mijoz)"
 msgid "Buyurtmachi Mijoz:"
 msgstr "Заказчик-Клиент:"
 
 msgid "Usta biriktirilmagan"
 msgstr "Мастер не назначен"
 
-#| msgid "Taklif"
 msgid "Takliflar"
 msgstr "Предложения"
 
 msgid "Ishni topshirish"
 msgstr "Сдать работу"
 
-#| msgid "Saqlashni bekor qilish"
 msgid "Ishni qabul qilish"
 msgstr "Принять работу"
 
-#| msgid "Javob berish"
 msgid "Baho berish"
 msgstr "Оценить"
 
-#| msgid "Tasdiqlangan"
 msgid "Yakunlangan"
 msgstr "Завершено"
 
-#| msgid "Tasdiqlanish kutilmoqda"
 msgid "Bosqich kutilmoqda"
 msgstr "Ожидание этапа"
 
@@ -1729,10 +1737,6 @@ msgstr "Редактировать"
 
 #~ msgid "Ko'proq ko'rish"
 #~ msgstr "Показать больше"
-
-# Dashboard
-#~ msgid "E'lonlar"
-#~ msgstr "Объявления"
 
 #~ msgid "Yangi e'lon"
 #~ msgstr "Новое объявление"

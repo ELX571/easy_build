@@ -428,7 +428,7 @@
                 <div style="display:flex; align-items:flex-end; justify-content:space-between;">
                     <img src="{{ profile.get_avatar_url }}" class="p-avatar" onerror="this.src='/static/images/default_avatar.svg'">
                     {% if is_own_profile %}
-                    <a href="{% url 'build:profile_edit' %}" class="edit-p-btn" style="margin-bottom:4px;"><i class="fa-solid fa-pen"></i> Tahrirlash</a>
+                    <a href="{% url 'build:profile_edit' %}" class="edit-p-btn" style="margin-bottom:4px;"><i class="fa-solid fa-pen"></i> {% translate "Tahrirlash" %}</a>
                     {% endif %}
                 </div>
                 <div class="profile-name-row">
@@ -463,7 +463,7 @@
         </div>
 
         <div class="profile-tabs">
-            <div class="tab-node active-tab" onclick="switchProfileTab(event, 'my-posts-panel')">{% if is_own_profile %}E'lonlarim{% else %}E'lonlar{% endif %}</div>
+            <div class="tab-node active-tab" onclick="switchProfileTab(event, 'my-posts-panel')">{% if is_own_profile %}{% translate "E'lonlarim" %}{% else %}{% translate "E'lonlar" %}{% endif %}</div>
             <div class="tab-node" onclick="switchProfileTab(event, 'rating-stats-panel')">{% trans "Reyting & Statistika" %}</div>
             {% if is_own_profile %}
             <div class="tab-node" onclick="switchProfileTab(event, 'liked-posts-panel')">{% trans "Yoqqanlar" %}</div>
@@ -653,7 +653,7 @@
                             <p style="font-size:14px; color:var(--text-muted); line-height:1.6;">{{ review.comment }}</p>
                             {% if review.builder_reply %}
                             <div class="review-reply">
-                                <strong style="color:var(--active-text-blue); font-size:12px;"><i class="fa-solid fa-reply"></i> Sizning javobingiz</strong>
+                                <strong style="color:var(--active-text-blue); font-size:12px;"><i class="fa-solid fa-reply"></i> {% translate "Sizning javobingiz" %}</strong>
                                 <p style="margin-top:4px;">{{ review.builder_reply }}</p>
                             </div>
                             {% endif %}
@@ -661,7 +661,7 @@
                         {% empty %}
                         <div style="text-align:center; padding:40px; color:var(--text-muted);">
                             <i class="fa-regular fa-comment-dots" style="font-size:36px; opacity:0.3; display:block; margin-bottom:12px;"></i>
-                            Hozircha izohlar yo'q
+                            {% translate "Hozircha izohlar yo'q." %}
                         </div>
                         {% endfor %}
                     </div>
