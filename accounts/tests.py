@@ -189,3 +189,9 @@ class SubscriptionSystemTests(TestCase):
         msg = Message.objects.filter(room=room, sender=self.builder_user).last()
         self.assertIsNotNone(msg)
         self.assertEqual(msg.content, "To'lov cheki yuborildi")
+
+    def test_superadmin_dashboard_view(self):
+        self.client.login(username='admin', password='adminpassword')
+        response = self.client.get('/uz/superadmin/')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('total_users_count', response.context)
