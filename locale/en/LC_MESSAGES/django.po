@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 10:25+0500\n"
+"POT-Creation-Date: 2026-07-23 10:30+0500\n"
 "Language: en\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -974,7 +974,6 @@ msgstr "Edit"
 msgid "Tasdiqlangan foydalanuvchi"
 msgstr "Username"
 
-#| msgid "E'lonlar"
 msgid "E'lonlarim"
 msgstr "My listings"
 
@@ -1040,7 +1039,6 @@ msgstr "Customer Reviews"
 msgid "Sizning javobingiz"
 msgstr "Sizning javobingiz"
 
-#| msgid "Hozircha jamoangizda a'zolar yo'q."
 msgid "Hozircha izohlar yo'q."
 msgstr "No reviews yet."
 
@@ -1153,12 +1151,20 @@ msgstr "Basic Info"
 msgid "To'lov chekingiz admin tomonidan tekshirilmoqda."
 msgstr "Your payment receipt is being verified by an admin."
 
-msgid "Yangilash"
-msgstr "Edit"
+#| msgid "Tilni o'zgartirish"
+msgid "Tarifni o'zgartirish"
+msgstr "Change plan"
 
 #, python-format
 msgid "-25%% foyda"
 msgstr "-25% discount"
+
+#| msgid "so'm / yil"
+msgid "so'm/yil"
+msgstr "sum/year"
+
+msgid "so'm/oy"
+msgstr "sum/month"
 
 msgid "SINOV MUDDATI"
 msgstr "TRIAL PERIOD"
@@ -1193,9 +1199,6 @@ msgstr "✓ Active"
 msgid "STANDARD"
 msgstr "STANDARD"
 
-msgid "so'm/oy"
-msgstr "UZS / month"
-
 msgid "Barcha asosiy funksiyalar"
 msgstr "All Builders"
 
@@ -1216,9 +1219,6 @@ msgstr "Announcements and projects are quickly recommended"
 
 msgid "SINOV MUDDATI barcha funksiyalari"
 msgstr "All TRIAL PERIOD features"
-
-msgid "Sotib olish"
-msgstr "Purchase"
 
 msgid "TOP USTALARGA"
 msgstr "FOR TOP BUILDERS"
@@ -1511,6 +1511,12 @@ msgstr "Ulashish"
 
 msgid "Yangi suhbat"
 msgstr "Edit"
+
+#~ msgid "Yangilash"
+#~ msgstr "Edit"
+
+#~ msgid "Sotib olish"
+#~ msgstr "Purchase"
 
 #~ msgid "Siz bilan bog\\"
 #~ msgstr "Siz bilan bog"
@@ -1820,9 +1826,6 @@ msgstr "Edit"
 
 #~ msgid "Eng ommabop"
 #~ msgstr "Most Popular"
-
-#~ msgid "so'm / yil"
-#~ msgstr "UZS / year"
 
 #~ msgid ""
 #~ "Doimiy va jiddiy buyurtmalar oqimiga ega bo'lishni xohlovchi ustalar "

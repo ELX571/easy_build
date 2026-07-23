@@ -697,11 +697,9 @@
                 </div>
                 {% endif %}
                 
-                {% if not sub_is_active and not sub_is_temp %}
-                <a href="#plans-section" onclick="document.getElementById('plans-section').scrollIntoView({behavior: 'smooth'})" style="background: #3b82f6; color: white; padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; text-decoration: none; transition: all 0.3s ease;">
-                    <i class="fa-solid fa-arrow-up-right-dots"></i> {% trans "Yangilash" %}
+                <a id="changePlanBtn" href="{% url 'build:payment_dashboard' %}?plan=pro&period=monthly" style="background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: 14px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); transition: all 0.3s ease;">
+                    <i class="fa-solid fa-sliders"></i> {% trans "Tarifni o'zgartirish" %}
                 </a>
-                {% endif %}
             </div>
             <!-- /JORIY OBUNA HOLATI WIDGETI -->
 
@@ -943,22 +941,30 @@
             const labelYearly = document.getElementById('labelYearly');
             const stdPrice = document.getElementById('stdPriceAmount');
             const stdPeriod = document.getElementById('stdPricePeriod');
+            const changePlanBtn = document.getElementById('changePlanBtn');
+            const stdBuyBtn = document.getElementById('stdBuyBtn');
             
             if (type === 'toggle') { isYearly = !isYearly; } 
             else { isYearly = (type === 'yearly'); }
             
+            const targetPeriod = isYearly ? 'yearly' : 'monthly';
+            const payUrl = "{% url 'build:payment_dashboard' %}?plan=pro&period=" + targetPeriod;
+
+            if (changePlanBtn) changePlanBtn.href = payUrl;
+            if (stdBuyBtn) stdBuyBtn.href = payUrl;
+
             if (isYearly) {
                 toggleContainer.classList.add('yearly');
                 labelMonthly.classList.remove('active');
                 labelYearly.classList.add('active');
-                stdPrice.innerText = '441,000';
-                stdPeriod.innerText = "so'm/yil";
+                if (stdPrice) stdPrice.innerText = '441,000';
+                if (stdPeriod) stdPeriod.innerText = "{% trans "so'm/yil" %}";
             } else {
                 toggleContainer.classList.remove('yearly');
                 labelMonthly.classList.add('active');
                 labelYearly.classList.remove('active');
-                stdPrice.innerText = '49,000';
-                stdPeriod.innerText = "so'm/oy";
+                if (stdPrice) stdPrice.innerText = '49,000';
+                if (stdPeriod) stdPeriod.innerText = "{% trans "so'm/oy" %}";
             }
         }
     </script>
@@ -1040,7 +1046,7 @@
                     </div>
                 </div>
                 
-                <button type="button" class="plan-btn" onclick="openPayModal('pro')">{% trans "Sotib olish" %}</button>
+                <a id="stdBuyBtn" href="{% url 'build:payment_dashboard' %}?plan=pro&period=monthly" class="plan-btn" style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;"><i class="fa-solid fa-credit-card"></i> {% trans "Tarifni o'zgartirish" %}</a>
             </div>
         </div>
 

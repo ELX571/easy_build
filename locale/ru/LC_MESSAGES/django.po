@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 10:25+0500\n"
+"POT-Creation-Date: 2026-07-23 10:30+0500\n"
 "Language: ru\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -978,7 +978,6 @@ msgid "Tasdiqlangan foydalanuvchi"
 msgstr "Имя пользователя"
 
 # Dashboard
-#| msgid "E'lonlar"
 msgid "E'lonlarim"
 msgstr "Мои объявления"
 
@@ -1045,7 +1044,6 @@ msgstr "Отзывы клиентов"
 msgid "Sizning javobingiz"
 msgstr "Sizning javobingiz"
 
-#| msgid "Hozircha jamoangizda a'zolar yo'q."
 msgid "Hozircha izohlar yo'q."
 msgstr "Пока нет отзывов."
 
@@ -1159,12 +1157,20 @@ msgstr "Основные данные"
 msgid "To'lov chekingiz admin tomonidan tekshirilmoqda."
 msgstr "Квитанция об оплате проверяется администратором."
 
-msgid "Yangilash"
-msgstr "Редактировать"
+#| msgid "Tilni o'zgartirish"
+msgid "Tarifni o'zgartirish"
+msgstr "Сменить тариф"
 
 #, python-format
 msgid "-25%% foyda"
 msgstr "-25% выгода"
+
+#| msgid "so'm / yil"
+msgid "so'm/yil"
+msgstr "сум/год"
+
+msgid "so'm/oy"
+msgstr "сум/месяц"
 
 msgid "SINOV MUDDATI"
 msgstr "ПРОБНЫЙ ПЕРИОД"
@@ -1199,9 +1205,6 @@ msgstr "✓ Активный"
 msgid "STANDARD"
 msgstr "СТАНДАРТ"
 
-msgid "so'm/oy"
-msgstr "сум / месяц"
-
 msgid "Barcha asosiy funksiyalar"
 msgstr "Все мастера"
 
@@ -1222,9 +1225,6 @@ msgstr "Объявления и проекты быстро рекомендую
 
 msgid "SINOV MUDDATI barcha funksiyalari"
 msgstr "Все функции ПРОБНОГО ПЕРИОДА"
-
-msgid "Sotib olish"
-msgstr "Купить"
 
 msgid "TOP USTALARGA"
 msgstr "ТОП МАСТЕРАМ"
@@ -1517,6 +1517,12 @@ msgstr "Ulashish"
 
 msgid "Yangi suhbat"
 msgstr "Редактировать"
+
+#~ msgid "Yangilash"
+#~ msgstr "Редактировать"
+
+#~ msgid "Sotib olish"
+#~ msgstr "Купить"
 
 #~ msgid "Siz bilan bog\\"
 #~ msgstr "Siz bilan bog"
@@ -1811,9 +1817,6 @@ msgstr "Редактировать"
 
 #~ msgid "Eng ommabop"
 #~ msgstr "Самый популярный"
-
-#~ msgid "so'm / yil"
-#~ msgstr "сум / год"
 
 #~ msgid ""
 #~ "Doimiy va jiddiy buyurtmalar oqimiga ega bo'lishni xohlovchi ustalar "

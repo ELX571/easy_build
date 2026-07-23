@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 10:25+0500\n"
+"POT-Creation-Date: 2026-07-23 10:30+0500\n"
 "PO-Revision-Date: 2026-06-23 10:00+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Uzbek <uz@li.org>\n"
@@ -963,11 +963,9 @@ msgstr "Xabarlar"
 msgid "Tasdiqlangan foydalanuvchi"
 msgstr "Faol foydalanuvchi"
 
-#| msgid "Jami e'lonlar"
 msgid "E'lonlarim"
 msgstr "Ish jarayonlari"
 
-#| msgid "Jami e'lonlar"
 msgid "E'lonlar"
 msgstr "Ish jarayonlari"
 
@@ -1030,7 +1028,6 @@ msgstr "Ish jarayonlari"
 msgid "Sizning javobingiz"
 msgstr "Sizning javobingiz"
 
-#| msgid "Hozircha jamoangizda a'zolar yo'q."
 msgid "Hozircha izohlar yo'q."
 msgstr "Hozircha jamoangizda a'zolar yo'q."
 
@@ -1141,12 +1138,20 @@ msgstr "Asosiy imkoniyatlar"
 msgid "To'lov chekingiz admin tomonidan tekshirilmoqda."
 msgstr "To'lov chekingiz admin tomonidan tekshirilmoqda."
 
-msgid "Yangilash"
-msgstr "Xabarlar"
+#| msgid "Tilni o'zgartirish"
+msgid "Tarifni o'zgartirish"
+msgstr "Rejimni o'zgartirish"
 
 #, python-format
 msgid "-25%% foyda"
 msgstr "-20%% foyda"
+
+#| msgid "so'm/oy"
+msgid "so'm/yil"
+msgstr "so'm/oy"
+
+msgid "so'm/oy"
+msgstr "so'm/oy"
 
 msgid "SINOV MUDDATI"
 msgstr "SINOV MUDDATI"
@@ -1181,9 +1186,6 @@ msgstr "✓ Faol"
 msgid "STANDARD"
 msgstr "STANDARD"
 
-msgid "so'm/oy"
-msgstr "so'm/oy"
-
 msgid "Barcha asosiy funksiyalar"
 msgstr "Barcha asosiy funksiyalar"
 
@@ -1204,9 +1206,6 @@ msgstr "E'lon va loyihalar tez rekomendatsiyaga chiqishi"
 
 msgid "SINOV MUDDATI barcha funksiyalari"
 msgstr "SINOV MUDDATI barcha funksiyalari"
-
-msgid "Sotib olish"
-msgstr "Sotib olish"
 
 msgid "TOP USTALARGA"
 msgstr "TOP USTALARGA"
@@ -1493,6 +1492,12 @@ msgstr "Ulashish"
 
 msgid "Yangi suhbat"
 msgstr "Xabarlar"
+
+#~ msgid "Yangilash"
+#~ msgstr "Xabarlar"
+
+#~ msgid "Sotib olish"
+#~ msgstr "Sotib olish"
 
 #~ msgid "Siz bilan bog\\"
 #~ msgstr "Siz bilan bog"
