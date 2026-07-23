@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 10:09+0500\n"
+"POT-Creation-Date: 2026-07-23 10:17+0500\n"
 "Language: en\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -607,7 +607,6 @@ msgstr "Usta o"
 msgid "Post yaratish"
 msgstr "Create post"
 
-#| msgid "Professional qurilish materiallari va texnika ijarasi bozori"
 msgid ""
 "Professional qurilish materiallari va texnika ijarasi bozori tez kunda ishga "
 "tushadi."
@@ -775,8 +774,16 @@ msgstr "You have submitted a request for the Premium VIP (Yearly) plan."
 msgid "Tarif paketini tanlang:"
 msgstr "Select a subscription plan:"
 
+#| msgid "PRO Obuna"
+msgid "PRO Obuna (Yillik)"
+msgstr "PRO Subscription (Yearly)"
+
+#| msgid "PRO Obuna"
+msgid "PRO Obuna (Oylik)"
+msgstr "PRO Subscription (Monthly)"
+
 msgid "so'm"
-msgstr "UZS"
+msgstr "sum"
 
 msgid "Ushbu tarif sotilmaydi, faqat adminlar tomonidan sovg\\"
 msgstr "Ushbu tarif sotilmaydi, faqat adminlar tomonidan sovg"
@@ -855,6 +862,14 @@ msgstr "Write here if you have any questions about payment."
 
 msgid "Xabaringizni yozing..."
 msgstr "Xabaringizni yozing..."
+
+#| msgid "Premium VIP"
+msgid "Premium VIP (Oylik)"
+msgstr "Premium"
+
+#| msgid "Premium VIP"
+msgid "Premium VIP (Yillik)"
+msgstr "Premium"
 
 msgid "Quruvchilar obuna paketlari"
 msgstr "Builders subscription packages"
@@ -1399,6 +1414,9 @@ msgstr "New Password:"
 msgid "Xabar yozish"
 msgstr "Send message"
 
+msgid "Bloklash funksiyasi tez kunda!"
+msgstr "Blocking feature coming soon!"
+
 msgid "Bloklash"
 msgstr "Block"
 
@@ -1478,9 +1496,6 @@ msgstr "Edit"
 #~ msgstr ""
 #~ "We apologize for the inconvenience. The payment system will be restored "
 #~ "shortly."
-
-#~ msgid "PRO Obuna"
-#~ msgstr "Premium Subscription"
 
 #~ msgid "UZCARD"
 #~ msgstr "UZCARD"

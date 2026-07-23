@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 10:09+0500\n"
+"POT-Creation-Date: 2026-07-23 10:17+0500\n"
 "PO-Revision-Date: 2026-06-23 10:00+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Uzbek <uz@li.org>\n"
@@ -604,7 +604,6 @@ msgstr "Usta o"
 msgid "Post yaratish"
 msgstr "Post yaratish"
 
-#| msgid "Professional qurilish materiallari va texnika ijarasi bozori"
 msgid ""
 "Professional qurilish materiallari va texnika ijarasi bozori tez kunda ishga "
 "tushadi."
@@ -767,6 +766,14 @@ msgstr "Siz <b>%(plan_name)s</b> tarifi uchun so'rov yuborgansiz."
 msgid "Tarif paketini tanlang:"
 msgstr "Tarif paketini tanlang:"
 
+#| msgid "PRO Obuna"
+msgid "PRO Obuna (Yillik)"
+msgstr "Premium"
+
+#| msgid "PRO Obuna"
+msgid "PRO Obuna (Oylik)"
+msgstr "Premium"
+
 msgid "so'm"
 msgstr "so'm"
 
@@ -846,6 +853,14 @@ msgstr "To'lov haqida savollaringiz bo'lsa bu yerga yozing."
 
 msgid "Xabaringizni yozing..."
 msgstr "Xabaringizni yozing..."
+
+#| msgid "Premium VIP"
+msgid "Premium VIP (Oylik)"
+msgstr "Premium"
+
+#| msgid "Premium VIP"
+msgid "Premium VIP (Yillik)"
+msgstr "Premium"
 
 msgid "Quruvchilar obuna paketlari"
 msgstr "Quruvchilar obuna paketlari"
@@ -1383,6 +1398,9 @@ msgstr "Xabarlar"
 msgid "Xabar yozish"
 msgstr "Xabarlar"
 
+msgid "Bloklash funksiyasi tez kunda!"
+msgstr "Bloklash funksiyasi tez kunda!"
+
 msgid "Bloklash"
 msgstr "Bloklash"
 
@@ -1449,10 +1467,6 @@ msgstr "Xabarlar"
 
 #~ msgid "tez kunda ishga tushadi."
 #~ msgstr "tez kunda ishga tushadi."
-
-#~| msgid "Premium"
-#~ msgid "PRO Obuna"
-#~ msgstr "Premium"
 
 #~ msgid "Ish tajribasi"
 #~ msgstr "Ish tajribasi"

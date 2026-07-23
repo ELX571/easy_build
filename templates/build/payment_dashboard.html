@@ -1260,7 +1260,7 @@
                                     <div class="plan-card-content">
                                         <div class="plan-check"><i class="fa-solid fa-check"></i></div>
                                         <div class="plan-icon-circle"><i class="fa-solid fa-star"></i></div>
-                                        <div class="plan-name">{% if selected_period == 'yearly' %}PRO Obuna (Yillik){% else %}PRO Obuna (Oylik){% endif %}</div>
+                                        <div class="plan-name">{% if selected_period == 'yearly' %}{% trans "PRO Obuna (Yillik)" %}{% else %}{% trans "PRO Obuna (Oylik)" %}{% endif %}</div>
                                         <div class="plan-price">{% if selected_period == 'yearly' %}470,400{% else %}49,000{% endif %} {% trans "so'm" %}</div>
                                     </div>
                                 </label>
@@ -1638,8 +1638,8 @@
         yearly: "{% trans 'Yillik obuna' %} (-25%)",
     };
     const PLAN_NAMES = {
-        pro: { monthly: "PRO Obuna (Oylik)", yearly: "PRO Obuna (Yillik)" },
-        vip: { monthly: "Premium VIP (Oylik)", yearly: "Premium VIP (Yillik)" },
+        pro: { monthly: "{% trans 'PRO Obuna (Oylik)' %}", yearly: "{% trans 'PRO Obuna (Yillik)' %}" },
+        vip: { monthly: "{% trans 'Premium VIP (Oylik)' %}", yearly: "{% trans 'Premium VIP (Yillik)' %}" },
     };
 
     // Chap blok uchun dinamik matnlar — HTML data atributlaridan o'qiladi (apostrophe muammosidan xoli)
