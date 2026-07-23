@@ -732,7 +732,7 @@ msgid "KARTA EGASI"
 msgstr "KARTA EGASI"
 
 msgid "Nusxalash"
-msgstr "Редактировать"
+msgstr "Копировать"
 
 msgid "Tekshirilmoqda..."
 msgstr "Проверяется..."

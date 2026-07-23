@@ -729,7 +729,7 @@ msgid "KARTA EGASI"
 msgstr "KARTA EGASI"
 
 msgid "Nusxalash"
-msgstr "Choose"
+msgstr "Copy"
 
 msgid "Tekshirilmoqda..."
 msgstr "Verifying..."
