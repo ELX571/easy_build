@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 10:06+0500\n"
+"POT-Creation-Date: 2026-07-23 10:09+0500\n"
 "PO-Revision-Date: 2026-06-23 10:00+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Uzbek <uz@li.org>\n"
@@ -337,9 +337,8 @@ msgstr "Parolni qayta kiriting"
 msgid "Ro'yxatdan o'tish →"
 msgstr "Ro'yxatdan o'tish →"
 
-#, python-format
-msgid "{%% translate "
-msgstr "{%% translate "
+msgid "Allaqachon akkauntingiz bormi?"
+msgstr "Allaqachon akkauntingiz bormi?"
 
 msgid "Tizimga kirish"
 msgstr "Tizimdan chiqish"
@@ -433,9 +432,6 @@ msgstr "B2B marketda ishtirok etish va katta loyihalarni bajarish uchun."
 
 msgid "Keyingi qadam"
 msgstr "Keyingi qadam"
-
-msgid "Allaqachon akkauntingiz bormi?"
-msgstr "Allaqachon akkauntingiz bormi?"
 
 msgid "&times;"
 msgstr "&times;"
@@ -608,14 +604,11 @@ msgstr "Usta o"
 msgid "Post yaratish"
 msgstr "Post yaratish"
 
-#| msgid ""
-#| "Professional qurilish materiallari va texnika ijarasi bozori tez kunda "
-#| "ishga tushadi."
-msgid "Professional qurilish materiallari va texnika ijarasi bozori"
+#| msgid "Professional qurilish materiallari va texnika ijarasi bozori"
+msgid ""
+"Professional qurilish materiallari va texnika ijarasi bozori tez kunda ishga "
+"tushadi."
 msgstr "Professional qurilish materiallari va texnika ijarasi bozori tez kunda ishga tushadi."
-
-msgid "tez kunda ishga tushadi."
-msgstr "tez kunda ishga tushadi."
 
 msgid "Materiallar bozori"
 msgstr "Materiallar bozori"
@@ -638,7 +631,6 @@ msgstr "B2B Shartnomalar"
 msgid "Kompaniyalar o'rtasida qurilish bitimlari"
 msgstr "Kompaniyalar o'rtasida qurilish bitimlari"
 
-#| msgid "Bosh sahifa"
 msgid "Bosh sahifaga qaytish"
 msgstr "Bosh sahifa"
 
@@ -654,7 +646,6 @@ msgstr "Avatar"
 msgid "Premium Usta"
 msgstr "Premium"
 
-#| msgid "Bekor qilish"
 msgid "Shikoyat qilish"
 msgstr "Bekor qilish"
 
@@ -699,7 +690,6 @@ msgstr "Hamkasblar e'lonlari"
 msgid "oldin"
 msgstr "oldin"
 
-#| msgid "Nusxalash"
 msgid "Nusxa olish"
 msgstr "Xabarlar"
 
@@ -1032,21 +1022,18 @@ msgstr "Vaqtga rioya"
 msgid "Xushmuomalalik"
 msgstr "Xushmuomalalik"
 
-#| msgid "Boshqa mijozlar e'lonlari"
 msgid "Mijozlar Izohlari"
 msgstr "Ish jarayonlari"
 
 msgid "Siz mijozsiz"
 msgstr "Siz mijozsiz"
 
-#| msgid "Ro'yxatdan o'tish →"
 msgid "Ro'yxatdan olib tashlash"
 msgstr "Ro'yxatdan o'tish →"
 
 msgid "Sizga yoqqan e'lonlar hozircha mavjud emas."
 msgstr "Qidiruv shartlariga mos keladigan Quruvchilar hozircha mavjud emas."
 
-#| msgid "Bekor qilish"
 msgid "Saqlashni bekor qilish"
 msgstr "Bekor qilish"
 
@@ -1245,7 +1232,6 @@ msgstr "Profil Sozlamalari"
 msgid "Jamoa nomi"
 msgstr "Profil Sozlamalari"
 
-#| msgid "Guruhni tark etish"
 msgid "Guruhga o'tish"
 msgstr "Rejimni o'zgartirish"
 
@@ -1456,6 +1442,13 @@ msgstr "O"
 
 msgid "Yangi suhbat"
 msgstr "Xabarlar"
+
+#, python-format
+#~ msgid "{%% translate "
+#~ msgstr "{%% translate "
+
+#~ msgid "tez kunda ishga tushadi."
+#~ msgstr "tez kunda ishga tushadi."
 
 #~| msgid "Premium"
 #~ msgid "PRO Obuna"

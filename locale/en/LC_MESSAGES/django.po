@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 10:06+0500\n"
+"POT-Creation-Date: 2026-07-23 10:09+0500\n"
 "Language: en\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -338,9 +338,8 @@ msgstr "Repeat Password"
 msgid "Ro'yxatdan o'tish →"
 msgstr "Sign Up"
 
-#, python-format
-msgid "{%% translate "
-msgstr "{%% translate "
+msgid "Allaqachon akkauntingiz bormi?"
+msgstr "Already have an account?"
 
 msgid "Tizimga kirish"
 msgstr "Sign Out"
@@ -435,9 +434,6 @@ msgstr "To participate in the B2B market and to complete large projects."
 
 msgid "Keyingi qadam"
 msgstr "Next step"
-
-msgid "Allaqachon akkauntingiz bormi?"
-msgstr "Already have an account?"
 
 msgid "&times;"
 msgstr "&times;"
@@ -611,14 +607,11 @@ msgstr "Usta o"
 msgid "Post yaratish"
 msgstr "Create Post"
 
-#| msgid ""
-#| "Professional qurilish materiallari va texnika ijarasi bozori tez kunda "
-#| "ishga tushadi."
-msgid "Professional qurilish materiallari va texnika ijarasi bozori"
+#| msgid "Professional qurilish materiallari va texnika ijarasi bozori"
+msgid ""
+"Professional qurilish materiallari va texnika ijarasi bozori tez kunda ishga "
+"tushadi."
 msgstr "Professional building materials and equipment rental market is launching soon."
-
-msgid "tez kunda ishga tushadi."
-msgstr "will be launched soon."
 
 msgid "Materiallar bozori"
 msgstr "Material market"
@@ -642,7 +635,6 @@ msgid "Kompaniyalar o'rtasida qurilish bitimlari"
 msgstr "Construction contracts between companies"
 
 # Navigation
-#| msgid "Bosh sahifa"
 msgid "Bosh sahifaga qaytish"
 msgstr "Home"
 
@@ -659,7 +651,6 @@ msgid "Premium Usta"
 msgstr "Premium"
 
 # Common
-#| msgid "Bekor qilish"
 msgid "Shikoyat qilish"
 msgstr "Cancel"
 
@@ -707,7 +698,6 @@ msgstr "Colleague listings"
 msgid "oldin"
 msgstr "ago"
 
-#| msgid "Nusxalash"
 msgid "Nusxa olish"
 msgstr "Choose"
 
@@ -1042,14 +1032,12 @@ msgstr "Vaqtga rioya"
 msgid "Xushmuomalalik"
 msgstr "Xushmuomalalik"
 
-#| msgid "Mijozlar e'lonlari"
 msgid "Mijozlar Izohlari"
 msgstr "Client listings"
 
 msgid "Siz mijozsiz"
 msgstr "You are the customer"
 
-#| msgid "Ro'yxatdan o'tish →"
 msgid "Ro'yxatdan olib tashlash"
 msgstr "Sign Up"
 
@@ -1257,7 +1245,6 @@ msgstr "Team Settings"
 msgid "Jamoa nomi"
 msgstr "Team Settings"
 
-#| msgid "Guruhni tark etish"
 msgid "Guruhga o'tish"
 msgstr "Go to Group"
 
@@ -1472,6 +1459,13 @@ msgstr "O"
 
 msgid "Yangi suhbat"
 msgstr "Edit"
+
+#, python-format
+#~ msgid "{%% translate "
+#~ msgstr "{%% translate "
+
+#~ msgid "tez kunda ishga tushadi."
+#~ msgstr "will be launched soon."
 
 #~ msgid ""
 #~ "TO'LOV TIZIMI VAQTINCHALIK ISHLAMAYABDI, TEXNIK ISHLAR OLIB BORILMOQDA"
