@@ -4,11 +4,14 @@
 {% block title %}{% trans "Superadmin Dashboard — EasyBuild" %}{% endblock %}
 
 {% block content %}
+<!-- FontAwesome 6 CDN for Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 <style>
     :root {
         --sa-bg: #0a0a0f;
         --sa-card-bg: #12121a;
-        --sa-card-hover: #181824;
+        --sa-card-hover: #181826;
         --sa-border: rgba(255, 255, 255, 0.08);
         --sa-orange: #ff6b00;
         --sa-orange-glow: rgba(255, 107, 0, 0.25);
@@ -22,12 +25,12 @@
     }
 
     .sa-container {
-        max-width: 1400px;
+        max-width: 1440px;
         margin: 0 auto;
         padding: 2rem 1.5rem 4rem;
     }
 
-    /* Header */
+    /* Header Bar */
     .sa-header {
         display: flex;
         justify-content: space-between;
@@ -90,31 +93,28 @@
 
     .sa-stat-card:hover {
         transform: translateY(-3px);
-        border-color: rgba(255, 107, 0, 0.3);
+        border-color: rgba(255, 107, 0, 0.35);
     }
 
     .sa-stat-icon {
-        width: 54px;
-        height: 54px;
-        border-radius: 14px;
-        background: rgba(255, 107, 0, 0.1);
-        border: 1px solid rgba(255, 107, 0, 0.25);
-        color: var(--sa-orange);
+        width: 56px;
+        height: 56px;
+        border-radius: 16px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.5rem;
+        font-size: 1.6rem;
         flex-shrink: 0;
     }
 
     .sa-stat-val {
-        font-size: 1.8rem;
+        font-size: 1.85rem;
         font-weight: 800;
         line-height: 1.1;
     }
 
     .sa-stat-lbl {
-        font-size: 0.8rem;
+        font-size: 0.82rem;
         color: var(--sa-muted);
         margin-top: 4px;
         font-weight: 600;
@@ -166,7 +166,7 @@
     }
 
     .sa-tab-btn i {
-        font-size: 1rem;
+        font-size: 1.05rem;
     }
 
     .sa-tab-btn:hover {
@@ -175,9 +175,9 @@
     }
 
     .sa-tab-btn.active {
-        background: var(--sa-orange);
+        background: linear-gradient(135deg, #ff6b00, #e05d00);
         color: #ffffff;
-        box-shadow: 0 4px 15px var(--sa-orange-glow);
+        box-shadow: 0 4px 18px var(--sa-orange-glow);
     }
 
     /* Tab Content Boxes */
@@ -249,31 +249,39 @@
     .badge-pro { background: rgba(255, 107, 0, 0.15); color: var(--sa-orange); border: 1px solid rgba(255, 107, 0, 0.3); }
     .badge-vip { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
 
-    /* Action Buttons */
+    /* Action Buttons with Icons & Text */
     .btn-act {
         border: none;
-        padding: 7px 13px;
-        border-radius: 8px;
+        padding: 8px 14px;
+        border-radius: 10px;
         font-weight: 700;
         font-size: 0.78rem;
         cursor: pointer;
         display: inline-flex;
         align-items: center;
-        gap: 5px;
+        gap: 6px;
         transition: all 0.2s ease;
         text-decoration: none;
+        white-space: nowrap;
+    }
+    .btn-act:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
     .btn-act-approve { background: #10b981; color: #fff; }
     .btn-act-approve:hover { background: #059669; }
     .btn-act-reject { background: #ef4444; color: #fff; }
     .btn-act-reject:hover { background: #dc2626; }
-    .btn-act-pro { background: var(--sa-orange); color: #fff; }
+    .btn-act-pro { background: linear-gradient(135deg, #ff6b00, #ea580c); color: #fff; }
+    .btn-act-vip { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: #fff; }
+    .btn-act-revoke { background: #475569; color: #fff; }
     .btn-act-ban { background: #64748b; color: #fff; }
+    .btn-act-ban:hover { background: #475569; }
 
     /* Thumbnails */
     .receipt-thumb {
-        width: 48px;
-        height: 48px;
+        width: 50px;
+        height: 50px;
         border-radius: 10px;
         object-fit: cover;
         cursor: pointer;
@@ -285,7 +293,7 @@
         border-color: var(--sa-orange);
     }
 
-    /* Maintenance Switch Card */
+    /* Maintenance Box */
     .maint-box {
         background: rgba(255, 107, 0, 0.05);
         border: 1.5px solid rgba(255, 107, 0, 0.25);
@@ -357,7 +365,7 @@
         border: 1px solid var(--sa-border);
         border-radius: 20px;
         padding: 2rem;
-        max-width: 500px;
+        max-width: 520px;
         width: 100%;
         position: relative;
         box-shadow: 0 25px 60px rgba(0,0,0,0.7);
@@ -389,7 +397,9 @@
     <!-- Analytics Cards Grid -->
     <div class="sa-stats-grid">
         <div class="sa-stat-card">
-            <div class="sa-stat-icon"><i class="fa-solid fa-users"></i></div>
+            <div class="sa-stat-icon" style="background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.3);">
+                <i class="fa-solid fa-users" style="color: #3b82f6;"></i>
+            </div>
             <div>
                 <div class="sa-stat-val">{{ total_users_count }}</div>
                 <div class="sa-stat-lbl">{% trans "Jami Foydalanuvchilar" %}</div>
@@ -397,7 +407,9 @@
         </div>
 
         <div class="sa-stat-card">
-            <div class="sa-stat-icon"><i class="fa-solid fa-user-plus"></i></div>
+            <div class="sa-stat-icon" style="background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3);">
+                <i class="fa-solid fa-user-plus" style="color: #10b981;"></i>
+            </div>
             <div>
                 <div class="sa-stat-val">{{ new_today_count }}</div>
                 <div class="sa-stat-lbl">{% trans "Bugun Ro'yxatdan O'tganlar" %}</div>
@@ -405,7 +417,9 @@
         </div>
 
         <div class="sa-stat-card">
-            <div class="sa-stat-icon"><i class="fa-solid fa-crown"></i></div>
+            <div class="sa-stat-icon" style="background: rgba(255, 107, 0, 0.12); border: 1px solid rgba(255, 107, 0, 0.3);">
+                <i class="fa-solid fa-crown" style="color: #ff6b00;"></i>
+            </div>
             <div>
                 <div class="sa-stat-val">{{ active_subs_count }}</div>
                 <div class="sa-stat-lbl">{% trans "Faol PRO / VIP Obunachilar" %}</div>
@@ -416,8 +430,8 @@
             {% if pending_requests_count > 0 %}
             <div class="pending-alert-glow"></div>
             {% endif %}
-            <div class="sa-stat-icon" style="color: #f59e0b; background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3);">
-                <i class="fa-solid fa-clock-rotate-left"></i>
+            <div class="sa-stat-icon" style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.3);">
+                <i class="fa-solid fa-clock-rotate-left" style="color: #f59e0b;"></i>
             </div>
             <div>
                 <div class="sa-stat-val" style="color: #fbbf24;">{{ pending_requests_count }}</div>
@@ -472,7 +486,7 @@
                     <tr>
                         <td>
                             <div style="display: flex; align-items: center; gap: 10px;">
-                                <div style="width: 36px; height: 36px; border-radius: 50%; background: #2a2a3c; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--sa-orange);">
+                                <div style="width: 38px; height: 38px; border-radius: 50%; background: #2a2a3c; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--sa-orange);">
                                     {{ req.user.username|slice:":1"|upper }}
                                 </div>
                                 <div>
@@ -486,25 +500,25 @@
                         <td><span style="color: var(--sa-muted); font-size: 0.8rem;">{{ req.created_at|date:"Y-m-d H:i" }}</span></td>
                         <td>
                             {% if req.user.profile.builder_info.is_temp_active %}
-                            <span class="badge-status badge-pending">⚡ {% trans "Vaqtinchalik PRO" %}</span>
+                            <span class="badge-status badge-pending"><i class="fa-solid fa-bolt"></i> {% trans "Vaqtinchalik PRO" %}</span>
                             {% else %}
                             <span style="color: var(--sa-muted); font-size: 0.8rem;">—</span>
                             {% endif %}
                         </td>
                         <td>
                             {% if req.screenshot %}
-                            <img src="{{ req.screenshot.url }}" class="receipt-thumb" onclick="openImageViewer('{{ req.screenshot.url }}')" alt="Receipt" />
+                            <img src="{{ req.screenshot.url }}" class="receipt-thumb" onclick="openImageViewer('{{ req.screenshot.url }}')" alt="Receipt" title="{% translate 'Rasmga bosib kattalashtiring' %}" />
                             {% else %}
                             <span style="color: var(--sa-muted);">—</span>
                             {% endif %}
                         </td>
                         <td>
                             {% if req.status == 'pending' %}
-                            <span class="badge-status badge-pending">⏳ {% trans "Kutilmoqda" %}</span>
+                            <span class="badge-status badge-pending"><i class="fa-solid fa-hourglass-half"></i> {% trans "Kutilmoqda" %}</span>
                             {% elif req.status == 'accepted' %}
-                            <span class="badge-status badge-accepted">✅ {% trans "Tasdiqlangan" %}</span>
+                            <span class="badge-status badge-accepted"><i class="fa-solid fa-circle-check"></i> {% trans "Tasdiqlangan" %}</span>
                             {% else %}
-                            <span class="badge-status badge-rejected">❌ {% trans "Rad etilgan" %}</span>
+                            <span class="badge-status badge-rejected"><i class="fa-solid fa-circle-xmark"></i> {% trans "Rad etilgan" %}</span>
                             {% endif %}
                         </td>
                         <td style="text-align: right;">
@@ -536,9 +550,9 @@
 
     <!-- TAB 2: FOYDALANUVCHILAR BOSHQARUVI (USERS) -->
     <div id="tab-users" class="sa-tab-content {% if active_tab == 'users' %}active{% endif %}">
-        <form method="get" action="" style="display: flex; gap: 12px; margin-bottom: 1.5rem; flex-wrap: wrap;">
+        <form method="get" action="" style="display: flex; gap: 12px; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center;">
             <input type="hidden" name="tab" value="users">
-            <input type="text" name="q" value="{{ search_q }}" placeholder="{% translate 'Ism, username yoki email bo\'yicha qidiruv...' %}" style="flex: 1; min-width: 240px; background: rgba(255,255,255,0.05); border: 1px solid var(--sa-border); padding: 10px 16px; border-radius: 12px; color: #fff;">
+            <input type="text" name="q" value="{{ search_q }}" placeholder="{% translate 'Ism, username yoki email bo\'yicha qidiruv...' %}" style="flex: 1; min-width: 260px; background: rgba(255,255,255,0.05); border: 1px solid var(--sa-border); padding: 10px 16px; border-radius: 12px; color: #fff;">
             
             <select name="role" style="background: #1c1c2e; border: 1px solid var(--sa-border); padding: 10px 16px; border-radius: 12px; color: #fff;">
                 <option value="">{% trans "Barcha Rollar" %}</option>
@@ -554,8 +568,8 @@
                 <option value="banned" {% if sub_filter == 'banned' %}selected{% endif %}>{% trans "Bloklanganlar" %}</option>
             </select>
 
-            <button type="submit" class="btn-act btn-act-pro" style="padding: 10px 20px;">
-                <i class="fa-solid fa-magnifying-glass"></i> {% trans "Saralash" %}
+            <button type="submit" class="btn-act btn-act-pro" style="padding: 10px 22px;">
+                <i class="fa-solid fa-magnifying-glass"></i> {% trans "Qidirish" %}
             </button>
         </form>
 
@@ -576,7 +590,7 @@
                     <tr>
                         <td>
                             <div style="display: flex; align-items: center; gap: 10px;">
-                                <div style="width: 38px; height: 38px; border-radius: 50%; background: #2a2a3c; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--sa-orange);">
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background: #2a2a3c; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--sa-orange);">
                                     {{ u.username|slice:":1"|upper }}
                                 </div>
                                 <div>
@@ -596,38 +610,47 @@
                             {% if u.profile.builder_info.subscription_status %}
                             <span class="badge-status badge-pro"><i class="fa-solid fa-crown"></i> {{ u.profile.builder_info.subscription_plan.name|default:"PRO" }}</span>
                             {% elif u.profile.builder_info.is_temp_active %}
-                            <span class="badge-status badge-pending">⚡ Vaqtincha PRO</span>
+                            <span class="badge-status badge-pending"><i class="fa-solid fa-bolt"></i> Vaqtincha PRO</span>
                             {% else %}
                             <span style="color: var(--sa-muted); font-size: 0.8rem;">Free</span>
                             {% endif %}
                         </td>
                         <td>
                             {% if u.is_active %}
-                            <span style="color: #34d399; font-weight: 700; font-size: 0.8rem;">● {% trans "Faol" %}</span>
+                            <span style="color: #34d399; font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; gap: 4px;">
+                                <i class="fa-solid fa-circle" style="font-size: 8px;"></i> {% trans "Faol" %}
+                            </span>
                             {% else %}
-                            <span style="color: #f87171; font-weight: 700; font-size: 0.8rem;">● {% trans "Bloklangan" %}</span>
+                            <span style="color: #f87171; font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; gap: 4px;">
+                                <i class="fa-solid fa-circle" style="font-size: 8px;"></i> {% trans "Bloklangan" %}
+                            </span>
                             {% endif %}
                         </td>
                         <td style="text-align: right;">
-                            <div style="display: flex; justify-content: flex-end; gap: 6px;">
-                                <a href="{% url 'build:superadmin_manage_user' u.id 'grant_pro' %}" class="btn-act btn-act-pro" title="PRO Berish">
-                                    +PRO
+                            <div style="display: flex; justify-content: flex-end; gap: 6px; flex-wrap: wrap;">
+                                <a href="{% url 'build:superadmin_manage_user' u.id 'grant_pro' %}" class="btn-act btn-act-pro" title="30 Kunlik PRO Obuna berish">
+                                    <i class="fa-solid fa-crown"></i> +PRO
                                 </a>
-                                <a href="{% url 'build:superadmin_manage_user' u.id 'grant_vip' %}" class="btn-act" style="background:#8b5cf6; color:#fff;" title="VIP Berish">
-                                    +VIP
+                                <a href="{% url 'build:superadmin_manage_user' u.id 'grant_vip' %}" class="btn-act btn-act-vip" title="1 Yillik VIP Status berish">
+                                    <i class="fa-solid fa-gem"></i> +VIP
                                 </a>
+                                {% if u.profile.builder_info.subscription_status or u.profile.builder_info.is_temp_active %}
+                                <a href="{% url 'build:superadmin_manage_user' u.id 'revoke' %}" class="btn-act btn-act-revoke" title="Obunani bekor qilish">
+                                    <i class="fa-solid fa-rotate-left"></i> {% trans "Bekor qilish" %}
+                                </a>
+                                {% endif %}
                                 {% if u.is_active %}
-                                <a href="{% url 'build:superadmin_manage_user' u.id 'ban' %}" class="btn-act btn-act-ban" title="Bloklash">
-                                    <i class="fa-solid fa-ban"></i>
+                                <a href="{% url 'build:superadmin_manage_user' u.id 'ban' %}" class="btn-act btn-act-ban" title="Foydalanuvchini bloklash">
+                                    <i class="fa-solid fa-user-slash"></i> {% trans "Bloklash" %}
                                 </a>
                                 {% else %}
                                 <a href="{% url 'build:superadmin_manage_user' u.id 'unban' %}" class="btn-act btn-act-approve" title="Blokdan chiqarish">
-                                    <i class="fa-solid fa-unlock"></i>
+                                    <i class="fa-solid fa-user-check"></i> {% trans "Chiqarish" %}
                                 </a>
                                 {% endif %}
                                 {% if not u.is_superuser %}
-                                <button onclick="confirmDeleteUser({{ u.id }}, '{{ u.username }}')" class="btn-act btn-act-reject" title="O'chirish">
-                                    <i class="fa-solid fa-trash"></i>
+                                <button onclick="confirmDeleteUser({{ u.id }}, '{{ u.username }}')" class="btn-act btn-act-reject" title="Foydalanuvchini butunlay o'chirish">
+                                    <i class="fa-solid fa-trash"></i> {% trans "O'chirish" %}
                                 </button>
                                 {% endif %}
                             </div>

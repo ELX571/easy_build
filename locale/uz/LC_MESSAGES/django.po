@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 10:48+0500\n"
+"POT-Creation-Date: 2026-07-23 11:02+0500\n"
 "PO-Revision-Date: 2026-06-23 10:00+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Uzbek <uz@li.org>\n"
@@ -446,7 +446,7 @@ msgid "Hamkasblar"
 msgstr "Hamkasblar"
 
 msgid "Market Pro"
-msgstr "Market Pro (B2B)"
+msgstr "Market Pro"
 
 msgid "Usta Qidirish"
 msgstr "Usta Qidirish"
@@ -613,13 +613,13 @@ msgid "Kompaniyalar o'rtasida qurilish bitimlari"
 msgstr "Kompaniyalar o'rtasida qurilish bitimlari"
 
 msgid "Bosh sahifaga qaytish"
-msgstr "Bosh sahifa"
+msgstr "Bosh sahifaga qaytish"
 
 msgid "Bu sizning o'z e'loningiz!"
 msgstr "Bu sizning o'z e'loningiz!"
 
 msgid "Kerakli e'lonni qidiring..."
-msgstr "Parolni kiriting"
+msgstr "Kerakli e'lonni qidiring..."
 
 msgid "Avatar"
 msgstr "Avatar"
@@ -628,7 +628,7 @@ msgid "Premium Usta"
 msgstr "Premium"
 
 msgid "Shikoyat qilish"
-msgstr "Bekor qilish"
+msgstr "Shikoyat qilish"
 
 msgid "Profil Sozlamalari"
 msgstr "Profil Sozlamalari"
@@ -646,7 +646,7 @@ msgid ""
 msgstr "Kompaniyalar o'rtasida to'g'ridan-to'g'ri ishonchli shartnomalar tuzish imkoniyati."
 
 msgid "Chat boshlashda xatolik yuz berdi!"
-msgstr "Xatolik yuz berdi!"
+msgstr "Chat boshlashda xatolik yuz berdi!"
 
 msgid "Kritik amalni tasdiqlang"
 msgstr "Kritik amalni tasdiqlang"
@@ -660,7 +660,7 @@ msgid "Bekor qilish"
 msgstr "Bekor qilish"
 
 msgid "O'chirish"
-msgstr "Kirish"
+msgstr "O'chirish"
 
 msgid "Boshqa mijozlar e'lonlari"
 msgstr "Ish jarayonlari"
@@ -672,7 +672,7 @@ msgid "oldin"
 msgstr "oldin"
 
 msgid "Nusxa olish"
-msgstr "Xabarlar"
+msgstr "Nusxa olish"
 
 msgid "Ko'rinmaydigan qilish"
 msgstr "Ko'rinmaydigan qilish"
@@ -696,13 +696,13 @@ msgid ""
 msgstr "Hozircha sizga kelgan xabarlar mavjud emas. Yangi bildirishnomalar shu yerda ko'rinadi."
 
 msgid "Profil sozlamalari"
-msgstr "Profil Sozlamalari"
+msgstr "Profil sozlamalari"
 
 msgid "KARTA EGASI"
 msgstr "KARTA EGASI"
 
 msgid "Nusxalash"
-msgstr "Xabarlar"
+msgstr "Nusxalash"
 
 msgid "Tekshirilmoqda..."
 msgstr "Tekshirilmoqda..."
@@ -749,10 +749,10 @@ msgid "Tarif paketini tanlang:"
 msgstr "Tarif paketini tanlang:"
 
 msgid "PRO Obuna (Yillik)"
-msgstr "Premium"
+msgstr "PRO Obuna (Yillik)"
 
 msgid "PRO Obuna (Oylik)"
-msgstr "Premium"
+msgstr "PRO Obuna (Oylik)"
 
 msgid "so'm"
 msgstr "so'm"
@@ -783,10 +783,10 @@ msgid "Umumiy to'lov summasi"
 msgstr "Umumiy to'lov summasi"
 
 msgid "Yillik obuna"
-msgstr "Yillik"
+msgstr "Yillik obuna"
 
 msgid "Oylik obuna"
-msgstr "Faol obuna"
+msgstr "Oylik obuna"
 
 msgid "Oyiga bor-yo'g'i 36,750 so'm"
 msgstr "Oyiga bor-yo'g'i 36,750 so'm"
@@ -810,7 +810,7 @@ msgid "To'lovni tasdiqlash"
 msgstr "To'lovlarni Tasdiqlash Dashbordi"
 
 msgid "Sizda tekshirilayotgan to'lov cheki bor!"
-msgstr "Sizda kutilayotgan to'lov bor!"
+msgstr "Sizda tekshirilayotgan to'lov cheki bor!"
 
 msgid ""
 "Sizga PRO imkoniyatlar faollashtirildi. Biroq, oxirgi yuborgan to'lov "
@@ -959,16 +959,16 @@ msgid "Ortga"
 msgstr "Ortga"
 
 msgid "Tahrirlash"
-msgstr "Xabarlar"
+msgstr "Tahrirlash"
 
 msgid "Tasdiqlangan foydalanuvchi"
 msgstr "Faol foydalanuvchi"
 
 msgid "E'lonlarim"
-msgstr "Ish jarayonlari"
+msgstr "E'lonlarim"
 
 msgid "E'lonlar"
-msgstr "Ish jarayonlari"
+msgstr "E'lonlar"
 
 msgid "Reyting & Statistika"
 msgstr "Reyting & Statistika"
@@ -1024,25 +1024,25 @@ msgid "Xushmuomalalik"
 msgstr "Xushmuomalalik"
 
 msgid "Mijozlar Izohlari"
-msgstr "Ish jarayonlari"
+msgstr "Mijozlar Izohlari"
 
 msgid "Sizning javobingiz"
 msgstr "Sizning javobingiz"
 
 msgid "Hozircha izohlar yo'q."
-msgstr "Hozircha jamoangizda a'zolar yo'q."
+msgstr "Hozircha izohlar yo'q."
 
 msgid "Siz mijozsiz"
 msgstr "Siz mijozsiz"
 
 msgid "Ro'yxatdan olib tashlash"
-msgstr "Ro'yxatdan o'tish →"
+msgstr "Ro'yxatdan olib tashlash"
 
 msgid "Sizga yoqqan e'lonlar hozircha mavjud emas."
 msgstr "Qidiruv shartlariga mos keladigan Quruvchilar hozircha mavjud emas."
 
 msgid "Saqlashni bekor qilish"
-msgstr "Bekor qilish"
+msgstr "Saqlashni bekor qilish"
 
 msgid "Saqlab qo'yilgan e'lonlaringiz hozircha mavjud emas."
 msgstr "Saqlab qo'yilgan e'lonlaringiz hozircha mavjud emas."
@@ -1140,14 +1140,14 @@ msgid "To'lov chekingiz admin tomonidan tekshirilmoqda."
 msgstr "To'lov chekingiz admin tomonidan tekshirilmoqda."
 
 msgid "Tarifni o'zgartirish"
-msgstr "Rejimni o'zgartirish"
+msgstr "Tarifni o'zgartirish"
 
 #, python-format
 msgid "-25%% foyda"
-msgstr "-20%% foyda"
+msgstr "-25% foyda"
 
 msgid "so'm/yil"
-msgstr "so'm/oy"
+msgstr "so'm/yil"
 
 msgid "so'm/oy"
 msgstr "so'm/oy"
@@ -1240,7 +1240,7 @@ msgid "Jamoa nomi"
 msgstr "Profil Sozlamalari"
 
 msgid "Guruhga o'tish"
-msgstr "Rejimni o'zgartirish"
+msgstr "Guruhga o'tish"
 
 msgid "A'zo qo'shish"
 msgstr "A'zo qo'shish"
@@ -1293,13 +1293,11 @@ msgstr "Superadmin Dashboard"
 msgid "Maintenance Mode FAOL"
 msgstr "Maintenance Mode FAOL"
 
-#| msgid "Faol foydalanuvchi"
 msgid "Jami Foydalanuvchilar"
-msgstr "Faol foydalanuvchi"
+msgstr "Jami Foydalanuvchilar"
 
-#| msgid "Ro'yxatdan o'ting"
 msgid "Bugun Ro'yxatdan O'tganlar"
-msgstr "Ro'yxatdan o'ting"
+msgstr "Bugun Ro'yxatdan O'tganlar"
 
 msgid "Faol PRO / VIP Obunachilar"
 msgstr "Faol PRO / VIP Obunachilar"
@@ -1307,13 +1305,11 @@ msgstr "Faol PRO / VIP Obunachilar"
 msgid "Kutilayotgan Cheklar"
 msgstr "Kutilayotgan Cheklar"
 
-#| msgid "Gamifikatsiya"
 msgid "Cheklar & Verifikatsiya"
-msgstr "Gamifikatsiya"
+msgstr "Cheklar & Verifikatsiya"
 
-#| msgid "Foydalanuvchi nomi"
 msgid "Foydalanuvchilar Boshqaruvi"
-msgstr "Foydalanuvchi nomi"
+msgstr "Foydalanuvchilar Boshqaruvi"
 
 msgid "Tizim Sozlamalari & Maintenance"
 msgstr "Tizim Sozlamalari & Maintenance"
@@ -1324,22 +1320,18 @@ msgstr "Trafik & Aktivlik Loglari"
 msgid "Obuna So'rovlari va Cheklar"
 msgstr "Obuna So'rovlari va Cheklar"
 
-#| msgid "Foydalanuvchi nomi"
 msgid "Foydalanuvchi"
 msgstr "Foydalanuvchi nomi"
 
-#| msgid "Tarif paketini tanlang:"
 msgid "Tarif Paketi"
 msgstr "Tarif paketini tanlang:"
 
 msgid "Summa"
 msgstr "Summa"
 
-#| msgid "Yakunlangan"
 msgid "Yuklangan Vaqti"
 msgstr "Tasdiqlangan usta"
 
-#| msgid "Vaqtinchalik kirish faol"
 msgid "Vaqtinchalik PRO"
 msgstr "Vaqtinchalik kirish faol"
 
@@ -1352,23 +1344,21 @@ msgstr "Status"
 msgid "Harakatlar"
 msgstr "Harakatlar"
 
-#| msgid "Rad etildi"
+msgid "Rasmga bosib kattalashtiring"
+msgstr "Rasmga bosib kattalashtiring"
+
 msgid "Rad etilgan"
 msgstr "Rad etildi"
 
-#| msgid "Tasdiqlandi"
 msgid "Tasdiqlash"
 msgstr "Tasdiqlandi"
 
-#| msgid "Rad etildi"
 msgid "Rad etish"
 msgstr "Rad etildi"
 
-#| msgid "Bajarildi"
 msgid "Bajarilgan"
 msgstr "Bajarildi"
 
-#| msgid "Hozircha hech qanday to'lov so'rovi yubormagansiz."
 msgid "Hozircha hech qanday obuna cheklari yuklanmagan."
 msgstr "Hozircha hech qanday to'lov so'rovi yubormagansiz."
 
@@ -1378,34 +1368,24 @@ msgstr "Ism, username yoki email bo"
 msgid "Barcha Rollar"
 msgstr "Barcha Rollar"
 
-#| msgid "Ustalar"
 msgid "Usta"
 msgstr "Faol ustalar"
 
 msgid "Mijoz"
 msgstr "Mijoz"
 
-#| msgid "Kompaniya/Jamoa"
 msgid "Kompaniya"
 msgstr "Kompaniya/Jamoa"
 
-#| msgid "Barcha asosiy funksiyalar"
 msgid "Barcha Obunalar"
 msgstr "Barcha asosiy funksiyalar"
 
-#| msgid "Saqlanganlar"
 msgid "Bloklanganlar"
 msgstr "Saqlanganlar"
 
-#| msgid "Saqlash"
-msgid "Saralash"
-msgstr "Saqlash"
-
-#| msgid "Roli:"
 msgid "Rol"
 msgstr "Roli:"
 
-#| msgid "Ro'yxatdan o'ting"
 msgid "Ro'yxatdan O'tgan Sana"
 msgstr "Ro'yxatdan o'ting"
 
@@ -1418,15 +1398,19 @@ msgstr "Hisob Holati"
 msgid "Admin Boshqaruvi"
 msgstr "Admin Boshqaruvi"
 
-#| msgid "✓ Faol"
 msgid "Faol"
 msgstr "✓ Faol"
 
-#| msgid "Yakunlangan"
 msgid "Bloklangan"
 msgstr "Tasdiqlangan usta"
 
-#| msgid "Taklif foydalanuvchi chatiga yuborildi!"
+msgid "Bloklash"
+msgstr "Bloklash"
+
+#| msgid "Kirish"
+msgid "Chiqarish"
+msgstr "Kirish"
+
 msgid "Mos keluvchi foydalanuvchilar topilmadi."
 msgstr "Taklif foydalanuvchi chatiga yuborildi!"
 
@@ -1450,7 +1434,6 @@ msgstr "Maintenance Xabari (Ruscha):"
 msgid "Maintenance Xabari (Inglizcha):"
 msgstr "Maintenance Xabari (Inglizcha):"
 
-#| msgid "Sozlamalarni saqlash"
 msgid "Sozlamalarni Saqlash"
 msgstr "Sozlamalar"
 
@@ -1472,15 +1455,12 @@ msgstr "Vaqt"
 msgid "Mehmon (Guest)"
 msgstr "Mehmon (Guest)"
 
-#| msgid "Hozircha ish jarayonlari mavjud emas"
 msgid "Hozircha trafik loglari mavjud emas."
 msgstr "Hozircha ish jarayonlari mavjud emas"
 
-#| msgid "To'lov chekini yuklang (Screenshot):"
 msgid "To'lov Cheki Skrinshoti"
 msgstr "To'lov chekini yuklang (Screenshot):"
 
-#| msgid "To'lovni tasdiqlash"
 msgid "To'lov Chekini Rad Etish"
 msgstr "To'lovlarni Tasdiqlash Dashbordi"
 
@@ -1492,7 +1472,6 @@ msgstr "Foydalanuvchiga rad etish sababini yozing. Ushbu xabar unga avtomatik bi
 msgid "Masalan: Chekda summa kam yozilgan yoki rasm sifatsiz..."
 msgstr "Masalan: Chekda summa kam yozilgan yoki rasm sifatsiz..."
 
-#| msgid "Tarif tanlash va Tasdiqlash"
 msgid "Tasdiqlash va Rad etish"
 msgstr "Tarif tanlash va Tasdiqlash"
 
@@ -1514,7 +1493,7 @@ msgid ""
 msgstr "Hozircha verifikatsiya qilinishi kerak bo'lgan to'lov screenshotlari yuborilmagan."
 
 msgid "Ish jarayonlari boshqaruv paneli"
-msgstr "Ish jarayonlari"
+msgstr "Ish jarayonlari boshqaruv paneli"
 
 msgid "Roli:"
 msgstr "Roli:"
@@ -1529,31 +1508,31 @@ msgid "Muddat:"
 msgstr "Muddat:"
 
 msgid "Ijrochi Usta:"
-msgstr "Quruvchi (Usta)"
+msgstr "Ijrochi Usta:"
 
 msgid "Buyurtmachi Mijoz:"
-msgstr "Buyurtmachi (Mijoz)"
+msgstr "Buyurtmachi Mijoz:"
 
 msgid "Usta biriktirilmagan"
 msgstr "Usta biriktirilmagan"
 
 msgid "Takliflar"
-msgstr "Taklif"
+msgstr "Takliflar"
 
 msgid "Ishni topshirish"
 msgstr "Ishni topshirish"
 
 msgid "Ishni qabul qilish"
-msgstr "Bekor qilish"
+msgstr "Ishni qabul qilish"
 
 msgid "Baho berish"
-msgstr "Yetkazib berish"
+msgstr "Baho berish"
 
 msgid "Yakunlangan"
-msgstr "Tasdiqlangan usta"
+msgstr "Yakunlangan"
 
 msgid "Bosqich kutilmoqda"
-msgstr "Tasdiqlanish kutilmoqda"
+msgstr "Bosqich kutilmoqda"
 
 msgid "Hozircha ish jarayonlari mavjud emas"
 msgstr "Hozircha ish jarayonlari mavjud emas"
@@ -1621,13 +1600,13 @@ msgid "A'zolar ro'yxati"
 msgstr "A'zolar ro'yxati"
 
 msgid "Nomni o'zgartirish"
-msgstr "Rejimni o'zgartirish"
+msgstr "Nomni o'zgartirish"
 
 msgid "Guruhni tark etish"
-msgstr "Rejimni o'zgartirish"
+msgstr "Guruhni tark etish"
 
 msgid "Foydalanuvchi Ma'lumotlari"
-msgstr "Foydalanuvchi nomi"
+msgstr "Foydalanuvchi Ma'lumotlari"
 
 msgid "Media (Rasm / Video)"
 msgstr "Media (Rasm / Video)"
@@ -1639,13 +1618,10 @@ msgid "Ovozli xabarlar"
 msgstr "Xabarlar"
 
 msgid "Xabar yozish"
-msgstr "Xabarlar"
+msgstr "Xabar yozish"
 
 msgid "Bloklash funksiyasi tez kunda!"
 msgstr "Bloklash funksiyasi tez kunda!"
-
-msgid "Bloklash"
-msgstr "Bloklash"
 
 msgid "Guruh nomini o'zgartirish"
 msgstr "Rejimni o'zgartirish"
@@ -1666,10 +1642,10 @@ msgid "24 soatlik tekshiruvda"
 msgstr "24 soatlik tekshiruvda"
 
 msgid "To'lov rad etilgan"
-msgstr "To'lovlarni Tasdiqlash Dashbordi"
+msgstr "To'lov rad etilgan"
 
 msgid "To'lov tekshirilmoqda"
-msgstr "Tekshirilmoqda..."
+msgstr "To'lov tekshirilmoqda"
 
 msgid "kuting..."
 msgstr "kuting..."
@@ -1710,13 +1686,15 @@ msgstr "Texnik Tanaffus — EasyBuild"
 msgid "Profilaktika ishlari ketmoqda"
 msgstr "Profilaktika ishlari ketmoqda"
 
-#| msgid "Texnika ijarasi"
 msgid "Texnik Tanaffus"
-msgstr "Texnika ijarasi"
+msgstr "Texnik Tanaffus"
 
-#| msgid "Parolni yangilash"
 msgid "Sahifani Yangilash"
-msgstr "Parolni yangilash"
+msgstr "Sahifani Yangilash"
+
+#~| msgid "Saqlash"
+#~ msgid "Saralash"
+#~ msgstr "Saqlash"
 
 #~ msgid ""
 #~ "Siz yuborgan chek hozirda admin tomonidan tekshirilmoqda. Iltimos, u "

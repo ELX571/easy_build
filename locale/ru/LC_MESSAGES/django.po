@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 10:48+0500\n"
+"POT-Creation-Date: 2026-07-23 11:02+0500\n"
 "Language: ru\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1315,11 +1315,9 @@ msgstr "Панель суперадмина"
 msgid "Maintenance Mode FAOL"
 msgstr "Maintenance Mode FAOL"
 
-#| msgid "Faol foydalanuvchi"
 msgid "Jami Foydalanuvchilar"
 msgstr "Всего пользователей"
 
-#| msgid "Ro'yxatdan o'ting"
 msgid "Bugun Ro'yxatdan O'tganlar"
 msgstr "Зарегистрировано сегодня"
 
@@ -1329,11 +1327,9 @@ msgstr "Активные PRO / VIP подписчики"
 msgid "Kutilayotgan Cheklar"
 msgstr "Ожидающие чеки"
 
-#| msgid "Gamifikatsiya"
 msgid "Cheklar & Verifikatsiya"
 msgstr "Чеки и верификация"
 
-#| msgid "Foydalanuvchi nomi"
 msgid "Foydalanuvchilar Boshqaruvi"
 msgstr "Управление пользователями"
 
@@ -1346,22 +1342,18 @@ msgstr "Логи трафика и активности"
 msgid "Obuna So'rovlari va Cheklar"
 msgstr "Obuna So'rovlari va Cheklar"
 
-#| msgid "Foydalanuvchi nomi"
 msgid "Foydalanuvchi"
 msgstr "Имя пользователя"
 
-#| msgid "Tarif paketini tanlang:"
 msgid "Tarif Paketi"
 msgstr "Выберите тарифный пакет:"
 
 msgid "Summa"
 msgstr "Summa"
 
-#| msgid "Yakunlangan"
 msgid "Yuklangan Vaqti"
 msgstr "Завершено"
 
-#| msgid "Vaqtinchalik kirish faol"
 msgid "Vaqtinchalik PRO"
 msgstr "Временный доступ активен"
 
@@ -1374,62 +1366,49 @@ msgstr "Status"
 msgid "Harakatlar"
 msgstr "Harakatlar"
 
-#| msgid "Rad etildi"
+msgid "Rasmga bosib kattalashtiring"
+msgstr "Rasmga bosib kattalashtiring"
+
 msgid "Rad etilgan"
 msgstr "Приглашение отклонено!"
 
 msgid "Tasdiqlash"
 msgstr "Подтвердить"
 
-#| msgid "Rad etildi"
 msgid "Rad etish"
 msgstr "Приглашение отклонено!"
 
-#| msgid "Bajarildi"
 msgid "Bajarilgan"
 msgstr "Выполнено"
 
-#| msgid "Hozircha hech qanday to'lov so'rovi yubormagansiz."
 msgid "Hozircha hech qanday obuna cheklari yuklanmagan."
 msgstr "Вы еще не отправляли запросов на оплату."
 
 # Modals
-#| msgid "Ism, username yoki telefon..."
 msgid "Ism, username yoki email bo\\"
 msgstr "Имя, имя пользователя или телефон..."
 
 msgid "Barcha Rollar"
 msgstr "Barcha Rollar"
 
-#| msgid "Ustalar"
 msgid "Usta"
 msgstr "Мастера"
 
-#| msgid "Mijozlar"
 msgid "Mijoz"
 msgstr "Клиенты"
 
-#| msgid "Kompaniya/Jamoa"
 msgid "Kompaniya"
 msgstr "Компания/Команда"
 
-#| msgid "Barcha asosiy funksiyalar"
 msgid "Barcha Obunalar"
 msgstr "Все мастера"
 
-#| msgid "Saqlanganlar"
 msgid "Bloklanganlar"
 msgstr "Проверенный мастер"
 
-#| msgid "Saqlash"
-msgid "Saralash"
-msgstr "Сохранить"
-
-#| msgid "Roli:"
 msgid "Rol"
 msgstr "Роль:"
 
-#| msgid "Ro'yxatdan o'ting"
 msgid "Ro'yxatdan O'tgan Sana"
 msgstr "Регистрация"
 
@@ -1442,15 +1421,20 @@ msgstr "Hisob Holati"
 msgid "Admin Boshqaruvi"
 msgstr "Admin Boshqaruvi"
 
-#| msgid "✓ Faol"
 msgid "Faol"
 msgstr "✓ Активный"
 
-#| msgid "Yakunlangan"
 msgid "Bloklangan"
 msgstr "Завершено"
 
-#| msgid "Taklif foydalanuvchi chatiga yuborildi!"
+msgid "Bloklash"
+msgstr "Заблокировать"
+
+# Auth
+#| msgid "Kirish"
+msgid "Chiqarish"
+msgstr "Войти"
+
 msgid "Mos keluvchi foydalanuvchilar topilmadi."
 msgstr "Приглашение отправлено в чат пользователя!"
 
@@ -1474,7 +1458,6 @@ msgstr "Maintenance Xabari (Ruscha):"
 msgid "Maintenance Xabari (Inglizcha):"
 msgstr "Maintenance Xabari (Inglizcha):"
 
-#| msgid "Sozlamalarni saqlash"
 msgid "Sozlamalarni Saqlash"
 msgstr "Сохранить изменения"
 
@@ -1496,15 +1479,12 @@ msgstr "Vaqt"
 msgid "Mehmon (Guest)"
 msgstr "Mehmon (Guest)"
 
-#| msgid "Hozircha ish jarayonlari mavjud emas"
 msgid "Hozircha trafik loglari mavjud emas."
 msgstr "На данный момент нет доступных рабочих процессов"
 
-#| msgid "To'lov chekini yuklang (Screenshot):"
 msgid "To'lov Cheki Skrinshoti"
 msgstr "Загрузите чек оплаты (Скриншот):"
 
-#| msgid "To'lovni tasdiqlash"
 msgid "To'lov Chekini Rad Etish"
 msgstr "Подтвердить оплату"
 
@@ -1516,7 +1496,6 @@ msgstr "Foydalanuvchiga rad etish sababini yozing. Ushbu xabar unga avtomatik bi
 msgid "Masalan: Chekda summa kam yozilgan yoki rasm sifatsiz..."
 msgstr "Masalan: Chekda summa kam yozilgan yoki rasm sifatsiz..."
 
-#| msgid "Tarif tanlash va Tasdiqlash"
 msgid "Tasdiqlash va Rad etish"
 msgstr "Выбор тарифа и Подтверждение"
 
@@ -1670,9 +1649,6 @@ msgstr "Написать сообщение"
 msgid "Bloklash funksiyasi tez kunda!"
 msgstr "Функция блокировки скоро будет доступна!"
 
-msgid "Bloklash"
-msgstr "Заблокировать"
-
 msgid "Guruh nomini o'zgartirish"
 msgstr "Сменить язык"
 
@@ -1737,13 +1713,15 @@ msgstr "Технический перерыв — EasyBuild"
 msgid "Profilaktika ishlari ketmoqda"
 msgstr "Ведутся профилактические работы"
 
-#| msgid "Texnika ijarasi"
 msgid "Texnik Tanaffus"
 msgstr "Технический перерыв"
 
-#| msgid "Parolni yangilash"
 msgid "Sahifani Yangilash"
 msgstr "Обновить страницу"
+
+#~| msgid "Saqlash"
+#~ msgid "Saralash"
+#~ msgstr "Сохранить"
 
 #~ msgid ""
 #~ "Siz yuborgan chek hozirda admin tomonidan tekshirilmoqda. Iltimos, u "
