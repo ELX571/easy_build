@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 11:02+0500\n"
+"POT-Creation-Date: 2026-07-23 11:06+0500\n"
 "Language: en\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -238,7 +238,7 @@ msgstr "English"
 msgid "Easy Build"
 msgstr "EasyBuild Premium"
 
-msgid "EasyBuild"
+msgid "EasyBuild Premium"
 msgstr "EasyBuild Premium"
 
 msgid "Qurilish loyihangizni boshqaring"
@@ -249,17 +249,19 @@ msgid ""
 "Ro'yxatdan o'ting va bugun boshlang."
 msgstr "We have brought together the best masters and clients on one platform. Register and start today."
 
-msgid "Faol foydalanuvchi"
-msgstr "Username"
+msgid "Faol ustalar"
+msgstr "Active craftsmen"
 
-msgid "Tugallangan loyiha"
-msgstr "Namangan Region"
+#| msgid "Muvaffaqiyatli kirdingiz!"
+msgid "Muvaffaqiyatli loyihalar"
+msgstr "Completed projects"
 
-msgid "Xush kelibsiz! 👋"
-msgstr "Welcome to the chat"
+#| msgid "Xush kelibsiz! 👋"
+msgid "Xush kelibsiz!"
+msgstr "Welcome!"
 
 msgid "Hisobingizga kiring va davom eting"
-msgstr "Log in to your account and continue"
+msgstr "Sign in to your account and continue"
 
 msgid "Google bilan kirish"
 msgstr "Sign in with Google"
@@ -267,14 +269,15 @@ msgstr "Sign in with Google"
 msgid "yoki"
 msgstr "or"
 
-msgid "Foydalanuvchi nomi yoki Email"
-msgstr "Username or link"
+#| msgid "Foydalanuvchi nomi"
+msgid "Email yoki foydalanuvchi nomi"
+msgstr "Email or username"
 
 msgid "Email yoki username kiriting"
 msgstr "Enter Email or username"
 
 msgid "Parolni kiriting"
-msgstr "Repeat Password"
+msgstr "Enter your password"
 
 msgid "Parolni unutdingizmi?"
 msgstr "Forgot password?"
@@ -294,6 +297,9 @@ msgstr "Success"
 
 msgid "Serverga ulanib bo'lmadi."
 msgstr "Could not connect to the server."
+
+msgid "EasyBuild"
+msgstr "EasyBuild Premium"
 
 msgid "Qurilish platformasiga qo'shiling"
 msgstr "Join the build platform"
@@ -552,9 +558,6 @@ msgstr "Good"
 
 msgid "Qidirish"
 msgstr "Search"
-
-msgid "EasyBuild Premium"
-msgstr "EasyBuild Premium"
 
 msgid "Tasdiqlangan"
 msgstr "Verified builder"
@@ -962,9 +965,6 @@ msgstr "Email (Optional)"
 
 msgid "Jami e'lonlar"
 msgstr "Neon framed listings"
-
-msgid "Faol ustalar"
-msgstr "Builders"
 
 msgid "Ortga"
 msgstr "Back"
@@ -1426,7 +1426,6 @@ msgid "Bloklash"
 msgstr "Block"
 
 # Auth pages
-#| msgid "Kirish"
 msgid "Chiqarish"
 msgstr "Sign In"
 
@@ -1713,6 +1712,15 @@ msgstr "Technical Maintenance"
 
 msgid "Sahifani Yangilash"
 msgstr "Refresh Page"
+
+#~ msgid "Faol foydalanuvchi"
+#~ msgstr "Username"
+
+#~ msgid "Tugallangan loyiha"
+#~ msgstr "Namangan Region"
+
+#~ msgid "Foydalanuvchi nomi yoki Email"
+#~ msgstr "Username or link"
 
 #~| msgid "Saqlash"
 #~ msgid "Saralash"

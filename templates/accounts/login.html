@@ -346,15 +346,15 @@
     <div class="branding">
         <div class="brand-logo">
             <div class="brand-logo-icon"><i class="fa-solid fa-layer-group"></i></div>
-            <span>{% trans "EasyBuild" %}</span>
+            <span>{% trans "EasyBuild Premium" %}</span>
         </div>
         <div class="brand-body">
             <h2>{% trans "Qurilish loyihangizni boshqaring" %}</h2>
             <p>{% trans "Eng yaxshi ustalar va buyurtmachilarni bir platformada birlashtirdik. Ro'yxatdan o'ting va bugun boshlang." %}</p>
         </div>
         <div class="brand-stats">
-            <div class="stat"><div class="num">1,200+</div><div class="lbl">{% trans "Faol foydalanuvchi" %}</div></div>
-            <div class="stat"><div class="num">500+</div><div class="lbl">{% trans "Tugallangan loyiha" %}</div></div>
+            <div class="stat"><div class="num">1,200+</div><div class="lbl">{% trans "Faol ustalar" %}</div></div>
+            <div class="stat"><div class="num">500+</div><div class="lbl">{% trans "Muvaffaqiyatli loyihalar" %}</div></div>
         </div>
     </div>
 
@@ -366,7 +366,7 @@
         </button>
 
         <div class="form-header">
-            <h1>{% trans "Xush kelibsiz! 👋" %}</h1>
+            <h1>{% trans "Xush kelibsiz!" %}</h1>
             <p>{% trans "Hisobingizga kiring va davom eting" %}</p>
         </div>
 
@@ -384,7 +384,7 @@
             {% csrf_token %}
 
             <div class="form-group">
-                <label for="username">{% trans "Foydalanuvchi nomi yoki Email" %}</label>
+                <label for="username">{% trans "Email yoki foydalanuvchi nomi" %}</label>
                 <div class="input-wrap">
                     <i class="fa-regular fa-user input-icon"></i>
                     <input type="text" id="username" name="username" placeholder="{% trans 'Email yoki username kiriting' %}" required autocomplete="username">

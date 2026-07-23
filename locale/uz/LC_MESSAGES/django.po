@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 11:02+0500\n"
+"POT-Creation-Date: 2026-07-23 11:06+0500\n"
 "PO-Revision-Date: 2026-06-23 10:00+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Uzbek <uz@li.org>\n"
@@ -238,8 +238,8 @@ msgstr "English"
 msgid "Easy Build"
 msgstr "Easy Build"
 
-msgid "EasyBuild"
-msgstr "EasyBuild"
+msgid "EasyBuild Premium"
+msgstr "EasyBuild Premium"
 
 msgid "Qurilish loyihangizni boshqaring"
 msgstr "Qurilish loyihangizni boshqaring"
@@ -249,14 +249,16 @@ msgid ""
 "Ro'yxatdan o'ting va bugun boshlang."
 msgstr "Eng yaxshi ustalar va buyurtmachilarni bir platformada birlashtirdik. Ro'yxatdan o'ting va bugun boshlang."
 
-msgid "Faol foydalanuvchi"
-msgstr "Faol foydalanuvchi"
+msgid "Faol ustalar"
+msgstr "Faol ustalar"
 
-msgid "Tugallangan loyiha"
-msgstr "Tugallangan loyiha"
+#| msgid "Muvaffaqiyatli kirdingiz!"
+msgid "Muvaffaqiyatli loyihalar"
+msgstr "Muvaffaqiyatli loyihalar"
 
-msgid "Xush kelibsiz! 👋"
-msgstr "Xush kelibsiz! 👋"
+#| msgid "Xush kelibsiz! 👋"
+msgid "Xush kelibsiz!"
+msgstr "Xush kelibsiz!"
 
 msgid "Hisobingizga kiring va davom eting"
 msgstr "Hisobingizga kiring va davom eting"
@@ -267,8 +269,9 @@ msgstr "Google bilan kirish"
 msgid "yoki"
 msgstr "yoki"
 
-msgid "Foydalanuvchi nomi yoki Email"
-msgstr "Foydalanuvchi nomi yoki Email"
+#| msgid "Foydalanuvchi nomi"
+msgid "Email yoki foydalanuvchi nomi"
+msgstr "Email yoki foydalanuvchi nomi"
 
 msgid "Email yoki username kiriting"
 msgstr "Email yoki username kiriting"
@@ -293,6 +296,9 @@ msgstr "Muvaffaqiyatli kirdingiz!"
 
 msgid "Serverga ulanib bo'lmadi."
 msgstr "Serverga ulanib bo'lmadi."
+
+msgid "EasyBuild"
+msgstr "EasyBuild"
 
 msgid "Qurilish platformasiga qo'shiling"
 msgstr "Qurilish platformasiga qo'shiling"
@@ -549,9 +555,6 @@ msgstr "Yaxshi"
 
 msgid "Qidirish"
 msgstr "Qidirish"
-
-msgid "EasyBuild Premium"
-msgstr "EasyBuild Premium"
 
 msgid "Tasdiqlangan"
 msgstr "Tasdiqlangan usta"
@@ -951,9 +954,6 @@ msgstr "Email manzil (ixtiyoriy)"
 
 msgid "Jami e'lonlar"
 msgstr "Ish jarayonlari"
-
-msgid "Faol ustalar"
-msgstr "Faol ustalar"
 
 msgid "Ortga"
 msgstr "Ortga"
@@ -1407,7 +1407,6 @@ msgstr "Tasdiqlangan usta"
 msgid "Bloklash"
 msgstr "Bloklash"
 
-#| msgid "Kirish"
 msgid "Chiqarish"
 msgstr "Kirish"
 
@@ -1691,6 +1690,15 @@ msgstr "Texnik Tanaffus"
 
 msgid "Sahifani Yangilash"
 msgstr "Sahifani Yangilash"
+
+#~ msgid "Faol foydalanuvchi"
+#~ msgstr "Faol foydalanuvchi"
+
+#~ msgid "Tugallangan loyiha"
+#~ msgstr "Tugallangan loyiha"
+
+#~ msgid "Foydalanuvchi nomi yoki Email"
+#~ msgstr "Foydalanuvchi nomi yoki Email"
 
 #~| msgid "Saqlash"
 #~ msgid "Saralash"

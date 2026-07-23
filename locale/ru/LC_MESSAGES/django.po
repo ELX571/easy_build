@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 11:02+0500\n"
+"POT-Creation-Date: 2026-07-23 11:06+0500\n"
 "Language: ru\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -238,7 +238,7 @@ msgstr "English"
 msgid "Easy Build"
 msgstr "EasyBuild Premium"
 
-msgid "EasyBuild"
+msgid "EasyBuild Premium"
 msgstr "EasyBuild Premium"
 
 msgid "Qurilish loyihangizni boshqaring"
@@ -249,14 +249,16 @@ msgid ""
 "Ro'yxatdan o'ting va bugun boshlang."
 msgstr "Мы объединили лучших мастеров и заказчиков на одной платформе. Зарегистрируйтесь и начните сегодня."
 
-msgid "Faol foydalanuvchi"
-msgstr "Имя пользователя"
+msgid "Faol ustalar"
+msgstr "Активных мастеров"
 
-msgid "Tugallangan loyiha"
-msgstr "Наманганская область"
+#| msgid "Muvaffaqiyatli kirdingiz!"
+msgid "Muvaffaqiyatli loyihalar"
+msgstr "Завершенных проектов"
 
-msgid "Xush kelibsiz! 👋"
-msgstr "Добро пожаловать в чат"
+#| msgid "Xush kelibsiz! 👋"
+msgid "Xush kelibsiz!"
+msgstr "Добро пожаловать!"
 
 msgid "Hisobingizga kiring va davom eting"
 msgstr "Войдите в свою учетную запись и продолжайте"
@@ -267,14 +269,15 @@ msgstr "Войти через Google"
 msgid "yoki"
 msgstr "или"
 
-msgid "Foydalanuvchi nomi yoki Email"
-msgstr "Имя пользователя или ссылка"
+#| msgid "Foydalanuvchi nomi"
+msgid "Email yoki foydalanuvchi nomi"
+msgstr "Email или имя пользователя"
 
 msgid "Email yoki username kiriting"
 msgstr "Введите Email или имя пользователя"
 
 msgid "Parolni kiriting"
-msgstr "Повторите пароль"
+msgstr "Введите ваш пароль"
 
 msgid "Parolni unutdingizmi?"
 msgstr "Забыли пароль?"
@@ -294,6 +297,9 @@ msgstr "Успешно"
 
 msgid "Serverga ulanib bo'lmadi."
 msgstr "Не удалось подключиться к серверу."
+
+msgid "EasyBuild"
+msgstr "EasyBuild Premium"
 
 msgid "Qurilish platformasiga qo'shiling"
 msgstr "Присоединяйтесь к платформе сборки"
@@ -555,9 +561,6 @@ msgstr "Хороший"
 
 msgid "Qidirish"
 msgstr "Поиск"
-
-msgid "EasyBuild Premium"
-msgstr "EasyBuild Premium"
 
 msgid "Tasdiqlangan"
 msgstr "Проверенный мастер"
@@ -965,9 +968,6 @@ msgstr "Email (необязательно)"
 
 msgid "Jami e'lonlar"
 msgstr "Объявления с неоновой рамкой"
-
-msgid "Faol ustalar"
-msgstr "Мастера"
 
 msgid "Ortga"
 msgstr "Назад"
@@ -1431,7 +1431,6 @@ msgid "Bloklash"
 msgstr "Заблокировать"
 
 # Auth
-#| msgid "Kirish"
 msgid "Chiqarish"
 msgstr "Войти"
 
@@ -1718,6 +1717,15 @@ msgstr "Технический перерыв"
 
 msgid "Sahifani Yangilash"
 msgstr "Обновить страницу"
+
+#~ msgid "Faol foydalanuvchi"
+#~ msgstr "Имя пользователя"
+
+#~ msgid "Tugallangan loyiha"
+#~ msgstr "Наманганская область"
+
+#~ msgid "Foydalanuvchi nomi yoki Email"
+#~ msgstr "Имя пользователя или ссылка"
 
 #~| msgid "Saqlash"
 #~ msgid "Saralash"
