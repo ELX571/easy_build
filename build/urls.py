@@ -54,6 +54,12 @@ urlpatterns = [
     path('verification/chat/<int:user_id>/', views.chat_room_redirect, name='chat_room_redirect'),
     path('payment-dashboard/', views.payment_dashboard, name='payment_dashboard'),
 
+    # ── Superadmin Dashboard ───────────────────────────────────────────────────
+    path('superadmin/', views.superadmin_dashboard, name='superadmin_dashboard'),
+    path('superadmin/request/<int:request_id>/<str:action>/', views.superadmin_process_request, name='superadmin_process_request'),
+    path('superadmin/user/<int:user_id>/<str:action>/', views.superadmin_manage_user, name='superadmin_manage_user'),
+    path('superadmin/maintenance/', views.superadmin_toggle_maintenance, name='superadmin_toggle_maintenance'),
+
     # ── Subscription API ───────────────────────────────────────────────────────
     path('api/order/<int:order_id>/bid/', PlaceBidAPIView.as_view(), name='api_place_bid'),
     path('api/admin/grant-pro/<int:user_id>/', GrantProStatusAPIView.as_view(), name='api_grant_pro'),

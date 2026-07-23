@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 10:38+0500\n"
+"POT-Creation-Date: 2026-07-23 10:48+0500\n"
 "Language: en\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -819,7 +819,6 @@ msgstr "Toggle theme"
 msgid "To'lovni tasdiqlash"
 msgstr "Confirm payment"
 
-#| msgid "Sizda kutilayotgan to'lov bor!"
 msgid "Sizda tekshirilayotgan to'lov cheki bor!"
 msgstr "You have a payment receipt under review!"
 
@@ -1301,6 +1300,222 @@ msgstr "Search..."
 msgid "Taklif"
 msgstr "Invite"
 
+msgid "Superadmin Dashboard — EasyBuild"
+msgstr "Superadmin Dashboard — EasyBuild"
+
+# Dashboard
+#| msgid "Dashboard"
+msgid "Superadmin Dashboard"
+msgstr "Superadmin Dashboard"
+
+msgid "Maintenance Mode FAOL"
+msgstr "Maintenance Mode FAOL"
+
+#| msgid "Faol foydalanuvchi"
+msgid "Jami Foydalanuvchilar"
+msgstr "Total Users"
+
+#| msgid "Ro'yxatdan o'ting"
+msgid "Bugun Ro'yxatdan O'tganlar"
+msgstr "Registered Today"
+
+msgid "Faol PRO / VIP Obunachilar"
+msgstr "Active PRO / VIP Subscribers"
+
+msgid "Kutilayotgan Cheklar"
+msgstr "Pending Receipts"
+
+#| msgid "Gamifikatsiya"
+msgid "Cheklar & Verifikatsiya"
+msgstr "Receipts & Verification"
+
+#| msgid "Foydalanuvchi nomi"
+msgid "Foydalanuvchilar Boshqaruvi"
+msgstr "User Management"
+
+msgid "Tizim Sozlamalari & Maintenance"
+msgstr "System Settings & Maintenance"
+
+msgid "Trafik & Aktivlik Loglari"
+msgstr "Traffic & Activity Logs"
+
+msgid "Obuna So'rovlari va Cheklar"
+msgstr "Obuna So'rovlari va Cheklar"
+
+#| msgid "Foydalanuvchi nomi"
+msgid "Foydalanuvchi"
+msgstr "Username"
+
+#| msgid "Tarif paketini tanlang:"
+msgid "Tarif Paketi"
+msgstr "Select a subscription plan:"
+
+msgid "Summa"
+msgstr "Summa"
+
+#| msgid "Yakunlangan"
+msgid "Yuklangan Vaqti"
+msgstr "Completed"
+
+#| msgid "Vaqtinchalik kirish faol"
+msgid "Vaqtinchalik PRO"
+msgstr "Temporary access active"
+
+msgid "Chek Skrinshoti"
+msgstr "Chek Skrinshoti"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Harakatlar"
+msgstr "Harakatlar"
+
+#| msgid "Rad etildi"
+msgid "Rad etilgan"
+msgstr "Invitation rejected!"
+
+msgid "Tasdiqlash"
+msgstr "Confirm"
+
+#| msgid "Rad etildi"
+msgid "Rad etish"
+msgstr "Invitation rejected!"
+
+#| msgid "Bajarildi"
+msgid "Bajarilgan"
+msgstr "Completed"
+
+#| msgid "Hozircha hech qanday to'lov so'rovi yubormagansiz."
+msgid "Hozircha hech qanday obuna cheklari yuklanmagan."
+msgstr "You have not submitted any payment requests yet."
+
+# Modals
+#| msgid "Ism, username yoki telefon..."
+msgid "Ism, username yoki email bo\\"
+msgstr "Name, username or phone..."
+
+msgid "Barcha Rollar"
+msgstr "Barcha Rollar"
+
+#| msgid "Ustalar"
+msgid "Usta"
+msgstr "Builders"
+
+#| msgid "Mijozlar"
+msgid "Mijoz"
+msgstr "Clients"
+
+#| msgid "Kompaniya/Jamoa"
+msgid "Kompaniya"
+msgstr "Company/Team"
+
+#| msgid "Barcha asosiy funksiyalar"
+msgid "Barcha Obunalar"
+msgstr "All Builders"
+
+#| msgid "Saqlanganlar"
+msgid "Bloklanganlar"
+msgstr "Verified builder"
+
+#| msgid "Saqlash"
+msgid "Saralash"
+msgstr "Save"
+
+#| msgid "Roli:"
+msgid "Rol"
+msgstr "Role:"
+
+#| msgid "Ro'yxatdan o'ting"
+msgid "Ro'yxatdan O'tgan Sana"
+msgstr "Sign Up"
+
+msgid "Obuna Statusi"
+msgstr "Obuna Statusi"
+
+msgid "Hisob Holati"
+msgstr "Hisob Holati"
+
+msgid "Admin Boshqaruvi"
+msgstr "Admin Boshqaruvi"
+
+#| msgid "✓ Faol"
+msgid "Faol"
+msgstr "✓ Active"
+
+#| msgid "Yakunlangan"
+msgid "Bloklangan"
+msgstr "Completed"
+
+#| msgid "Taklif foydalanuvchi chatiga yuborildi!"
+msgid "Mos keluvchi foydalanuvchilar topilmadi."
+msgstr "Invitation sent to user's chat!"
+
+msgid "Tizim Sozlamalari & Maintenance Mode"
+msgstr "Tizim Sozlamalari & Maintenance Mode"
+
+msgid "Maintenance Mode (Texnik Tanaffus Rejimi)"
+msgstr "Maintenance Mode"
+
+msgid ""
+"Ushbu switch yoqilganda oddiy foydalanuvchilar uchun sayt bloklanadi va "
+"Maintenance sahifasi ko'rsatiladi."
+msgstr "Ushbu switch yoqilganda oddiy foydalanuvchilar uchun sayt bloklanadi va Maintenance sahifasi ko'rsatiladi."
+
+msgid "Maintenance Xabari (Uzbekcha):"
+msgstr "Maintenance Xabari (Uzbekcha):"
+
+msgid "Maintenance Xabari (Ruscha):"
+msgstr "Maintenance Xabari (Ruscha):"
+
+msgid "Maintenance Xabari (Inglizcha):"
+msgstr "Maintenance Xabari (Inglizcha):"
+
+#| msgid "Sozlamalarni saqlash"
+msgid "Sozlamalarni Saqlash"
+msgstr "Save Changes"
+
+msgid "Real-time Trafik va Aktivlik Loglari"
+msgstr "Real-time Trafik va Aktivlik Loglari"
+
+msgid "IP Manzil"
+msgstr "IP Manzil"
+
+msgid "Method & Path"
+msgstr "Method & Path"
+
+msgid "Status Code"
+msgstr "Status Code"
+
+msgid "Vaqt"
+msgstr "Vaqt"
+
+msgid "Mehmon (Guest)"
+msgstr "Mehmon (Guest)"
+
+#| msgid "Hozircha ish jarayonlari mavjud emas"
+msgid "Hozircha trafik loglari mavjud emas."
+msgstr "There are currently no workflows available"
+
+#| msgid "To'lov chekini yuklang (Screenshot):"
+msgid "To'lov Cheki Skrinshoti"
+msgstr "Upload payment receipt (Screenshot):"
+
+#| msgid "To'lovni tasdiqlash"
+msgid "To'lov Chekini Rad Etish"
+msgstr "Confirm payment"
+
+msgid ""
+"Foydalanuvchiga rad etish sababini yozing. Ushbu xabar unga avtomatik "
+"bildirishnoma va chat orqali yuboriladi."
+msgstr "Foydalanuvchiga rad etish sababini yozing. Ushbu xabar unga avtomatik bildirishnoma va chat orqali yuboriladi."
+
+msgid "Masalan: Chekda summa kam yozilgan yoki rasm sifatsiz..."
+msgstr "Masalan: Chekda summa kam yozilgan yoki rasm sifatsiz..."
+
+#| msgid "Tarif tanlash va Tasdiqlash"
+msgid "Tasdiqlash va Rad etish"
+msgstr "Plan Selection & Confirmation"
+
 msgid "To'lovlarni Tasdiqlash Dashbordi"
 msgstr "Payment Confirmation Dashboard"
 
@@ -1511,6 +1726,20 @@ msgstr "Ulashish"
 
 msgid "Yangi suhbat"
 msgstr "Edit"
+
+msgid "Texnik Tanaffus — EasyBuild"
+msgstr "Technical Maintenance — EasyBuild"
+
+msgid "Profilaktika ishlari ketmoqda"
+msgstr "Maintenance in progress"
+
+#| msgid "Texnika ijarasi"
+msgid "Texnik Tanaffus"
+msgstr "Technical Maintenance"
+
+#| msgid "Parolni yangilash"
+msgid "Sahifani Yangilash"
+msgstr "Refresh Page"
 
 #~ msgid ""
 #~ "Siz yuborgan chek hozirda admin tomonidan tekshirilmoqda. Iltimos, u "
@@ -1740,18 +1969,11 @@ msgstr "Edit"
 #~ msgid "Ma'lumot (Bio):"
 #~ msgstr "About (Bio):"
 
-#~ msgid "Mijozlar"
-#~ msgstr "Clients"
-
 #~ msgid "Like"
 #~ msgstr "Like"
 
 #~ msgid "Ko'proq ko'rish"
 #~ msgstr "See More"
-
-# Dashboard
-#~ msgid "Dashboard"
-#~ msgstr "Dashboard"
 
 #~ msgid "Yangi e'lon"
 #~ msgstr "New Listing"
@@ -1794,9 +2016,6 @@ msgstr "Edit"
 
 #~ msgid "Joriy reja"
 #~ msgstr "Current Plan"
-
-#~ msgid "Tasdiqlash"
-#~ msgstr "Confirm"
 
 #~ msgid "Ha"
 #~ msgstr "Yes"
@@ -1865,10 +2084,6 @@ msgstr "Edit"
 #~ "Siz 2 tagacha jamoaga a'zo bo'lishingiz yoki o'z jamoangizni "
 #~ "yaratishingiz mumkin."
 #~ msgstr "You can join up to 2 teams or create your own."
-
-# Modals
-#~ msgid "Ism, username yoki telefon..."
-#~ msgstr "Name, username or phone..."
 
 #~ msgid "Ha, o'chirish"
 #~ msgstr "Yes, remove"

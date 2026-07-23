@@ -1,0 +1,822 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block title %}{% trans "Superadmin Dashboard — EasyBuild" %}{% endblock %}
+
+{% block content %}
+<style>
+    :root {
+        --sa-bg: #0a0a0f;
+        --sa-card-bg: #12121a;
+        --sa-card-hover: #181824;
+        --sa-border: rgba(255, 255, 255, 0.08);
+        --sa-orange: #ff6b00;
+        --sa-orange-glow: rgba(255, 107, 0, 0.25);
+        --sa-text: #f8fafc;
+        --sa-muted: #94a3b8;
+    }
+
+    body {
+        background-color: var(--sa-bg) !important;
+        color: var(--sa-text);
+    }
+
+    .sa-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem 4rem;
+    }
+
+    /* Header */
+    .sa-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+        background: var(--sa-card-bg);
+        border: 1px solid var(--sa-border);
+        padding: 1.25rem 1.75rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .sa-title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 1.4rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+    }
+
+    .sa-title i {
+        color: var(--sa-orange);
+        font-size: 1.6rem;
+    }
+
+    .sa-badge-main {
+        background: var(--sa-orange-glow);
+        color: var(--sa-orange);
+        border: 1px solid rgba(255, 107, 0, 0.4);
+        padding: 4px 10px;
+        border-radius: 8px;
+        font-size: 0.75rem;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    /* Top Stats Grid */
+    .sa-stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.25rem;
+        margin-bottom: 2rem;
+    }
+
+    .sa-stat-card {
+        background: var(--sa-card-bg);
+        border: 1px solid var(--sa-border);
+        border-radius: 18px;
+        padding: 1.4rem 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+        transition: transform 0.25s ease, border-color 0.25s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .sa-stat-card:hover {
+        transform: translateY(-3px);
+        border-color: rgba(255, 107, 0, 0.3);
+    }
+
+    .sa-stat-icon {
+        width: 54px;
+        height: 54px;
+        border-radius: 14px;
+        background: rgba(255, 107, 0, 0.1);
+        border: 1px solid rgba(255, 107, 0, 0.25);
+        color: var(--sa-orange);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+    }
+
+    .sa-stat-val {
+        font-size: 1.8rem;
+        font-weight: 800;
+        line-height: 1.1;
+    }
+
+    .sa-stat-lbl {
+        font-size: 0.8rem;
+        color: var(--sa-muted);
+        margin-top: 4px;
+        font-weight: 600;
+    }
+
+    .pending-alert-glow {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 10px;
+        height: 10px;
+        background-color: #f59e0b;
+        border-radius: 50%;
+        box-shadow: 0 0 12px #f59e0b;
+        animation: pulseAlert 1.5s infinite;
+    }
+
+    @keyframes pulseAlert {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.4); opacity: 0.4; }
+    }
+
+    /* Tabs Bar */
+    .sa-tabs-bar {
+        display: flex;
+        gap: 8px;
+        background: var(--sa-card-bg);
+        border: 1px solid var(--sa-border);
+        padding: 8px;
+        border-radius: 16px;
+        margin-bottom: 2rem;
+        overflow-x: auto;
+    }
+
+    .sa-tab-btn {
+        padding: 12px 22px;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: var(--sa-muted);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap;
+        transition: all 0.25s ease;
+    }
+
+    .sa-tab-btn i {
+        font-size: 1rem;
+    }
+
+    .sa-tab-btn:hover {
+        color: var(--sa-text);
+        background: rgba(255, 255, 255, 0.04);
+    }
+
+    .sa-tab-btn.active {
+        background: var(--sa-orange);
+        color: #ffffff;
+        box-shadow: 0 4px 15px var(--sa-orange-glow);
+    }
+
+    /* Tab Content Boxes */
+    .sa-tab-content {
+        display: none;
+        background: var(--sa-card-bg);
+        border: 1px solid var(--sa-border);
+        border-radius: 20px;
+        padding: 1.8rem;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    }
+
+    .sa-tab-content.active {
+        display: block;
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(6px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Tables */
+    .sa-table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .sa-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        font-size: 0.88rem;
+    }
+
+    .sa-table th {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 14px 16px;
+        color: var(--sa-muted);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-bottom: 1px solid var(--sa-border);
+    }
+
+    .sa-table td {
+        padding: 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        vertical-align: middle;
+    }
+
+    .sa-table tr:hover td {
+        background: var(--sa-card-hover);
+    }
+
+    /* Badges */
+    .badge-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.78rem;
+        font-weight: 700;
+    }
+    .badge-pending { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-accepted { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-rejected { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .badge-pro { background: rgba(255, 107, 0, 0.15); color: var(--sa-orange); border: 1px solid rgba(255, 107, 0, 0.3); }
+    .badge-vip { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+
+    /* Action Buttons */
+    .btn-act {
+        border: none;
+        padding: 7px 13px;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 0.78rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+    .btn-act-approve { background: #10b981; color: #fff; }
+    .btn-act-approve:hover { background: #059669; }
+    .btn-act-reject { background: #ef4444; color: #fff; }
+    .btn-act-reject:hover { background: #dc2626; }
+    .btn-act-pro { background: var(--sa-orange); color: #fff; }
+    .btn-act-ban { background: #64748b; color: #fff; }
+
+    /* Thumbnails */
+    .receipt-thumb {
+        width: 48px;
+        height: 48px;
+        border-radius: 10px;
+        object-fit: cover;
+        cursor: pointer;
+        border: 1.5px solid var(--sa-border);
+        transition: transform 0.2s;
+    }
+    .receipt-thumb:hover {
+        transform: scale(1.1);
+        border-color: var(--sa-orange);
+    }
+
+    /* Maintenance Switch Card */
+    .maint-box {
+        background: rgba(255, 107, 0, 0.05);
+        border: 1.5px solid rgba(255, 107, 0, 0.25);
+        border-radius: 18px;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .maint-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    /* Toggle Switch */
+    .switch-toggle {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 32px;
+    }
+    .switch-toggle input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    .slider-toggle {
+        position: absolute;
+        cursor: pointer;
+        inset: 0;
+        background-color: #334155;
+        transition: .3s;
+        border-radius: 34px;
+    }
+    .slider-toggle:before {
+        position: absolute;
+        content: "";
+        height: 24px;
+        width: 24px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: .3s;
+        border-radius: 50%;
+    }
+    input:checked + .slider-toggle {
+        background-color: var(--sa-orange);
+    }
+    input:checked + .slider-toggle:before {
+        transform: translateX(28px);
+    }
+
+    /* Modal Viewer */
+    .sa-modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: rgba(0,0,0,0.85);
+        backdrop-filter: blur(8px);
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+    }
+    .sa-modal-content {
+        background: var(--sa-card-bg);
+        border: 1px solid var(--sa-border);
+        border-radius: 20px;
+        padding: 2rem;
+        max-width: 500px;
+        width: 100%;
+        position: relative;
+        box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+    }
+</style>
+
+<div class="sa-container">
+    <!-- Header Bar -->
+    <div class="sa-header">
+        <div class="sa-title">
+            <i class="fa-solid fa-shield-halved"></i>
+            {% trans "Superadmin Dashboard" %}
+            <span class="sa-badge-main">SUPERUSER</span>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            {% if system_setting.maintenance_mode %}
+            <div style="background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); padding: 6px 14px; border-radius: 30px; font-size: 0.8rem; font-weight: 800; display: flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-triangle-exclamation"></i> {% trans "Maintenance Mode FAOL" %}
+            </div>
+            {% endif %}
+
+            <a href="/admin/" target="_blank" style="color: var(--sa-muted); text-decoration: none; font-size: 0.85rem; font-weight: 700; display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.05); padding: 8px 14px; border-radius: 10px;">
+                <i class="fa-solid fa-database"></i> Django Admin
+            </a>
+        </div>
+    </div>
+
+    <!-- Analytics Cards Grid -->
+    <div class="sa-stats-grid">
+        <div class="sa-stat-card">
+            <div class="sa-stat-icon"><i class="fa-solid fa-users"></i></div>
+            <div>
+                <div class="sa-stat-val">{{ total_users_count }}</div>
+                <div class="sa-stat-lbl">{% trans "Jami Foydalanuvchilar" %}</div>
+            </div>
+        </div>
+
+        <div class="sa-stat-card">
+            <div class="sa-stat-icon"><i class="fa-solid fa-user-plus"></i></div>
+            <div>
+                <div class="sa-stat-val">{{ new_today_count }}</div>
+                <div class="sa-stat-lbl">{% trans "Bugun Ro'yxatdan O'tganlar" %}</div>
+            </div>
+        </div>
+
+        <div class="sa-stat-card">
+            <div class="sa-stat-icon"><i class="fa-solid fa-crown"></i></div>
+            <div>
+                <div class="sa-stat-val">{{ active_subs_count }}</div>
+                <div class="sa-stat-lbl">{% trans "Faol PRO / VIP Obunachilar" %}</div>
+            </div>
+        </div>
+
+        <div class="sa-stat-card">
+            {% if pending_requests_count > 0 %}
+            <div class="pending-alert-glow"></div>
+            {% endif %}
+            <div class="sa-stat-icon" style="color: #f59e0b; background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3);">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+            </div>
+            <div>
+                <div class="sa-stat-val" style="color: #fbbf24;">{{ pending_requests_count }}</div>
+                <div class="sa-stat-lbl">{% trans "Kutilayotgan Cheklar" %}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Tabs Bar -->
+    <div class="sa-tabs-bar">
+        <button class="sa-tab-btn {% if active_tab == 'requests' %}active{% endif %}" onclick="switchTab('requests')">
+            <i class="fa-solid fa-receipt"></i> {% trans "Cheklar & Verifikatsiya" %}
+            {% if pending_requests_count > 0 %}
+            <span style="background: #f59e0b; color: #000; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 10px;">{{ pending_requests_count }}</span>
+            {% endif %}
+        </button>
+        <button class="sa-tab-btn {% if active_tab == 'users' %}active{% endif %}" onclick="switchTab('users')">
+            <i class="fa-solid fa-users-gear"></i> {% trans "Foydalanuvchilar Boshqaruvi" %}
+        </button>
+        <button class="sa-tab-btn {% if active_tab == 'settings' %}active{% endif %}" onclick="switchTab('settings')">
+            <i class="fa-solid fa-sliders"></i> {% trans "Tizim Sozlamalari & Maintenance" %}
+        </button>
+        <button class="sa-tab-btn {% if active_tab == 'logs' %}active{% endif %}" onclick="switchTab('logs')">
+            <i class="fa-solid fa-chart-line"></i> {% trans "Trafik & Aktivlik Loglari" %}
+        </button>
+    </div>
+
+    <!-- TAB 1: TO'LOV CHEKLARI (REQUESTS) -->
+    <div id="tab-requests" class="sa-tab-content {% if active_tab == 'requests' %}active{% endif %}">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <h2 style="font-size: 1.2rem; font-weight: 800; display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-receipt" style="color: var(--sa-orange);"></i> {% trans "Obuna So'rovlari va Cheklar" %}
+            </h2>
+        </div>
+
+        <div class="sa-table-wrapper">
+            <table class="sa-table">
+                <thead>
+                    <tr>
+                        <th>{% trans "Foydalanuvchi" %}</th>
+                        <th>{% trans "Tarif Paketi" %}</th>
+                        <th>{% trans "Summa" %}</th>
+                        <th>{% trans "Yuklangan Vaqti" %}</th>
+                        <th>{% trans "Vaqtinchalik PRO" %}</th>
+                        <th>{% trans "Chek Skrinshoti" %}</th>
+                        <th>{% trans "Status" %}</th>
+                        <th style="text-align: right;">{% trans "Harakatlar" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for req in requests_list %}
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="width: 36px; height: 36px; border-radius: 50%; background: #2a2a3c; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--sa-orange);">
+                                    {{ req.user.username|slice:":1"|upper }}
+                                </div>
+                                <div>
+                                    <div style="font-weight: 700; color: #fff;">{{ req.user.get_full_name|default:req.user.username }}</div>
+                                    <div style="font-size: 0.75rem; color: var(--sa-muted);">@{{ req.user.username }}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span style="font-weight: 700; color: var(--sa-orange);">{{ req.plan_name }}</span></td>
+                        <td><span style="font-weight: 800; color: #fff;">{{ req.amount }} {% trans "so'm" %}</span></td>
+                        <td><span style="color: var(--sa-muted); font-size: 0.8rem;">{{ req.created_at|date:"Y-m-d H:i" }}</span></td>
+                        <td>
+                            {% if req.user.profile.builder_info.is_temp_active %}
+                            <span class="badge-status badge-pending">⚡ {% trans "Vaqtinchalik PRO" %}</span>
+                            {% else %}
+                            <span style="color: var(--sa-muted); font-size: 0.8rem;">—</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if req.screenshot %}
+                            <img src="{{ req.screenshot.url }}" class="receipt-thumb" onclick="openImageViewer('{{ req.screenshot.url }}')" alt="Receipt" />
+                            {% else %}
+                            <span style="color: var(--sa-muted);">—</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if req.status == 'pending' %}
+                            <span class="badge-status badge-pending">⏳ {% trans "Kutilmoqda" %}</span>
+                            {% elif req.status == 'accepted' %}
+                            <span class="badge-status badge-accepted">✅ {% trans "Tasdiqlangan" %}</span>
+                            {% else %}
+                            <span class="badge-status badge-rejected">❌ {% trans "Rad etilgan" %}</span>
+                            {% endif %}
+                        </td>
+                        <td style="text-align: right;">
+                            {% if req.status == 'pending' %}
+                            <div style="display: flex; justify-content: flex-end; gap: 6px;">
+                                <a href="{% url 'build:superadmin_process_request' req.id 'accept' %}" class="btn-act btn-act-approve">
+                                    <i class="fa-solid fa-check"></i> {% trans "Tasdiqlash" %}
+                                </a>
+                                <button onclick="openRejectModal({{ req.id }})" class="btn-act btn-act-reject">
+                                    <i class="fa-solid fa-xmark"></i> {% trans "Rad etish" %}
+                                </button>
+                            </div>
+                            {% else %}
+                            <span style="color: var(--sa-muted); font-size: 0.8rem;">{% trans "Bajarilgan" %}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 3rem; color: var(--sa-muted);">
+                            {% trans "Hozircha hech qanday obuna cheklari yuklanmagan." %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- TAB 2: FOYDALANUVCHILAR BOSHQARUVI (USERS) -->
+    <div id="tab-users" class="sa-tab-content {% if active_tab == 'users' %}active{% endif %}">
+        <form method="get" action="" style="display: flex; gap: 12px; margin-bottom: 1.5rem; flex-wrap: wrap;">
+            <input type="hidden" name="tab" value="users">
+            <input type="text" name="q" value="{{ search_q }}" placeholder="{% translate 'Ism, username yoki email bo\'yicha qidiruv...' %}" style="flex: 1; min-width: 240px; background: rgba(255,255,255,0.05); border: 1px solid var(--sa-border); padding: 10px 16px; border-radius: 12px; color: #fff;">
+            
+            <select name="role" style="background: #1c1c2e; border: 1px solid var(--sa-border); padding: 10px 16px; border-radius: 12px; color: #fff;">
+                <option value="">{% trans "Barcha Rollar" %}</option>
+                <option value="builder" {% if role_filter == 'builder' %}selected{% endif %}>{% trans "Usta" %}</option>
+                <option value="client" {% if role_filter == 'client' %}selected{% endif %}>{% trans "Mijoz" %}</option>
+                <option value="company" {% if role_filter == 'company' %}selected{% endif %}>{% trans "Kompaniya" %}</option>
+            </select>
+
+            <select name="sub_status" style="background: #1c1c2e; border: 1px solid var(--sa-border); padding: 10px 16px; border-radius: 12px; color: #fff;">
+                <option value="">{% trans "Barcha Obunalar" %}</option>
+                <option value="pro" {% if sub_filter == 'pro' %}selected{% endif %}>PRO / VIP</option>
+                <option value="free" {% if sub_filter == 'free' %}selected{% endif %}>Free</option>
+                <option value="banned" {% if sub_filter == 'banned' %}selected{% endif %}>{% trans "Bloklanganlar" %}</option>
+            </select>
+
+            <button type="submit" class="btn-act btn-act-pro" style="padding: 10px 20px;">
+                <i class="fa-solid fa-magnifying-glass"></i> {% trans "Saralash" %}
+            </button>
+        </form>
+
+        <div class="sa-table-wrapper">
+            <table class="sa-table">
+                <thead>
+                    <tr>
+                        <th>{% trans "Foydalanuvchi" %}</th>
+                        <th>{% trans "Rol" %}</th>
+                        <th>{% trans "Ro'yxatdan O'tgan Sana" %}</th>
+                        <th>{% trans "Obuna Statusi" %}</th>
+                        <th>{% trans "Hisob Holati" %}</th>
+                        <th style="text-align: right;">{% trans "Admin Boshqaruvi" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for u in users_list %}
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="width: 38px; height: 38px; border-radius: 50%; background: #2a2a3c; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--sa-orange);">
+                                    {{ u.username|slice:":1"|upper }}
+                                </div>
+                                <div>
+                                    <div style="font-weight: 700; color: #fff; display: flex; align-items: center; gap: 6px;">
+                                        {{ u.get_full_name|default:u.username }}
+                                        {% if u.profile.is_premium %}
+                                        <i class="fa-solid fa-circle-check" style="color: #3b82f6; font-size: 13px;" title="Verified PRO"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div style="font-size: 0.75rem; color: var(--sa-muted);">@{{ u.username }} ({{ u.email }})</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span style="font-weight: 600; text-transform: capitalize; color: var(--sa-muted);">{{ u.profile.role }}</span></td>
+                        <td><span style="font-size: 0.8rem; color: var(--sa-muted);">{{ u.date_joined|date:"Y-m-d" }}</span></td>
+                        <td>
+                            {% if u.profile.builder_info.subscription_status %}
+                            <span class="badge-status badge-pro"><i class="fa-solid fa-crown"></i> {{ u.profile.builder_info.subscription_plan.name|default:"PRO" }}</span>
+                            {% elif u.profile.builder_info.is_temp_active %}
+                            <span class="badge-status badge-pending">⚡ Vaqtincha PRO</span>
+                            {% else %}
+                            <span style="color: var(--sa-muted); font-size: 0.8rem;">Free</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if u.is_active %}
+                            <span style="color: #34d399; font-weight: 700; font-size: 0.8rem;">● {% trans "Faol" %}</span>
+                            {% else %}
+                            <span style="color: #f87171; font-weight: 700; font-size: 0.8rem;">● {% trans "Bloklangan" %}</span>
+                            {% endif %}
+                        </td>
+                        <td style="text-align: right;">
+                            <div style="display: flex; justify-content: flex-end; gap: 6px;">
+                                <a href="{% url 'build:superadmin_manage_user' u.id 'grant_pro' %}" class="btn-act btn-act-pro" title="PRO Berish">
+                                    +PRO
+                                </a>
+                                <a href="{% url 'build:superadmin_manage_user' u.id 'grant_vip' %}" class="btn-act" style="background:#8b5cf6; color:#fff;" title="VIP Berish">
+                                    +VIP
+                                </a>
+                                {% if u.is_active %}
+                                <a href="{% url 'build:superadmin_manage_user' u.id 'ban' %}" class="btn-act btn-act-ban" title="Bloklash">
+                                    <i class="fa-solid fa-ban"></i>
+                                </a>
+                                {% else %}
+                                <a href="{% url 'build:superadmin_manage_user' u.id 'unban' %}" class="btn-act btn-act-approve" title="Blokdan chiqarish">
+                                    <i class="fa-solid fa-unlock"></i>
+                                </a>
+                                {% endif %}
+                                {% if not u.is_superuser %}
+                                <button onclick="confirmDeleteUser({{ u.id }}, '{{ u.username }}')" class="btn-act btn-act-reject" title="O'chirish">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 2.5rem; color: var(--sa-muted);">
+                            {% trans "Mos keluvchi foydalanuvchilar topilmadi." %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- TAB 3: TIZIM SOZLAMALARI (SETTINGS & MAINTENANCE) -->
+    <div id="tab-settings" class="sa-tab-content {% if active_tab == 'settings' %}active{% endif %}">
+        <h2 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-screwdriver-wrench" style="color: var(--sa-orange);"></i> {% trans "Tizim Sozlamalari & Maintenance Mode" %}
+        </h2>
+
+        <form method="post" action="{% url 'build:superadmin_toggle_maintenance' %}" class="maint-box">
+            {% csrf_token %}
+            <div class="maint-header">
+                <div>
+                    <h3 style="font-size: 1.1rem; font-weight: 800; color: #fff;">{% trans "Maintenance Mode (Texnik Tanaffus Rejimi)" %}</h3>
+                    <p style="font-size: 0.85rem; color: var(--sa-muted); margin-top: 4px;">
+                        {% trans "Ushbu switch yoqilganda oddiy foydalanuvchilar uchun sayt bloklanadi va Maintenance sahifasi ko'rsatiladi." %}
+                    </p>
+                </div>
+                <label class="switch-toggle">
+                    <input type="checkbox" name="maintenance_mode" {% if system_setting.maintenance_mode %}checked{% endif %} onchange="this.form.submit()">
+                    <span class="slider-toggle"></span>
+                </label>
+            </div>
+
+            <hr style="border: none; border-top: 1px solid var(--sa-border);">
+
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <label style="font-weight: 700; font-size: 0.9rem;">{% trans "Maintenance Xabari (Uzbekcha):" %}</label>
+                <textarea name="msg_uz" rows="2" style="background: rgba(255,255,255,0.05); border: 1px solid var(--sa-border); padding: 12px; border-radius: 12px; color: #fff;">{{ system_setting.maintenance_message_uz }}</textarea>
+
+                <label style="font-weight: 700; font-size: 0.9rem;">{% trans "Maintenance Xabari (Ruscha):" %}</label>
+                <textarea name="msg_ru" rows="2" style="background: rgba(255,255,255,0.05); border: 1px solid var(--sa-border); padding: 12px; border-radius: 12px; color: #fff;">{{ system_setting.maintenance_message_ru }}</textarea>
+
+                <label style="font-weight: 700; font-size: 0.9rem;">{% trans "Maintenance Xabari (Inglizcha):" %}</label>
+                <textarea name="msg_en" rows="2" style="background: rgba(255,255,255,0.05); border: 1px solid var(--sa-border); padding: 12px; border-radius: 12px; color: #fff;">{{ system_setting.maintenance_message_en }}</textarea>
+
+                <button type="submit" class="btn-act btn-act-pro" style="align-self: flex-start; padding: 12px 24px; font-size: 0.9rem; margin-top: 8px;">
+                    <i class="fa-solid fa-floppy-disk"></i> {% trans "Sozlamalarni Saqlash" %}
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- TAB 4: TRAFIK & LOGS -->
+    <div id="tab-logs" class="sa-tab-content {% if active_tab == 'logs' %}active{% endif %}">
+        <h2 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-chart-line" style="color: var(--sa-orange);"></i> {% trans "Real-time Trafik va Aktivlik Loglari" %}
+        </h2>
+
+        <div class="sa-table-wrapper">
+            <table class="sa-table">
+                <thead>
+                    <tr>
+                        <th>{% trans "Foydalanuvchi" %}</th>
+                        <th>{% trans "IP Manzil" %}</th>
+                        <th>{% trans "Method & Path" %}</th>
+                        <th>{% trans "Status Code" %}</th>
+                        <th>{% trans "Vaqt" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in traffic_logs %}
+                    <tr>
+                        <td>
+                            {% if log.user %}
+                            <span style="font-weight: 700; color: #fff;">@{{ log.user.username }}</span>
+                            {% else %}
+                            <span style="color: var(--sa-muted);">{% trans "Mehmon (Guest)" %}</span>
+                            {% endif %}
+                        </td>
+                        <td><code style="color: var(--sa-orange); font-size: 0.8rem;">{{ log.ip_address|default:"127.0.0.1" }}</code></td>
+                        <td><span style="font-weight: 600; font-size: 0.82rem;">{{ log.method }} {{ log.path }}</span></td>
+                        <td>
+                            {% if log.status_code == 200 %}
+                            <span style="color: #34d399; font-weight: 800;">200 OK</span>
+                            {% elif log.status_code == 302 %}
+                            <span style="color: #60a5fa; font-weight: 800;">302 Found</span>
+                            {% elif log.status_code == 404 %}
+                            <span style="color: #fbbf24; font-weight: 800;">404 Not Found</span>
+                            {% else %}
+                            <span style="color: #f87171; font-weight: 800;">{{ log.status_code }}</span>
+                            {% endif %}
+                        </td>
+                        <td><span style="color: var(--sa-muted); font-size: 0.78rem;">{{ log.created_at|date:"H:i:s (Y-m-d)" }}</span></td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 2.5rem; color: var(--sa-muted);">
+                            {% trans "Hozircha trafik loglari mavjud emas." %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: IMAGE VIEWER -->
+<div id="image-viewer-modal" class="sa-modal">
+    <div class="sa-modal-content" style="max-width: 700px; text-align: center;">
+        <button onclick="closeImageViewer()" style="position: absolute; top: 14px; right: 14px; background: rgba(255,255,255,0.1); border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 1.2rem; color: #fff;">{% trans "To'lov Cheki Skrinshoti" %}</h3>
+        <img id="full-modal-image" src="" alt="Receipt Full" style="max-width: 100%; max-height: 70vh; border-radius: 12px; border: 1px solid var(--sa-border);" />
+    </div>
+</div>
+
+<!-- MODAL: REJECT REASON -->
+<div id="reject-reason-modal" class="sa-modal">
+    <div class="sa-modal-content">
+        <button onclick="closeRejectModal()" style="position: absolute; top: 14px; right: 14px; background: rgba(255,255,255,0.1); border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 0.8rem; color: #ef4444; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-triangle-exclamation"></i> {% trans "To'lov Chekini Rad Etish" %}
+        </h3>
+        <p style="font-size: 0.85rem; color: var(--sa-muted); margin-bottom: 1.2rem;">
+            {% trans "Foydalanuvchiga rad etish sababini yozing. Ushbu xabar unga avtomatik bildirishnoma va chat orqali yuboriladi." %}
+        </p>
+
+        <form id="reject-form" method="post" action="">
+            {% csrf_token %}
+            <textarea name="reason" rows="3" required placeholder="{% translate 'Masalan: Chekda summa kam yozilgan yoki rasm sifatsiz...' %}" style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--sa-border); padding: 12px; border-radius: 12px; color: #fff; margin-bottom: 1.2rem;"></textarea>
+            
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button type="button" onclick="closeRejectModal()" style="background: transparent; border: 1px solid var(--sa-border); color: var(--sa-muted); padding: 10px 18px; border-radius: 10px; font-weight: 700; cursor: pointer;">
+                    {% trans "Bekor qilish" %}
+                </button>
+                <button type="submit" class="btn-act btn-act-reject" style="padding: 10px 20px; font-size: 0.85rem;">
+                    <i class="fa-solid fa-xmark"></i> {% trans "Tasdiqlash va Rad etish" %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function switchTab(tabId) {
+        document.querySelectorAll('.sa-tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.sa-tab-content').forEach(c => c.classList.remove('active'));
+
+        event.currentTarget.classList.add('active');
+        const activeContent = document.getElementById('tab-' + tabId);
+        if (activeContent) activeContent.classList.add('active');
+
+        const url = new URL(window.location);
+        url.searchParams.set('tab', tabId);
+        window.history.pushState({}, '', url);
+    }
+
+    function openImageViewer(url) {
+        document.getElementById('full-modal-image').src = url;
+        document.getElementById('image-viewer-modal').style.display = 'flex';
+    }
+
+    function closeImageViewer() {
+        document.getElementById('image-viewer-modal').style.display = 'none';
+    }
+
+    function openRejectModal(reqId) {
+        const form = document.getElementById('reject-form');
+        form.action = `/superadmin/request/${reqId}/reject/`;
+        document.getElementById('reject-reason-modal').style.display = 'flex';
+    }
+
+    function closeRejectModal() {
+        document.getElementById('reject-reason-modal').style.display = 'none';
+    }
+
+    function confirmDeleteUser(userId, username) {
+        if (confirm(`Haqiqatdan ham @${username} foydalanuvchisini o'chirmoqchimisiz?`)) {
+            window.location.href = `/superadmin/user/${userId}/delete/`;
+        }
+    }
+</script>
+{% endblock %}

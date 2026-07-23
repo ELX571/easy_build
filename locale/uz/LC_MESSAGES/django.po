@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 10:38+0500\n"
+"POT-Creation-Date: 2026-07-23 10:48+0500\n"
 "PO-Revision-Date: 2026-06-23 10:00+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Uzbek <uz@li.org>\n"
@@ -809,7 +809,6 @@ msgstr "Rejimni o'zgartirish"
 msgid "To'lovni tasdiqlash"
 msgstr "To'lovlarni Tasdiqlash Dashbordi"
 
-#| msgid "Sizda kutilayotgan to'lov bor!"
 msgid "Sizda tekshirilayotgan to'lov cheki bor!"
 msgstr "Sizda kutilayotgan to'lov bor!"
 
@@ -1285,6 +1284,218 @@ msgstr "Qidiruv..."
 msgid "Taklif"
 msgstr "Taklif"
 
+msgid "Superadmin Dashboard — EasyBuild"
+msgstr "Superadmin Dashboard — EasyBuild"
+
+msgid "Superadmin Dashboard"
+msgstr "Superadmin Dashboard"
+
+msgid "Maintenance Mode FAOL"
+msgstr "Maintenance Mode FAOL"
+
+#| msgid "Faol foydalanuvchi"
+msgid "Jami Foydalanuvchilar"
+msgstr "Faol foydalanuvchi"
+
+#| msgid "Ro'yxatdan o'ting"
+msgid "Bugun Ro'yxatdan O'tganlar"
+msgstr "Ro'yxatdan o'ting"
+
+msgid "Faol PRO / VIP Obunachilar"
+msgstr "Faol PRO / VIP Obunachilar"
+
+msgid "Kutilayotgan Cheklar"
+msgstr "Kutilayotgan Cheklar"
+
+#| msgid "Gamifikatsiya"
+msgid "Cheklar & Verifikatsiya"
+msgstr "Gamifikatsiya"
+
+#| msgid "Foydalanuvchi nomi"
+msgid "Foydalanuvchilar Boshqaruvi"
+msgstr "Foydalanuvchi nomi"
+
+msgid "Tizim Sozlamalari & Maintenance"
+msgstr "Tizim Sozlamalari & Maintenance"
+
+msgid "Trafik & Aktivlik Loglari"
+msgstr "Trafik & Aktivlik Loglari"
+
+msgid "Obuna So'rovlari va Cheklar"
+msgstr "Obuna So'rovlari va Cheklar"
+
+#| msgid "Foydalanuvchi nomi"
+msgid "Foydalanuvchi"
+msgstr "Foydalanuvchi nomi"
+
+#| msgid "Tarif paketini tanlang:"
+msgid "Tarif Paketi"
+msgstr "Tarif paketini tanlang:"
+
+msgid "Summa"
+msgstr "Summa"
+
+#| msgid "Yakunlangan"
+msgid "Yuklangan Vaqti"
+msgstr "Tasdiqlangan usta"
+
+#| msgid "Vaqtinchalik kirish faol"
+msgid "Vaqtinchalik PRO"
+msgstr "Vaqtinchalik kirish faol"
+
+msgid "Chek Skrinshoti"
+msgstr "Chek Skrinshoti"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Harakatlar"
+msgstr "Harakatlar"
+
+#| msgid "Rad etildi"
+msgid "Rad etilgan"
+msgstr "Rad etildi"
+
+#| msgid "Tasdiqlandi"
+msgid "Tasdiqlash"
+msgstr "Tasdiqlandi"
+
+#| msgid "Rad etildi"
+msgid "Rad etish"
+msgstr "Rad etildi"
+
+#| msgid "Bajarildi"
+msgid "Bajarilgan"
+msgstr "Bajarildi"
+
+#| msgid "Hozircha hech qanday to'lov so'rovi yubormagansiz."
+msgid "Hozircha hech qanday obuna cheklari yuklanmagan."
+msgstr "Hozircha hech qanday to'lov so'rovi yubormagansiz."
+
+msgid "Ism, username yoki email bo\\"
+msgstr "Ism, username yoki email bo"
+
+msgid "Barcha Rollar"
+msgstr "Barcha Rollar"
+
+#| msgid "Ustalar"
+msgid "Usta"
+msgstr "Faol ustalar"
+
+msgid "Mijoz"
+msgstr "Mijoz"
+
+#| msgid "Kompaniya/Jamoa"
+msgid "Kompaniya"
+msgstr "Kompaniya/Jamoa"
+
+#| msgid "Barcha asosiy funksiyalar"
+msgid "Barcha Obunalar"
+msgstr "Barcha asosiy funksiyalar"
+
+#| msgid "Saqlanganlar"
+msgid "Bloklanganlar"
+msgstr "Saqlanganlar"
+
+#| msgid "Saqlash"
+msgid "Saralash"
+msgstr "Saqlash"
+
+#| msgid "Roli:"
+msgid "Rol"
+msgstr "Roli:"
+
+#| msgid "Ro'yxatdan o'ting"
+msgid "Ro'yxatdan O'tgan Sana"
+msgstr "Ro'yxatdan o'ting"
+
+msgid "Obuna Statusi"
+msgstr "Obuna Statusi"
+
+msgid "Hisob Holati"
+msgstr "Hisob Holati"
+
+msgid "Admin Boshqaruvi"
+msgstr "Admin Boshqaruvi"
+
+#| msgid "✓ Faol"
+msgid "Faol"
+msgstr "✓ Faol"
+
+#| msgid "Yakunlangan"
+msgid "Bloklangan"
+msgstr "Tasdiqlangan usta"
+
+#| msgid "Taklif foydalanuvchi chatiga yuborildi!"
+msgid "Mos keluvchi foydalanuvchilar topilmadi."
+msgstr "Taklif foydalanuvchi chatiga yuborildi!"
+
+msgid "Tizim Sozlamalari & Maintenance Mode"
+msgstr "Tizim Sozlamalari & Maintenance Mode"
+
+msgid "Maintenance Mode (Texnik Tanaffus Rejimi)"
+msgstr "Maintenance Mode (Texnik Tanaffus Rejimi)"
+
+msgid ""
+"Ushbu switch yoqilganda oddiy foydalanuvchilar uchun sayt bloklanadi va "
+"Maintenance sahifasi ko'rsatiladi."
+msgstr "Ushbu switch yoqilganda oddiy foydalanuvchilar uchun sayt bloklanadi va Maintenance sahifasi ko'rsatiladi."
+
+msgid "Maintenance Xabari (Uzbekcha):"
+msgstr "Maintenance Xabari (Uzbekcha):"
+
+msgid "Maintenance Xabari (Ruscha):"
+msgstr "Maintenance Xabari (Ruscha):"
+
+msgid "Maintenance Xabari (Inglizcha):"
+msgstr "Maintenance Xabari (Inglizcha):"
+
+#| msgid "Sozlamalarni saqlash"
+msgid "Sozlamalarni Saqlash"
+msgstr "Sozlamalar"
+
+msgid "Real-time Trafik va Aktivlik Loglari"
+msgstr "Real-time Trafik va Aktivlik Loglari"
+
+msgid "IP Manzil"
+msgstr "IP Manzil"
+
+msgid "Method & Path"
+msgstr "Method & Path"
+
+msgid "Status Code"
+msgstr "Status Code"
+
+msgid "Vaqt"
+msgstr "Vaqt"
+
+msgid "Mehmon (Guest)"
+msgstr "Mehmon (Guest)"
+
+#| msgid "Hozircha ish jarayonlari mavjud emas"
+msgid "Hozircha trafik loglari mavjud emas."
+msgstr "Hozircha ish jarayonlari mavjud emas"
+
+#| msgid "To'lov chekini yuklang (Screenshot):"
+msgid "To'lov Cheki Skrinshoti"
+msgstr "To'lov chekini yuklang (Screenshot):"
+
+#| msgid "To'lovni tasdiqlash"
+msgid "To'lov Chekini Rad Etish"
+msgstr "To'lovlarni Tasdiqlash Dashbordi"
+
+msgid ""
+"Foydalanuvchiga rad etish sababini yozing. Ushbu xabar unga avtomatik "
+"bildirishnoma va chat orqali yuboriladi."
+msgstr "Foydalanuvchiga rad etish sababini yozing. Ushbu xabar unga avtomatik bildirishnoma va chat orqali yuboriladi."
+
+msgid "Masalan: Chekda summa kam yozilgan yoki rasm sifatsiz..."
+msgstr "Masalan: Chekda summa kam yozilgan yoki rasm sifatsiz..."
+
+#| msgid "Tarif tanlash va Tasdiqlash"
+msgid "Tasdiqlash va Rad etish"
+msgstr "Tarif tanlash va Tasdiqlash"
+
 msgid "To'lovlarni Tasdiqlash Dashbordi"
 msgstr "To'lovlarni Tasdiqlash Dashbordi"
 
@@ -1492,6 +1703,20 @@ msgstr "Ulashish"
 
 msgid "Yangi suhbat"
 msgstr "Xabarlar"
+
+msgid "Texnik Tanaffus — EasyBuild"
+msgstr "Texnik Tanaffus — EasyBuild"
+
+msgid "Profilaktika ishlari ketmoqda"
+msgstr "Profilaktika ishlari ketmoqda"
+
+#| msgid "Texnika ijarasi"
+msgid "Texnik Tanaffus"
+msgstr "Texnika ijarasi"
+
+#| msgid "Parolni yangilash"
+msgid "Sahifani Yangilash"
+msgstr "Parolni yangilash"
 
 #~ msgid ""
 #~ "Siz yuborgan chek hozirda admin tomonidan tekshirilmoqda. Iltimos, u "

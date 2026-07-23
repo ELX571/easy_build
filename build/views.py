@@ -998,36 +998,101 @@ def choose_plan(request, plan_id):
     return redirect(reverse('chat:chat'))
 
 @login_required
-def admin_verification_dashboard(request):
+def superadmin_dashboard(request):
     if not (request.user.is_superuser or request.user.is_staff):
-        return HttpResponseForbidden("Faqat adminlar uchun ruxsat etilgan.")
+        return HttpResponseForbidden("Faqat superadmin va staff uchun ruxsat etilgan.")
+
+    from build.models import SystemSetting, TrafficLog
+    
+    # 1. Total Stats
+    total_users_count = User.objects.count()
+    today_start = timezone.now().replace(hour=0, minute=0, second=0, microsecond=0)
+    new_today_count = User.objects.filter(date_joined__gte=today_start).count()
+    
+    active_subs_count = BuilderProfile.objects.filter(
+        models.Q(subscription_status=True) | models.Q(is_temp_active=True)
+    ).count()
+    
+    pending_requests_count = SubscriptionRequest.objects.filter(status='pending').count()
+
+    # 2. Subscription Requests Tab
+    requests_list = SubscriptionRequest.objects.select_related('user').all().order_by('-created_at')
+
+    # 3. Users Management Tab
+    users_qs = User.objects.select_related('profile', 'profile__builder_info').all().order_by('-date_joined')
+    
+    search_q = request.GET.get('q', '').strip()
+    if search_q:
+        users_qs = users_qs.filter(
+            models.Q(username__icontains=search_q) |
+            models.Q(first_name__icontains=search_q) |
+            models.Q(last_name__icontains=search_q) |
+            models.Q(email__icontains=search_q)
+        )
         
-    requests = SubscriptionRequest.objects.all().order_by('-created_at')
-    return render(request, 'build/verification.html', {
-        'requests': requests
+    role_filter = request.GET.get('role', '')
+    if role_filter:
+        users_qs = users_qs.filter(profile__role=role_filter)
+        
+    sub_filter = request.GET.get('sub_status', '')
+    if sub_filter == 'pro':
+        users_qs = users_qs.filter(
+            models.Q(profile__builder_info__subscription_status=True) |
+            models.Q(profile__builder_info__is_temp_active=True)
+        )
+    elif sub_filter == 'free':
+        users_qs = users_qs.exclude(
+            models.Q(profile__builder_info__subscription_status=True) |
+            models.Q(profile__builder_info__is_temp_active=True)
+        )
+    elif sub_filter == 'banned':
+        users_qs = users_qs.filter(is_active=False)
+
+    # 4. System Settings
+    system_setting = SystemSetting.get_settings()
+
+    # 5. Traffic Logs Tab
+    traffic_logs = TrafficLog.objects.select_related('user').all().order_by('-created_at')[:300]
+
+    return render(request, 'build/superadmin_dashboard.html', {
+        'total_users_count': total_users_count,
+        'new_today_count': new_today_count,
+        'active_subs_count': active_subs_count,
+        'pending_requests_count': pending_requests_count,
+        'requests_list': requests_list,
+        'users_list': users_qs[:200],
+        'system_setting': system_setting,
+        'traffic_logs': traffic_logs,
+        'search_q': search_q,
+        'role_filter': role_filter,
+        'sub_filter': sub_filter,
+        'active_tab': request.GET.get('tab', 'requests')
     })
 
+
 @login_required
-def process_verification(request, request_id, action):
+def superadmin_process_request(request, request_id, action):
     if not (request.user.is_superuser or request.user.is_staff):
-        return HttpResponseForbidden("Faqat adminlar uchun ruxsat etilgan.")
-        
+        return JsonResponse({'success': False, 'error': 'Ruxsat etilmagan'}, status=403)
+
     sub_request = get_object_or_404(SubscriptionRequest, id=request_id)
     builder_user = sub_request.user
     bp = getattr(builder_user.profile, 'builder_info', None)
     if not bp:
         bp, _ = BuilderProfile.objects.get_or_create(profile=builder_user.profile)
-        
+
     room, _ = ChatRoom.get_or_create_for(builder_user, request.user)
-    
+
     if action == 'accept':
         sub_request.status = 'accepted'
         sub_request.save()
-        
+
         plan = Plan.objects.filter(name=sub_request.plan_name).first()
-        duration_days = plan.duration_days if plan else 30
+        is_yearly = any(x in sub_request.plan_name.lower() for x in ["yillik", "yearly", "годовая"])
+        duration_days = 365 if is_yearly else (plan.duration_days if plan else 30)
 
         bp.is_temp_active = False
+        bp.temp_active_until = None
         bp.subscription_status = True
         bp.subscription_plan = plan
         bp.subscription_start = timezone.now()
@@ -1035,12 +1100,9 @@ def process_verification(request, request_id, action):
         bp.pending_plan = None
         bp.save()
 
-        # ✅ Profile'da is_premium ni ham yoqamiz
-        builder_profile_obj = builder_user.profile
-        builder_profile_obj.is_premium = True
-        builder_profile_obj.save(update_fields=['is_premium'])
+        builder_user.profile.is_premium = True
+        builder_user.profile.save(update_fields=['is_premium'])
 
-        # ✅ Bildirishnoma yuboramiz
         from accounts.models import Notification
         Notification.objects.create(
             user=builder_user,
@@ -1048,31 +1110,34 @@ def process_verification(request, request_id, action):
             message=f"Tabriklaymiz! Sizning '{sub_request.plan_name}' obunangiz admin tomonidan tasdiqlandi va faollashtirildi. Endi barcha Premium imkoniyatlardan foydalanishingiz mumkin.",
             icon='fa-solid fa-crown',
         )
-        
-        # Send system message & broadcast via WebSocket
-        content_msg = f"✅ Tizim: To'lov tasdiqlandi. {sub_request.plan_name} tarifi doimiy faollashtirildi! Endi siz barcha Premium imkoniyatlardan foydalanishingiz mumkin."
+
+        content_msg = f"✅ Tizim: To'lov tasdiqlandi. {sub_request.plan_name} tarifi doimiy faollashtirildi!"
         msg = Message.objects.create(room=room, sender=request.user, content=content_msg)
         
-        channel_layer = get_channel_layer()
-        async_to_sync(channel_layer.group_send)(
-            f'chat_{room.pk}',
-            {
-                'type': 'chat_message',
-                'message_id': msg.id,
-                'message': msg.content,
-                'sender_id': request.user.id,
-                'sender_name': request.user.get_full_name() or request.user.username,
-                'time': msg.time_str(),
-                'is_read': False,
-                'room_id': room.pk,
-            }
-        )
-        
+        try:
+            channel_layer = get_channel_layer()
+            async_to_sync(channel_layer.group_send)(
+                f'chat_{room.pk}',
+                {
+                    'type': 'chat_message',
+                    'message_id': msg.id,
+                    'message': msg.content,
+                    'sender_id': request.user.id,
+                    'sender_name': request.user.get_full_name() or request.user.username,
+                    'time': msg.time_str(),
+                    'is_read': False,
+                    'room_id': room.pk,
+                }
+            )
+        except Exception:
+            pass
+
     elif action == 'reject':
+        rejection_reason = request.POST.get('reason', '').strip() or request.GET.get('reason', '').strip()
         sub_request.status = 'rejected'
+        sub_request.rejection_reason = rejection_reason
         sub_request.save()
 
-        # ❌ Barcha obuna imtiyozlarini darhol tortib olamiz
         bp.is_temp_active = False
         bp.temp_active_until = None
         bp.subscription_status = False
@@ -1080,53 +1145,155 @@ def process_verification(request, request_id, action):
         bp.pending_plan = None
         bp.save()
 
-        # ❌ Profile'da is_premium ni o'chiramiz
-        builder_profile_obj = builder_user.profile
-        builder_profile_obj.is_premium = False
-        builder_profile_obj.save(update_fields=['is_premium'])
+        builder_user.profile.is_premium = False
+        builder_user.profile.save(update_fields=['is_premium'])
 
-        # 📋 Obuna tarixiga yozamiz
         from build.models import SubscriptionHistory
         SubscriptionHistory.objects.create(
             user=builder_user,
             event='revoked',
             plan_name=sub_request.plan_name,
-            note=f"Admin tomonidan rad etildi (SubscriptionRequest #{sub_request.id})",
+            note=f"Admin tomonidan rad etildi: {rejection_reason}" if rejection_reason else f"Admin tomonidan rad etildi (Request #{sub_request.id})",
             performed_by=request.user,
         )
 
-        # ❌ Rad etish bildirishnomasini yuboramiz
         from accounts.models import Notification
+        notif_msg = f"Afsuski, yuborgan to'lov chekingiz tasdiqlanmadi. Sabab: {rejection_reason}" if rejection_reason else "Afsuski, yuborgan to'lov chekingiz tasdiqlanmadi. Iltimos, to'g'ri to'lov chekini yuboring yoki admin bilan bog'laning."
+        
         Notification.objects.create(
             user=builder_user,
             title="❌ To'lov tasdiqlanmadi",
-            message="Afsuski, yuborgan to'lov chekingiz tasdiqlanmadi. Iltimos, to'g'ri to'lov chekini yuboring yoki admin bilan bog'laning.",
+            message=notif_msg,
             icon='fa-solid fa-circle-xmark',
         )
-        
-        # Automatic warning notification posting
-        content_msg = "❌ To'lov tasdiqlanmadi. Iltimos, to'g'ri to'lov chekini yuboring yoki admin bilan bog'laning."
+
+        content_msg = f"❌ To'lov tasdiqlanmadi. {notif_msg}"
         msg = Message.objects.create(room=room, sender=request.user, content=content_msg)
         
-        channel_layer = get_channel_layer()
-        async_to_sync(channel_layer.group_send)(
-            f'chat_{room.pk}',
-            {
-                'type': 'chat_message',
-                'message_id': msg.id,
-                'message': msg.content,
-                'sender_id': request.user.id,
-                'sender_name': request.user.get_full_name() or request.user.username,
-                'time': msg.time_str(),
-                'is_read': False,
-                'room_id': room.pk,
-            }
-        )
-        
+        try:
+            channel_layer = get_channel_layer()
+            async_to_sync(channel_layer.group_send)(
+                f'chat_{room.pk}',
+                {
+                    'type': 'chat_message',
+                    'message_id': msg.id,
+                    'message': msg.content,
+                    'sender_id': request.user.id,
+                    'sender_name': request.user.get_full_name() or request.user.username,
+                    'time': msg.time_str(),
+                    'is_read': False,
+                    'room_id': room.pk,
+                }
+            )
+        except Exception:
+            pass
+
     if request.headers.get('x-requested-with') == 'XMLHttpRequest' or request.GET.get('ajax') == '1':
         return JsonResponse({'success': True})
+
+    return redirect('build:superadmin_dashboard')
+
+
+@login_required
+def superadmin_manage_user(request, user_id, action):
+    if not (request.user.is_superuser or request.user.is_staff):
+        return JsonResponse({'success': False, 'error': 'Ruxsat etilmagan'}, status=403)
+
+    target_user = get_object_or_404(User, id=user_id)
+    bp, _ = BuilderProfile.objects.get_or_create(profile=target_user.profile)
+
+    if action == 'grant_pro':
+        plan, _ = Plan.objects.get_or_create(name='PRO Obuna', defaults={'price': 49000, 'duration_days': 30})
+        bp.subscription_status = True
+        bp.subscription_plan = plan
+        bp.subscription_start = timezone.now()
+        bp.subscription_end = timezone.now() + timezone.timedelta(days=30)
+        bp.is_temp_active = False
+        bp.temp_active_until = None
+        bp.save()
+
+        target_user.profile.is_premium = True
+        target_user.profile.save(update_fields=['is_premium'])
+
+    elif action == 'grant_vip':
+        plan, _ = Plan.objects.get_or_create(name='Premium VIP', defaults={'price': 0, 'duration_days': 365})
+        bp.subscription_status = True
+        bp.subscription_plan = plan
+        bp.subscription_start = timezone.now()
+        bp.subscription_end = timezone.now() + timezone.timedelta(days=365)
+        bp.is_temp_active = False
+        bp.temp_active_until = None
+        bp.save()
+
+        target_user.profile.is_premium = True
+        target_user.profile.save(update_fields=['is_premium'])
+
+    elif action == 'revoke':
+        bp.subscription_status = False
+        bp.subscription_plan = None
+        bp.is_temp_active = False
+        bp.temp_active_until = None
+        bp.save()
+
+        target_user.profile.is_premium = False
+        target_user.profile.save(update_fields=['is_premium'])
+
+    elif action == 'ban':
+        target_user.is_active = False
+        target_user.save(update_fields=['is_active'])
+
+    elif action == 'unban':
+        target_user.is_active = True
+        target_user.save(update_fields=['is_active'])
+
+    elif action == 'delete':
+        if not target_user.is_superuser:
+            target_user.delete()
+            return JsonResponse({'success': True, 'deleted': True})
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest' or request.GET.get('ajax') == '1':
+        return JsonResponse({'success': True})
+
+    return redirect('build:superadmin_dashboard')
+
+
+@login_required
+def superadmin_toggle_maintenance(request):
+    if not (request.user.is_superuser or request.user.is_staff):
+        return JsonResponse({'success': False, 'error': 'Ruxsat etilmagan'}, status=403)
+
+    if request.method == 'POST':
+        from build.models import SystemSetting
+        setting = SystemSetting.get_settings()
+        mode_val = request.POST.get('maintenance_mode')
+        setting.maintenance_mode = (mode_val == 'true' or mode_val == '1' or mode_val == 'on')
         
-    return redirect('build:admin_verification_dashboard')
+        msg_uz = request.POST.get('msg_uz', '').strip()
+        msg_ru = request.POST.get('msg_ru', '').strip()
+        msg_en = request.POST.get('msg_en', '').strip()
+        
+        if msg_uz: setting.maintenance_message_uz = msg_uz
+        if msg_ru: setting.maintenance_message_ru = msg_ru
+        if msg_en: setting.maintenance_message_en = msg_en
+        
+        setting.save()
+
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest' or request.GET.get('ajax') == '1':
+            return JsonResponse({'success': True, 'maintenance_mode': setting.maintenance_mode})
+
+    return redirect('build:superadmin_dashboard')
+
+
+@login_required
+def admin_verification_dashboard(request):
+    if not (request.user.is_superuser or request.user.is_staff):
+        return HttpResponseForbidden("Faqat adminlar uchun ruxsat etilgan.")
+    return redirect('build:superadmin_dashboard')
+
+
+@login_required
+def process_verification(request, request_id, action):
+    return superadmin_process_request(request, request_id, action)
 
 @login_required
 def chat_room_redirect(request, user_id):

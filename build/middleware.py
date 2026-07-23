@@ -1,12 +1,6 @@
-"""
-EasyBuild — Subscription Expiry Middleware
-Har so'rovda (request) foydalanuvchining obuna muddatini tekshiradi.
-Muddati o'tgan bo'lsa — avtomatik o'chiradi va bildirishnoma yuboradi.
-Yengil ishlash uchun faqat autentifikatsiya qilingan ustalarda, har 15 daqiqada bir tekshiradi.
-"""
 from django.utils import timezone
 from django.utils.deprecation import MiddlewareMixin
-
+from django.shortcuts import render
 
 SUBSCRIPTION_CHECK_INTERVAL_SECONDS = 900  # 15 daqiqa
 
@@ -18,8 +12,6 @@ class SubscriptionExpiryMiddleware(MiddlewareMixin):
             return None
 
         session = request.session
-
-        # 15 daqiqada bir marta tekshirish (har requestda DB ga urmaslik)
         last_check = session.get('sub_last_check')
         now_ts = timezone.now().timestamp()
 
@@ -34,20 +26,15 @@ class SubscriptionExpiryMiddleware(MiddlewareMixin):
             if not bp:
                 return None
 
-            # Muddati o'tganmi?
             if (bp.subscription_status and
                     bp.subscription_end and
                     bp.subscription_end < timezone.now()):
 
                 plan_name = bp.subscription_plan.name if bp.subscription_plan else "Obuna"
-
-                # Obunani o'chiramiz
                 bp.subscription_status = False
                 bp.subscription_plan = None
                 bp.save(update_fields=['subscription_status', 'subscription_plan'])
-                # Signals is_premium ni sinxronlaydi
 
-                # Foydalanuvchiga bildirishnoma
                 from accounts.models import Notification
                 already_notified = profile.user.notifications.filter(
                     title__icontains='Obuna muddati tugadi',
@@ -67,7 +54,6 @@ class SubscriptionExpiryMiddleware(MiddlewareMixin):
                         url='/uz/payment-dashboard/',
                     )
 
-            # Temp obuna muddati o'tganmi?
             elif (bp.is_temp_active and
                   bp.temp_active_until and
                   bp.temp_active_until < timezone.now()):
@@ -76,6 +62,83 @@ class SubscriptionExpiryMiddleware(MiddlewareMixin):
                 bp.save(update_fields=['is_temp_active'])
 
         except Exception:
-            pass  # Har qanday xatoda — davom etamiz
+            pass
 
         return None
+
+
+class MaintenanceModeMiddleware(MiddlewareMixin):
+    """
+    Superadmin "Maintenance Mode" (Texnik tanaffus) yoqqanida:
+    Superuser'dan tashqari barcha oddiy foydalanuvchilar va mehmonlar uchun
+    saytning har qanday sahifasiga kirish bloklanadi va chiroyli Maintenance sahifasi ko'rsatiladi.
+    """
+    def process_request(self, request):
+        try:
+            from build.models import SystemSetting
+            setting = SystemSetting.get_settings()
+            if not setting.maintenance_mode:
+                return None
+
+            # Superuser / staff holatida ruxsat beriladi
+            if request.user.is_authenticated and (request.user.is_superuser or request.user.is_staff):
+                return None
+
+            # Admin va static resurslarga ruxsat beramiz
+            path = request.path_info
+            exempt_prefixes = [
+                '/admin/', '/superadmin/', '/static/', '/media/', '/i18n/', '/accounts/login/'
+            ]
+            if any(path.startswith(prefix) for prefix in exempt_prefixes):
+                return None
+
+            from django.utils.translation import get_language
+            lang = get_language() or 'uz'
+            if lang == 'ru':
+                msg = setting.maintenance_message_ru
+            elif lang == 'en':
+                msg = setting.maintenance_message_en
+            else:
+                msg = setting.maintenance_message_uz
+
+            return render(request, 'maintenance.html', {
+                'maintenance_message': msg,
+                'setting': setting,
+            }, status=503)
+        except Exception:
+            return None
+
+
+class AuditLogMiddleware(MiddlewareMixin):
+    """
+    Real-time foydalanuvchilar oqimi va trafik loglarini bazaga yozuvchi middleware.
+    """
+    def process_response(self, request, response):
+        try:
+            path = request.path_info
+            if any(path.startswith(p) for p in ['/static/', '/media/', '/favicon.ico']):
+                return response
+
+            from build.models import TrafficLog
+            
+            x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+            if x_forwarded_for:
+                ip = x_forwarded_for.split(',')[0].strip()
+            else:
+                ip = request.META.get('REMOTE_ADDR', '')
+
+            user = request.user if request.user.is_authenticated else None
+            user_agent = request.META.get('HTTP_USER_AGENT', '')[:490]
+
+            TrafficLog.objects.create(
+                user=user,
+                ip_address=ip[:45],
+                path=path[:490],
+                method=request.method[:10],
+                user_agent=user_agent,
+                status_code=response.status_code
+            )
+        except Exception:
+            pass
+
+        return response

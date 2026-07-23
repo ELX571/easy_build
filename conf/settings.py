@@ -94,6 +94,8 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
     # Subscription expiry auto-check
     'build.middleware.SubscriptionExpiryMiddleware',
+    'build.middleware.MaintenanceModeMiddleware',
+    'build.middleware.AuditLogMiddleware',
 ]
 
 # DEBUG rejimida brauzerni avtomatik yangilash middleware'ini qo'shish

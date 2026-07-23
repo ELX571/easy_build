@@ -336,6 +336,7 @@ class SubscriptionRequest(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     screenshot = models.ImageField(upload_to='screenshots/')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    rejection_reason = models.TextField(blank=True, null=True, verbose_name='Rad etish sababi')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -378,3 +379,51 @@ class SubscriptionHistory(models.Model):
 
     def __str__(self):
         return f"{self.user.username} | {self.get_event_display()} | {self.plan_name or '—'}"
+
+
+class SystemSetting(models.Model):
+    maintenance_mode = models.BooleanField(default=False, verbose_name='Maintenance Mode (Texnik tanaffus)')
+    maintenance_message_uz = models.TextField(
+        default="Saytda profilaktika va yangilanish ishlari ketmoqda. Birozdan so'ng qayta urinib ko'ring.",
+        verbose_name='Maintenance Xabari (UZ)'
+    )
+    maintenance_message_ru = models.TextField(
+        default="На сайте ведутся профилактические и обновительные работы. Попробуйте зайти немного позже.",
+        verbose_name='Maintenance Xabari (RU)'
+    )
+    maintenance_message_en = models.TextField(
+        default="System maintenance and update is in progress. Please try again later.",
+        verbose_name='Maintenance Xabari (EN)'
+    )
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = 'Tizim Sozlamasi'
+        verbose_name_plural = 'Tizim Sozlamalari'
+
+    @classmethod
+    def get_settings(cls):
+        obj, _ = cls.objects.get_or_create(id=1)
+        return obj
+
+    def __str__(self):
+        return f"SystemSetting (Maintenance: {self.maintenance_mode})"
+
+
+class TrafficLog(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='traffic_logs')
+    ip_address = models.CharField(max_length=45, blank=True, null=True)
+    path = models.CharField(max_length=500)
+    method = models.CharField(max_length=10, default='GET')
+    user_agent = models.CharField(max_length=500, blank=True, null=True)
+    status_code = models.IntegerField(default=200)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Trafik Logi'
+        verbose_name_plural = 'Trafik Loglari'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        user_str = self.user.username if self.user else 'Mehmon'
+        return f"{user_str} | {self.method} {self.path} ({self.status_code})"
