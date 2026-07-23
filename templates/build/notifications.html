@@ -374,15 +374,15 @@
 
         <div class="expanded-menu">
             <div class="menu-col">
-                <div class="menu-title"><i class="fa-solid fa-compass" style="color: var(--active-text-blue); transform: rotate(15deg);"></i> Navigator</div>
+                <div class="menu-title"><i class="fa-solid fa-compass" style="color: var(--active-text-blue); transform: rotate(15deg);"></i> {% translate "Navigator" %}</div>
                 <ul class="menu-list">
-                    <li><a href="{% url 'build:home' %}"><i class="fa-solid fa-house main-icon"></i> Usta Qidirish</a></li>
-                    <li><a href="{% url 'build:market' %}" class="{% if request.resolver_match.url_name == 'market' %}active-link{% endif %}"><i class="fa-solid fa-store main-icon"></i> Market Pro (B2B)</a></li>
-                    <li><a href="#"><i class="fa-regular fa-comment-dots main-icon"></i> Xabarlar <span class="badge">3</span></a></li>
+                    <li><a href="{% url 'build:home' %}"><i class="fa-solid fa-house main-icon"></i> {% translate "Usta Qidirish" %}</a></li>
+                    <li><a href="{% url 'build:market' %}" class="{% if request.resolver_match.url_name == 'market' %}active-link{% endif %}"><i class="fa-solid fa-store main-icon"></i> {% translate "Market Pro (B2B)" %}</a></li>
+                    <li><a href="#"><i class="fa-regular fa-comment-dots main-icon"></i> {% translate "Xabarlar" %} <span class="badge">3</span></a></li>
                 </ul>
                 <div class="section-label">{% trans "Tizim" %}</div>
                 <ul class="menu-list">
-                    <li><a href="{% url 'build:workflow' %}" class="active-link"><i class="fa-solid fa-layer-group main-icon"></i> Ish jarayonlari</a></li>
+                    <li><a href="{% url 'build:workflow' %}" class="active-link"><i class="fa-solid fa-layer-group main-icon"></i> {% translate "Ish jarayonlari" %}</a></li>
                 </ul>
             </div>
         </div>

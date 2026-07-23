@@ -385,10 +385,10 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
         <div class="menu-col">
             <div class="menu-title">
                 <i class="fa-solid fa-compass" style="color: var(--orange); transform: rotate(15deg);"></i>
-                Navigator
+                {% translate "Navigator" %}
             </div>
             <ul class="menu-list">
-                <li><a href="{% url 'build:home' %}"><i class="fa-solid fa-house main-icon"></i> Home</a></li>
+                <li><a href="{% url 'build:home' %}"><i class="fa-solid fa-house main-icon"></i> {% translate "Bosh sahifa" %}</a></li>
                 <li><a href="{% url 'build:network' %}"><i class="fa-solid fa-users main-icon"></i> {% trans "Hamkasblar" %}</a></li>
                 <li><a href="{% url 'build:market' %}" class="{% if request.resolver_match.url_name == 'market' %}active-link{% endif %}"><i class="fa-solid fa-store main-icon"></i> {% trans "Market Pro (B2B)" %}</a></li>
                 <li><a href="{% url 'build:builder_list' %}"><i class="fa-solid fa-helmet-safety main-icon"></i> {% trans "Usta Qidirish" %}</a></li>
@@ -396,7 +396,7 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
                 <li><a href="{% url 'build:payment_dashboard' %}" class="{% if request.resolver_match.url_name == 'payment_dashboard' %}active-link{% endif %}"><i class="fa-solid fa-gem main-icon"></i> {% trans "Premium Obuna" %}</a></li>
                 
                 
-                <li><a href="{% url 'build:profile' %}"><i class="fa-regular fa-user main-icon"></i> Mening Profilim</a></li>
+                <li><a href="{% url 'build:profile' %}"><i class="fa-regular fa-user main-icon"></i> {% translate "Mening Profilim" %}</a></li>
             </ul>
         </div>
     </div>

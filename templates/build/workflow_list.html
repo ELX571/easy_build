@@ -395,15 +395,15 @@
 
         <div class="expanded-menu">
             <div class="menu-col">
-                <div class="menu-title"><i class="fa-solid fa-compass" style="color: var(--active-text-blue); transform: rotate(15deg);"></i> Navigator</div>
+                <div class="menu-title"><i class="fa-solid fa-compass" style="color: var(--active-text-blue); transform: rotate(15deg);"></i> {% translate "Navigator" %}</div>
                 <ul class="menu-list">
-                    <li><a href="{% url 'build:home' %}"><i class="fa-solid fa-house main-icon"></i> Usta Qidirish</a></li>
-                    <li><a href="{% url 'build:market' %}" class="{% if request.resolver_match.url_name == 'market' %}active-link{% endif %}"><i class="fa-solid fa-store main-icon"></i> Market Pro (B2B)</a></li>
-                    <li><a href="#"><i class="fa-regular fa-comment-dots main-icon"></i> Xabarlar <span class="badge">3</span></a></li>
+                    <li><a href="{% url 'build:home' %}"><i class="fa-solid fa-house main-icon"></i> {% translate "Usta Qidirish" %}</a></li>
+                    <li><a href="{% url 'build:market' %}" class="{% if request.resolver_match.url_name == 'market' %}active-link{% endif %}"><i class="fa-solid fa-store main-icon"></i> {% translate "Market Pro (B2B)" %}</a></li>
+                    <li><a href="#"><i class="fa-regular fa-comment-dots main-icon"></i> {% translate "Xabarlar" %} <span class="badge">3</span></a></li>
                 </ul>
                 <div class="section-label">{% trans "Tizim" %}</div>
                 <ul class="menu-list">
-                    <li><a href="{% url 'build:workflow' %}" class="active-link"><i class="fa-solid fa-layer-group main-icon"></i> Ish jarayonlari</a></li>
+                    <li><a href="{% url 'build:workflow' %}" class="active-link"><i class="fa-solid fa-layer-group main-icon"></i> {% translate "Ish jarayonlari" %}</a></li>
                 </ul>
             </div>
         </div>
@@ -411,8 +411,8 @@
 
     <div class="main-content">
         <div class="workspace-header">
-            <h2><i class="fa-solid fa-bars-progress" style="color: var(--active-text-blue);"></i> Ish jarayonlari boshqaruv paneli</h2>
-            <p>Roli: <span style="color: var(--active-text-blue); font-weight: 700; text-transform: uppercase;">{{ user.profile.get_role_display }}</span> | Loyihalaringizning CRM va Kanban tracking holati</p>
+            <h2><i class="fa-solid fa-bars-progress" style="color: var(--active-text-blue);"></i> {% trans "Ish jarayonlari boshqaruv paneli" %}</h2>
+            <p>{% trans "Roli:" %} <span style="color: var(--active-text-blue); font-weight: 700; text-transform: uppercase;">{{ user.profile.get_role_display }}</span> | {% trans "Loyihalaringizning CRM va Kanban tracking holati" %}</p>
         </div>
 
         <div class="workflow-grid">
@@ -435,14 +435,14 @@
                         </div>
                         <div class="detail-item">
                             <span class="label">{% trans "Muddat:" %}</span>
-                            <span class="val">{{ project.duration_days }} kun</span>
+                            <span class="val">{{ project.duration_days }} {% trans "kun" %}</span>
                         </div>
                         <div class="detail-item" style="grid-column: 1 / -1; border-top: 1px solid var(--border-color); padding-top: 6px; margin-top: 4px;">
-                            <span class="label">{% if user.profile.role == 'client' %}Ijrochi Usta:{% else %}Buyurtmachi Mijoz:{% endif %}</span>
+                            <span class="label">{% if user.profile.role == 'client' %}{% trans "Ijrochi Usta:" %}{% else %}{% trans "Buyurtmachi Mijoz:" %}{% endif %}</span>
                             <span class="val" style="display: flex; align-items: center; gap: 6px; margin-top: 2px;">
                                 <i class="fa-regular fa-user" style="font-size: 12px; color: var(--text-muted);"></i>
                                 {% if user.profile.role == 'client' %}
-                                    {% if project.assigned_builder %}@{{ project.assigned_builder.profile.user.username }} ({{ project.assigned_builder.profession }}){% else %}Usta biriktirilmagan{% endif %}
+                                    {% if project.assigned_builder %}@{{ project.assigned_builder.profile.user.username }} ({{ project.assigned_builder.profession }}){% else %}{% trans "Usta biriktirilmagan" %}{% endif %}
                                 {% else %}
                                     @{{ project.client.user.username }}
                                 {% endif %}
@@ -453,20 +453,20 @@
                     <div class="workflow-actions">
     {% if project.status == 'open' and user.profile.role == 'client' %}
         <a href="#" class="action-btn btn-primary">
-            <i class="fa-solid fa-list-check"></i> Takliflar ({{ project.bids.count }})
+            <i class="fa-solid fa-list-check"></i> {% trans "Takliflar" %} ({{ project.bids.count }})
         </a>
     {% elif project.status == 'in_progress' and user.profile.role == 'builder' %}
         <a href="{% url 'build:update_status' project.id 'review' %}" class="action-btn btn-primary">
-            <i class="fa-solid fa-paper-plane"></i> Ishni topshirish
+            <i class="fa-solid fa-paper-plane"></i> {% trans "Ishni topshirish" %}
         </a>
     {% elif project.status == 'review' and user.profile.role == 'client' %}
         <a href="{% url 'build:update_status' project.id 'completed' %}" class="action-btn btn-primary" style="background: #22c55e;">
-            <i class="fa-solid fa-circle-check"></i> Ishni qabul qilish
+            <i class="fa-solid fa-circle-check"></i> {% trans "Ishni qabul qilish" %}
         </a>
     {% elif project.status == 'completed' %}
         {% if user.profile.role == 'client' and not project.has_review %}
             <button type="button" onclick="openReviewModal('{{ project.id }}', '{{ project.assigned_builder.profile.user.username }}')" class="action-btn btn-primary" style="background: #f59e0b;">
-                <i class="fa-solid fa-star"></i> Baho berish
+                <i class="fa-solid fa-star"></i> {% trans "Baho berish" %}
             </button>
         {% elif project.has_review %}
             <span class="action-btn btn-secondary" style="color: #f59e0b; cursor: default;">
@@ -474,12 +474,12 @@
             </span>
         {% else %}
             <span class="action-btn btn-secondary" style="color: #22c55e; cursor: default;">
-                <i class="fa-solid fa-check-double"></i> Yakunlangan
+                <i class="fa-solid fa-check-double"></i> {% trans "Yakunlangan" %}
             </span>
         {% endif %}
     {% else %}
         <span class="action-btn btn-secondary" style="cursor: default;">
-            <i class="fa-solid fa-hourglass-half"></i> Bosqich kutilmoqda
+            <i class="fa-solid fa-hourglass-half"></i> {% trans "Bosqich kutilmoqda" %}
         </span>
     {% endif %}
 </div>

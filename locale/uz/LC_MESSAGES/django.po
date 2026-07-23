@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 10:19+0500\n"
+"POT-Creation-Date: 2026-07-23 10:22+0500\n"
 "PO-Revision-Date: 2026-06-23 10:00+0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Uzbek <uz@li.org>\n"
@@ -322,7 +322,6 @@ msgstr "Username"
 msgid "username kiriting"
 msgstr "username kiriting"
 
-#| msgid "Kuchli parol o\\"
 msgid "Kuchli parol o'ylab toping"
 msgstr "Kuchli parol o"
 
@@ -619,7 +618,6 @@ msgstr "Bosh sahifa"
 msgid "Bu sizning o'z e'loningiz!"
 msgstr "Bu sizning o'z e'loningiz!"
 
-#| msgid "Yangi nomni kiriting..."
 msgid "Kerakli e'lonni qidiring..."
 msgstr "Parolni kiriting"
 
@@ -759,7 +757,6 @@ msgstr "Premium"
 msgid "so'm"
 msgstr "so'm"
 
-#| msgid "Ushbu tarif sotilmaydi, faqat adminlar tomonidan sovg\\"
 msgid ""
 "Ushbu tarif sotilmaydi, faqat adminlar tomonidan sovg'a sifatida beriladi"
 msgstr "Ushbu tarif sotilmaydi, faqat adminlar tomonidan sovg"
@@ -1291,11 +1288,55 @@ msgid ""
 "yuborilmagan."
 msgstr "Hozircha verifikatsiya qilinishi kerak bo'lgan to'lov screenshotlari yuborilmagan."
 
+#| msgid "Ish jarayonlari"
+msgid "Ish jarayonlari boshqaruv paneli"
+msgstr "Ish jarayonlari"
+
+msgid "Roli:"
+msgstr "Roli:"
+
+msgid "Loyihalaringizning CRM va Kanban tracking holati"
+msgstr "Loyihalaringizning CRM va Kanban tracking holati"
+
 msgid "Byudjet:"
 msgstr "Byudjet:"
 
 msgid "Muddat:"
 msgstr "Muddat:"
+
+#| msgid "Quruvchi (Usta)"
+msgid "Ijrochi Usta:"
+msgstr "Quruvchi (Usta)"
+
+#| msgid "Buyurtmachi (Mijoz)"
+msgid "Buyurtmachi Mijoz:"
+msgstr "Buyurtmachi (Mijoz)"
+
+msgid "Usta biriktirilmagan"
+msgstr "Usta biriktirilmagan"
+
+#| msgid "Taklif"
+msgid "Takliflar"
+msgstr "Taklif"
+
+msgid "Ishni topshirish"
+msgstr "Ishni topshirish"
+
+#| msgid "Saqlashni bekor qilish"
+msgid "Ishni qabul qilish"
+msgstr "Bekor qilish"
+
+#| msgid "Javob berish"
+msgid "Baho berish"
+msgstr "Yetkazib berish"
+
+#| msgid "Tasdiqlangan"
+msgid "Yakunlangan"
+msgstr "Tasdiqlangan usta"
+
+#| msgid "Tasdiqlanish kutilmoqda"
+msgid "Bosqich kutilmoqda"
+msgstr "Tasdiqlanish kutilmoqda"
 
 msgid "Hozircha ish jarayonlari mavjud emas"
 msgstr "Hozircha ish jarayonlari mavjud emas"
@@ -1314,6 +1355,9 @@ msgstr "Ustaning ishidan qoniqdingizmi? Fikringizni qoldiring..."
 msgid "Yuborish"
 msgstr "Yuborish"
 
+msgid "Mening Profilim"
+msgstr "Mening Profilim"
+
 msgid "Yangi chat"
 msgstr "Xabarlar"
 
@@ -1323,18 +1367,15 @@ msgstr "Qidirish"
 msgid "Suhbatlar"
 msgstr "Chatlar"
 
-#| msgid "Sozlamalarga o\\"
 msgid "Sozlamalarga o'tish"
 msgstr "Sozlamalar"
 
 msgid "online"
 msgstr "online"
 
-#| msgid "Ovozli qo\\"
 msgid "Ovozli qo'ng'iroq"
 msgstr "Ovozli qo"
 
-#| msgid "Video qo\\"
 msgid "Video qo'ng'iroq"
 msgstr "Video qo"
 
@@ -1353,7 +1394,6 @@ msgstr "✍️ yozmoqda..."
 msgid "Tayyor"
 msgstr "Tayyor"
 
-#| msgid "Fayl, rasm yoki video jo\\"
 msgid "Fayl, rasm yoki video jo'natish"
 msgstr "Fayl, rasm yoki video jo"
 
@@ -1408,11 +1448,9 @@ msgstr "Vaqtinchalik kirish faol"
 msgid "24 soatlik tekshiruvda"
 msgstr "24 soatlik tekshiruvda"
 
-#| msgid "To'lovni tasdiqlash"
 msgid "To'lov rad etilgan"
 msgstr "To'lovlarni Tasdiqlash Dashbordi"
 
-#| msgid "Tekshirilmoqda..."
 msgid "To'lov tekshirilmoqda"
 msgstr "Tekshirilmoqda..."
 

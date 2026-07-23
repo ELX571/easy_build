@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-23 10:19+0500\n"
+"POT-Creation-Date: 2026-07-23 10:22+0500\n"
 "Language: ru\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -325,7 +325,6 @@ msgstr "@username"
 msgid "username kiriting"
 msgstr "@username"
 
-#| msgid "Kuchli parol o\\"
 msgid "Kuchli parol o'ylab toping"
 msgstr "Kuchli parol o"
 
@@ -770,7 +769,6 @@ msgstr "PRO Подписка (Месячная)"
 msgid "so'm"
 msgstr "сум"
 
-#| msgid "Ushbu tarif sotilmaydi, faqat adminlar tomonidan sovg\\"
 msgid ""
 "Ushbu tarif sotilmaydi, faqat adminlar tomonidan sovg'a sifatida beriladi"
 msgstr "Ushbu tarif sotilmaydi, faqat adminlar tomonidan sovg"
@@ -1310,11 +1308,56 @@ msgid ""
 "yuborilmagan."
 msgstr "Пока не отправлены скриншоты платежей для верификации."
 
+#| msgid "Ish jarayonlari"
+msgid "Ish jarayonlari boshqaruv paneli"
+msgstr "Панель управления рабочими процессами"
+
+msgid "Roli:"
+msgstr "Роль:"
+
+msgid "Loyihalaringizning CRM va Kanban tracking holati"
+msgstr "CRM и Kanban трекинг ваших проектов"
+
 msgid "Byudjet:"
 msgstr "Бюджет:"
 
 msgid "Muddat:"
 msgstr "Срок:"
+
+#| msgid "Quruvchi (Usta)"
+msgid "Ijrochi Usta:"
+msgstr "Исполнитель-Мастер:"
+
+# Role choices
+#| msgid "Buyurtmachi (Mijoz)"
+msgid "Buyurtmachi Mijoz:"
+msgstr "Заказчик-Клиент:"
+
+msgid "Usta biriktirilmagan"
+msgstr "Мастер не назначен"
+
+#| msgid "Taklif"
+msgid "Takliflar"
+msgstr "Предложения"
+
+msgid "Ishni topshirish"
+msgstr "Сдать работу"
+
+#| msgid "Saqlashni bekor qilish"
+msgid "Ishni qabul qilish"
+msgstr "Принять работу"
+
+#| msgid "Javob berish"
+msgid "Baho berish"
+msgstr "Оценить"
+
+#| msgid "Tasdiqlangan"
+msgid "Yakunlangan"
+msgstr "Завершено"
+
+#| msgid "Tasdiqlanish kutilmoqda"
+msgid "Bosqich kutilmoqda"
+msgstr "Ожидание этапа"
 
 msgid "Hozircha ish jarayonlari mavjud emas"
 msgstr "На данный момент нет доступных рабочих процессов"
@@ -1333,6 +1376,9 @@ msgstr "Ustaning ishidan qoniqdingizmi? Fikringizni qoldiring..."
 msgid "Yuborish"
 msgstr "Отправить"
 
+msgid "Mening Profilim"
+msgstr "Мой Профиль"
+
 msgid "Yangi chat"
 msgstr "Редактировать"
 
@@ -1343,18 +1389,15 @@ msgstr "Поиск..."
 msgid "Suhbatlar"
 msgstr "Чаты"
 
-#| msgid "Sozlamalarga o\\"
 msgid "Sozlamalarga o'tish"
 msgstr "Настройки"
 
 msgid "online"
 msgstr "В сети"
 
-#| msgid "Ovozli qo\\"
 msgid "Ovozli qo'ng'iroq"
 msgstr "Ovozli qo"
 
-#| msgid "Video qo\\"
 msgid "Video qo'ng'iroq"
 msgstr "Video qo"
 
@@ -1373,7 +1416,6 @@ msgstr "✍️ пишу..."
 msgid "Tayyor"
 msgstr "Готовый"
 
-#| msgid "Fayl, rasm yoki video jo\\"
 msgid "Fayl, rasm yoki video jo'natish"
 msgstr "Fayl, rasm yoki video jo"
 
@@ -1428,11 +1470,9 @@ msgstr "Временный доступ активен"
 msgid "24 soatlik tekshiruvda"
 msgstr "на 24-часовой проверке"
 
-#| msgid "To'lovni tasdiqlash"
 msgid "To'lov rad etilgan"
 msgstr "Платеж отклонен"
 
-#| msgid "Tekshirilmoqda..."
 msgid "To'lov tekshirilmoqda"
 msgstr "Платеж проверяется"
 
@@ -1734,9 +1774,6 @@ msgstr "Редактировать"
 
 #~ msgid "Joriy reja"
 #~ msgstr "Текущий план"
-
-#~ msgid "Mening Jamoam"
-#~ msgstr "Моя команда"
 
 #~ msgid "Tasdiqlash"
 #~ msgstr "Подтвердить"
