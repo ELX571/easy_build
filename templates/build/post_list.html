@@ -165,21 +165,21 @@ body { overflow-x: hidden !important; width: 100% !important; max-width: 100vw !
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
-    <a href="{% url 'build:home' %}" class="s-btn {% if request.resolver_match.url_name == 'home' %}active{% endif %}" title="Bosh sahifa"><i class="fa-solid fa-house"></i></a>
-    <a href="{% url 'build:network' %}" class="s-btn {% if request.resolver_match.url_name == 'network' %}active{% endif %}" title="Hamkasblar"><i class="fa-solid fa-users"></i></a>
-    <a href="javascript:void(0)" onclick="showMarketToast()" data-old="" class="s-btn {% if request.resolver_match.url_name == 'post_list' %}active{% endif %}" title="Market Pro"><i class="fa-solid fa-store"></i></a>
-    <a href="{% url 'build:builder_list' %}" class="s-btn {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" title="Ustalar"><i class="fa-solid fa-helmet-safety"></i></a>
+    <a href="{% url 'build:home' %}" class="s-btn {% if request.resolver_match.url_name == 'home' %}active{% endif %}" title="{% translate 'Bosh sahifa' %}"><i class="fa-solid fa-house"></i></a>
+    <a href="{% url 'build:network' %}" class="s-btn {% if request.resolver_match.url_name == 'network' %}active{% endif %}" title="{% translate 'Hamkasblar' %}"><i class="fa-solid fa-users"></i></a>
+    <a href="javascript:void(0)" onclick="showMarketToast()" data-old="" class="s-btn {% if request.resolver_match.url_name == 'post_list' %}active{% endif %}" title="{% translate 'Market Pro' %}"><i class="fa-solid fa-store"></i></a>
+    <a href="{% url 'build:builder_list' %}" class="s-btn {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" title="{% translate 'Ustalar' %}"><i class="fa-solid fa-helmet-safety"></i></a>
     <a href="{% url 'build:post_create' %}" class="s-btn" title="Yangi e'lon"><i class="fa-solid fa-plus"></i></a>
-    <a href="{% url 'chat:chat' %}" class="s-btn {% if request.resolver_match.namespace == 'chat' %}active{% endif %}" title="Xabarlar" style="position:relative">
+    <a href="{% url 'chat:chat' %}" class="s-btn {% if request.resolver_match.namespace == 'chat' %}active{% endif %}" title="{% translate 'Xabarlar' %}" style="position:relative">
       <i class="fa-regular fa-comment-dots"></i>
       {% if unread_chat_count > 0 %}<span style="position:absolute;top:6px;right:6px;background:#ef4444;color:#fff;font-size:9px;font-weight:800;min-width:14px;height:14px;border-radius:7px;display:flex;align-items:center;justify-content:center;">{{ unread_chat_count }}</span>{% endif %}
     </a>
-            <a href="{% url 'build:payment_dashboard' %}" class="rail-item {% if request.resolver_match.url_name == 'payment_dashboard' %}active{% endif %}" data-title="Premium"><i class="fa-solid fa-gem"></i></a>
+            <a href="{% url 'build:payment_dashboard' %}" class="rail-item {% if request.resolver_match.url_name == 'payment_dashboard' %}active{% endif %}" data-title="{% translate 'Premium' %}"><i class="fa-solid fa-gem"></i></a>
             
             
     <div class="s-divider"></div>
     <button class="s-btn" id="sideThemeBtn" title="Tema"><i class="fa-solid fa-moon"></i></button>
-            <a href="{% url 'build:notifications_list' %}" class="rail-item {% if request.resolver_match.url_name == 'notifications_list' %}active{% endif %}" data-title="Bildirishnomalar">
+            <a href="{% url 'build:notifications_list' %}" class="rail-item {% if request.resolver_match.url_name == 'notifications_list' %}active{% endif %}" data-title="{% translate 'Bildirishnomalar' %}">
     <i class="fa-solid fa-bell"></i>
     {% if unread_notifications_count > 0 %}
         <span style="position:absolute; top:8px; right:8px; background:#ef4444; color:white; font-size:10px; font-weight:800; border-radius:50%; width:16px; height:16px; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-panel);">{{ unread_notifications_count }}</span>
@@ -284,7 +284,7 @@ body { overflow-x: hidden !important; width: 100% !important; max-width: 100vw !
 
       <!-- Notification form -->
       <div class="cs-notify">
-        <input type="email" class="cs-notify-inp" id="notifyEmail" placeholder="Email manzilingiz...">
+        <input type="email" class="cs-notify-inp" id="notifyEmail" placeholder="{% translate 'Email manzilingiz...' %}">
         <button class="cs-notify-btn" onclick="subscribeNotify()"><i class="fa-solid fa-bell"></i> Xabardor qiling</button>
       </div>
 

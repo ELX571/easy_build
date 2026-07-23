@@ -354,18 +354,18 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
 <body>
 <div class="sidebar-container">
     <div class="icon-rail">
-            <a href="{% url 'build:home' %}" class="rail-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}" data-title="Bosh sahifa"><i class="fa-solid fa-house"></i></a>
-            <a href="{% url 'build:network' %}" class="rail-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}" data-title="Hamkasblar"><i class="fa-solid fa-users"></i></a>
-            <a href="{% url 'build:market' %}" class="rail-item {% if request.resolver_match.url_name == 'market' %}active{% endif %}" data-title="Market Pro"><i class="fa-solid fa-store"></i></a>
-            <a href="{% url 'build:builder_list' %}" class="rail-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" data-title="Usta Qidirish"><i class="fa-solid fa-helmet-safety"></i></a>
-            <a href="{% url 'chat:chat' %}" class="rail-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}" data-title="Chatlar">
+            <a href="{% url 'build:home' %}" class="rail-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}" data-title="{% translate 'Bosh sahifa' %}"><i class="fa-solid fa-house"></i></a>
+            <a href="{% url 'build:network' %}" class="rail-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}" data-title="{% translate 'Hamkasblar' %}"><i class="fa-solid fa-users"></i></a>
+            <a href="{% url 'build:market' %}" class="rail-item {% if request.resolver_match.url_name == 'market' %}active{% endif %}" data-title="{% translate 'Market Pro' %}"><i class="fa-solid fa-store"></i></a>
+            <a href="{% url 'build:builder_list' %}" class="rail-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" data-title="{% translate 'Usta Qidirish' %}"><i class="fa-solid fa-helmet-safety"></i></a>
+            <a href="{% url 'chat:chat' %}" class="rail-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}" data-title="{% translate 'Chatlar' %}">
                 <i class="fa-regular fa-comment-dots"></i>
                 {% if unread_chat_count > 0 %}
                 <span style="position:absolute; top:8px; right:8px; background:var(--active-text-blue); color:white; font-size:10px; font-weight:800; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center;">{{ unread_chat_count }}</span>
                 {% endif %}
             </a>
-            <a href="{% url 'build:payment_dashboard' %}" class="rail-item {% if request.resolver_match.url_name == 'payment_dashboard' %}active{% endif %}" data-title="Premium"><i class="fa-solid fa-gem"></i></a>
-            <a href="{% url 'build:notifications_list' %}" class="rail-item {% if request.resolver_match.url_name == 'notifications_list' %}active{% endif %}" data-title="Bildirishnomalar">
+            <a href="{% url 'build:payment_dashboard' %}" class="rail-item {% if request.resolver_match.url_name == 'payment_dashboard' %}active{% endif %}" data-title="{% translate 'Premium' %}"><i class="fa-solid fa-gem"></i></a>
+            <a href="{% url 'build:notifications_list' %}" class="rail-item {% if request.resolver_match.url_name == 'notifications_list' %}active{% endif %}" data-title="{% translate 'Bildirishnomalar' %}">
                 <i class="fa-solid fa-bell"></i>
                 {% if unread_notifications_count > 0 %}
                     <span style="position:absolute; top:8px; right:8px; background:#ef4444; color:white; font-size:10px; font-weight:800; border-radius:50%; width:16px; height:16px; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-panel);">{{ unread_notifications_count }}</span>
@@ -411,13 +411,13 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
       <div class="logo-icon"><i class="fa-solid fa-layer-group"></i></div>
       <span class="logo-text">{% trans "EasyBuild" %}</span>
     </div>
-    <button class="hbtn" onclick="openNewChat()" title="Yangi chat"><i class="fa-solid fa-pen-to-square"></i></button>
-    <a href="/" class="hbtn" title="Bosh sahifa"><i class="fa-solid fa-house"></i></a>
+    <button class="hbtn" onclick="openNewChat()" title="{% translate 'Yangi chat' %}"><i class="fa-solid fa-pen-to-square"></i></button>
+    <a href="/" class="hbtn" title="{% translate 'Bosh sahifa' %}"><i class="fa-solid fa-house"></i></a>
   </div>
   <div class="sb-search">
     <div class="si">
       <i class="fa-solid fa-magnifying-glass"></i>
-      <input id="srch" placeholder="Qidirish..." oninput="filterContacts(this.value)">
+      <input id="srch" placeholder="{% translate 'Qidirish...' %}" oninput="filterContacts(this.value)">
     </div>
   </div>
   <div class="contacts" id="contacts"><div class="sec">{% trans "Suhbatlar" %}</div></div>
@@ -428,7 +428,7 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
     <i class="fa-solid fa-helmet-safety bg-watermark" style="position: absolute; z-index: 0;"></i>
   <div class="ch" id="ch" style="display:none; position:relative; z-index:2;">
     <button class="hbtn bk" id="bk" onclick="closeSidebar()" style="display:none"><i class="fa-solid fa-arrow-left"></i></button>
-    <div class="ca-wrap" style="cursor:pointer;" onclick="goToSettings()" title="Sozlamalarga o'tish">
+    <div class="ca-wrap" style="cursor:pointer;" onclick="goToSettings()" title="{% translate 'Sozlamalarga o\'tish' %}">
       <img src="" class="ca" id="ca" onerror="this.style.display='none';document.getElementById('cap').style.display='flex'">
       <div class="avp ca" id="cap" style="display:none;width:40px;height:40px;font-size:15px"></div>
       <div class="con-dot" id="cdot" style="display:none"></div>
@@ -443,8 +443,8 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
       <div class="cs" id="cst">{% trans "online" %}</div>
     </div>
     <div style="display:flex;gap:6px;margin-left:auto">
-      <button class="hbtn" onclick="startCall('audio')" title="Ovozli qo'ng'iroq"><i class="fa-solid fa-phone"></i></button>
-      <button class="hbtn" onclick="startCall('video')" title="Video qo'ng'iroq"><i class="fa-solid fa-video"></i></button>
+      <button class="hbtn" onclick="startCall('audio')" title="{% translate 'Ovozli qo\'ng\'iroq' %}"><i class="fa-solid fa-phone"></i></button>
+      <button class="hbtn" onclick="startCall('video')" title="{% translate 'Video qo\'ng\'iroq' %}"><i class="fa-solid fa-video"></i></button>
     </div>
   </div>
 
@@ -499,18 +499,18 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
     </div>
 
     <div class="ir">
-      <label class="attach-btn" id="attach-btn" title="Fayl, rasm yoki video jo'natish">
+      <label class="attach-btn" id="attach-btn" title="{% translate 'Fayl, rasm yoki video jo\'natish' %}">
          <input type="file" id="file-input" style="display:none" accept="image/*,video/*,audio/*,.pdf,.doc,.docx" onchange="if(this.files[0]) { window.uploadFile(this.files[0]); this.value=''; }">
          <i class="fa-solid fa-paperclip"></i>
       </label>
       <div class="ib" id="input-box" style="position:relative;">
-        <textarea id="inp" rows="1" placeholder="Xabar yozing..." onkeydown="onKey(event)" oninput="resize(this);onType();updateActionBtn()"></textarea>
+        <textarea id="inp" rows="1" placeholder="{% translate 'Xabar yozing...' %}" onkeydown="onKey(event)" oninput="resize(this);onType();updateActionBtn()"></textarea>
       </div>
       
       <!-- Gorgeous Instagram Style Recording UI -->
       <div id="recording-ui" style="display:none; flex:1; align-items:center; background:rgba(0, 0, 0, 0.25); border-radius:24px; padding:0 16px; justify-content:space-between; height:48px; border:1px solid rgba(255,255,255,0.03);">
           
-          <button onclick="cancelRecording(event)" style="background:rgba(239, 68, 68, 0.1); border:none; color:#ef4444; cursor:pointer; font-size:15px; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; transition:0.2s;" onmouseover="this.style.background='#ef4444'; this.style.color='#fff';" title="Bekor qilish">
+          <button onclick="cancelRecording(event)" style="background:rgba(239, 68, 68, 0.1); border:none; color:#ef4444; cursor:pointer; font-size:15px; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; transition:0.2s;" onmouseover="this.style.background='#ef4444'; this.style.color='#fff';" title="{% translate 'Bekor qilish' %}">
               <i class="fa-solid fa-trash"></i>
           </button>
           
@@ -565,8 +565,8 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
         
         <!-- Actions -->
         <div style="padding:20px 24px; border-top:1px solid rgba(255,255,255,0.05); background:rgba(0,0,0,0.2); display:flex; gap:12px;">
-            <button onclick="document.getElementById('chat-settings-modal').style.display='none'; renameGroup()" style="flex:1; padding:12px; background:rgba(255,255,255,0.03); color:#fff; border:1px solid rgba(255,255,255,0.1); border-radius:14px; cursor:pointer; font-weight:600; font-size:13px; display:flex; flex-direction:column; align-items:center; gap:6px; transition:0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.03)'"><i class="fa-solid fa-pen" style="font-size:16px; color:#94a3b8;"></i> Nomni o'zgartirish</button>
-            <button onclick="leaveGroup()" style="flex:1; padding:12px; background:rgba(239, 68, 68, 0.1); color:#ef4444; border:1px solid rgba(239, 68, 68, 0.2); border-radius:14px; cursor:pointer; font-weight:600; font-size:13px; display:flex; flex-direction:column; align-items:center; gap:6px; transition:0.2s;" onmouseover="this.style.background='rgba(239, 68, 68, 0.2)'" onmouseout="this.style.background='rgba(239, 68, 68, 0.1)'"><i class="fa-solid fa-arrow-right-from-bracket" style="font-size:16px;"></i> Guruhni tark etish</button>
+            <button onclick="document.getElementById('chat-settings-modal').style.display='none'; renameGroup()" style="flex:1; padding:12px; background:rgba(255,255,255,0.03); color:#fff; border:1px solid rgba(255,255,255,0.1); border-radius:14px; cursor:pointer; font-weight:600; font-size:13px; display:flex; flex-direction:column; align-items:center; gap:6px; transition:0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.03)'"><i class="fa-solid fa-pen" style="font-size:16px; color:#94a3b8;"></i> {% translate "Nomni o'zgartirish" %}</button>
+            <button onclick="leaveGroup()" style="flex:1; padding:12px; background:rgba(239, 68, 68, 0.1); color:#ef4444; border:1px solid rgba(239, 68, 68, 0.2); border-radius:14px; cursor:pointer; font-weight:600; font-size:13px; display:flex; flex-direction:column; align-items:center; gap:6px; transition:0.2s;" onmouseover="this.style.background='rgba(239, 68, 68, 0.2)'" onmouseout="this.style.background='rgba(239, 68, 68, 0.1)'"><i class="fa-solid fa-arrow-right-from-bracket" style="font-size:16px;"></i> {% translate "Guruhni tark etish" %}</button>
         </div>
     </div>
 </div>
@@ -577,7 +577,7 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
         
         <!-- Header -->
         <div style="padding:20px 24px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.05); background:rgba(255,255,255,0.02);">
-            <h3 style="margin:0; font-size:16px; font-weight:800; color:#fff; display:flex; align-items:center; gap:8px;"><i class="fa-solid fa-user" style="color:var(--active-text-blue);"></i> Foydalanuvchi Ma'lumotlari</h3>
+            <h3 style="margin:0; font-size:16px; font-weight:800; color:#fff; display:flex; align-items:center; gap:8px;"><i class="fa-solid fa-user" style="color:var(--active-text-blue);"></i> {% translate "Foydalanuvchi Ma'lumotlari" %}</h3>
             <button onclick="document.getElementById('personal-settings-modal').style.display='none'" style="background:rgba(255,255,255,0.05); border:none; color:#a1a1aa; cursor:pointer; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; transition:0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'; this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.color='#a1a1aa'"><i class="fa-solid fa-xmark"></i></button>
         </div>
         
@@ -624,8 +624,8 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
         
         <!-- Actions -->
         <div style="padding:20px 24px; border-top:1px solid rgba(255,255,255,0.05); background:rgba(0,0,0,0.2); display:flex; gap:12px;">
-            <button onclick="document.getElementById('personal-settings-modal').style.display='none';" style="flex:1; padding:12px; background:rgba(255,255,255,0.03); color:#fff; border:1px solid rgba(255,255,255,0.1); border-radius:14px; cursor:pointer; font-weight:600; font-size:13px; display:flex; flex-direction:column; align-items:center; gap:6px; transition:0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.03)'"><i class="fa-solid fa-message" style="font-size:16px; color:#94a3b8;"></i> Xabar yozish</button>
-            <button onclick="showToast('Bloklash funksiyasi tez kunda! 🚀', true)" style="flex:1; padding:12px; background:rgba(239, 68, 68, 0.1); color:#ef4444; border:1px solid rgba(239, 68, 68, 0.2); border-radius:14px; cursor:pointer; font-weight:600; font-size:13px; display:flex; flex-direction:column; align-items:center; gap:6px; transition:0.2s;" onmouseover="this.style.background='rgba(239, 68, 68, 0.2)'" onmouseout="this.style.background='rgba(239, 68, 68, 0.1)'"><i class="fa-solid fa-ban" style="font-size:16px;"></i> Bloklash</button>
+            <button onclick="document.getElementById('personal-settings-modal').style.display='none';" style="flex:1; padding:12px; background:rgba(255,255,255,0.03); color:#fff; border:1px solid rgba(255,255,255,0.1); border-radius:14px; cursor:pointer; font-weight:600; font-size:13px; display:flex; flex-direction:column; align-items:center; gap:6px; transition:0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.03)'"><i class="fa-solid fa-message" style="font-size:16px; color:#94a3b8;"></i> {% translate "Xabar yozish" %}</button>
+            <button onclick="showToast('{% translate \'Bloklash funksiyasi tez kunda!\' %}', true)" style="flex:1; padding:12px; background:rgba(239, 68, 68, 0.1); color:#ef4444; border:1px solid rgba(239, 68, 68, 0.2); border-radius:14px; cursor:pointer; font-weight:600; font-size:13px; display:flex; flex-direction:column; align-items:center; gap:6px; transition:0.2s;" onmouseover="this.style.background='rgba(239, 68, 68, 0.2)'" onmouseout="this.style.background='rgba(239, 68, 68, 0.1)'"><i class="fa-solid fa-ban" style="font-size:16px;"></i> {% translate "Bloklash" %}</button>
         </div>
     </div>
 </div>
@@ -715,7 +715,7 @@ body::after{content:'';position:fixed;bottom:-30%;right:5%;width:500px;height:50
             <h3 style="margin:0; font-size:16px; font-weight:800; color:#fff;">{% trans "Guruh nomini o'zgartirish" %}</h3>
         </div>
         <div style="padding:24px;">
-            <input type="text" id="rename-group-input" style="width:100%; padding:14px 16px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); border-radius:12px; color:#fff; font-size:15px; outline:none; transition:0.2s;" onfocus="this.style.borderColor='var(--active-text-blue)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'" placeholder="Yangi nomni kiriting...">
+            <input type="text" id="rename-group-input" style="width:100%; padding:14px 16px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); border-radius:12px; color:#fff; font-size:15px; outline:none; transition:0.2s;" onfocus="this.style.borderColor='var(--active-text-blue)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'" placeholder="{% translate 'Yangi nomni kiriting...' %}">
         </div>
         <div style="padding:16px 24px; background:rgba(0,0,0,0.2); border-top:1px solid rgba(255,255,255,0.05); display:flex; gap:12px; justify-content:flex-end;">
             <button onclick="document.getElementById('rename-group-modal').style.display='none'" style="padding:10px 20px; background:transparent; color:#94a3b8; border:none; cursor:pointer; font-weight:600; font-size:14px;">{% trans "Bekor qilish" %}</button>
@@ -955,7 +955,7 @@ async function openRoom(id){
     }
     
     // Add click handler to navigate to settings
-    document.getElementById('cn').innerHTML = `<span style="cursor:pointer;" onclick="goToSettings()" title="Sozlamalarga o'tish">${esc(contact.name)}</span>`;
+    document.getElementById('cn').innerHTML = `<span style="cursor:pointer;" onclick="goToSettings()" title="{% translate 'Sozlamalarga o\'tish' %}">${esc(contact.name)}</span>`;
     
     const cap=document.getElementById('cap');
     const ca=document.getElementById('ca');
@@ -992,15 +992,15 @@ async function openRoom(id){
       const info = contact.payment_info;
       let statusStr = "";
       if (info.subscription_status) {
-          statusStr = `Doimiy obuna faol (${info.subscription_plan})`;
+          statusStr = "{% translate 'Doimiy obuna faol' %} (" + (info.subscription_plan || '') + ")";
       } else if (info.is_temp_active) {
-          statusStr = `Vaqtinchalik kirish faol (${info.pending_plan}) — 24 soatlik tekshiruvda`;
+          statusStr = "{% translate 'Vaqtinchalik kirish faol' %} (" + (info.pending_plan || '') + ") — {% translate '24 soatlik tekshiruvda' %}";
       } else if (info.request_status === 'rejected') {
-          statusStr = `To'lov rad etilgan (${info.pending_plan || ''})`;
+          statusStr = "{% translate 'To\'lov rad etilgan' %} (" + (info.pending_plan || '') + ")";
       } else if (info.request_status === 'pending') {
-          statusStr = `To'lov tekshirilmoqda (${info.pending_plan}) — kuting...`;
+          statusStr = "{% translate 'To\'lov tekshirilmoqda' %} (" + (info.pending_plan || '') + ") — {% translate 'kuting...' %}";
       } else {
-          statusStr = `Obuna faol emas`;
+          statusStr = "{% translate 'Obuna faol emas' %}";
       }
       textSpan.textContent = statusStr;
       actionsDiv.innerHTML = '';
@@ -1110,19 +1110,19 @@ function goToSettings() {
         mSocials.innerHTML = '';
         if (contact.socials) {
             if (contact.socials.phone) {
-                mSocials.innerHTML += `<a href="tel:${contact.socials.phone}" title="Telefon" style="width:36px; height:36px; border-radius:12px; background:rgba(16,185,129,0.1); color:#10b981; display:flex; align-items:center; justify-content:center; font-size:16px; transition:0.2s; border:1px solid rgba(16,185,129,0.2);" onmouseover="this.style.background='rgba(16,185,129,0.2)'" onmouseout="this.style.background='rgba(16,185,129,0.1)'"><i class="fa-solid fa-phone"></i></a>`;
+                mSocials.innerHTML += `<a href="tel:${contact.socials.phone}" title="{% translate 'Telefon' %}" style="width:36px; height:36px; border-radius:12px; background:rgba(16,185,129,0.1); color:#10b981; display:flex; align-items:center; justify-content:center; font-size:16px; transition:0.2s; border:1px solid rgba(16,185,129,0.2);" onmouseover="this.style.background='rgba(16,185,129,0.2)'" onmouseout="this.style.background='rgba(16,185,129,0.1)'"><i class="fa-solid fa-phone"></i></a>`;
             }
             if (contact.socials.telegram_url) {
-                mSocials.innerHTML += `<a href="${contact.socials.telegram_url}" target="_blank" title="Telegram" style="width:36px; height:36px; border-radius:12px; background:rgba(41,182,246,0.1); color:#29b6f6; display:flex; align-items:center; justify-content:center; font-size:18px; transition:0.2s; border:1px solid rgba(41,182,246,0.2);" onmouseover="this.style.background='rgba(41,182,246,0.2)'" onmouseout="this.style.background='rgba(41,182,246,0.1)'"><i class="fa-brands fa-telegram"></i></a>`;
+                mSocials.innerHTML += `<a href="${contact.socials.telegram_url}" target="_blank" title="{% translate 'Telegram' %}" style="width:36px; height:36px; border-radius:12px; background:rgba(41,182,246,0.1); color:#29b6f6; display:flex; align-items:center; justify-content:center; font-size:18px; transition:0.2s; border:1px solid rgba(41,182,246,0.2);" onmouseover="this.style.background='rgba(41,182,246,0.2)'" onmouseout="this.style.background='rgba(41,182,246,0.1)'"><i class="fa-brands fa-telegram"></i></a>`;
             }
             if (contact.socials.whatsapp_url) {
-                mSocials.innerHTML += `<a href="${contact.socials.whatsapp_url}" target="_blank" title="WhatsApp" style="width:36px; height:36px; border-radius:12px; background:rgba(37,211,102,0.1); color:#25d366; display:flex; align-items:center; justify-content:center; font-size:18px; transition:0.2s; border:1px solid rgba(37,211,102,0.2);" onmouseover="this.style.background='rgba(37,211,102,0.2)'" onmouseout="this.style.background='rgba(37,211,102,0.1)'"><i class="fa-brands fa-whatsapp"></i></a>`;
+                mSocials.innerHTML += `<a href="${contact.socials.whatsapp_url}" target="_blank" title="{% translate 'WhatsApp' %}" style="width:36px; height:36px; border-radius:12px; background:rgba(37,211,102,0.1); color:#25d366; display:flex; align-items:center; justify-content:center; font-size:18px; transition:0.2s; border:1px solid rgba(37,211,102,0.2);" onmouseover="this.style.background='rgba(37,211,102,0.2)'" onmouseout="this.style.background='rgba(37,211,102,0.1)'"><i class="fa-brands fa-whatsapp"></i></a>`;
             }
             if (contact.socials.instagram_url) {
-                mSocials.innerHTML += `<a href="${contact.socials.instagram_url}" target="_blank" title="Instagram" style="width:36px; height:36px; border-radius:12px; background:rgba(225,48,108,0.1); color:#e1306c; display:flex; align-items:center; justify-content:center; font-size:18px; transition:0.2s; border:1px solid rgba(225,48,108,0.2);" onmouseover="this.style.background='rgba(225,48,108,0.2)'" onmouseout="this.style.background='rgba(225,48,108,0.1)'"><i class="fa-brands fa-instagram"></i></a>`;
+                mSocials.innerHTML += `<a href="${contact.socials.instagram_url}" target="_blank" title="{% translate 'Instagram' %}" style="width:36px; height:36px; border-radius:12px; background:rgba(225,48,108,0.1); color:#e1306c; display:flex; align-items:center; justify-content:center; font-size:18px; transition:0.2s; border:1px solid rgba(225,48,108,0.2);" onmouseover="this.style.background='rgba(225,48,108,0.2)'" onmouseout="this.style.background='rgba(225,48,108,0.1)'"><i class="fa-brands fa-instagram"></i></a>`;
             }
             if (contact.socials.facebook_url) {
-                mSocials.innerHTML += `<a href="${contact.socials.facebook_url}" target="_blank" title="Facebook" style="width:36px; height:36px; border-radius:12px; background:rgba(24,119,242,0.1); color:#1877f2; display:flex; align-items:center; justify-content:center; font-size:18px; transition:0.2s; border:1px solid rgba(24,119,242,0.2);" onmouseover="this.style.background='rgba(24,119,242,0.2)'" onmouseout="this.style.background='rgba(24,119,242,0.1)'"><i class="fa-brands fa-facebook"></i></a>`;
+                mSocials.innerHTML += `<a href="${contact.socials.facebook_url}" target="_blank" title="{% translate 'Facebook' %}" style="width:36px; height:36px; border-radius:12px; background:rgba(24,119,242,0.1); color:#1877f2; display:flex; align-items:center; justify-content:center; font-size:18px; transition:0.2s; border:1px solid rgba(24,119,242,0.2);" onmouseover="this.style.background='rgba(24,119,242,0.2)'" onmouseout="this.style.background='rgba(24,119,242,0.1)'"><i class="fa-brands fa-facebook"></i></a>`;
             }
         }
         
@@ -1327,7 +1327,7 @@ function appendMsg(m,scroll=true,isNew=false){
                 </div>
               </div>
               
-              <div onclick="toggleSpeed('${aid}', this)" style="flex-shrink:0; width:24px; height:24px; background:${speedBg}; color:${speedColor}; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; cursor:pointer; transition:0.2s; font-weight:800; user-select:none; margin-top:-14px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);" title="Tezlik">
+              <div onclick="toggleSpeed('${aid}', this)" style="flex-shrink:0; width:24px; height:24px; background:${speedBg}; color:${speedColor}; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; cursor:pointer; transition:0.2s; font-weight:800; user-select:none; margin-top:-14px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);" title="{% translate 'Tezlik' %}">
                 1x
               </div>
               
@@ -1349,10 +1349,10 @@ function appendMsg(m,scroll=true,isNew=false){
   
   const actHtml = `
     <div class="msg-actions">
-      <button class="msg-act-btn reply" title="Javob berish" onclick="startReply('${mid}')"><i class="fa-solid fa-reply"></i></button>
-      ${isOut && !m.file_url ? `<button class="msg-act-btn edit" title="Tahrirlash" onclick="startEdit('${mid}')"><i class="fa-solid fa-pen"></i></button>` : ''}
-      <button class="msg-act-btn" title="Ulashish" onclick="shareMessage('${mid}')"><i class="fa-solid fa-share-nodes"></i></button>
-      ${isOut ? `<button class="msg-act-btn delete" title="O'chirish" onclick="deleteMessage('${mid}')"><i class="fa-solid fa-trash"></i></button>` : ''}
+      <button class="msg-act-btn reply" title="{% translate 'Javob berish' %}" onclick="startReply('${mid}')"><i class="fa-solid fa-reply"></i></button>
+      ${isOut && !m.file_url ? `<button class="msg-act-btn edit" title="{% translate 'Tahrirlash' %}" onclick="startEdit('${mid}')"><i class="fa-solid fa-pen"></i></button>` : ''}
+      <button class="msg-act-btn" title="{% translate 'Ulashish' %}" onclick="shareMessage('${mid}')"><i class="fa-solid fa-share-nodes"></i></button>
+      ${isOut ? `<button class="msg-act-btn delete" title="{% translate 'O\'chirish' %}" onclick="deleteMessage('${mid}')"><i class="fa-solid fa-trash"></i></button>` : ''}
     </div>
   `;
   
@@ -2235,7 +2235,7 @@ async function updateGroupData(data) {
         const resp = await res.json();
         if (resp.success) {
             if (data.name) {
-                document.getElementById('cn').innerHTML = `<span style="cursor:pointer;" onclick="goToSettings()" title="Sozlamalarga o'tish">${esc(resp.new_name)}</span>`;
+                document.getElementById('cn').innerHTML = `<span style="cursor:pointer;" onclick="goToSettings()" title="{% translate 'Sozlamalarga o\'tish' %}">${esc(resp.new_name)}</span>`;
                 document.getElementById('csm-name').textContent = resp.new_name;
                 contact.name = resp.new_name;
                 const item = document.getElementById('ci_' + roomId);

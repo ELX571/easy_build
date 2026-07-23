@@ -305,7 +305,7 @@
             </div>
             <div style="display: flex; justify-content: flex-end; align-items: center; gap: 20px;">
                 <a href="{% url 'build:profile' %}">
-                    <img src="{{ user.profile.get_avatar_url }}" alt="Profil" class="profile-avatar">
+                    <img src="{{ user.profile.get_avatar_url }}" alt="{% translate 'Profil' %}" class="profile-avatar">
                 </a>
             </div>
         </div>
@@ -313,18 +313,18 @@
 
     <div class="sidebar-container">
         <div class="icon-rail">
-            <a href="{% url 'build:home' %}" class="rail-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}" data-title="Bosh sahifa"><i class="fa-solid fa-house"></i></a>
-            <a href="{% url 'build:network' %}" class="rail-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}" data-title="Hamkasblar"><i class="fa-solid fa-users"></i></a>
-            <a href="{% url 'build:market' %}" class="rail-item {% if request.resolver_match.url_name == 'market' %}active{% endif %}" data-title="Market Pro"><i class="fa-solid fa-store"></i></a>
-            <a href="{% url 'build:builder_list' %}" class="rail-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" data-title="Usta Qidirish"><i class="fa-solid fa-helmet-safety"></i></a>
-            <a href="{% url 'chat:chat' %}" class="rail-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}" data-title="Chatlar">
+            <a href="{% url 'build:home' %}" class="rail-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}" data-title="{% translate 'Bosh sahifa' %}"><i class="fa-solid fa-house"></i></a>
+            <a href="{% url 'build:network' %}" class="rail-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}" data-title="{% translate 'Hamkasblar' %}"><i class="fa-solid fa-users"></i></a>
+            <a href="{% url 'build:market' %}" class="rail-item {% if request.resolver_match.url_name == 'market' %}active{% endif %}" data-title="{% translate 'Market Pro' %}"><i class="fa-solid fa-store"></i></a>
+            <a href="{% url 'build:builder_list' %}" class="rail-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" data-title="{% translate 'Usta Qidirish' %}"><i class="fa-solid fa-helmet-safety"></i></a>
+            <a href="{% url 'chat:chat' %}" class="rail-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}" data-title="{% translate 'Chatlar' %}">
                 <i class="fa-regular fa-comment-dots"></i>
                 {% if unread_chat_count > 0 %}
                 <span style="position:absolute; top:8px; right:8px; background:var(--active-text-blue); color:white; font-size:10px; font-weight:800; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center;">{{ unread_chat_count }}</span>
                 {% endif %}
             </a>
-            <a href="{% url 'build:payment_dashboard' %}" class="rail-item {% if request.resolver_match.url_name == 'payment_dashboard' %}active{% endif %}" data-title="Premium"><i class="fa-solid fa-gem"></i></a>
-            <a href="{% url 'build:notifications_list' %}" class="rail-item {% if request.resolver_match.url_name == 'notifications_list' %}active{% endif %}" data-title="Bildirishnomalar">
+            <a href="{% url 'build:payment_dashboard' %}" class="rail-item {% if request.resolver_match.url_name == 'payment_dashboard' %}active{% endif %}" data-title="{% translate 'Premium' %}"><i class="fa-solid fa-gem"></i></a>
+            <a href="{% url 'build:notifications_list' %}" class="rail-item {% if request.resolver_match.url_name == 'notifications_list' %}active{% endif %}" data-title="{% translate 'Bildirishnomalar' %}">
                 <i class="fa-solid fa-bell"></i>
                 {% if unread_notifications_count > 0 %}
                     <span style="position:absolute; top:8px; right:8px; background:#ef4444; color:white; font-size:10px; font-weight:800; border-radius:50%; width:16px; height:16px; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-panel);">{{ unread_notifications_count }}</span>
@@ -1099,7 +1099,7 @@
                 <div class="ttc-left">
                     <div class="ttc-icon"><i class="fa-solid fa-users"></i></div>
                     <div class="ttc-inputs">
-                        <input type="text" id="teamNameInput" value="{{ request.user.first_name }}" placeholder="Jamoa nomi">
+                        <input type="text" id="teamNameInput" value="{{ request.user.first_name }}" placeholder="{% translate 'Jamoa nomi' %}">
                         <button type="button" class="btn-submit" style="width: auto; padding: 10px 20px; font-size: 14px;" onclick="updateTeamName()">{% trans "Saqlash" %}</button>
                     </div>
                 </div>
@@ -1115,7 +1115,7 @@
             <div class="team-members-grid">
                 {% for member in profile.builder_info.members.all %}
                 <div class="tm-card" id="team-member-{{ member.id }}">
-                    <img src="{{ member.profile.get_avatar_url }}" alt="Avatar">
+                    <img src="{{ member.profile.get_avatar_url }}" alt="{% translate 'Avatar' %}">
                     <div class="tm-name">{{ member.get_full_name|default:member.username }}</div>
                     <div class="tm-role">{% trans "Qurilish jamoasi" %}</div>
                     <button class="tm-remove-btn" onclick="removeTeamMember({{ member.id }}, '{{ member.get_full_name|default:member.username }}')">
@@ -1134,7 +1134,7 @@
             <div class="joined-teams-grid">
                 {% for joined_team in request.user.joined_teams.all %}
                 <div class="tm-card">
-                    <img src="{{ joined_team.profile.get_avatar_url }}" alt="Avatar">
+                    <img src="{{ joined_team.profile.get_avatar_url }}" alt="{% translate 'Avatar' %}">
                     <div class="tm-name">{{ joined_team.profile.user.first_name }}</div>
                     <div class="tm-role">{% trans "Jamoa sardori" %}</div>
                     <div style="margin-top: 15px; font-size: 13px; color: var(--text-muted);"><i class="fa-solid fa-check"></i> {% trans "Faol a'zo" %}</div>
@@ -1363,7 +1363,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <p style="color:#94a3b8;font-size:14px;margin-bottom:20px;">{% trans "Foydalanuvchini username yoki telefon raqami bo'yicha qidiring." %}</p>
         
         <div style="display:flex;gap:10px;margin-bottom:20px;">
-            <input type="text" id="memberSearchInput" placeholder="Qidiruv..." style="flex:1;padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(0,0,0,0.2);color:#fff;font-size:15px;outline:none;" onkeyup="if(event.key === 'Enter' || this.value.length >= 2) searchTeamMember()">
+            <input type="text" id="memberSearchInput" placeholder="{% translate 'Qidiruv...' %}" style="flex:1;padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(0,0,0,0.2);color:#fff;font-size:15px;outline:none;" onkeyup="if(event.key === 'Enter' || this.value.length >= 2) searchTeamMember()">
             <button type="button" onclick="searchTeamMember()" class="btn-submit" style="width:auto;padding:0 20px;"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
         

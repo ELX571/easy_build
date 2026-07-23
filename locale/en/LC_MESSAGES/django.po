@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-22 15:33+0500\n"
+"POT-Creation-Date: 2026-07-23 10:05+0500\n"
 "Language: en\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -362,6 +362,9 @@ msgstr "Account"
 msgid "Profil"
 msgstr "Profile"
 
+msgid "Preview"
+msgstr "Preview"
+
 msgid "Shahar / Viloyat"
 msgstr "City / Region"
 
@@ -438,9 +441,6 @@ msgstr "&times;"
 msgid "Aloqa usullari"
 msgstr "Communication methods"
 
-msgid "Navigator"
-msgstr "Navigator"
-
 # Navigation
 msgid "Bosh sahifa"
 msgstr "Home"
@@ -448,11 +448,27 @@ msgstr "Home"
 msgid "Hamkasblar"
 msgstr "Colleagues"
 
-msgid "Market Pro (B2B)"
-msgstr "Market Pro (B2B)"
+msgid "Market Pro"
+msgstr "Market Pro"
 
 msgid "Usta Qidirish"
 msgstr "Find a Builder"
+
+#| msgid "Suhbatlar"
+msgid "Chatlar"
+msgstr "Chats"
+
+msgid "Premium"
+msgstr "Premium"
+
+msgid "Bildirishnomalar"
+msgstr "Notifications"
+
+msgid "Navigator"
+msgstr "Navigator"
+
+msgid "Market Pro (B2B)"
+msgstr "Market Pro (B2B)"
 
 msgid "Xabarlar"
 msgstr "Messages"
@@ -541,9 +557,6 @@ msgstr "Republic of Karakalpakstan"
 msgid "Minimal Reyting"
 msgstr "Minimum Rating"
 
-msgid "Premium"
-msgstr "Premium"
-
 msgid "Yuqori"
 msgstr "High"
 
@@ -552,6 +565,13 @@ msgstr "Good"
 
 msgid "Qidirish"
 msgstr "Search"
+
+msgid "EasyBuild Premium"
+msgstr "EasyBuild Premium"
+
+#| msgid "Tasdiqlangan usta"
+msgid "Tasdiqlangan"
+msgstr "Verified builder"
 
 msgid "Usta o'zi haqida ma'lumot qoldirmagan."
 msgstr "The builder has not provided any information."
@@ -619,6 +639,18 @@ msgstr "This is your own listing!"
 msgid "Kerakli e\\"
 msgstr "Required e\\"
 
+msgid "Avatar"
+msgstr "Avatar"
+
+#| msgid "Premium"
+msgid "Premium Usta"
+msgstr "Premium"
+
+# Team
+#| msgid "Jamoa Sozlamalari"
+msgid "Profil Sozlamalari"
+msgstr "Team Settings"
+
 msgid ""
 "Professional qurilish materiallari va texnika ijarasi bozori tez kunda ishga "
 "tushadi."
@@ -636,7 +668,6 @@ msgid ""
 "imkoniyati."
 msgstr "Opportunity to conclude direct reliable contracts between companies."
 
-#| msgid "Xatolik yuz berdi!"
 msgid "Chat boshlashda xatolik yuz berdi!"
 msgstr "An error occurred!"
 
@@ -683,13 +714,19 @@ msgid ""
 "ko'rinadi."
 msgstr "No messages received yet. New notifications will appear here."
 
-msgid "TO'LOV TIZIMI VAQTINCHALIK ISHLAMAYABDI, TEXNIK ISHLAR OLIB BORILMOQDA"
-msgstr "PAYMENT SYSTEM IS TEMPORARILY DOWN, TECHNICAL MAINTENANCE IN PROGRESS"
+#| msgid "Jamoa sozlamalari"
+msgid "Profil sozlamalari"
+msgstr "Team Settings"
 
-msgid ""
-"Keltirilgan noqulayliklar uchun uzr so'raymiz. Tez orada to'lov tizimi qayta "
-"tiklanadi."
-msgstr "We apologize for the inconvenience. The payment system will be restored shortly."
+msgid "KARTA EGASI"
+msgstr "KARTA EGASI"
+
+#| msgid "Tanlash"
+msgid "Nusxalash"
+msgstr "Choose"
+
+msgid "Tekshirilmoqda..."
+msgstr "Verifying..."
 
 msgid "Oxirgi so'rovingiz:"
 msgstr "Your last request:"
@@ -735,6 +772,9 @@ msgstr "Select a subscription plan:"
 msgid "so'm"
 msgstr "UZS"
 
+msgid "Ushbu tarif sotilmaydi, faqat adminlar tomonidan sovg\\"
+msgstr "Ushbu tarif sotilmaydi, faqat adminlar tomonidan sovg"
+
 msgid "Maxsus"
 msgstr "Special"
 
@@ -757,11 +797,9 @@ msgstr "Yearly"
 msgid "Umumiy to'lov summasi"
 msgstr "Total payment amount"
 
-#| msgid "Yillik"
 msgid "Yillik obuna"
 msgstr "Yearly"
 
-#| msgid "Faol obuna"
 msgid "Oylik obuna"
 msgstr "Active"
 
@@ -782,9 +820,6 @@ msgstr "PNG, JPG or PDF format"
 
 msgid "Rasmni o'zgartirish"
 msgstr "Toggle theme"
-
-msgid "Tekshirilmoqda..."
-msgstr "Verifying..."
 
 msgid "To'lovni tasdiqlash"
 msgstr "Confirm payment"
@@ -811,6 +846,9 @@ msgstr "The conversation with the admin has not started yet."
 
 msgid "To'lov haqida savollaringiz bo'lsa bu yerga yozing."
 msgstr "Write here if you have any questions about payment."
+
+msgid "Xabaringizni yozing..."
+msgstr "Xabaringizni yozing..."
 
 msgid "Quruvchilar obuna paketlari"
 msgstr "Builders subscription packages"
@@ -885,6 +923,10 @@ msgstr "Upload image:"
 msgid "Postni joylash"
 msgstr "Post Listing"
 
+#| msgid "Faol ustalar"
+msgid "Ustalar"
+msgstr "Builders"
+
 msgid "Tez Kunda!"
 msgstr "Fast Day!"
 
@@ -914,6 +956,10 @@ msgstr "Delivery"
 msgid "Xavfsiz to'lov"
 msgstr "Security & Password"
 
+#| msgid "Email manzil (ixtiyoriy)"
+msgid "Email manzilingiz..."
+msgstr "Email (Optional)"
+
 msgid "Jami e'lonlar"
 msgstr "Neon framed listings"
 
@@ -923,8 +969,9 @@ msgstr "Builders"
 msgid "Ortga"
 msgstr "Back"
 
-msgid "Bildirishnomalar"
-msgstr "Notifications"
+#| msgid "Faol foydalanuvchi"
+msgid "Tasdiqlangan foydalanuvchi"
+msgstr "Username"
 
 msgid "Reyting & Statistika"
 msgstr "Ranking & Statistics"
@@ -934,6 +981,9 @@ msgstr "Liked"
 
 msgid "Saqlanganlar"
 msgstr "Verified builder"
+
+msgid "avatar"
+msgstr "avatar"
 
 msgid "Siz hali biror marta e'lon joylashtirmadingiz."
 msgstr "You have not posted an ad yet."
@@ -969,9 +1019,6 @@ msgstr "Personal Information"
 
 msgid "Xavfsizlik va Parol"
 msgstr "Security & Password"
-
-msgid "EasyBuild Premium"
-msgstr "EasyBuild Premium"
 
 msgid "Jamoa sozlamalari"
 msgstr "Team Settings"
@@ -1055,7 +1102,7 @@ msgstr "Your payment receipt is being verified by an admin."
 msgid "Yangilash"
 msgstr "Edit"
 
-#| msgid "-20%% foyda"
+#, python-format
 msgid "-25%% foyda"
 msgstr "-20%% profit"
 
@@ -1150,6 +1197,10 @@ msgstr "It is given only to the best, most reliable masters"
 msgid "Jamoa Sozlamalari"
 msgstr "Team Settings"
 
+#| msgid "Jamoa sardori"
+msgid "Jamoa nomi"
+msgstr "Team Settings"
+
 msgid "A'zo qo'shish"
 msgstr "Add Member"
 
@@ -1184,11 +1235,19 @@ msgstr "Add Member"
 msgid "Foydalanuvchini username yoki telefon raqami bo'yicha qidiring."
 msgstr "Search for a user by username or phone number."
 
+# Home page
+#| msgid "Qidirish..."
+msgid "Qidiruv..."
+msgstr "Search..."
+
 msgid "Taklif"
 msgstr "Invite"
 
 msgid "To'lovlarni Tasdiqlash Dashbordi"
 msgstr "Payment Confirmation Dashboard"
+
+msgid "Screenshot"
+msgstr "Screenshot"
 
 msgid "So'ralgan Plan:"
 msgstr "Requested Plan:"
@@ -1218,14 +1277,35 @@ msgstr "No active contracts or ongoing construction projects found for you."
 msgid "Ustani baholash"
 msgstr "Post Listing"
 
+msgid "Ustaning ishidan qoniqdingizmi? Fikringizni qoldiring..."
+msgstr "Ustaning ishidan qoniqdingizmi? Fikringizni qoldiring..."
+
 msgid "Yuborish"
 msgstr "Send"
+
+#| msgid "Yangi suhbat"
+msgid "Yangi chat"
+msgstr "Edit"
+
+# Home page
+msgid "Qidirish..."
+msgstr "Search..."
 
 msgid "Suhbatlar"
 msgstr "Chats"
 
+#| msgid "Sozlamalar"
+msgid "Sozlamalarga o\\"
+msgstr "Settings"
+
 msgid "online"
 msgstr "Online"
+
+msgid "Ovozli qo\\"
+msgstr "Ovozli qo"
+
+msgid "Video qo\\"
+msgstr "Video qo"
 
 msgid "Faol obuna turi: ..."
 msgstr "Active subscription type: ..."
@@ -1242,8 +1322,27 @@ msgstr "✍️ writing..."
 msgid "Tayyor"
 msgstr "Ready"
 
+msgid "Fayl, rasm yoki video jo\\"
+msgstr "Fayl, rasm yoki video jo"
+
+#| msgid "Xabar yozish"
+msgid "Xabar yozing..."
+msgstr "Send Message"
+
 msgid "A'zolar ro'yxati"
 msgstr "List of members"
+
+#| msgid "Rasmni o'zgartirish"
+msgid "Nomni o'zgartirish"
+msgstr "Toggle theme"
+
+#| msgid "Guruhga o'tish"
+msgid "Guruhni tark etish"
+msgstr "Go to Group"
+
+#| msgid "Foydalanuvchi nomi"
+msgid "Foydalanuvchi Ma'lumotlari"
+msgstr "Username"
 
 msgid "Media (Rasm / Video)"
 msgstr "Media (Picture / Video)"
@@ -1254,14 +1353,90 @@ msgstr "Files"
 msgid "Ovozli xabarlar"
 msgstr "New Password:"
 
+msgid "Xabar yozish"
+msgstr "Send Message"
+
+msgid "Bloklash"
+msgstr "Bloklash"
+
 msgid "Guruh nomini o'zgartirish"
 msgstr "Change Language"
+
+#| msgid "Parolni kiriting"
+msgid "Yangi nomni kiriting..."
+msgstr "Repeat Password"
 
 msgid "Qo'ng'iroq..."
 msgstr "Call..."
 
+msgid "Doimiy obuna faol"
+msgstr "Doimiy obuna faol"
+
+msgid "Vaqtinchalik kirish faol"
+msgstr "Vaqtinchalik kirish faol"
+
+msgid "24 soatlik tekshiruvda"
+msgstr "24 soatlik tekshiruvda"
+
+msgid "To\\"
+msgstr "To"
+
+# Chat
+#| msgid "Yozing..."
+msgid "kuting..."
+msgstr "Type a message..."
+
+msgid "Obuna faol emas"
+msgstr "Obuna faol emas"
+
+#| msgid "Telefon raqam"
+msgid "Telefon"
+msgstr "Phone:"
+
+#| msgid "Telefon raqam"
+msgid "Telegram"
+msgstr "Phone:"
+
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+msgid "Instagram"
+msgstr "Instagram"
+
+msgid "Facebook"
+msgstr "Facebook"
+
+msgid "Tezlik"
+msgstr "Tezlik"
+
+#| msgid "Yetkazib berish"
+msgid "Javob berish"
+msgstr "Delivery"
+
+#| msgid "Tanlash"
+msgid "Tahrirlash"
+msgstr "Choose"
+
+msgid "Ulashish"
+msgstr "Ulashish"
+
+msgid "O\\"
+msgstr "O"
+
 msgid "Yangi suhbat"
 msgstr "Edit"
+
+#~ msgid ""
+#~ "TO'LOV TIZIMI VAQTINCHALIK ISHLAMAYABDI, TEXNIK ISHLAR OLIB BORILMOQDA"
+#~ msgstr ""
+#~ "PAYMENT SYSTEM IS TEMPORARILY DOWN, TECHNICAL MAINTENANCE IN PROGRESS"
+
+#~ msgid ""
+#~ "Keltirilgan noqulayliklar uchun uzr so'raymiz. Tez orada to'lov tizimi "
+#~ "qayta tiklanadi."
+#~ msgstr ""
+#~ "We apologize for the inconvenience. The payment system will be restored "
+#~ "shortly."
 
 #~ msgid "PRO Obuna"
 #~ msgstr "Premium Subscription"
@@ -1426,15 +1601,8 @@ msgstr "Edit"
 #~ msgid "Input (file, multiple)"
 #~ msgstr "Input (file, multiple)"
 
-#~ msgid "Market Pro"
-#~ msgstr "Market Pro"
-
 #~ msgid "Ma'lumot (Bio):"
 #~ msgstr "About (Bio):"
-
-# Home page
-#~ msgid "Qidirish..."
-#~ msgstr "Search..."
 
 #~ msgid "Mijozlar"
 #~ msgstr "Clients"
@@ -1472,9 +1640,6 @@ msgstr "Edit"
 #~ msgid "Taklif jo'natish"
 #~ msgstr "Send Invitation"
 
-#~ msgid "Xabar yozish"
-#~ msgstr "Send Message"
-
 # Builder list
 #~ msgid "Usta qidirish"
 #~ msgstr "Find a Builder"
@@ -1484,10 +1649,6 @@ msgstr "Edit"
 
 #~ msgid "yil"
 #~ msgstr "years"
-
-# Chat
-#~ msgid "Yozing..."
-#~ msgstr "Type a message..."
 
 #~ msgid "Offline"
 #~ msgstr "Offline"
@@ -1500,9 +1661,6 @@ msgstr "Edit"
 
 #~ msgid "Joriy reja"
 #~ msgstr "Current Plan"
-
-#~ msgid "Guruhga o'tish"
-#~ msgstr "Go to Group"
 
 #~ msgid "Mening Jamoam"
 #~ msgstr "My Team"

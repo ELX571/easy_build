@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-22 15:33+0500\n"
+"POT-Creation-Date: 2026-07-23 10:05+0500\n"
 "Language: ru\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -364,6 +364,9 @@ msgstr "Счет"
 msgid "Profil"
 msgstr "Профиль"
 
+msgid "Preview"
+msgstr "Preview"
+
 msgid "Shahar / Viloyat"
 msgstr "Город / Область"
 
@@ -441,9 +444,6 @@ msgstr "&раз;"
 msgid "Aloqa usullari"
 msgstr "Методы связи"
 
-msgid "Navigator"
-msgstr "Навигатор"
-
 # Navigation
 msgid "Bosh sahifa"
 msgstr "Главная"
@@ -451,11 +451,27 @@ msgstr "Главная"
 msgid "Hamkasblar"
 msgstr "Коллеги"
 
-msgid "Market Pro (B2B)"
-msgstr "Market Pro (B2B)"
+msgid "Market Pro"
+msgstr "Market Pro"
 
 msgid "Usta Qidirish"
 msgstr "Поиск мастера"
+
+#| msgid "Suhbatlar"
+msgid "Chatlar"
+msgstr "Чаты"
+
+msgid "Premium"
+msgstr "Премиум"
+
+msgid "Bildirishnomalar"
+msgstr "Уведомления"
+
+msgid "Navigator"
+msgstr "Навигатор"
+
+msgid "Market Pro (B2B)"
+msgstr "Market Pro (B2B)"
 
 msgid "Xabarlar"
 msgstr "Сообщения"
@@ -544,9 +560,6 @@ msgstr "Республика Каракалпакстан"
 msgid "Minimal Reyting"
 msgstr "Минимальный рейтинг"
 
-msgid "Premium"
-msgstr "Премиум"
-
 msgid "Yuqori"
 msgstr "Высокий"
 
@@ -555,6 +568,13 @@ msgstr "Хороший"
 
 msgid "Qidirish"
 msgstr "Поиск"
+
+msgid "EasyBuild Premium"
+msgstr "EasyBuild Premium"
+
+#| msgid "Tasdiqlangan usta"
+msgid "Tasdiqlangan"
+msgstr "Проверенный мастер"
 
 msgid "Usta o'zi haqida ma'lumot qoldirmagan."
 msgstr "Мастер не оставил информацию о себе."
@@ -622,6 +642,18 @@ msgstr "Это ваше собственное объявление!"
 msgid "Kerakli e\\"
 msgstr "Требуется е\\"
 
+msgid "Avatar"
+msgstr "Avatar"
+
+#| msgid "Premium"
+msgid "Premium Usta"
+msgstr "Премиум"
+
+# Team
+#| msgid "Jamoa Sozlamalari"
+msgid "Profil Sozlamalari"
+msgstr "Настройки команды"
+
 msgid ""
 "Professional qurilish materiallari va texnika ijarasi bozori tez kunda ishga "
 "tushadi."
@@ -639,7 +671,6 @@ msgid ""
 "imkoniyati."
 msgstr "Возможность заключения прямых надежных договоров между компаниями."
 
-#| msgid "Xatolik yuz berdi!"
 msgid "Chat boshlashda xatolik yuz berdi!"
 msgstr "Произошла ошибка!"
 
@@ -686,13 +717,19 @@ msgid ""
 "ko'rinadi."
 msgstr "Пока у вас нет сообщений. Новые уведомления появятся здесь."
 
-msgid "TO'LOV TIZIMI VAQTINCHALIK ISHLAMAYABDI, TEXNIK ISHLAR OLIB BORILMOQDA"
-msgstr "ПЛАТЕЖНАЯ СИСТЕМА ВРЕМЕННО НЕ РАБОТАЕТ, ВЕДУТСЯ ТЕХНИЧЕСКИЕ РАБОТЫ"
+#| msgid "Jamoa sozlamalari"
+msgid "Profil sozlamalari"
+msgstr "Настройки команды"
 
-msgid ""
-"Keltirilgan noqulayliklar uchun uzr so'raymiz. Tez orada to'lov tizimi qayta "
-"tiklanadi."
-msgstr "Приносим извинения за доставленные неудобства. Платежная система скоро возобновит работу."
+msgid "KARTA EGASI"
+msgstr "KARTA EGASI"
+
+#| msgid "Tanlash"
+msgid "Nusxalash"
+msgstr "Редактировать"
+
+msgid "Tekshirilmoqda..."
+msgstr "Проверяется..."
 
 msgid "Oxirgi so'rovingiz:"
 msgstr "Ваш последний запрос:"
@@ -738,6 +775,9 @@ msgstr "Выберите тарифный пакет:"
 msgid "so'm"
 msgstr "сум"
 
+msgid "Ushbu tarif sotilmaydi, faqat adminlar tomonidan sovg\\"
+msgstr "Ushbu tarif sotilmaydi, faqat adminlar tomonidan sovg"
+
 msgid "Maxsus"
 msgstr "Специальный"
 
@@ -760,11 +800,9 @@ msgstr "Ежегодно"
 msgid "Umumiy to'lov summasi"
 msgstr "Общая сумма оплаты"
 
-#| msgid "Yillik"
 msgid "Yillik obuna"
 msgstr "Ежегодно"
 
-#| msgid "Faol obuna"
 msgid "Oylik obuna"
 msgstr "Активен"
 
@@ -785,9 +823,6 @@ msgstr "Формат PNG, JPG или PDF"
 
 msgid "Rasmni o'zgartirish"
 msgstr "Переключить тему"
-
-msgid "Tekshirilmoqda..."
-msgstr "Проверяется..."
 
 msgid "To'lovni tasdiqlash"
 msgstr "Подтвердить оплату"
@@ -814,6 +849,9 @@ msgstr "Разговор с админом еще не начался."
 
 msgid "To'lov haqida savollaringiz bo'lsa bu yerga yozing."
 msgstr "Пишите сюда, если у вас есть вопросы по оплате."
+
+msgid "Xabaringizni yozing..."
+msgstr "Xabaringizni yozing..."
 
 msgid "Quruvchilar obuna paketlari"
 msgstr "Пакеты подписки для строителей"
@@ -888,6 +926,10 @@ msgstr "Загрузить фото:"
 msgid "Postni joylash"
 msgstr "Разместить объявление"
 
+#| msgid "Faol ustalar"
+msgid "Ustalar"
+msgstr "Мастера"
+
 msgid "Tez Kunda!"
 msgstr "Постный день!"
 
@@ -917,6 +959,10 @@ msgstr "Доставка"
 msgid "Xavfsiz to'lov"
 msgstr "Безопасность и пароль"
 
+#| msgid "Email manzil (ixtiyoriy)"
+msgid "Email manzilingiz..."
+msgstr "Email (необязательно)"
+
 msgid "Jami e'lonlar"
 msgstr "Объявления с неоновой рамкой"
 
@@ -926,8 +972,9 @@ msgstr "Мастера"
 msgid "Ortga"
 msgstr "Назад"
 
-msgid "Bildirishnomalar"
-msgstr "Уведомления"
+#| msgid "Faol foydalanuvchi"
+msgid "Tasdiqlangan foydalanuvchi"
+msgstr "Имя пользователя"
 
 msgid "Reyting & Statistika"
 msgstr "Рейтинг и статистика"
@@ -937,6 +984,9 @@ msgstr "Понравившиеся"
 
 msgid "Saqlanganlar"
 msgstr "Проверенный мастер"
+
+msgid "avatar"
+msgstr "avatar"
 
 msgid "Siz hali biror marta e'lon joylashtirmadingiz."
 msgstr "Вы еще не разместили объявление."
@@ -973,9 +1023,6 @@ msgstr "Личные данные"
 
 msgid "Xavfsizlik va Parol"
 msgstr "Безопасность и пароль"
-
-msgid "EasyBuild Premium"
-msgstr "EasyBuild Premium"
 
 msgid "Jamoa sozlamalari"
 msgstr "Настройки команды"
@@ -1059,7 +1106,7 @@ msgstr "Квитанция об оплате проверяется админи
 msgid "Yangilash"
 msgstr "Редактировать"
 
-#| msgid "-20%% foyda"
+#, python-format
 msgid "-25%% foyda"
 msgstr "-20%% прибыль"
 
@@ -1154,6 +1201,10 @@ msgstr "Его отдают только лучшим, самым надежны
 msgid "Jamoa Sozlamalari"
 msgstr "Настройки команды"
 
+#| msgid "Jamoa sardori"
+msgid "Jamoa nomi"
+msgstr "Настройки команды"
+
 msgid "A'zo qo'shish"
 msgstr "Добавить участника"
 
@@ -1188,11 +1239,19 @@ msgstr "Добавить участника"
 msgid "Foydalanuvchini username yoki telefon raqami bo'yicha qidiring."
 msgstr "Найдите пользователя по имени пользователя или номеру телефона."
 
+# Home page
+#| msgid "Qidirish..."
+msgid "Qidiruv..."
+msgstr "Поиск..."
+
 msgid "Taklif"
 msgstr "Пригласить"
 
 msgid "To'lovlarni Tasdiqlash Dashbordi"
 msgstr "Панель подтверждения платежа"
+
+msgid "Screenshot"
+msgstr "Screenshot"
 
 msgid "So'ralgan Plan:"
 msgstr "Запрошенный план:"
@@ -1222,14 +1281,35 @@ msgstr "У вас не найдено активных контрактов ил
 msgid "Ustani baholash"
 msgstr "Разместить объявление"
 
+msgid "Ustaning ishidan qoniqdingizmi? Fikringizni qoldiring..."
+msgstr "Ustaning ishidan qoniqdingizmi? Fikringizni qoldiring..."
+
 msgid "Yuborish"
 msgstr "Отправить"
+
+#| msgid "Yangi suhbat"
+msgid "Yangi chat"
+msgstr "Редактировать"
+
+# Home page
+msgid "Qidirish..."
+msgstr "Поиск..."
 
 msgid "Suhbatlar"
 msgstr "Чаты"
 
+#| msgid "Sozlamalar"
+msgid "Sozlamalarga o\\"
+msgstr "Настройки"
+
 msgid "online"
 msgstr "В сети"
+
+msgid "Ovozli qo\\"
+msgstr "Ovozli qo"
+
+msgid "Video qo\\"
+msgstr "Video qo"
 
 msgid "Faol obuna turi: ..."
 msgstr "Тип активной подписки: ..."
@@ -1246,8 +1326,27 @@ msgstr "✍️ пишу..."
 msgid "Tayyor"
 msgstr "Готовый"
 
+msgid "Fayl, rasm yoki video jo\\"
+msgstr "Fayl, rasm yoki video jo"
+
+#| msgid "Xabar yozish"
+msgid "Xabar yozing..."
+msgstr "Написать сообщение"
+
 msgid "A'zolar ro'yxati"
 msgstr "Список участников"
+
+#| msgid "Rasmni o'zgartirish"
+msgid "Nomni o'zgartirish"
+msgstr "Переключить тему"
+
+#| msgid "Guruhga o'tish"
+msgid "Guruhni tark etish"
+msgstr "Перейти в группу"
+
+#| msgid "Foydalanuvchi nomi"
+msgid "Foydalanuvchi Ma'lumotlari"
+msgstr "Имя пользователя"
 
 msgid "Media (Rasm / Video)"
 msgstr "Медиа (Изображение/Видео)"
@@ -1258,14 +1357,89 @@ msgstr "Файлы"
 msgid "Ovozli xabarlar"
 msgstr "Новый пароль:"
 
+msgid "Xabar yozish"
+msgstr "Написать сообщение"
+
+msgid "Bloklash"
+msgstr "Bloklash"
+
 msgid "Guruh nomini o'zgartirish"
 msgstr "Сменить язык"
+
+#| msgid "Parolni kiriting"
+msgid "Yangi nomni kiriting..."
+msgstr "Повторите пароль"
 
 msgid "Qo'ng'iroq..."
 msgstr "Вызов..."
 
+msgid "Doimiy obuna faol"
+msgstr "Doimiy obuna faol"
+
+msgid "Vaqtinchalik kirish faol"
+msgstr "Vaqtinchalik kirish faol"
+
+msgid "24 soatlik tekshiruvda"
+msgstr "24 soatlik tekshiruvda"
+
+msgid "To\\"
+msgstr "To"
+
+# Chat
+#| msgid "Yozing..."
+msgid "kuting..."
+msgstr "Напишите..."
+
+msgid "Obuna faol emas"
+msgstr "Obuna faol emas"
+
+#| msgid "Telefon raqam"
+msgid "Telefon"
+msgstr "Телефон:"
+
+#| msgid "Telefon raqam"
+msgid "Telegram"
+msgstr "Телефон:"
+
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+msgid "Instagram"
+msgstr "Instagram"
+
+msgid "Facebook"
+msgstr "Facebook"
+
+msgid "Tezlik"
+msgstr "Tezlik"
+
+#| msgid "Yetkazib berish"
+msgid "Javob berish"
+msgstr "Доставка"
+
+#| msgid "Tanlash"
+msgid "Tahrirlash"
+msgstr "Редактировать"
+
+msgid "Ulashish"
+msgstr "Ulashish"
+
+msgid "O\\"
+msgstr "O"
+
 msgid "Yangi suhbat"
 msgstr "Редактировать"
+
+#~ msgid ""
+#~ "TO'LOV TIZIMI VAQTINCHALIK ISHLAMAYABDI, TEXNIK ISHLAR OLIB BORILMOQDA"
+#~ msgstr "ПЛАТЕЖНАЯ СИСТЕМА ВРЕМЕННО НЕ РАБОТАЕТ, ВЕДУТСЯ ТЕХНИЧЕСКИЕ РАБОТЫ"
+
+#~ msgid ""
+#~ "Keltirilgan noqulayliklar uchun uzr so'raymiz. Tez orada to'lov tizimi "
+#~ "qayta tiklanadi."
+#~ msgstr ""
+#~ "Приносим извинения за доставленные неудобства. Платежная система скоро "
+#~ "возобновит работу."
 
 #~ msgid "PRO Obuna"
 #~ msgstr "Премиум подписка"
@@ -1430,15 +1604,8 @@ msgstr "Редактировать"
 #~ msgid "Input (file, multiple)"
 #~ msgstr "Ввод (файл, несколько)"
 
-#~ msgid "Market Pro"
-#~ msgstr "Market Pro"
-
 #~ msgid "Ma'lumot (Bio):"
 #~ msgstr "О себе (Bio):"
-
-# Home page
-#~ msgid "Qidirish..."
-#~ msgstr "Поиск..."
 
 #~ msgid "Mijozlar"
 #~ msgstr "Клиенты"
@@ -1469,9 +1636,6 @@ msgstr "Редактировать"
 #~ msgid "Taklif jo'natish"
 #~ msgstr "Отправить приглашение"
 
-#~ msgid "Xabar yozish"
-#~ msgstr "Написать сообщение"
-
 # Builder list
 #~ msgid "Usta qidirish"
 #~ msgstr "Поиск мастера"
@@ -1481,10 +1645,6 @@ msgstr "Редактировать"
 
 #~ msgid "yil"
 #~ msgstr "лет"
-
-# Chat
-#~ msgid "Yozing..."
-#~ msgstr "Напишите..."
 
 #~ msgid "Offline"
 #~ msgstr "Не в сети"
@@ -1497,9 +1657,6 @@ msgstr "Редактировать"
 
 #~ msgid "Joriy reja"
 #~ msgstr "Текущий план"
-
-#~ msgid "Guruhga o'tish"
-#~ msgstr "Перейти в группу"
 
 #~ msgid "Mening Jamoam"
 #~ msgstr "Моя команда"

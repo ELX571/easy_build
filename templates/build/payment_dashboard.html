@@ -1091,7 +1091,7 @@
         <div class="header-right">
             {% if request.user.is_authenticated %}
                 <a href="{% url 'build:profile' %}">
-                    <img src="{{ request.user.profile.get_avatar_url }}" alt="Profil" class="profile-avatar">
+                    <img src="{{ request.user.profile.get_avatar_url }}" alt="{% translate 'Profil' %}" class="profile-avatar">
                 </a>
             {% else %}
                 <a href="{% url 'accounts:login' %}" style="text-decoration: none; color: var(--color-orange); font-weight: 700; font-size: 15px;">
@@ -1105,18 +1105,18 @@
 <!-- SIDEBAR NAV -->
 <div class="sidebar-container">
     <div class="icon-rail">
-        <a href="{% url 'build:home' %}" class="rail-item" data-title="Bosh sahifa"><i class="fa-solid fa-house"></i></a>
-        <a href="{% url 'build:network' %}" class="rail-item" data-title="Hamkasblar"><i class="fa-solid fa-users"></i></a>
-        <a href="{% url 'build:builder_list' %}" class="rail-item" data-title="Usta Qidirish"><i class="fa-solid fa-helmet-safety"></i></a>
-        <a href="{% url 'chat:chat' %}" class="rail-item" data-title="Chatlar">
+        <a href="{% url 'build:home' %}" class="rail-item" data-title="{% translate 'Bosh sahifa' %}"><i class="fa-solid fa-house"></i></a>
+        <a href="{% url 'build:network' %}" class="rail-item" data-title="{% translate 'Hamkasblar' %}"><i class="fa-solid fa-users"></i></a>
+        <a href="{% url 'build:builder_list' %}" class="rail-item" data-title="{% translate 'Usta Qidirish' %}"><i class="fa-solid fa-helmet-safety"></i></a>
+        <a href="{% url 'chat:chat' %}" class="rail-item" data-title="{% translate 'Chatlar' %}">
             <i class="fa-regular fa-comment-dots"></i>
         </a>
-        <a href="{% url 'build:payment_dashboard' %}" class="rail-item active" data-title="Premium"><i class="fa-solid fa-gem"></i></a>
-        <a href="{% url 'build:notifications_list' %}" class="rail-item" data-title="Bildirishnomalar">
+        <a href="{% url 'build:payment_dashboard' %}" class="rail-item active" data-title="{% translate 'Premium' %}"><i class="fa-solid fa-gem"></i></a>
+        <a href="{% url 'build:notifications_list' %}" class="rail-item" data-title="{% translate 'Bildirishnomalar' %}">
             <i class="fa-solid fa-bell"></i>
         </a>
         <div class="rail-divider"></div>
-        <a href="{% url 'build:profile' %}" class="rail-item" data-title="Profil sozlamalari">
+        <a href="{% url 'build:profile' %}" class="rail-item" data-title="{% translate 'Profil sozlamalari' %}">
             <i class="fa-regular fa-user"></i>
         </a>
     </div>
@@ -1265,7 +1265,7 @@
                                     </div>
                                 </label>
                             {% elif plan.name == 'Premium VIP' %}
-                                <label class="plan-card disabled-card" title="Ushbu tarif sotilmaydi, faqat adminlar tomonidan sovg'a sifatida beriladi">
+                                <label class="plan-card disabled-card" title="{% translate 'Ushbu tarif sotilmaydi, faqat adminlar tomonidan sovg\'a sifatida beriladi' %}">
                                     <input type="radio" name="plan_name" value="{{ plan.name }}" disabled>
                                     <div class="plan-card-content">
                                         <div class="plan-check"><i class="fa-solid fa-lock"></i></div>
@@ -1296,7 +1296,7 @@
                                     <div class="plan-price">{% if selected_period == 'yearly' %}470,400{% else %}49,000{% endif %} {% trans "so'm" %}</div>
                                 </div>
                             </label>
-                            <label class="plan-card disabled-card" title="Ushbu tarif sotilmaydi, faqat adminlar tomonidan sovg'a sifatida beriladi">
+                            <label class="plan-card disabled-card" title="{% translate 'Ushbu tarif sotilmaydi, faqat adminlar tomonidan sovg\'a sifatida beriladi' %}">
                                 <input type="radio" name="plan_name" value="Premium VIP" disabled>
                                 <div class="plan-card-content">
                                     <div class="plan-check"><i class="fa-solid fa-lock"></i></div>
@@ -1374,7 +1374,7 @@
                             <p style="font-size: 0.9rem; font-weight: 600; color: var(--color-text-main);" id="fileNameDisplay">{% trans "Faylni tanlang yoki shu yerga tashlang" %}</p>
                             <p style="font-size: 0.75rem; color: var(--color-text-muted); margin-top: 0.4rem;">{% trans "PNG, JPG yoki PDF formatida" %}</p>
                         </div>
-                        <img id="imagePreview" src="" alt="Preview" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 14px; z-index: 5;" />
+                        <img id="imagePreview" src="" alt="{% translate 'Preview' %}" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 14px; z-index: 5;" />
                         <div id="imageOverlay" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 6; flex-direction: column; justify-content: center; align-items: center; border-radius: 14px; opacity: 0; transition: 0.3s; backdrop-filter: blur(4px);">
                             <i class="fa-solid fa-pen-to-square" style="color: white; font-size: 28px; margin-bottom: 8px;"></i>
                             <span style="color: white; font-size: 15px; font-weight: 700;">{% trans "Rasmni o'zgartirish" %}</span>
@@ -1503,7 +1503,7 @@
 
         <!-- Xabar yuborish inputs -->
         <div class="chat-input-row">
-            <input type="text" class="premium-input" id="chatInput" placeholder="Xabaringizni yozing..." onkeypress="handleKeyPress(event)">
+            <input type="text" class="premium-input" id="chatInput" placeholder="{% translate 'Xabaringizni yozing...' %}" onkeypress="handleKeyPress(event)">
             <button class="btn-send" onclick="sendChatMessage()">
                 <i class="fa-solid fa-paper-plane"></i>
             </button>

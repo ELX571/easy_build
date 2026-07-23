@@ -423,7 +423,7 @@
             <div class="header-right">
                 {% if user.is_authenticated %}
                     <a href="{% url 'build:profile' %}">
-                        <img src="{{ user.profile.get_avatar_url }}" alt="Profil" class="profile-avatar">
+                        <img src="{{ user.profile.get_avatar_url }}" alt="{% translate 'Profil' %}" class="profile-avatar">
                     </a>
                 {% else %}
                     <a href="{% url 'accounts:login' %}" style="text-decoration: none; color: var(--active-text-blue); font-weight: 700; font-size: 15px;">
@@ -436,18 +436,18 @@
 
     <div class="sidebar-container">
         <div class="icon-rail">
-            <a href="{% url 'build:home' %}" class="rail-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}" data-title="Bosh sahifa"><i class="fa-solid fa-house"></i></a>
-            <a href="{% url 'build:network' %}" class="rail-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}" data-title="Hamkasblar"><i class="fa-solid fa-users"></i></a>
-            <a href="{% url 'build:market' %}" class="rail-item {% if request.resolver_match.url_name == 'market' %}active{% endif %}" data-title="Market Pro"><i class="fa-solid fa-store"></i></a>
-            <a href="{% url 'build:builder_list' %}" class="rail-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" data-title="Usta Qidirish"><i class="fa-solid fa-helmet-safety"></i></a>
-            <a href="{% url 'chat:chat' %}" class="rail-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}" data-title="Chatlar">
+            <a href="{% url 'build:home' %}" class="rail-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}" data-title="{% translate 'Bosh sahifa' %}"><i class="fa-solid fa-house"></i></a>
+            <a href="{% url 'build:network' %}" class="rail-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}" data-title="{% translate 'Hamkasblar' %}"><i class="fa-solid fa-users"></i></a>
+            <a href="{% url 'build:market' %}" class="rail-item {% if request.resolver_match.url_name == 'market' %}active{% endif %}" data-title="{% translate 'Market Pro' %}"><i class="fa-solid fa-store"></i></a>
+            <a href="{% url 'build:builder_list' %}" class="rail-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" data-title="{% translate 'Usta Qidirish' %}"><i class="fa-solid fa-helmet-safety"></i></a>
+            <a href="{% url 'chat:chat' %}" class="rail-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}" data-title="{% translate 'Chatlar' %}">
                 <i class="fa-regular fa-comment-dots"></i>
                 {% if unread_chat_count > 0 %}
                 <span style="position:absolute; top:8px; right:8px; background:var(--active-text-blue); color:white; font-size:10px; font-weight:800; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center;">{{ unread_chat_count }}</span>
                 {% endif %}
             </a>
-            <a href="{% url 'build:payment_dashboard' %}" class="rail-item {% if request.resolver_match.url_name == 'payment_dashboard' %}active{% endif %}" data-title="Premium"><i class="fa-solid fa-gem"></i></a>
-            <a href="{% url 'build:notifications_list' %}" class="rail-item {% if request.resolver_match.url_name == 'notifications_list' %}active{% endif %}" data-title="Bildirishnomalar">
+            <a href="{% url 'build:payment_dashboard' %}" class="rail-item {% if request.resolver_match.url_name == 'payment_dashboard' %}active{% endif %}" data-title="{% translate 'Premium' %}"><i class="fa-solid fa-gem"></i></a>
+            <a href="{% url 'build:notifications_list' %}" class="rail-item {% if request.resolver_match.url_name == 'notifications_list' %}active{% endif %}" data-title="{% translate 'Bildirishnomalar' %}">
                 <i class="fa-solid fa-bell"></i>
                 {% if unread_notifications_count > 0 %}
                     <span style="position:absolute; top:8px; right:8px; background:#ef4444; color:white; font-size:10px; font-weight:800; border-radius:50%; width:16px; height:16px; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-panel);">{{ unread_notifications_count }}</span>
@@ -492,14 +492,14 @@
                 <div class="tweet-card" id="post-{{ post.id }}">
                     <div class="tweet-header">
                         <a href="#" class="tweet-author" onclick="contactUser(event, '{{ post.author.id }}')">
-                            <img src="{{ post.author.profile.get_avatar_url }}" alt="Avatar" class="tweet-avatar" onerror="this.src='/static/images/default_avatar.svg'">
+                            <img src="{{ post.author.profile.get_avatar_url }}" alt="{% translate 'Avatar' %}" class="tweet-avatar" onerror="this.src='/static/images/default_avatar.svg'">
                             <div class="tweet-author-info">
                                 <div class="tweet-name">
                                     {{ post.author.get_full_name|default:post.author.username }}
                                     {% if post.author.profile.is_premium %}
-                                        <i class="fa-solid fa-crown" style="color: #f97316; font-size: 14px; margin-left: 4px; filter: drop-shadow(0 0 4px rgba(249,115,22,0.5));" title="Premium Usta"></i>
+                                        <i class="fa-solid fa-crown" style="color: #f97316; font-size: 14px; margin-left: 4px; filter: drop-shadow(0 0 4px rgba(249,115,22,0.5));" title="{% translate 'Premium Usta' %}"></i>
                                     {% elif post.author.profile.is_verified %}
-                                        <i class="fa-solid fa-circle-check" style="color: #10b981; font-size: 16px; margin-left: 4px;" title="Tasdiqlangan"></i>
+                                        <i class="fa-solid fa-circle-check" style="color: #10b981; font-size: 16px; margin-left: 4px;" title="{% translate 'Tasdiqlangan' %}"></i>
                                     {% endif %}
                                 </div>
                                 <div class="tweet-username">@{{ post.author.username }} &middot; {{ post.created_time|timesince }} &middot; <span style="color:#f59e0b; font-weight:600; display:inline-flex; align-items:center; gap:3px;"><i class="fa-solid fa-star" style="font-size:11px;"></i> {{ post.author.profile.rating_average|floatformat:1 }}</span></div>
