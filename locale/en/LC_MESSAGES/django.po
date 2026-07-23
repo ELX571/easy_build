@@ -247,7 +247,7 @@ msgstr "Manage your construction project"
 msgid ""
 "Eng yaxshi ustalar va buyurtmachilarni bir platformada birlashtirdik. "
 "Ro'yxatdan o'ting va bugun boshlang."
-msgstr ""
+msgstr "We have brought together the best masters and clients on one platform. Register and start today."
 
 msgid "Faol foydalanuvchi"
 msgstr "Username"
@@ -262,7 +262,7 @@ msgid "Hisobingizga kiring va davom eting"
 msgstr "Log in to your account and continue"
 
 msgid "Google bilan kirish"
-msgstr ""
+msgstr "Sign in with Google"
 
 msgid "yoki"
 msgstr "or"
@@ -271,7 +271,7 @@ msgid "Foydalanuvchi nomi yoki Email"
 msgstr "Username or link"
 
 msgid "Email yoki username kiriting"
-msgstr ""
+msgstr "Enter Email or username"
 
 msgid "Parolni kiriting"
 msgstr "Repeat Password"
@@ -284,7 +284,7 @@ msgid "Kirish"
 msgstr "Sign In"
 
 msgid "Akkauntingiz yo'qmi?"
-msgstr ""
+msgstr "Don't have an account?"
 
 msgid "Ro'yxatdan o'ting"
 msgstr "Sign Up"
@@ -293,14 +293,14 @@ msgid "Muvaffaqiyatli kirdingiz!"
 msgstr "Success"
 
 msgid "Serverga ulanib bo'lmadi."
-msgstr ""
+msgstr "Could not connect to the server."
 
 msgid "Qurilish platformasiga qo'shiling"
 msgstr "Join the build platform"
 
 msgid ""
 "Usta yoki mijoz — ikki bosqichda ro'yxatdan o'ting va darhol ishni boshlang."
-msgstr ""
+msgstr "Master or Client — register in two steps and start work immediately."
 
 msgid "Asosiy ma'lumotlarni kiriting"
 msgstr "Personal Information"
@@ -324,10 +324,10 @@ msgid "username kiriting"
 msgstr "@username"
 
 msgid "Kuchli parol o\\"
-msgstr ""
+msgstr "Kuchli parol o"
 
 msgid "8-30 tagacha belgi kiritilishi kerak"
-msgstr ""
+msgstr "8 to 30 characters must be entered"
 
 msgid "Parolni tasdiqlang"
 msgstr "Repeat Password"
@@ -339,7 +339,7 @@ msgid "Ro'yxatdan o'tish →"
 msgstr "Sign Up"
 
 msgid "Allaqachon akkauntingiz bormi?"
-msgstr ""
+msgstr "Already have an account?"
 
 msgid "Tizimga kirish"
 msgstr "Sign Out"
@@ -347,7 +347,7 @@ msgstr "Sign Out"
 msgid ""
 "Parol kuchsiz! Iltimos, murakkabroq parol (raqam yoki belgi aralashtirib) "
 "kiriting."
-msgstr ""
+msgstr "Password is weak! Please enter a more complex password (mixing numbers and symbols)."
 
 msgid "Ro'yxatdan o'tdingiz!"
 msgstr "Sign Up"
@@ -375,13 +375,13 @@ msgid "Email manzil (ixtiyoriy)"
 msgstr "Email (Optional)"
 
 msgid "Siz bilan bog\\"
-msgstr ""
+msgstr "Siz bilan bog"
 
 msgid "Bio — o'zingiz haqida"
 msgstr "Bio is about yourself"
 
 msgid "Qisqacha o\\"
-msgstr ""
+msgstr "Qisqacha o"
 
 msgid "Saqlash va Yakunlash 🚀"
 msgstr "Save and Finish 🚀"
@@ -394,7 +394,7 @@ msgstr "Profile Settings"
 
 msgid ""
 "O'z yo'nalishingizni tanlang. EasyBuild sizga mos vositalarni taqdim etadi."
-msgstr ""
+msgstr "Choose your specialization. EasyBuild will provide you with suitable tools."
 
 msgid "Yo'nalishni tanlang"
 msgstr "Select a subscription plan:"
@@ -430,7 +430,7 @@ msgid "B2B marketda ishtirok etish va katta loyihalarni bajarish uchun."
 msgstr "To participate in the B2B market and to complete large projects."
 
 msgid "Keyingi qadam"
-msgstr ""
+msgstr "Next step"
 
 msgid "&times;"
 msgstr "&times;"
@@ -500,7 +500,7 @@ msgid "Tom yopuvchi (Tomchi)"
 msgstr "Roofer"
 
 msgid "G\\"
-msgstr ""
+msgstr "G"
 
 msgid "G'isht quyuvchi (G'ishtchi)"
 msgstr "Bricklayer"
@@ -530,7 +530,7 @@ msgid "Umumiy quruvchi"
 msgstr "General Builder"
 
 msgid "Farg\\"
-msgstr ""
+msgstr "Farg"
 
 msgid "Samarqand viloyati"
 msgstr "Samarkand Region"
@@ -581,10 +581,10 @@ msgid "Xatolik yuz berdi!"
 msgstr "An error occurred!"
 
 msgid "Bog\\"
-msgstr ""
+msgstr "Bog"
 
 msgid "Usta o\\"
-msgstr ""
+msgstr "Usta o"
 
 msgid "Post yaratish"
 msgstr "Create Post"
@@ -622,22 +622,20 @@ msgstr "Required e\\"
 msgid ""
 "Professional qurilish materiallari va texnika ijarasi bozori tez kunda ishga "
 "tushadi."
-msgstr ""
+msgstr "Professional building materials and equipment rental market is launching soon."
 
 msgid "Sement, g'isht, armatura va qurilish materiallarining eng katta bazasi."
-msgstr ""
-"The largest database of cement, bricks, fittings and building materials."
+msgstr "The largest database of cement, bricks, fittings and building materials."
 
 msgid ""
 "Ekskavator, kran va og'ir qurilish texnikalarini ishonchli ijaraga olish."
-msgstr ""
+msgstr "Reliable rental of excavators, cranes and heavy construction machinery."
 
 msgid ""
 "Kompaniyalar o'rtasida to'g'ridan-to'g'ri ishonchli shartnomalar tuzish "
 "imkoniyati."
-msgstr ""
+msgstr "Opportunity to conclude direct reliable contracts between companies."
 
-#, fuzzy
 #| msgid "Xatolik yuz berdi!"
 msgid "Chat boshlashda xatolik yuz berdi!"
 msgstr "An error occurred!"
@@ -672,7 +670,7 @@ msgstr "Nothing found"
 
 msgid ""
 "Siz qidirgan toifada yoki hududda hozircha qurilish e'lonlari mavjud emas."
-msgstr ""
+msgstr "There are currently no construction listings in the searched category or region."
 
 msgid "Barcha bildirishnomalaringiz va so'nggi yangiliklar"
 msgstr "All your notifications and latest news"
@@ -683,7 +681,7 @@ msgstr "You have no new notifications."
 msgid ""
 "Hozircha sizga kelgan xabarlar mavjud emas. Yangi bildirishnomalar shu yerda "
 "ko'rinadi."
-msgstr ""
+msgstr "No messages received yet. New notifications will appear here."
 
 msgid "TO'LOV TIZIMI VAQTINCHALIK ISHLAMAYABDI, TEXNIK ISHLAR OLIB BORILMOQDA"
 msgstr "PAYMENT SYSTEM IS TEMPORARILY DOWN, TECHNICAL MAINTENANCE IN PROGRESS"
@@ -691,9 +689,7 @@ msgstr "PAYMENT SYSTEM IS TEMPORARILY DOWN, TECHNICAL MAINTENANCE IN PROGRESS"
 msgid ""
 "Keltirilgan noqulayliklar uchun uzr so'raymiz. Tez orada to'lov tizimi qayta "
 "tiklanadi."
-msgstr ""
-"We apologize for the inconvenience. The payment system will be restored "
-"shortly."
+msgstr "We apologize for the inconvenience. The payment system will be restored shortly."
 
 msgid "Oxirgi so'rovingiz:"
 msgstr "Your last request:"
@@ -709,13 +705,11 @@ msgstr "Invitation rejected!"
 
 #, python-format
 msgid "Siz <b>%(plan_name)s</b> tarifi uchun so'rov yuborgansiz."
-msgstr ""
-"You have submitted a request for the <b>%(plan_name)s</b> subscription."
+msgstr "You have submitted a request for the <b>%(plan_name)s</b> subscription."
 
 msgid ""
 "Vaqtinchalik 24 soatlik ruxsat faollashtirildi. Admin tasdig'ini kuting."
-msgstr ""
-"Temporary 24-hour access has been activated. Please wait for admin approval."
+msgstr "Temporary 24-hour access has been activated. Please wait for admin approval."
 
 msgid "Hozircha hech qanday to'lov so'rovi yubormagansiz."
 msgstr "You have not submitted any payment requests yet."
@@ -751,7 +745,7 @@ msgid "Premium VIP"
 msgstr "Premium"
 
 msgid "To'lov davri:"
-msgstr ""
+msgstr "Payment period:"
 
 # Verification
 msgid "Oylik"
@@ -761,14 +755,12 @@ msgid "Yillik"
 msgstr "Yearly"
 
 msgid "Umumiy to'lov summasi"
-msgstr ""
+msgstr "Total payment amount"
 
-#, fuzzy
 #| msgid "Yillik"
 msgid "Yillik obuna"
 msgstr "Yearly"
 
-#, fuzzy
 #| msgid "Faol obuna"
 msgid "Oylik obuna"
 msgstr "Active"
@@ -792,7 +784,7 @@ msgid "Rasmni o'zgartirish"
 msgstr "Toggle theme"
 
 msgid "Tekshirilmoqda..."
-msgstr ""
+msgstr "Verifying..."
 
 msgid "To'lovni tasdiqlash"
 msgstr "Confirm payment"
@@ -803,9 +795,7 @@ msgstr "You have a pending payment!"
 msgid ""
 "Siz yuborgan chek hozirda admin tomonidan tekshirilmoqda. Iltimos, u "
 "tasdiqlanguncha biroz kuting va qaytadan to'lov qilishga urinmang."
-msgstr ""
-"The receipt you sent is currently being verified by the admin. Please wait "
-"until it is approved and do not try to pay again."
+msgstr "The receipt you sent is currently being verified by the admin. Please wait until it is approved and do not try to pay again."
 
 msgid "Tushunarli"
 msgstr "Got it"
@@ -828,7 +818,7 @@ msgstr "Builders subscription packages"
 msgid ""
 "Loyihalaringiz ko'lamiga mos tarif rejasini tanlang va qo'shimcha "
 "imtiyozlarga ega bo'ling"
-msgstr ""
+msgstr "Choose a subscription plan suitable for your project scale and get extra privileges"
 
 msgid "Chegirma"
 msgstr "Discount"
@@ -901,7 +891,7 @@ msgstr "Fast Day!"
 msgid ""
 "O'zbekistonning eng innovatsion qurilish mollari va xizmatlari platformasi "
 "tayyorlanmoqda. Birinchilardan bo'ling!"
-msgstr ""
+msgstr "Uzbekistan's most innovative building materials and services platform is launching soon. Be among the first!"
 
 msgid "Kun"
 msgstr "Day"
@@ -957,7 +947,7 @@ msgstr "Gamification"
 msgid ""
 "Reytinging 3.0 dan past. Iltimos, admin bilan bog'laning yoki sifatni "
 "oshiring."
-msgstr ""
+msgstr "Your rating is below 3.0. Please contact support or improve service quality."
 
 msgid "Siz mijozsiz"
 msgstr "You are the customer"
@@ -1065,7 +1055,6 @@ msgstr "Your payment receipt is being verified by an admin."
 msgid "Yangilash"
 msgstr "Edit"
 
-#, fuzzy, python-format
 #| msgid "-20%% foyda"
 msgid "-25%% foyda"
 msgstr "-20%% profit"
@@ -1210,7 +1199,7 @@ msgstr "No Interviews / Surveys available"
 msgid ""
 "Hozircha verifikatsiya qilinishi kerak bo'lgan to'lov screenshotlari "
 "yuborilmagan."
-msgstr ""
+msgstr "No payment screenshots submitted for verification yet."
 
 msgid "Byudjet:"
 msgstr "Budget:"
@@ -1224,7 +1213,7 @@ msgstr "There are currently no workflows available"
 msgid ""
 "Sizda hech qanday faol shartnoma yoki jarayondagi qurilish loyihalari "
 "topilmadi."
-msgstr ""
+msgstr "No active contracts or ongoing construction projects found for you."
 
 msgid "Ustani baholash"
 msgstr "Post Listing"
@@ -1245,8 +1234,7 @@ msgid "Chatni tanlang"
 msgstr "Select a subscription plan:"
 
 msgid "Chap tomondagi ro'yxatdan suhbat tanlang yoki yangi suhbat boshlang"
-msgstr ""
-"Select a conversation from the list on the left or start a new conversation"
+msgstr "Select a conversation from the list on the left or start a new conversation"
 
 msgid "✍️ yozmoqda..."
 msgstr "✍️ writing..."
