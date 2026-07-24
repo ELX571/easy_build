@@ -68,11 +68,11 @@ class ProfileEditForm(forms.ModelForm):
         model = Profile
         fields = ['first_name', 'last_name', 'phone', 'city', 'bio', 'avatar', 'telegram', 'whatsapp', 'instagram', 'facebook']
         widgets = {
-            'phone': forms.TextInput(attrs={'placeholder': _('+998 90 123 45 67')}),
+            'phone': forms.TextInput(attrs={'placeholder': _('+998 90 000 00 00')}),
             'bio': forms.Textarea(attrs={'rows': 3, 'placeholder': _('Masalan: Men 5 yillik tajribaga ega ustaman...')}),
             'avatar': forms.FileInput(),
             'telegram': forms.TextInput(attrs={'placeholder': _('@username')}),
-            'whatsapp': forms.TextInput(attrs={'placeholder': _('+998 90 123 45 67')}),
+            'whatsapp': forms.TextInput(attrs={'placeholder': _('+998 90 000 00 00')}),
             'instagram': forms.TextInput(attrs={'placeholder': _('@username')}),
             'facebook': forms.TextInput(attrs={'placeholder': _('Foydalanuvchi nomi yoki link')}),
         }

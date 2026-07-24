@@ -78,6 +78,7 @@ class UserRegisterSerializer(serializers.Serializer):
 
 
 class UserSecondRegisterSerializer(serializers.ModelSerializer):
+
     email = serializers.EmailField(required=False, allow_blank=True)
     phone = serializers.CharField(required=True, error_messages={'required': 'Telefon raqamini kiritish majburiy!', 'blank': 'Telefon raqamini kiritish majburiy!'})
 

@@ -12,33 +12,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <script>
-        /* ⚡️ HAMBURGER DRAWER FUNCTIONS - hoisted */
-        function openMobileDrawer() {
-            var sb = document.querySelector('.sidebar-container');
-            var ov = document.getElementById('mobileDrawerOverlay');
-            if (sb) { sb.style.display = 'flex'; void sb.offsetWidth; sb.classList.add('mobile-drawer-open','active'); }
-            if (ov) { ov.style.display = 'block'; requestAnimationFrame(function(){ ov.style.opacity='1'; }); }
-            document.body.style.overflow = 'hidden';
-        }
-        function closeMobileDrawer(e) {
-            if (e && e.stopPropagation) e.stopPropagation();
-            var sb = document.querySelector('.sidebar-container');
-            var ov = document.getElementById('mobileDrawerOverlay');
-            if (sb) { sb.classList.remove('mobile-drawer-open','active','open'); setTimeout(function(){ if(!sb.classList.contains('mobile-drawer-open')) sb.style.display='none'; }, 400); }
-            if (ov) { ov.style.opacity='0'; setTimeout(function(){ ov.style.display='none'; }, 350); }
-            document.body.style.overflow = '';
-        }
-        function toggleMobileDrawer(e) {
-            if (e && e.preventDefault) { e.preventDefault(); e.stopPropagation(); }
-            var sb = document.querySelector('.sidebar-container');
-            if (sb && (sb.classList.contains('mobile-drawer-open') || sb.classList.contains('active'))) { closeMobileDrawer(e); } else { openMobileDrawer(); }
-        }
-        window.openMobileDrawer = openMobileDrawer;
-        window.closeMobileDrawer = closeMobileDrawer;
-        window.toggleMobileDrawer = toggleMobileDrawer;
-    </script>
-
     <style>
         /* —————————————————————————————————————————————————————————
            PREMIUM VARIABLE SYSTEM (CYBER ORANGE & ULTRA GLASS)
@@ -124,9 +97,7 @@
         }
 
         .header-container { width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
-        .header-left { display: flex; justify-content: flex-start; align-items: center; }
-        .menu-hamburger { font-size: 20px; cursor: pointer; color: var(--link-color); padding: 10px; border-radius: 12px; transition: all 0.25s ease; }
-        .menu-hamburger:hover { color: var(--active-text-blue); background: var(--link-hover-bg); transform: scale(1.05); }
+        .header-left { display: flex; justify-content: flex-start; }
 
         .header-add-btn { background: var(--active-text-blue); color: #ffffff; width: 44px; height: 44px; border-radius: 14px; text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 4px 12px var(--glow-color); transition: all 0.3s ease; position: relative; }
         .header-add-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px var(--glow-color); }
@@ -138,173 +109,31 @@
         .header-right { display: flex; justify-content: flex-end; align-items: center; gap: 20px; }
         .profile-avatar { width: 44px; height: 44px; border-radius: 14px; object-fit: cover; border: 2px solid var(--border-color); cursor: pointer; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
 
-        /* ═══════════════════════════════════════════════════════
-           📱 MOBILE OFF-CANVAS DRAWER (max-width: 1024px)
-           ═══════════════════════════════════════════════════════ */
-        @keyframes drawerSlideIn {
-            from { transform: translateX(-100%); }
-            to   { transform: translateX(0); }
-        }
-        @keyframes drawerSlideOut {
-            from { transform: translateX(0); }
-            to   { transform: translateX(-100%); }
-        }
+        /* —————————————————————————————————————————————————————————
+           SIDEBAR (Faqat Desktop uchun)
+           ————————————————————————————————————————————————————————— */
+        .sidebar-container { position: fixed; top: 100px; left: 24px; display: flex; z-index: 999; height: calc(100vh - 130px); }
+        .icon-rail { width: 68px; height: 100%; background: var(--bg-panel); border-radius: 20px; display: flex; flex-direction: column; align-items: center; padding: 24px 0; box-shadow: 0 20px 40px var(--shadow-rail); border: 1px solid var(--border-color); backdrop-filter: blur(24px); position: relative; z-index: 2; }
+        .rail-item { width: 46px; height: 46px; border-radius: 14px; display: flex; justify-content: center; align-items: center; color: var(--rail-item-color); font-size: 18px; margin-bottom: 10px; cursor: pointer; text-decoration: none; transition: 0.3s; }
+        .rail-item.active { background: var(--active-text-blue); color: #ffffff; box-shadow: 0 8px 20px var(--glow-color); }
+        [data-theme="dark"] .rail-item.active { background: rgba(255, 107, 0, 0.14); color: var(--active-text-blue); border: 1px solid rgba(255, 107, 0, 0.3); }
+        .rail-item:hover:not(.active) { background: var(--rail-item-hover-bg); color: var(--text-main); transform: scale(1.05); }
+        .rail-divider { width: 24px; height: 1px; background: var(--border-color); margin: 14px 0; }
 
-        @media (max-width: 1024px) {
-            /* ── CLOSED: completely hidden via JS (display:none on load) ── */
-            .sidebar-container {
-                display: none;
-                flex-direction: column;
-                position: fixed !important;
-                top: 0 !important;
-                left: 0 !important;
-                width: 290px !important;
-                max-width: 88vw !important;
-                height: 100vh !important;
-                height: 100dvh !important;
-                z-index: 100000 !important;
-                background: linear-gradient(160deg, #0d1117 0%, #111827 60%, #0d1117 100%) !important;
-                border-right: 1px solid rgba(255, 107, 0, 0.18) !important;
-                box-shadow: 10px 0 60px rgba(0,0,0,0.8) !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                overflow: hidden !important;
-            }
-            [data-theme="light"] .sidebar-container {
-                background: linear-gradient(160deg, #ffffff 0%, #f8fafc 60%, #ffffff 100%) !important;
-                border-right: 1px solid rgba(255, 107, 0, 0.15) !important;
-                box-shadow: 10px 0 50px rgba(0,0,0,0.12) !important;
-            }
-            /* ── OPEN: slide in ── */
-            .sidebar-container.mobile-drawer-open,
-            .sidebar-container.active {
-                animation: drawerSlideIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) both !important;
-            }
-            /* ── icon-rail: hidden on mobile ── */
-            .sidebar-container .icon-rail {
-                display: none !important;
-            }
-            /* ── expanded-menu: fills the drawer ── */
-            .sidebar-container .expanded-menu {
-                display: flex !important;
-                flex-direction: column !important;
-                width: 100% !important;
-                flex: 1 !important;
-                height: 100% !important;
-                overflow-y: auto !important;
-                -webkit-overflow-scrolling: touch !important;
-                padding: 0 16px calc(40px + env(safe-area-inset-bottom,0px)) 16px !important;
-                margin: 0 !important;
-                background: transparent !important;
-            }
-            .expanded-menu .menu-col {
-                width: 100% !important;
-                min-width: 0 !important;
-                padding: 0 !important;
-            }
-            /* ── Drawer header ── */
-            .expanded-menu .menu-title {
-                display: flex !important;
-                align-items: center !important;
-                justify-content: space-between !important;
-                width: 100% !important;
-                padding: calc(env(safe-area-inset-top,0px) + 22px) 4px 18px !important;
-                margin-bottom: 6px !important;
-                border-bottom: 1px solid rgba(255,107,0,0.15) !important;
-                font-size: 17px !important;
-                font-weight: 800 !important;
-                color: #f8fafc !important;
-                flex-shrink: 0 !important;
-                gap: 0 !important;
-            }
-            [data-theme="light"] .expanded-menu .menu-title { color: #0f172a !important; }
-            /* ── Close button ── */
-            .expanded-menu .menu-title button.drawer-close-btn,
-            .expanded-menu .menu-title .drawer-close-btn {
-                width: 36px !important; height: 36px !important; min-width: 36px !important;
-                border-radius: 10px !important;
-                background: rgba(255,107,0,0.12) !important;
-                border: none !important;
-                display: flex !important; align-items: center !important; justify-content: center !important;
-                color: #ff6b00 !important;
-                font-size: 16px !important;
-                cursor: pointer !important;
-                transition: background 0.2s, transform 0.15s !important;
-            }
-            .expanded-menu .menu-title button.drawer-close-btn:active { transform: scale(0.88) !important; }
-            /* ── Menu list ── */
-            .expanded-menu .menu-list {
-                list-style: none !important;
-                display: flex !important;
-                flex-direction: column !important;
-                gap: 2px !important;
-                margin: 12px 0 0 0 !important;
-                padding: 0 !important;
-            }
-            .expanded-menu .menu-list li a {
-                display: flex !important;
-                align-items: center !important;
-                padding: 13px 14px !important;
-                font-size: 15px !important;
-                font-weight: 600 !important;
-                border-radius: 14px !important;
-                color: #94a3b8 !important;
-                text-decoration: none !important;
-                transition: background 0.18s, color 0.18s !important;
-            }
-            [data-theme="light"] .expanded-menu .menu-list li a { color: #475569 !important; }
-            .expanded-menu .menu-list li a:hover,
-            .expanded-menu .menu-list li a.active-link {
-                background: rgba(255,107,0,0.12) !important;
-                color: #ff6b00 !important;
-            }
-            [data-theme="light"] .expanded-menu .menu-list li a:hover,
-            [data-theme="light"] .expanded-menu .menu-list li a.active-link {
-                background: rgba(255,107,0,0.09) !important;
-                color: #ff6b00 !important;
-            }
-            .expanded-menu .menu-list li a i.main-icon {
-                font-size: 17px !important; margin-right: 14px !important;
-                width: 22px !important; min-width: 22px !important; text-align: center !important;
-            }
-            /* ── Section label ── */
-            .expanded-menu .section-label {
-                display: block !important;
-                font-size: 10px !important; font-weight: 700 !important;
-                text-transform: uppercase !important; letter-spacing: 1.2px !important;
-                color: rgba(148,163,184,0.55) !important;
-                margin: 18px 0 4px 14px !important;
-            }
-        }
-
-        /* ── JS will hide sidebar on load for mobile ── */
-
-        @media (min-width: 769px) {
-            .sidebar-container { position: fixed; top: 100px; left: 24px; display: flex; z-index: 999; height: calc(100vh - 130px); }
-            .icon-rail { width: 68px; height: 100%; background: var(--bg-panel); border-radius: 20px; display: flex; flex-direction: column; align-items: center; padding: 24px 0; box-shadow: 0 20px 40px var(--shadow-rail); border: 1px solid var(--border-color); backdrop-filter: blur(24px); position: relative; z-index: 2; }
-            .rail-item { width: 46px; height: 46px; border-radius: 14px; display: flex; justify-content: center; align-items: center; color: var(--rail-item-color); font-size: 18px; margin-bottom: 10px; cursor: pointer; text-decoration: none; transition: 0.3s; }
-            .rail-item.active { background: var(--active-text-blue); color: #ffffff; box-shadow: 0 8px 20px var(--glow-color); }
-            [data-theme="dark"] .rail-item.active { background: rgba(255, 107, 0, 0.14); color: var(--active-text-blue); border: 1px solid rgba(255, 107, 0, 0.3); }
-            .rail-item:hover:not(.active) { background: var(--rail-item-hover-bg); color: var(--text-main); transform: scale(1.05); }
-            .rail-divider { width: 24px; height: 1px; background: var(--border-color); margin: 14px 0; }
-
-            .expanded-menu { width: 0; opacity: 0; visibility: hidden; overflow: hidden; background: var(--bg-panel); border-radius: 20px; box-shadow: 0 30px 60px var(--shadow-menu); border: 1px solid var(--border-color); margin-left: -20px; padding-left: 20px; display: flex; backdrop-filter: blur(24px); transition: 0.4s ease; pointer-events: none;}
-            .sidebar-container:hover .expanded-menu { width: 280px; opacity: 1; visibility: visible; margin-left: 16px; pointer-events: auto; }
-            .menu-col { min-width: 250px; height: 100%; padding: 28px 20px; display: flex; flex-direction: column; }
-            .menu-title { font-size: 17px; font-weight: 700; color: var(--text-main); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
-            .menu-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
-            .menu-list li a { display: flex; align-items: center; padding: 11px 14px; color: var(--link-color); font-size: 14px; font-weight: 600; text-decoration: none; border-radius: 10px; transition: 0.2s; }
-            .menu-list li a:hover { background: var(--link-hover-bg); color: var(--text-main); transform: translateX(5px); }
-            .menu-list li a.active-link { background: var(--active-bg-light); color: var(--active-text-blue); }
-            .menu-list li a i.main-icon { font-size: 16px; margin-right: 12px; color: var(--text-muted); width: 20px; text-align: center; }
-        }
+        .expanded-menu { width: 0; opacity: 0; visibility: hidden; overflow: hidden; background: var(--bg-panel); border-radius: 20px; box-shadow: 0 30px 60px var(--shadow-menu); border: 1px solid var(--border-color); margin-left: -20px; padding-left: 20px; display: flex; backdrop-filter: blur(24px); transition: 0.4s ease; pointer-events: none;}
+        .sidebar-container:hover .expanded-menu { width: 280px; opacity: 1; visibility: visible; margin-left: 16px; pointer-events: auto; }
+        .menu-col { min-width: 250px; height: 100%; padding: 28px 20px; display: flex; flex-direction: column; }
+        .menu-title { font-size: 17px; font-weight: 700; color: var(--text-main); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+        .menu-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+        .menu-list li a { display: flex; align-items: center; padding: 11px 14px; color: var(--link-color); font-size: 14px; font-weight: 600; text-decoration: none; border-radius: 10px; transition: 0.2s; }
+        .menu-list li a:hover { background: var(--link-hover-bg); color: var(--text-main); transform: translateX(5px); }
+        .menu-list li a.active-link { background: var(--active-bg-light); color: var(--active-text-blue); }
+        .menu-list li a i.main-icon { font-size: 16px; margin-right: 12px; color: var(--text-muted); width: 20px; text-align: center; }
 
         /* —————————————————————————————————————————————————————————
            MAIN CONTENT & SEARCH (Global)
            ————————————————————————————————————————————————————————— */
-        @media (min-width: 769px) {
-            .main-content { margin-left: 120px; padding: 120px 40px 40px 40px; animation: fadeIn 0.8s ease; }
-        }
+        .main-content { margin-left: 120px; padding: 120px 40px 40px 40px; animation: fadeIn 0.8s ease; }
         .market-filter-bar { max-width: 600px; margin: 0 auto 30px auto; }
 
         .search-wrapper { position: relative; width: 100%; border-radius: 50px; background: rgba(12, 14, 22, 0.9); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 20px 40px rgba(0, 0, 0, 0.45), 0 4px 12px rgba(0, 0, 0, 0.3); backdrop-filter: blur(32px); transition: 0.3s ease; }
@@ -372,93 +201,28 @@
         /* —————————————————————————————————————————————————————————
            📱 100% RESPONSIVE MOBILE STYLES (App-Like UI)
            ————————————————————————————————————————————————————————— */
-        /* ── INSTAGRAM-STYLE MINIMALIST BOTTOM NAVIGATION (MOBILE) ── */
-        .bottom-nav {
-            display: none;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: calc(58px + env(safe-area-inset-bottom, 0px));
-            padding-bottom: env(safe-area-inset-bottom, 0px);
-            background: rgba(9, 13, 22, 0.94);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            z-index: 9999;
-            justify-content: space-around;
-            align-items: center;
-            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.4);
-        }
-        .bottom-nav-item {
-            color: #64748b;
-            font-size: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 20%;
-            height: 58px;
-            text-decoration: none;
-            position: relative;
-            opacity: 0.55;
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .bottom-nav-item.active {
-            color: var(--active-text-blue);
-            opacity: 1;
-            font-size: 21px;
-        }
-        .bottom-nav-item.active .nav-active-dot {
-            position: absolute;
-            bottom: 6px;
-            width: 4px;
-            height: 4px;
-            background-color: var(--active-text-blue);
-            border-radius: 50%;
-            box-shadow: 0 0 8px var(--active-text-blue);
-        }
-        .bottom-nav-item:hover { color: #ffffff; opacity: 1; }
-        .bottom-nav-item.add-btn {
-            background: linear-gradient(135deg, #ff6b00, #ea580c);
-            color: #ffffff !important;
-            border-radius: 50%;
-            width: 48px;
-            height: 48px;
-            opacity: 1;
-            transform: translateY(-8px);
-            box-shadow: 0 6px 20px rgba(255, 107, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4);
-            border: 3px solid #05070c;
-            font-size: 20px;
-            flex-shrink: 0;
-        }
-        .bottom-nav-item.add-btn:active { transform: translateY(-4px) scale(0.95); }
-        .bottom-nav-avatar {
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 1.5px solid rgba(255, 255, 255, 0.25);
-            transition: border-color 0.2s ease;
-        }
-        .bottom-nav-item.active .bottom-nav-avatar {
-            border-color: var(--active-text-blue);
-            box-shadow: 0 0 10px rgba(255, 107, 0, 0.5);
-        }
+        .bottom-nav { display: none; position: fixed; bottom: 0; padding-bottom: env(safe-area-inset-bottom); left: 0; width: 100%; background: var(--bg-panel); backdrop-filter: blur(24px); border-top: 1px solid var(--border-color); z-index: 1000; justify-content: space-around; align-items: center; height: calc(65px + env(safe-area-inset-bottom)); box-shadow: 0 -10px 30px rgba(0,0,0,0.1); }
+        .bottom-nav-item { color: var(--rail-item-color); font-size: 22px; display: flex; align-items: center; justify-content: center; width: 100%; height: 65px; text-decoration: none; position: relative; transition: 0.2s; }
+        .bottom-nav-item.active { color: var(--active-text-blue); }
+
+        .bottom-nav-item.add-btn { background: linear-gradient(135deg, #ff6b00, #ff8c33); color: #fff !important; border-radius: 50%; width: 56px; height: 56px; flex-shrink: 0; transform: translateY(-20px); box-shadow: 0 8px 25px var(--glow-color); border: 4px solid var(--bg-body); font-size: 24px; position: absolute; left: 50%; margin-left: -28px; z-index: 10; }
+        .bottom-nav-item.add-btn:active { transform: translateY(-15px) scale(0.95); }
+        .bottom-nav-item .badge { position: absolute; top: 12px; right: calc(50% - 18px); background: #ef4444; color: #fff; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 10px; border: 2px solid var(--bg-panel); }
 
         @media (max-width: 768px) {
             body { background-color: var(--bg-body); }
+            /* Menyular va oraliqlar */
+            .sidebar-container { display: none !important; }
             .bottom-nav { display: flex; }
 
             /* Tepa qism: Qidiruv paneli ekranga yopishadi */
             header { padding: env(safe-area-inset-top) 16px 0 16px; height: calc(64px + env(safe-area-inset-top)); }
             .header-container { grid-template-columns: auto 1fr auto; }
-            .header-left .menu-hamburger { display: flex !important; font-size: 22px; width: 44px; height: 44px; align-items: center; justify-content: center; border-radius: 12px; cursor: pointer; }
             .header-add-btn { display: none; }
             .logo { font-size: 20px; justify-content: flex-start; }
             .profile-avatar { width: 38px; height: 38px; }
 
-            .main-content { margin-left: 0 !important; margin-right: 0 !important; padding: calc(85px + env(safe-area-inset-top)) 0 calc(90px + env(safe-area-inset-bottom)) 0 !important; width: 100% !important; }
+            .main-content { margin-left: 0; padding: calc(85px + env(safe-area-inset-top)) 0 calc(90px + env(safe-area-inset-bottom)) 0; width: 100%; }
 
             /* Qidiruv bar mobil uchun siqiladi */
             .market-filter-bar { padding: 0 14px; margin-bottom: 20px; }
@@ -646,19 +410,25 @@
 
     <header>
         <div class="header-container">
-            <div class="header-left"><i class="fa-solid fa-bars menu-hamburger" onclick="window.toggleMobileDrawer(event)"></i></div>
-            <div class="header-center">
-                <a href="{% url 'build:home' %}" class="logo" style="text-decoration: none;">
-                    EasyBuild <i class="fa-solid fa-helmet-safety"></i>
+            <div class="header-left">
+                <a href="{% url 'build:post_create' %}" class="header-add-btn" data-title="{% trans 'Post yaratish' %}">
+                    <i class="fa-solid fa-plus"></i>
                 </a>
+            </div>
+            <div class="header-center">
+                <div class="logo" id="logoText" style="cursor: pointer; user-select: none;">
+                    EasyBuild <i class="fa-solid fa-helmet-safety"></i>
+                </div>
             </div>
             <div class="header-right">
                 {% if user.is_authenticated %}
                     <a href="{% url 'build:profile' %}">
-                        <img src="{{ user.profile.get_avatar_url }}" class="profile-avatar" alt="{% translate 'Profil' %}">
+                        <img src="{{ user.profile.get_avatar_url }}" alt="{% translate 'Profil' %}" class="profile-avatar">
                     </a>
                 {% else %}
-                    <a href="{% url 'accounts:login' %}" style="text-decoration: none; color: var(--active-text-blue); font-weight: 700;"><i class="fa-solid fa-right-to-bracket"></i> {% translate "Kirish" %}</a>
+                    <a href="{% url 'accounts:login' %}" style="text-decoration: none; color: var(--active-text-blue); font-weight: 700; font-size: 15px;">
+                        <i class="fa-solid fa-right-to-bracket"></i> <span class="hidden sm:inline">{% trans "Kirish" %}</span>
+                    </a>
                 {% endif %}
             </div>
         </div>
@@ -692,36 +462,13 @@
                 {% endif %}
             </a>
         </div>
-
-        <div class="expanded-menu">
-            <div class="menu-col">
-                <div class="menu-title">
-                    <span style="display:flex; align-items:center; gap:10px;">
-                        <span style="width:32px; height:32px; background:linear-gradient(135deg,#ff6b00,#ff9500); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-                            <i class="fa-solid fa-helmet-safety" style="color:#fff; font-size:15px;"></i>
-                        </span>
-                        <span>EasyBuild</span>
-                    </span>
-                    <button class="drawer-close-btn" onclick="window.closeMobileDrawer(event)" style="background:none; border:none; cursor:pointer; padding:0;">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                </div>
-                <ul class="menu-list">
-                    <li><a href="{% url 'build:home' %}" class="{% if request.resolver_match.url_name == 'home' %}active-link{% endif %}"><i class="fa-solid fa-house main-icon"></i> {% trans "Bosh sahifa" %}</a></li>
-                    <li><a href="{% url 'build:network' %}" class="{% if request.resolver_match.url_name == 'network' %}active-link{% endif %}"><i class="fa-solid fa-users main-icon"></i> {% trans "Hamkasblar" %}</a></li>
-                    <li><a href="{% url 'build:market' %}" class="{% if request.resolver_match.url_name == 'market' %}active-link{% endif %}"><i class="fa-solid fa-store main-icon"></i> {% trans "Market Pro" %}</a></li>
-                    <li><a href="{% url 'build:builder_list' %}" class="{% if request.resolver_match.url_name == 'builder_list' %}active-link{% endif %}"><i class="fa-solid fa-helmet-safety main-icon"></i> {% trans "Usta Qidirish" %}</a></li>
-                    <li><a href="{% url 'chat:chat' %}" class="{% if request.resolver_match.namespace == 'chat' %}active-link{% endif %}"><i class="fa-regular fa-comment-dots main-icon"></i> {% trans "Xabarlar" %} {% if unread_chat_count > 0 %}<span style="background:linear-gradient(135deg,#ff6b00,#ff8c33); color:#fff; font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; margin-left:auto;">{{ unread_chat_count }}</span>{% endif %}</a></li>
-                    <li><a href="{% url 'build:notifications_list' %}" class="{% if request.resolver_match.url_name == 'notifications_list' %}active-link{% endif %}"><i class="fa-solid fa-bell main-icon"></i> {% trans "Bildirishnomalar" %} {% if unread_notifications_count > 0 %}<span style="background:#ef4444; color:#fff; font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; margin-left:auto;">{{ unread_notifications_count }}</span>{% endif %}</a></li>
-                    <li><a href="{% url 'build:payment_dashboard' %}" class="{% if request.resolver_match.url_name == 'payment_dashboard' %}active-link{% endif %}"><i class="fa-solid fa-gem main-icon"></i> {% trans "Premium" %}</a></li>
-                </ul>
-
-                <div class="section-label">{% translate "Shaxsiy" %}</div>
-                <ul class="menu-list">
-                    <li><a href="{% url 'build:profile' %}" class="{% if request.resolver_match.url_name == 'profile' %}active-link{% endif %}"><i class="fa-solid fa-user main-icon"></i> {% trans "Profil" %}</a></li>
-                    <li><a href="{% url 'build:profile_edit' %}" class="{% if request.resolver_match.url_name == 'profile_edit' %}active-link{% endif %}"><i class="fa-solid fa-gear main-icon"></i> {% trans "Sozlamalar" %}</a></li>
-                </ul>
-            </div>
+            <a href="{% url 'build:profile' %}" class="rail-item">
+                {% if request.user.profile.avatar %}
+                    <img src="{{ request.user.profile.get_avatar_url }}" style="width:100%; height:100%; border-radius:14px; object-fit:cover;">
+                {% else %}
+                    <i class="fa-regular fa-user"></i>
+                {% endif %}
+            </a>
         </div>
     </div>
 
@@ -935,31 +682,21 @@
 
     </style>
 
-    <!-- INSTAGRAM-STYLE MINIMALIST MOBILE BOTTOM NAVIGATION -->
-    <div class="bottom-nav">
-        <a href="{% url 'build:home' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}" title="{% translate 'Bosh sahifa' %}">
-            <i class="fa-solid fa-house"></i>
-            <span class="nav-active-dot"></span>
-        </a>
-        <a href="{% url 'build:builder_list' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" title="{% translate 'Qidiruv / Ustalar' %}">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <span class="nav-active-dot"></span>
-        </a>
-        <a href="{% url 'build:post_create' %}" class="bottom-nav-item add-btn" title="{% translate 'Yangi e\'lon' %}">
-            <i class="fa-solid fa-plus"></i>
-        </a>
-        <a href="{% url 'build:network' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}" title="{% translate 'Jamiyat' %}">
-            <i class="fa-solid fa-users"></i>
-            <span class="nav-active-dot"></span>
-        </a>
-        <a href="{% url 'build:profile' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'profile' or request.resolver_match.url_name == 'profile_edit' %}active{% endif %}" title="{% translate 'Profil' %}">
-            {% if user.is_authenticated and user.profile.get_avatar_url %}
-                <img src="{{ user.profile.get_avatar_url }}" class="bottom-nav-avatar" alt="{% translate 'Profil' %}">
-            {% else %}
-                <i class="fa-regular fa-user"></i>
+<div class="bottom-nav">
+        <a href="{% url 'build:home' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}"><i class="fa-solid fa-house"></i></a>
+        <a href="{% url 'build:network' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}"><i class="fa-solid fa-users"></i></a>
+        <div style="width: 56px;"></div>
+        <a href="{% url 'build:builder_list' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}"><i class="fa-solid fa-helmet-safety"></i></a>
+        <a href="{% url 'chat:chat' %}" class="bottom-nav-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}">
+            <i class="fa-regular fa-comment-dots"></i>
+            {% if unread_chat_count > 0 %}
+                <span class="badge">{{ unread_chat_count }}</span>
             {% endif %}
-            <span class="nav-active-dot"></span>
         </a>
+            
+            
+            
+        <a href="{% url 'build:post_create' %}" class="bottom-nav-item add-btn"><i class="fa-solid fa-plus"></i></a>
     </div>
 
     <script>
@@ -1250,34 +987,6 @@ function showToast(type, message) {
             }
             if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
             if (logoText) logoText.addEventListener('click', toggleTheme);
-
-            const hamburgerBtn = document.querySelector('.menu-hamburger');
-            const sidebar = document.querySelector('.sidebar-container');
-            const mainContent = document.querySelector('.main-content');
-
-            /* ── Desktop-only hamburger toggle (sidebar hide/show) ── */
-            if (hamburgerBtn && sidebar && mainContent && window.innerWidth > 768) {
-                hamburgerBtn.addEventListener('click', function(e) {
-                    const isHidden = sidebar.style.transform === 'translateX(-150%)';
-                    if (!isHidden) {
-                        sidebar.style.transform = 'translateX(-150%)';
-                        sidebar.style.opacity = '0';
-                        mainContent.style.marginLeft = '40px';
-                    } else {
-                        sidebar.style.transform = 'translateX(0)';
-                        sidebar.style.opacity = '1';
-                        mainContent.style.marginLeft = '120px';
-                    }
-                });
-            }
-
-            /* ── Mobile: hide sidebar on page load, Escape to close ── */
-            if (window.innerWidth <= 1024) {
-                if (sidebar) sidebar.style.display = 'none';
-            }
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') closeMobileDrawer(e);
-            });
         });
     </script>
 
@@ -1298,19 +1007,6 @@ function showMarketToast() {
   clearTimeout(t._tmr);
   t._tmr = setTimeout(() => t.classList.remove('show'), 3500);
 }
-</script>
-
-<!-- Mobile Drawer Overlay -->
-<div id="mobileDrawerOverlay" onclick="closeMobileDrawer(event)" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.65); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); z-index:99999; opacity:0; transition:opacity 0.35s ease;"></div>
-
-<script>
-    /* Hide sidebar on mobile page load */
-    (function() {
-        if (window.innerWidth <= 1024) {
-            var sb = document.querySelector('.sidebar-container');
-            if (sb) sb.style.display = 'none';
-        }
-    })();
 </script>
 </body>
 </html>
