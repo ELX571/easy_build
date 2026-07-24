@@ -218,7 +218,7 @@
             border-color: rgba(0, 0, 0, 0.15) !important;
         }
 
-        /* 🚀 MASTER INSTAGRAM OFF-CANVAS SIDE DRAWER CSS (MOBILE & TABLET) */
+        /* 🚀 MASTER PREMIUM OFF-CANVAS SIDE DRAWER CSS (MOBILE & TABLET) */
         @media (max-width: 1024px) {
             /* 1. Hide sidebar off-screen by default on mobile/tablet */
             .sidebar-container, #sideDrawer, .offcanvas-menu {
@@ -227,19 +227,19 @@
                 position: fixed !important;
                 top: 0 !important;
                 left: 0 !important;
-                width: 280px !important;
-                max-width: 85vw !important;
+                width: 290px !important;
+                max-width: 88vw !important;
                 height: 100vh !important;
                 height: 100dvh !important;
                 z-index: 100000 !important;
-                background: var(--bg-panel, #090d16) !important;
-                backdrop-filter: blur(35px) !important;
-                -webkit-backdrop-filter: blur(35px) !important;
-                border-right: 1px solid var(--border-color, rgba(255,255,255,0.12)) !important;
-                box-shadow: 0 0 100px rgba(0,0,0,0.8) !important;
+                background: linear-gradient(160deg, #0d1117 0%, #111827 50%, #0d1117 100%) !important;
+                backdrop-filter: blur(40px) !important;
+                -webkit-backdrop-filter: blur(40px) !important;
+                border-right: 1px solid rgba(255, 107, 0, 0.12) !important;
+                box-shadow: 8px 0 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04) inset !important;
                 transform: translateX(-100%) !important;
-                transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, visibility 0.35s ease !important;
-                opacity: 0 !important;
+                transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1) !important;
+                opacity: 1 !important;
                 visibility: hidden !important;
                 pointer-events: none !important;
                 margin: 0 !important;
@@ -247,7 +247,16 @@
                 overflow: hidden !important;
             }
 
-            /* 2. When open, slide in as a full 280px drawer */
+            /* Light mode drawer */
+            [data-theme="light"] .sidebar-container,
+            [data-theme="light"] #sideDrawer,
+            [data-theme="light"] .offcanvas-menu {
+                background: linear-gradient(160deg, #ffffff 0%, #f8fafc 50%, #ffffff 100%) !important;
+                border-right: 1px solid rgba(255, 107, 0, 0.15) !important;
+                box-shadow: 8px 0 60px rgba(0,0,0,0.15) !important;
+            }
+
+            /* 2. When open, slide in as a full drawer */
             .sidebar-container.mobile-drawer-open,
             .sidebar-container.active,
             .sidebar-container.open,
@@ -257,7 +266,6 @@
             .offcanvas-menu.active,
             .offcanvas-menu.open {
                 transform: translateX(0) !important;
-                opacity: 1 !important;
                 visibility: visible !important;
                 pointer-events: auto !important;
             }
@@ -280,7 +288,7 @@
                 opacity: 1 !important;
                 visibility: visible !important;
                 margin: 0 !important;
-                padding: calc(20px + env(safe-area-inset-top, 0px)) 16px calc(40px + env(safe-area-inset-bottom, 0px)) 16px !important;
+                padding: 0 16px calc(40px + env(safe-area-inset-bottom, 0px)) 16px !important;
                 pointer-events: auto !important;
                 border: none !important;
                 box-shadow: none !important;
@@ -297,50 +305,110 @@
                 height: auto !important;
             }
 
+            /* Premium drawer header */
             .expanded-menu .menu-title {
-                font-size: 18px !important;
+                font-size: 17px !important;
                 font-weight: 800 !important;
-                margin-bottom: 20px !important;
+                margin-bottom: 8px !important;
+                padding: calc(env(safe-area-inset-top, 0px) + 20px) 4px 18px 4px !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: space-between !important;
                 width: 100% !important;
+                border-bottom: 1px solid rgba(255, 107, 0, 0.12) !important;
+                color: #f8fafc !important;
+                letter-spacing: -0.3px !important;
+                flex-shrink: 0 !important;
+            }
+
+            [data-theme="light"] .expanded-menu .menu-title {
+                color: #0f172a !important;
+                border-bottom-color: rgba(255, 107, 0, 0.15) !important;
+            }
+
+            .expanded-menu .menu-title .drawer-close-btn {
+                width: 36px !important;
+                height: 36px !important;
+                min-width: 36px !important;
+                border-radius: 10px !important;
+                background: rgba(255, 107, 0, 0.1) !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                color: #ff6b00 !important;
+                cursor: pointer !important;
+                transition: background 0.2s, transform 0.15s !important;
+                font-size: 15px !important;
+                flex-shrink: 0 !important;
+                padding: 0 !important;
+            }
+            .expanded-menu .menu-title .drawer-close-btn:active {
+                transform: scale(0.9) !important;
+                background: rgba(255, 107, 0, 0.2) !important;
             }
 
             .expanded-menu .menu-list {
                 display: flex !important;
                 flex-direction: column !important;
-                gap: 6px !important;
+                gap: 3px !important;
+                margin-top: 12px !important;
             }
 
             .expanded-menu .menu-list li a {
                 display: flex !important;
                 align-items: center !important;
-                padding: 13px 16px !important;
+                padding: 13px 14px !important;
                 font-size: 15px !important;
                 font-weight: 600 !important;
                 border-radius: 14px !important;
-                color: var(--link-color, #94a3b8) !important;
-                transition: background 0.2s ease, color 0.2s ease !important;
+                color: #94a3b8 !important;
+                transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease !important;
+                text-decoration: none !important;
+                line-height: 1 !important;
+            }
+
+            [data-theme="light"] .expanded-menu .menu-list li a {
+                color: #475569 !important;
+            }
+
+            .expanded-menu .menu-list li a:active {
+                transform: scale(0.97) !important;
             }
 
             .expanded-menu .menu-list li a:hover,
             .expanded-menu .menu-list li a.active-link {
-                background: var(--active-bg-light, rgba(255, 107, 0, 0.15)) !important;
-                color: var(--active-text-blue, #ff6b00) !important;
+                background: rgba(255, 107, 0, 0.12) !important;
+                color: #ff6b00 !important;
+            }
+
+            [data-theme="light"] .expanded-menu .menu-list li a:hover,
+            [data-theme="light"] .expanded-menu .menu-list li a.active-link {
+                background: rgba(255, 107, 0, 0.1) !important;
+                color: #ff6b00 !important;
             }
 
             .expanded-menu .menu-list li a i.main-icon {
-                font-size: 18px !important;
+                font-size: 17px !important;
                 margin-right: 14px !important;
                 width: 22px !important;
                 text-align: center !important;
+                flex-shrink: 0 !important;
+            }
+
+            /* section label inside drawer */
+            .expanded-menu .section-label {
+                font-size: 10px !important;
+                font-weight: 700 !important;
+                text-transform: uppercase !important;
+                letter-spacing: 1.2px !important;
+                color: rgba(148, 163, 184, 0.6) !important;
+                margin: 16px 4px 6px 14px !important;
+                display: block !important;
             }
 
             /* iOS Input Zoom Prevention */
             input, textarea, select { font-size: 16px !important; }
-        }
-            
+
             /* Top Header Notch Alignment */
             header {
                 padding-top: env(safe-area-inset-top, 0px) !important;
@@ -350,7 +418,7 @@
             }
             .header-add-btn { width: 40px !important; height: 40px !important; }
 
-            /* Safe Main Content Padding (Never clipped by bottom-nav or desktop margins) */
+            /* Safe Main Content Padding */
             .main-content {
                 padding-top: calc(80px + env(safe-area-inset-top, 0px)) !important;
                 padding-bottom: calc(85px + env(safe-area-inset-bottom, 0px)) !important;
@@ -358,7 +426,7 @@
                 margin-left: 0 !important; margin-right: 0 !important;
                 width: 100% !important;
             }
-            
+
             /* Responsive Grid & Container Spacing */
             .market-filter-bar, .builders-grid-layout, .profile-container, .form-container, .auth-wrapper {
                 padding-left: 12px !important;
@@ -422,8 +490,57 @@
         {% endblock %}
     </main>
 
-    <!-- ⚡️ GLOBAL INSTAGRAM HAMBURGER MENU DRAWER OVERLAY & JS -->
-    <div id="mobileDrawerOverlay" class="drawer-backdrop drawer-overlay" onclick="closeMobileDrawer(event)" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 999998; transition: opacity 0.3s ease;"></div>
+    <!-- ⚡️ GLOBAL HAMBURGER MENU DRAWER OVERLAY -->
+    <div id="mobileDrawerOverlay" onclick="window.closeMobileDrawer(event)" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); z-index:99999; opacity:0; transition:opacity 0.35s ease;"></div>
+
+    <script>
+        // Override open/close to animate overlay properly
+        (function() {
+            var _origOpen = window.openMobileDrawer;
+            var _origClose = window.closeMobileDrawer;
+
+            window.openMobileDrawer = function() {
+                var overlay = document.getElementById('mobileDrawerOverlay');
+                if (overlay) {
+                    overlay.style.display = 'block';
+                    requestAnimationFrame(function() {
+                        overlay.style.opacity = '1';
+                    });
+                }
+                var sidebar = document.querySelector('.sidebar-container, #sideDrawer, .offcanvas-menu');
+                if (sidebar) {
+                    sidebar.classList.add('mobile-drawer-open', 'active', 'open');
+                }
+                document.body.style.overflow = 'hidden';
+                document.documentElement.style.overflow = 'hidden';
+            };
+
+            window.closeMobileDrawer = function(e) {
+                if (e && typeof e.stopPropagation === 'function') e.stopPropagation();
+                var overlay = document.getElementById('mobileDrawerOverlay');
+                if (overlay) {
+                    overlay.style.opacity = '0';
+                    setTimeout(function() { overlay.style.display = 'none'; }, 350);
+                }
+                var sidebar = document.querySelector('.sidebar-container, #sideDrawer, .offcanvas-menu');
+                if (sidebar) {
+                    sidebar.classList.remove('mobile-drawer-open', 'active', 'open');
+                }
+                document.body.style.overflow = '';
+                document.documentElement.style.overflow = '';
+            };
+
+            window.toggleMobileDrawer = function(e) {
+                if (e && typeof e.preventDefault === 'function') { e.preventDefault(); e.stopPropagation(); }
+                var sidebar = document.querySelector('.sidebar-container, #sideDrawer, .offcanvas-menu');
+                if (sidebar && (sidebar.classList.contains('mobile-drawer-open') || sidebar.classList.contains('active') || sidebar.classList.contains('open'))) {
+                    window.closeMobileDrawer(e);
+                } else {
+                    window.openMobileDrawer();
+                }
+            };
+        })();
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
