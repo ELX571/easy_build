@@ -12,6 +12,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
+    <script>
+        /* ⚡️ HAMBURGER DRAWER FUNCTIONS - hoisted */
+        function openMobileDrawer() {
+            var sb = document.querySelector('.sidebar-container');
+            var ov = document.getElementById('mobileDrawerOverlay');
+            if (sb) { sb.style.display = 'flex'; void sb.offsetWidth; sb.classList.add('mobile-drawer-open','active'); }
+            if (ov) { ov.style.display = 'block'; requestAnimationFrame(function(){ ov.style.opacity='1'; }); }
+            document.body.style.overflow = 'hidden';
+        }
+        function closeMobileDrawer(e) {
+            if (e && e.stopPropagation) e.stopPropagation();
+            var sb = document.querySelector('.sidebar-container');
+            var ov = document.getElementById('mobileDrawerOverlay');
+            if (sb) { sb.classList.remove('mobile-drawer-open','active','open'); setTimeout(function(){ if(!sb.classList.contains('mobile-drawer-open')) sb.style.display='none'; }, 400); }
+            if (ov) { ov.style.opacity='0'; setTimeout(function(){ ov.style.display='none'; }, 350); }
+            document.body.style.overflow = '';
+        }
+        function toggleMobileDrawer(e) {
+            if (e && e.preventDefault) { e.preventDefault(); e.stopPropagation(); }
+            var sb = document.querySelector('.sidebar-container');
+            if (sb && (sb.classList.contains('mobile-drawer-open') || sb.classList.contains('active'))) { closeMobileDrawer(e); } else { openMobileDrawer(); }
+        }
+        window.openMobileDrawer = openMobileDrawer;
+        window.closeMobileDrawer = closeMobileDrawer;
+        window.toggleMobileDrawer = toggleMobileDrawer;
+    </script>
+
     <style>
         /* —————————————————————————————————————————————————————————
            PREMIUM VARIABLE SYSTEM (CYBER ORANGE & ULTRA GLASS)
@@ -111,9 +138,147 @@
         .header-right { display: flex; justify-content: flex-end; align-items: center; gap: 20px; }
         .profile-avatar { width: 44px; height: 44px; border-radius: 14px; object-fit: cover; border: 2px solid var(--border-color); cursor: pointer; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
 
-        /* —————————————————————————————————————————————————————————
-           SIDEBAR (Faqat Desktop uchun)
-           ————————————————————————————————————————————————————————— */
+        /* ═══════════════════════════════════════════════════════
+           📱 MOBILE OFF-CANVAS DRAWER (max-width: 1024px)
+           ═══════════════════════════════════════════════════════ */
+        @keyframes drawerSlideIn {
+            from { transform: translateX(-100%); }
+            to   { transform: translateX(0); }
+        }
+        @keyframes drawerSlideOut {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-100%); }
+        }
+
+        @media (max-width: 1024px) {
+            /* ── CLOSED: completely hidden via JS (display:none on load) ── */
+            .sidebar-container {
+                display: none;
+                flex-direction: column;
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 290px !important;
+                max-width: 88vw !important;
+                height: 100vh !important;
+                height: 100dvh !important;
+                z-index: 100000 !important;
+                background: linear-gradient(160deg, #0d1117 0%, #111827 60%, #0d1117 100%) !important;
+                border-right: 1px solid rgba(255, 107, 0, 0.18) !important;
+                box-shadow: 10px 0 60px rgba(0,0,0,0.8) !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow: hidden !important;
+            }
+            [data-theme="light"] .sidebar-container {
+                background: linear-gradient(160deg, #ffffff 0%, #f8fafc 60%, #ffffff 100%) !important;
+                border-right: 1px solid rgba(255, 107, 0, 0.15) !important;
+                box-shadow: 10px 0 50px rgba(0,0,0,0.12) !important;
+            }
+            /* ── OPEN: slide in ── */
+            .sidebar-container.mobile-drawer-open,
+            .sidebar-container.active {
+                animation: drawerSlideIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) both !important;
+            }
+            /* ── icon-rail: hidden on mobile ── */
+            .sidebar-container .icon-rail {
+                display: none !important;
+            }
+            /* ── expanded-menu: fills the drawer ── */
+            .sidebar-container .expanded-menu {
+                display: flex !important;
+                flex-direction: column !important;
+                width: 100% !important;
+                flex: 1 !important;
+                height: 100% !important;
+                overflow-y: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+                padding: 0 16px calc(40px + env(safe-area-inset-bottom,0px)) 16px !important;
+                margin: 0 !important;
+                background: transparent !important;
+            }
+            .expanded-menu .menu-col {
+                width: 100% !important;
+                min-width: 0 !important;
+                padding: 0 !important;
+            }
+            /* ── Drawer header ── */
+            .expanded-menu .menu-title {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                width: 100% !important;
+                padding: calc(env(safe-area-inset-top,0px) + 22px) 4px 18px !important;
+                margin-bottom: 6px !important;
+                border-bottom: 1px solid rgba(255,107,0,0.15) !important;
+                font-size: 17px !important;
+                font-weight: 800 !important;
+                color: #f8fafc !important;
+                flex-shrink: 0 !important;
+                gap: 0 !important;
+            }
+            [data-theme="light"] .expanded-menu .menu-title { color: #0f172a !important; }
+            /* ── Close button ── */
+            .expanded-menu .menu-title button.drawer-close-btn,
+            .expanded-menu .menu-title .drawer-close-btn {
+                width: 36px !important; height: 36px !important; min-width: 36px !important;
+                border-radius: 10px !important;
+                background: rgba(255,107,0,0.12) !important;
+                border: none !important;
+                display: flex !important; align-items: center !important; justify-content: center !important;
+                color: #ff6b00 !important;
+                font-size: 16px !important;
+                cursor: pointer !important;
+                transition: background 0.2s, transform 0.15s !important;
+            }
+            .expanded-menu .menu-title button.drawer-close-btn:active { transform: scale(0.88) !important; }
+            /* ── Menu list ── */
+            .expanded-menu .menu-list {
+                list-style: none !important;
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 2px !important;
+                margin: 12px 0 0 0 !important;
+                padding: 0 !important;
+            }
+            .expanded-menu .menu-list li a {
+                display: flex !important;
+                align-items: center !important;
+                padding: 13px 14px !important;
+                font-size: 15px !important;
+                font-weight: 600 !important;
+                border-radius: 14px !important;
+                color: #94a3b8 !important;
+                text-decoration: none !important;
+                transition: background 0.18s, color 0.18s !important;
+            }
+            [data-theme="light"] .expanded-menu .menu-list li a { color: #475569 !important; }
+            .expanded-menu .menu-list li a:hover,
+            .expanded-menu .menu-list li a.active-link {
+                background: rgba(255,107,0,0.12) !important;
+                color: #ff6b00 !important;
+            }
+            [data-theme="light"] .expanded-menu .menu-list li a:hover,
+            [data-theme="light"] .expanded-menu .menu-list li a.active-link {
+                background: rgba(255,107,0,0.09) !important;
+                color: #ff6b00 !important;
+            }
+            .expanded-menu .menu-list li a i.main-icon {
+                font-size: 17px !important; margin-right: 14px !important;
+                width: 22px !important; min-width: 22px !important; text-align: center !important;
+            }
+            /* ── Section label ── */
+            .expanded-menu .section-label {
+                display: block !important;
+                font-size: 10px !important; font-weight: 700 !important;
+                text-transform: uppercase !important; letter-spacing: 1.2px !important;
+                color: rgba(148,163,184,0.55) !important;
+                margin: 18px 0 4px 14px !important;
+            }
+        }
+
+        /* ── JS will hide sidebar on load for mobile ── */
+
         @media (min-width: 769px) {
             .sidebar-container { position: fixed; top: 100px; left: 24px; display: flex; z-index: 999; height: calc(100vh - 130px); }
             .icon-rail { width: 68px; height: 100%; background: var(--bg-panel); border-radius: 20px; display: flex; flex-direction: column; align-items: center; padding: 24px 0; box-shadow: 0 20px 40px var(--shadow-rail); border: 1px solid var(--border-color); backdrop-filter: blur(24px); position: relative; z-index: 2; }
@@ -1090,22 +1255,29 @@ function showToast(type, message) {
             const sidebar = document.querySelector('.sidebar-container');
             const mainContent = document.querySelector('.main-content');
 
-            if (hamburgerBtn && sidebar && mainContent) {
+            /* ── Desktop-only hamburger toggle (sidebar hide/show) ── */
+            if (hamburgerBtn && sidebar && mainContent && window.innerWidth > 768) {
                 hamburgerBtn.addEventListener('click', function(e) {
-                    if (window.innerWidth > 768) {
-                        const isHidden = sidebar.style.transform === 'translateX(-150%)';
-                        if (!isHidden) {
-                            sidebar.style.transform = 'translateX(-150%)';
-                            sidebar.style.opacity = '0';
-                            mainContent.style.marginLeft = '40px';
-                        } else {
-                            sidebar.style.transform = 'translateX(0)';
-                            sidebar.style.opacity = '1';
-                            mainContent.style.marginLeft = '120px';
-                        }
+                    const isHidden = sidebar.style.transform === 'translateX(-150%)';
+                    if (!isHidden) {
+                        sidebar.style.transform = 'translateX(-150%)';
+                        sidebar.style.opacity = '0';
+                        mainContent.style.marginLeft = '40px';
+                    } else {
+                        sidebar.style.transform = 'translateX(0)';
+                        sidebar.style.opacity = '1';
+                        mainContent.style.marginLeft = '120px';
                     }
                 });
             }
+
+            /* ── Mobile: hide sidebar on page load, Escape to close ── */
+            if (window.innerWidth <= 1024) {
+                if (sidebar) sidebar.style.display = 'none';
+            }
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeMobileDrawer(e);
+            });
         });
     </script>
 
@@ -1126,6 +1298,19 @@ function showMarketToast() {
   clearTimeout(t._tmr);
   t._tmr = setTimeout(() => t.classList.remove('show'), 3500);
 }
+</script>
+
+<!-- Mobile Drawer Overlay -->
+<div id="mobileDrawerOverlay" onclick="closeMobileDrawer(event)" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.65); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); z-index:99999; opacity:0; transition:opacity 0.35s ease;"></div>
+
+<script>
+    /* Hide sidebar on mobile page load */
+    (function() {
+        if (window.innerWidth <= 1024) {
+            var sb = document.querySelector('.sidebar-container');
+            if (sb) sb.style.display = 'none';
+        }
+    })();
 </script>
 </body>
 </html>
