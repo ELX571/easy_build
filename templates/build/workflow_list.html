@@ -446,15 +446,20 @@
 
     <header>
         <div class="header-container">
-            <div class="header-left"><i class="fa-solid fa-bars menu-hamburger"></i></div>
-            <div class="header-center"><div class="logo">{% trans "EasyBuild" %}</div></div>
+            <div class="header-left"><i class="fa-solid fa-bars menu-hamburger" onclick="toggleMobileDrawer(event)"></i></div>
+            <div class="header-center">
+                <a href="{% url 'build:home' %}" class="logo" style="text-decoration: none;">
+                    EasyBuild <i class="fa-solid fa-helmet-safety"></i>
+                </a>
+            </div>
             <div class="header-right">
-                <div class="profile-wrapper">
+                {% if user.is_authenticated %}
                     <a href="{% url 'build:profile' %}">
-                        {% if user.profile.avatar %}<img src="{{ user.profile.avatar.url }}" class="profile-avatar">
-                        {% else %}<img src="/static/images/default_avatar.svg" class="profile-avatar">{% endif %}
+                        <img src="{{ user.profile.get_avatar_url }}" class="profile-avatar" alt="{% translate 'Profil' %}">
                     </a>
-                </div>
+                {% else %}
+                    <a href="{% url 'accounts:login' %}" style="text-decoration: none; color: var(--active-text-blue); font-weight: 700;"><i class="fa-solid fa-right-to-bracket"></i> {% translate "Kirish" %}</a>
+                {% endif %}
             </div>
         </div>
     </header>
