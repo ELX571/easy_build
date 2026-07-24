@@ -60,13 +60,15 @@
         .header-right { display: flex; justify-content: flex-end; align-items: center; gap: 20px; }
 
         /* ── SIDEBAR (Global Desktop) ── */
-        .sidebar-container { position: fixed; top: 100px; left: 24px; display: flex; z-index: 999; height: calc(100vh - 130px); }
-        .icon-rail { width: 68px; height: 100%; background: var(--bg-panel); border-radius: 20px; display: flex; flex-direction: column; align-items: center; padding: 24px 0; border: 1px solid var(--border-color); backdrop-filter: blur(24px); }
-        .rail-item { width: 46px; height: 46px; border-radius: 14px; display: flex; justify-content: center; align-items: center; color: var(--rail-item-color); font-size: 18px; margin-bottom: 10px; text-decoration: none; transition: 0.3s; }
-        .rail-item.active { background: var(--active-text-blue); color: #ffffff; box-shadow: 0 8px 20px var(--glow-color); }
-        [data-theme="dark"] .rail-item.active { background: rgba(255, 107, 0, 0.14); color: var(--active-text-blue); border: 1px solid rgba(255, 107, 0, 0.3); }
-        .rail-item:hover:not(.active) { background: var(--rail-item-hover-bg); color: var(--text-main); transform: scale(1.05); }
-        .rail-divider { width: 24px; height: 1px; background: var(--border-color); margin: 14px 0; }
+        @media (min-width: 769px) {
+            .sidebar-container { position: fixed; top: 100px; left: 24px; display: flex; z-index: 999; height: calc(100vh - 130px); }
+            .icon-rail { width: 68px; height: 100%; background: var(--bg-panel); border-radius: 20px; display: flex; flex-direction: column; align-items: center; padding: 24px 0; border: 1px solid var(--border-color); backdrop-filter: blur(24px); }
+            .rail-item { width: 46px; height: 46px; border-radius: 14px; display: flex; justify-content: center; align-items: center; color: var(--rail-item-color); font-size: 18px; margin-bottom: 10px; text-decoration: none; transition: 0.3s; }
+            .rail-item.active { background: var(--active-text-blue); color: #ffffff; box-shadow: 0 8px 20px var(--glow-color); }
+            [data-theme="dark"] .rail-item.active { background: rgba(255, 107, 0, 0.14); color: var(--active-text-blue); border: 1px solid rgba(255, 107, 0, 0.3); }
+            .rail-item:hover:not(.active) { background: var(--rail-item-hover-bg); color: var(--text-main); transform: scale(1.05); }
+            .rail-divider { width: 24px; height: 1px; background: var(--border-color); margin: 14px 0; }
+        }
 
         /* ── PROFILE CONTAINER ── */
         .profile-container { width: 100%; max-width: 680px; display: flex; flex-direction: column; gap: 24px; position: relative; margin-left: 120px; animation: fadeIn 0.6s ease; }
