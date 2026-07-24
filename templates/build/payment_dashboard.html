@@ -121,10 +121,37 @@
         padding: 0 1.5rem;
         padding-left: 100px; /* Account for the fixed sidebar */
     }
+
+    /* ── RESPONSIVE MEDIA QUERIES (320px, 480px, 768px, 1024px, 1200px) ── */
+    @media (max-width: 1200px) {
+        .payment-wrapper { max-width: 980px; margin-top: 90px; }
+    }
+
+    @media (max-width: 1024px) {
+        .payment-wrapper { max-width: 100%; padding-left: 90px; padding-right: 1.25rem; }
+    }
+
     @media (max-width: 768px) {
-        .payment-wrapper {
-            padding-left: 1.5rem; /* Reset padding for mobile since sidebar is hidden */
-        }
+        .payment-wrapper { padding-left: 1rem; padding-right: 1rem; margin-top: 80px; margin-bottom: 5rem; }
+        .virtual-card { padding: 1.25rem; border-radius: 16px; margin-bottom: 1.25rem; }
+        .vc-number { font-size: 1.2rem !important; }
+        #payment-buttons-row { gap: 12px !important; }
+        #click-link, #uzum-link { width: 140px !important; height: 70px !important; }
+    }
+
+    @media (max-width: 480px) {
+        .payment-wrapper { padding-left: 0.75rem; padding-right: 0.75rem; margin-top: 75px; }
+        .virtual-card { padding: 1rem; }
+        .vc-number { font-size: 1.05rem !important; letter-spacing: 1px !important; }
+        #payment-buttons-row { gap: 10px !important; flex-wrap: wrap !important; }
+        #click-link, #uzum-link { width: 130px !important; height: 65px !important; }
+        .btn-submit { font-size: 0.95rem; padding: 14px; min-height: 48px; }
+    }
+
+    @media (max-width: 320px) {
+        .payment-wrapper { padding-left: 0.5rem; padding-right: 0.5rem; }
+        .vc-number { font-size: 0.95rem !important; }
+        #click-link, #uzum-link { width: 120px !important; height: 60px !important; }
     }
 
     .dashboard-grid {

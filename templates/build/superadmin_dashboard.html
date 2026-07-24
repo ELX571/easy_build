@@ -366,9 +366,49 @@
         border-radius: 20px;
         padding: 2rem;
         max-width: 520px;
-        width: 100%;
+        width: 94%;
+        max-height: 85vh;
+        overflow-y: auto;
         position: relative;
         box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+    }
+
+    /* ── COMPREHENSIVE RESPONSIVE MEDIA QUERIES (320px, 480px, 768px, 1024px, 1200px) ── */
+    @media (max-width: 1200px) {
+        .sa-container { max-width: 100%; padding: 1.5rem 1.25rem 3rem; }
+    }
+
+    @media (max-width: 1024px) {
+        .sa-stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+        .sa-container { padding: 1rem 0.75rem 5rem; }
+        .sa-header { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 1rem 1.2rem; }
+        .sa-title { font-size: 1.2rem; }
+        .sa-tabs-bar { padding: 6px; gap: 6px; border-radius: 14px; -webkit-overflow-scrolling: touch; }
+        .sa-tab-btn { padding: 10px 16px; font-size: 0.82rem; border-radius: 10px; }
+        .sa-tab-content { padding: 1.2rem 1rem; border-radius: 16px; }
+        .sa-table th, .sa-table td { padding: 12px 10px; font-size: 0.8rem; }
+        .btn-act { padding: 8px 12px; font-size: 0.76rem; min-height: 38px; }
+        .maint-header { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+    }
+
+    @media (max-width: 480px) {
+        .sa-stats-grid { grid-template-columns: 1fr; gap: 0.85rem; }
+        .sa-stat-card { padding: 1.1rem 1.2rem; }
+        .sa-stat-val { font-size: 1.5rem; }
+        .sa-stat-icon { width: 46px; height: 46px; font-size: 1.3rem; }
+        .sa-tab-btn { padding: 9px 12px; font-size: 0.78rem; }
+        .btn-act { width: 100%; justify-content: center; min-height: 42px; margin-bottom: 4px; }
+        .sa-table td div[style*="flex-end"] { flex-direction: column; width: 100%; }
+        .sa-modal-content { padding: 1.4rem 1rem; border-radius: 16px; }
+    }
+
+    @media (max-width: 320px) {
+        .sa-container { padding: 0.75rem 0.5rem 5rem; }
+        .sa-title { font-size: 1.05rem; }
+        .sa-tab-btn { padding: 8px 10px; font-size: 0.74rem; }
     }
 </style>
 
