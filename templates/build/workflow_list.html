@@ -493,20 +493,31 @@
         </div>
     </div>
 
-    <!-- MOBILE BOTTOM NAVIGATION -->
+    <!-- INSTAGRAM-STYLE MINIMALIST MOBILE BOTTOM NAVIGATION -->
     <div class="bottom-nav">
-        <a href="{% url 'build:home' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}"><i class="fa-solid fa-house"></i></a>
-        <a href="{% url 'build:network' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}"><i class="fa-solid fa-users"></i></a>
-        <div style="width: 56px;"></div>
-        <a href="{% url 'build:builder_list' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}"><i class="fa-solid fa-helmet-safety"></i></a>
-        <a href="{% url 'chat:chat' %}" class="bottom-nav-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}">
-            <i class="fa-regular fa-comment-dots"></i>
-            {% if unread_chat_count > 0 %}<span class="badge">{{ unread_chat_count }}</span>{% endif %}
+        <a href="{% url 'build:home' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}" title="{% translate 'Bosh sahifa' %}">
+            <i class="fa-solid fa-house"></i>
+            <span class="nav-active-dot"></span>
         </a>
-            <a href="{% url 'build:payment_dashboard' %}" class="rail-item {% if request.resolver_match.url_name == 'payment_dashboard' %}active{% endif %}" data-title="{% translate 'Premium' %}"><i class="fa-solid fa-gem"></i></a>
-            
-            
-        <a href="{% url 'build:post_create' %}" class="bottom-nav-item add-btn"><i class="fa-solid fa-plus"></i></a>
+        <a href="{% url 'build:builder_list' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" title="{% translate 'Qidiruv / Ustalar' %}">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span class="nav-active-dot"></span>
+        </a>
+        <a href="{% url 'build:post_create' %}" class="bottom-nav-item add-btn" title="{% translate 'Yangi e\'lon' %}">
+            <i class="fa-solid fa-plus"></i>
+        </a>
+        <a href="{% url 'build:network' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}" title="{% translate 'Jamiyat' %}">
+            <i class="fa-solid fa-users"></i>
+            <span class="nav-active-dot"></span>
+        </a>
+        <a href="{% url 'build:profile' %}" class="bottom-nav-item {% if request.resolver_match.url_name == 'profile' or request.resolver_match.url_name == 'profile_edit' %}active{% endif %}" title="{% translate 'Profil' %}">
+            {% if user.is_authenticated and user.profile.get_avatar_url %}
+                <img src="{{ user.profile.get_avatar_url }}" class="bottom-nav-avatar" alt="{% translate 'Profil' %}">
+            {% else %}
+                <i class="fa-regular fa-user"></i>
+            {% endif %}
+            <span class="nav-active-dot"></span>
+        </a>
     </div>
 
     <script>
