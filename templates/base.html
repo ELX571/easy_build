@@ -155,7 +155,47 @@
         .sa-modal, .secure-modal-overlay, .sidebar-container.mobile-drawer-open { z-index: 500 !important; }
         .toast-message, #toastNotif, #market-toast { z-index: 9999 !important; }
 
+        /* ── LIGHT MODE & DARK MODE BOTTOM NAV ADAPTATION ── */
+        [data-theme="light"] .bottom-nav {
+            background: rgba(255, 255, 255, 0.94) !important;
+            border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.06) !important;
+        }
+        [data-theme="light"] .bottom-nav-item {
+            color: #64748b !important;
+        }
+        [data-theme="light"] .bottom-nav-item.active {
+            color: #ff6b00 !important;
+        }
+        [data-theme="light"] .bottom-nav-avatar {
+            border-color: rgba(0, 0, 0, 0.15) !important;
+        }
+
         @media (max-width: 768px) {
+            /* Desktop Sidebar hide on Mobile */
+            .sidebar-container { display: none !important; }
+            .sidebar-container.mobile-drawer-open {
+                display: flex !important;
+                position: fixed !important;
+                top: 64px !important; left: 0 !important;
+                width: 285px !important;
+                height: calc(100vh - 64px) !important;
+                z-index: 500 !important;
+                background: var(--bg-panel, #090d16) !important;
+                backdrop-filter: blur(30px) !important;
+                border-right: 1px solid var(--border-color, rgba(255,255,255,0.1)) !important;
+                box-shadow: 0 20px 50px rgba(0,0,0,0.6) !important;
+            }
+            .sidebar-container.mobile-drawer-open .expanded-menu {
+                width: 100% !important;
+                opacity: 1 !important;
+                margin-left: 0 !important;
+                pointer-events: auto !important;
+                border: none !important;
+                box-shadow: none !important;
+            }
+            .sidebar-container.mobile-drawer-open .icon-rail { display: none !important; }
+
             /* iOS Input Zoom Prevention */
             input, textarea, select { font-size: 16px !important; }
             
@@ -168,7 +208,7 @@
             }
             .header-add-btn { width: 40px !important; height: 40px !important; }
 
-            /* Safe Main Content Padding (Never clipped by bottom-nav) */
+            /* Safe Main Content Padding (Never clipped by bottom-nav or desktop margins) */
             .main-content {
                 padding-top: calc(80px + env(safe-area-inset-top, 0px)) !important;
                 padding-bottom: calc(85px + env(safe-area-inset-bottom, 0px)) !important;
