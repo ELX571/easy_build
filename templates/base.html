@@ -23,9 +23,9 @@
     <meta name="theme-color" content="#f4f6fa" media="(prefers-color-scheme: light)">
     <meta name="title" content="EasyBuild.uz - Qurilish platformasi">
     <meta name="description" content="EasyBuild.uz - O'zbekistonning eng zamonaviy qurilish va ustalar platformasi.">
-    <!-- ⚡️ IMMEDIATE GLOBAL HAMBURGER DRAWER FUNCTIONS -->
+    <!-- ⚡️ IMMEDIATE GLOBAL HAMBURGER DRAWER FUNCTIONS (HOISTED) -->
     <script>
-        window.openMobileDrawer = function() {
+        function openMobileDrawer() {
             const sidebar = document.querySelector('.sidebar-container, #sideDrawer, .offcanvas-menu');
             const overlay = document.getElementById('mobileDrawerOverlay');
             if (sidebar) {
@@ -37,9 +37,9 @@
                 document.body.style.overflow = 'hidden';
                 document.documentElement.style.overflow = 'hidden';
             }
-        };
+        }
 
-        window.closeMobileDrawer = function(e) {
+        function closeMobileDrawer(e) {
             if (e && typeof e.stopPropagation === 'function') {
                 e.stopPropagation();
             }
@@ -54,9 +54,9 @@
                 document.body.style.overflow = '';
                 document.documentElement.style.overflow = '';
             }
-        };
+        }
 
-        window.toggleMobileDrawer = function(e) {
+        function toggleMobileDrawer(e) {
             if (e && typeof e.preventDefault === 'function') {
                 e.preventDefault();
                 e.stopPropagation();
@@ -67,7 +67,11 @@
             } else {
                 openMobileDrawer();
             }
-        };
+        }
+
+        window.openMobileDrawer = openMobileDrawer;
+        window.closeMobileDrawer = closeMobileDrawer;
+        window.toggleMobileDrawer = toggleMobileDrawer;
     </script>
 
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
