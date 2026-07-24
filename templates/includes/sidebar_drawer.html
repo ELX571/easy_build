@@ -1,0 +1,428 @@
+{% load i18n static %}
+<script>
+    /* ⚡️ UNIFIED SINGLE MOBILE DRAWER SYSTEM */
+    (function() {
+        if (!window.__drawerInitialized) {
+            window.__drawerInitialized = true;
+
+            window.openMobileDrawer = function() {
+                var sb = document.querySelector('.sidebar-container');
+                var ov = document.getElementById('mobileDrawerOverlay');
+                if (sb) {
+                    sb.style.display = 'flex';
+                    void sb.offsetWidth; // Force reflow
+                    sb.classList.add('mobile-drawer-open', 'active', 'open');
+                }
+                if (ov) {
+                    ov.style.display = 'block';
+                    requestAnimationFrame(function() { ov.style.opacity = '1'; });
+                }
+                document.body.style.overflow = 'hidden';
+            };
+
+            window.closeMobileDrawer = function(e) {
+                if (e && e.stopPropagation) e.stopPropagation();
+                var sb = document.querySelector('.sidebar-container');
+                var ov = document.getElementById('mobileDrawerOverlay');
+                if (sb) {
+                    sb.classList.remove('mobile-drawer-open', 'active', 'open');
+                    setTimeout(function() {
+                        if (!sb.classList.contains('mobile-drawer-open')) {
+                            sb.style.display = 'none';
+                        }
+                    }, 400);
+                }
+                if (ov) {
+                    ov.style.opacity = '0';
+                    setTimeout(function() { ov.style.display = 'none'; }, 350);
+                }
+                document.body.style.overflow = '';
+            };
+
+            window.toggleMobileDrawer = function(e) {
+                if (e && e.preventDefault) { e.preventDefault(); e.stopPropagation(); }
+                var sb = document.querySelector('.sidebar-container');
+                if (sb && (sb.classList.contains('mobile-drawer-open') || sb.classList.contains('active') || sb.classList.contains('open'))) {
+                    closeMobileDrawer(e);
+                } else {
+                    openMobileDrawer();
+                }
+            };
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' || e.key === 'Esc') {
+                    closeMobileDrawer(e);
+                }
+            });
+        }
+    })();
+</script>
+
+<style>
+    /* ═══════════════════════════════════════════════════════
+       ⚡️ UNIFIED SIDEBAR & MOBILE DRAWER STYLES
+       ═══════════════════════════════════════════════════════ */
+    @keyframes drawerSlideIn {
+        from { transform: translateX(-100%); }
+        to   { transform: translateX(0); }
+    }
+
+    /* 📱 MOBILE (max-width: 1024px) */
+    @media (max-width: 1024px) {
+        .sidebar-container {
+            display: none !important;
+            flex-direction: column !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 290px !important;
+            max-width: 88vw !important;
+            height: 100vh !important;
+            height: 100dvh !important;
+            z-index: 100000 !important;
+            background: linear-gradient(160deg, #0d1117 0%, #111827 60%, #0d1117 100%) !important;
+            border-right: 1px solid rgba(255, 107, 0, 0.18) !important;
+            box-shadow: 10px 0 60px rgba(0,0,0,0.8) !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden !important;
+        }
+        [data-theme="light"] .sidebar-container {
+            background: linear-gradient(160deg, #ffffff 0%, #f8fafc 60%, #ffffff 100%) !important;
+            border-right: 1px solid rgba(255, 107, 0, 0.15) !important;
+            box-shadow: 10px 0 50px rgba(0,0,0,0.12) !important;
+        }
+
+        .sidebar-container.mobile-drawer-open,
+        .sidebar-container.active,
+        .sidebar-container.open {
+            display: flex !important;
+            animation: drawerSlideIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) both !important;
+        }
+
+        .sidebar-container .icon-rail {
+            display: none !important;
+        }
+
+        .sidebar-container .expanded-menu {
+            display: flex !important;
+            flex-direction: column !important;
+            width: 100% !important;
+            flex: 1 !important;
+            height: 100% !important;
+            overflow-y: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            padding: 0 16px calc(40px + env(safe-area-inset-bottom, 0px)) 16px !important;
+            margin: 0 !important;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
+            transform: none !important;
+        }
+
+        .expanded-menu .menu-col {
+            width: 100% !important;
+            min-width: 0 !important;
+            padding: 0 !important;
+            flex: 1 !important;
+        }
+
+        .expanded-menu .menu-title {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            width: 100% !important;
+            padding: calc(env(safe-area-inset-top, 0px) + 22px) 4px 18px 4px !important;
+            margin-bottom: 6px !important;
+            border-bottom: 1px solid rgba(255, 107, 0, 0.15) !important;
+            font-size: 17px !important;
+            font-weight: 800 !important;
+            color: #f8fafc !important;
+            flex-shrink: 0 !important;
+        }
+        [data-theme="light"] .expanded-menu .menu-title {
+            color: #0f172a !important;
+        }
+
+        .expanded-menu .menu-title button.drawer-close-btn,
+        .expanded-menu .menu-title .drawer-close-btn {
+            width: 36px !important;
+            height: 36px !important;
+            min-width: 36px !important;
+            border-radius: 10px !important;
+            background: rgba(255, 107, 0, 0.12) !important;
+            border: none !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            color: #ff6b00 !important;
+            font-size: 16px !important;
+            cursor: pointer !important;
+            transition: background 0.2s, transform 0.15s !important;
+        }
+        .expanded-menu .menu-title button.drawer-close-btn:active {
+            transform: scale(0.88) !important;
+        }
+
+        .expanded-menu .menu-list {
+            list-style: none !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 2px !important;
+            margin: 12px 0 0 0 !important;
+            padding: 0 !important;
+        }
+
+        .expanded-menu .menu-list li a {
+            display: flex !important;
+            align-items: center !important;
+            padding: 13px 14px !important;
+            font-size: 15px !important;
+            font-weight: 600 !important;
+            border-radius: 14px !important;
+            color: #94a3b8 !important;
+            text-decoration: none !important;
+            transition: background 0.18s, color 0.18s !important;
+            line-height: 1 !important;
+        }
+        [data-theme="light"] .expanded-menu .menu-list li a {
+            color: #475569 !important;
+        }
+
+        .expanded-menu .menu-list li a:hover,
+        .expanded-menu .menu-list li a.active-link {
+            background: rgba(255, 107, 0, 0.12) !important;
+            color: #ff6b00 !important;
+        }
+        [data-theme="light"] .expanded-menu .menu-list li a:hover,
+        [data-theme="light"] .expanded-menu .menu-list li a.active-link {
+            background: rgba(255, 107, 0, 0.09) !important;
+            color: #ff6b00 !important;
+        }
+
+        .expanded-menu .menu-list li a i.main-icon {
+            font-size: 17px !important;
+            margin-right: 14px !important;
+            width: 22px !important;
+            min-width: 22px !important;
+            text-align: center !important;
+        }
+
+        .expanded-menu .section-label {
+            display: block !important;
+            font-size: 10px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1.2px !important;
+            color: rgba(148, 163, 184, 0.55) !important;
+            margin: 18px 0 4px 14px !important;
+        }
+
+        .main-content {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            width: 100% !important;
+        }
+    }
+
+    /* 🖥 DESKTOP (min-width: 769px) */
+    @media (min-width: 769px) {
+        .sidebar-container {
+            position: fixed;
+            top: 100px;
+            left: 24px;
+            display: flex;
+            z-index: 999;
+            height: calc(100vh - 130px);
+        }
+        .icon-rail {
+            width: 68px;
+            height: 100%;
+            background: var(--bg-panel);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 24px 0;
+            box-shadow: 0 20px 40px var(--shadow-rail);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(24px);
+            position: relative;
+            z-index: 2;
+        }
+        .rail-item {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--rail-item-color);
+            font-size: 18px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .rail-item.active {
+            background: var(--active-text-blue);
+            color: #ffffff;
+            box-shadow: 0 8px 20px var(--glow-color);
+        }
+        [data-theme="dark"] .rail-item.active {
+            background: rgba(255, 107, 0, 0.14);
+            color: var(--active-text-blue);
+            border: 1px solid rgba(255, 107, 0, 0.3);
+        }
+        .rail-item:hover:not(.active) {
+            background: var(--rail-item-hover-bg);
+            color: var(--text-main);
+            transform: scale(1.05);
+        }
+        .rail-divider {
+            width: 24px;
+            height: 1px;
+            background: var(--border-color);
+            margin: 14px 0;
+        }
+
+        .expanded-menu {
+            width: 0;
+            opacity: 0;
+            visibility: hidden;
+            overflow: hidden;
+            background: var(--bg-panel);
+            border-radius: 20px;
+            box-shadow: 0 30px 60px var(--shadow-menu);
+            border: 1px solid var(--border-color);
+            margin-left: -20px;
+            padding-left: 20px;
+            display: flex;
+            backdrop-filter: blur(24px);
+            transition: 0.4s ease;
+            pointer-events: none;
+        }
+        .sidebar-container:hover .expanded-menu {
+            width: 280px;
+            opacity: 1;
+            visibility: visible;
+            margin-left: 16px;
+            pointer-events: auto;
+        }
+        .menu-col {
+            min-width: 250px;
+            height: 100%;
+            padding: 28px 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .menu-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .menu-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .menu-list li a {
+            display: flex;
+            align-items: center;
+            padding: 11px 14px;
+            color: var(--link-color);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: 0.2s;
+        }
+        .menu-list li a:hover {
+            background: var(--link-hover-bg);
+            color: var(--text-main);
+            transform: translateX(5px);
+        }
+        .menu-list li a.active-link {
+            background: var(--active-bg-light);
+            color: var(--active-text-blue);
+        }
+        .menu-list li a i.main-icon {
+            font-size: 16px;
+            margin-right: 12px;
+            color: var(--text-muted);
+            width: 20px;
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="sidebar-container">
+    <div class="icon-rail">
+        <a href="{% url 'build:home' %}" class="rail-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}" data-title="{% translate 'Bosh sahifa' %}"><i class="fa-solid fa-house"></i></a>
+        <a href="{% url 'build:network' %}" class="rail-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}" data-title="{% translate 'Hamkasblar' %}"><i class="fa-solid fa-users"></i></a>
+        <a href="{% url 'build:market' %}" class="rail-item {% if request.resolver_match.url_name == 'market' %}active{% endif %}" data-title="{% translate 'Market Pro' %}"><i class="fa-solid fa-store"></i></a>
+        <a href="{% url 'build:builder_list' %}" class="rail-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" data-title="{% translate 'Usta Qidirish' %}"><i class="fa-solid fa-helmet-safety"></i></a>
+        <a href="{% url 'chat:chat' %}" class="rail-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}" data-title="{% translate 'Chatlar' %}">
+            <i class="fa-regular fa-comment-dots"></i>
+            {% if unread_chat_count > 0 %}
+            <span style="position:absolute; top:8px; right:8px; background:var(--active-text-blue); color:white; font-size:10px; font-weight:800; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center;">{{ unread_chat_count }}</span>
+            {% endif %}
+        </a>
+        <a href="{% url 'build:payment_dashboard' %}" class="rail-item {% if request.resolver_match.url_name == 'payment_dashboard' %}active{% endif %}" data-title="{% translate 'Premium' %}"><i class="fa-solid fa-gem"></i></a>
+        <a href="{% url 'build:notifications_list' %}" class="rail-item {% if request.resolver_match.url_name == 'notifications_list' %}active{% endif %}" data-title="{% translate 'Bildirishnomalar' %}">
+            <i class="fa-solid fa-bell"></i>
+            {% if unread_notifications_count > 0 %}
+                <span style="position:absolute; top:8px; right:8px; background:#ef4444; color:white; font-size:10px; font-weight:800; border-radius:50%; width:16px; height:16px; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-panel);">{{ unread_notifications_count }}</span>
+            {% endif %}
+        </a>
+        <div class="rail-divider"></div>
+        <a href="{% url 'build:profile' %}" class="rail-item">
+            {% if request.user.profile.avatar %}
+                <img src="{{ request.user.profile.get_avatar_url }}" style="width:100%; height:100%; border-radius:14px; object-fit:cover;">
+            {% else %}
+                <i class="fa-regular fa-user"></i>
+            {% endif %}
+        </a>
+    </div>
+
+    <div class="expanded-menu">
+        <div class="menu-col">
+            <div class="menu-title">
+                <span style="display:flex; align-items:center; gap:10px;">
+                    <span style="width:32px; height:32px; background:linear-gradient(135deg,#ff6b00,#ff9500); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                        <i class="fa-solid fa-helmet-safety" style="color:#fff; font-size:15px;"></i>
+                    </span>
+                    <span>EasyBuild</span>
+                </span>
+                <button class="drawer-close-btn" onclick="window.closeMobileDrawer(event)" style="background:none; border:none; cursor:pointer; padding:0;">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <ul class="menu-list">
+                <li><a href="{% url 'build:home' %}" class="{% if request.resolver_match.url_name == 'home' %}active-link{% endif %}"><i class="fa-solid fa-house main-icon"></i> {% trans "Bosh sahifa" %}</a></li>
+                <li><a href="{% url 'build:network' %}" class="{% if request.resolver_match.url_name == 'network' %}active-link{% endif %}"><i class="fa-solid fa-users main-icon"></i> {% trans "Hamkasblar" %}</a></li>
+                <li><a href="{% url 'build:market' %}" class="{% if request.resolver_match.url_name == 'market' %}active-link{% endif %}"><i class="fa-solid fa-store main-icon"></i> {% trans "Market Pro" %}</a></li>
+                <li><a href="{% url 'build:builder_list' %}" class="{% if request.resolver_match.url_name == 'builder_list' %}active-link{% endif %}"><i class="fa-solid fa-helmet-safety main-icon"></i> {% trans "Usta Qidirish" %}</a></li>
+                <li><a href="{% url 'chat:chat' %}" class="{% if request.resolver_match.namespace == 'chat' %}active-link{% endif %}"><i class="fa-regular fa-comment-dots main-icon"></i> {% trans "Xabarlar" %} {% if unread_chat_count > 0 %}<span style="background:linear-gradient(135deg,#ff6b00,#ff8c33); color:#fff; font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; margin-left:auto;">{{ unread_chat_count }}</span>{% endif %}</a></li>
+                <li><a href="{% url 'build:notifications_list' %}" class="{% if request.resolver_match.url_name == 'notifications_list' %}active-link{% endif %}"><i class="fa-solid fa-bell main-icon"></i> {% trans "Bildirishnomalar" %} {% if unread_notifications_count > 0 %}<span style="background:#ef4444; color:#fff; font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; margin-left:auto;">{{ unread_notifications_count }}</span>{% endif %}</a></li>
+                <li><a href="{% url 'build:payment_dashboard' %}" class="{% if request.resolver_match.url_name == 'payment_dashboard' %}active-link{% endif %}"><i class="fa-solid fa-gem main-icon"></i> {% trans "Premium" %}</a></li>
+            </ul>
+
+            <div class="section-label">{% translate "Shaxsiy" %}</div>
+            <ul class="menu-list">
+                <li><a href="{% url 'build:profile' %}" class="{% if request.resolver_match.url_name == 'profile' %}active-link{% endif %}"><i class="fa-solid fa-user main-icon"></i> {% trans "Profil" %}</a></li>
+                <li><a href="{% url 'build:profile_edit' %}" class="{% if request.resolver_match.url_name == 'profile_edit' %}active-link{% endif %}"><i class="fa-solid fa-gear main-icon"></i> {% trans "Sozlamalar" %}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="mobileDrawerOverlay" onclick="window.closeMobileDrawer(event)" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.65); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); z-index:99999; opacity:0; transition:opacity 0.35s ease;"></div>
