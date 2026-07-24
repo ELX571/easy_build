@@ -1,157 +1,210 @@
 {% load i18n %}
 <!DOCTYPE html>
-<html lang="uz" data-theme="dark">
+<html lang="{{ request.LANGUAGE_CODE|default:'uz' }}" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
     <meta name="theme-color" content="#05070c" media="(prefers-color-scheme: dark)">
     <meta name="theme-color" content="#f4f6fa" media="(prefers-color-scheme: light)">
-    <title>{% trans "Easy Build" %}</title>
+    <title>{% trans "Market Pro (B2B) - Easy Build" %}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    {% load humanize %}
     <style>
         .bg-watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 70vh; color: var(--watermark-color); opacity: var(--watermark-opacity); z-index: -2; pointer-events: none; transition: all 0.4s ease; }
         :root {
-            --watermark-color: var(--active-text-blue);
-            --watermark-opacity: 0.08;
-            --bg-body: #f4f6fa; --bg-panel: rgba(255, 255, 255, 0.75); --border-color: rgba(0, 0, 0, 0.06);
-            --text-main: #0f172a; --text-muted: #64748b; --active-text-blue: #ff6b00; --divider-col: #e2e8f0;
-            --glow-color: rgba(255, 107, 0, 0.2); --card-gradient: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
-            --input-bg: #ffffff;
-        }
-        [data-theme="dark"] {
-            --watermark-color: var(--active-text-blue);
-            --watermark-opacity: 0.03;
-            --bg-body: #05070c; --bg-panel: rgba(10, 14, 23, 0.7); --border-color: rgba(255, 255, 255, 0.05);
+            --watermark-color: #ff6b00;
+            --watermark-opacity: 0.04;
+            --bg-body: #05070c; --bg-panel: rgba(10, 14, 23, 0.85); --border-color: rgba(255, 255, 255, 0.08);
             --text-main: #f8fafc; --text-muted: #94a3b8; --active-text-blue: #ff6b00; --divider-col: rgba(255, 255, 255, 0.04);
-            --glow-color: rgba(255, 107, 0, 0.4); --card-gradient: linear-gradient(135deg, rgba(13, 18, 30, 0.85), rgba(8, 11, 20, 0.6));
-            --input-bg: rgba(255, 255, 255, 0.02);
+            --glow-color: rgba(255, 107, 0, 0.35); --card-gradient: linear-gradient(135deg, rgba(13, 18, 30, 0.9), rgba(8, 11, 20, 0.8));
+        }
+        [data-theme="light"] {
+            --watermark-opacity: 0.08;
+            --bg-body: #f4f6fa; --bg-panel: rgba(255, 255, 255, 0.9); --border-color: rgba(0, 0, 0, 0.08);
+            --text-main: #0f172a; --text-muted: #64748b; --active-text-blue: #ff6b00; --divider-col: #e2e8f0;
+            --glow-color: rgba(255, 107, 0, 0.2); --card-gradient: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(240,243,250,0.8));
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-
-        body { background-color: var(--bg-body); min-height: 100vh; color: var(--text-main); position: relative; transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        body { background-color: var(--bg-body); min-height: 100vh; color: var(--text-main); position: relative; transition: background 0.4s ease; overflow-x: hidden !important; width: 100% !important; max-width: 100vw !important; }
 
         /* HEADER */
-        header { background: var(--bg-panel); position: fixed; width: 100%; height: 76px; top: 0; left: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); padding: 0 40px; display: flex; align-items: center; backdrop-filter: blur(24px); transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        header { background: var(--bg-panel); position: fixed; width: 100%; height: 76px; top: 0; left: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); padding: 0 40px; display: flex; align-items: center; backdrop-filter: blur(24px); }
         .header-container { width: 100%; display: flex; justify-content: space-between; align-items: center; }
         .header-left { display: flex; align-items: center; gap: 15px; }
         .header-center { position: absolute; left: 50%; transform: translateX(-50%); }
         .header-right { display: flex; align-items: center; gap: 20px; }
-
         .menu-hamburger { font-size: 20px; cursor: pointer; color: var(--text-muted); padding: 10px; border-radius: 12px; transition: all 0.25s ease; }
         .menu-hamburger:hover { color: var(--active-text-blue); background: rgba(255,107,0,0.05); }
-
         .logo { font-size: 24px; font-weight: 800; color: var(--active-text-blue); text-decoration: none; display: flex; align-items: center; gap: 6px; }
         .logo span { color: var(--text-main); font-weight: 500; }
         .profile-avatar { width: 44px; height: 44px; border-radius: 14px; object-fit: cover; border: 2px solid var(--border-color); background: #000; }
 
-        /* SIDEBAR SOZLAMALARI */
-        .sidebar-container { position: fixed; top: 100px; left: 24px; display: flex; z-index: 999; height: calc(100vh - 130px); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        .icon-rail { width: 68px; height: 100%; background: var(--bg-panel); border-radius: 20px; display: flex; flex-direction: column; align-items: center; padding: 24px 0; border: 1px solid var(--border-color); backdrop-filter: blur(24px); transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        .rail-item { width: 46px; height: 46px; border-radius: 14px; display: flex; justify-content: center; align-items: center; color: var(--text-muted); font-size: 18px; margin-bottom: 10px; cursor: pointer; text-decoration: none; position: relative; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
-        .rail-item.active { background: rgba(255, 107, 0, 0.14); color: var(--active-text-blue); border: 1px solid rgba(255, 107, 0, 0.3); }
-        .rail-item:hover:not(.active) { color: var(--text-main); background: rgba(255,255,255,0.05); transform: scale(1.05); }
-        .rail-divider { width: 24px; height: 1px; background: var(--border-color); margin: 14px 0; }
-
-        .expanded-menu { width: 0; opacity: 0; overflow: hidden; background: var(--bg-panel); border-radius: 20px; border: 1px solid var(--border-color); margin-left: -20px; padding-left: 20px; display: flex; backdrop-filter: blur(24px); pointer-events: none; transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, margin-left 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        .sidebar-container:hover .expanded-menu { width: 240px; opacity: 1; margin-left: 16px; pointer-events: auto; }
-        .menu-col { min-width: 210px; height: 100%; padding: 24px 15px; display: flex; flex-direction: column; }
-        .menu-title { font-size: 16px; font-weight: 700; color: var(--text-main); margin-bottom: 16px; }
-        .menu-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
-        .menu-list li a { display: flex; align-items: center; padding: 11px 14px; color: var(--text-muted); font-size: 14px; font-weight: 600; text-decoration: none; border-radius: 10px; transition: all 0.2s ease; }
-        .menu-list li a.active-link { background: var(--active-bg-light); color: var(--active-text-blue); }
-
-        /* MAIN BLOKLAR */
-        .main-content { margin-left: 120px; padding: 120px 40px 40px 40px; display: flex; flex-direction: column; align-items: center; transition: margin-left 0.4s cubic-bezier(0.16, 1, 0.3, 1), width 0.4s cubic-bezier(0.16, 1, 0.3, 1); width: calc(100% - 120px); }
-
-        .market-search-wrapper { width: 100%; max-width: 1140px; margin-bottom: 24px; }
-        .market-search-container { background: var(--card-gradient); border: 1px solid var(--border-color); padding: 16px; border-radius: 20px; display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; }
-        .search-input-group { display: flex; align-items: center; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 0 14px; height: 44px; }
-        .search-core-field { width: 100%; border: none; background: transparent; outline: none; color: var(--text-main); font-size: 14px; font-weight: 600; }
-        .search-submit-btn { background: var(--active-text-blue); color: white; border: none; border-radius: 12px; height: 44px; padding: 0 20px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; }
-        .search-submit-btn:hover { opacity: 0.9; transform: translateY(-1px); }
-
-        .market-filter-bar { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 30px; width: 100%; max-width: 1140px; justify-content: space-between; align-items: center; }
-        .filter-btn { background: var(--bg-panel); border: 1px solid var(--border-color); color: var(--text-main); padding: 8px 16px; border-radius: 12px; font-weight: 600; font-size: 13px; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 6px; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
-        .filter-btn.active { background: var(--active-text-blue); color: white; border-color: var(--active-text-blue); box-shadow: 0 4px 12px var(--glow-color); }
-        .filter-btn:hover:not(.active) { transform: translateY(-2px); background: rgba(255,255,255,0.05); }
-
-        /* ⚡️ YANGI: PREMIUM ORDER SELECT DROPDOWN */
-        .select-order-field { background: var(--bg-panel); color: var(--text-main); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 12px; font-size: 13px; font-weight: 600; outline: none; cursor: pointer; height: 38px; }
-        .select-order-field option { background: #05070c; color: #fff; }
-
-        /* GRID TIZIMI */
-        .posts-grid { width: 100%; max-width: 1140px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-
-        /* ULTRA SMOOTH CARD */
-        .market-pro-card {
-            background: var(--card-gradient);
-            border-radius: 24px;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
+        /* MAIN CONTENT - LOCKED HERO */
+        .main-content {
+            padding: 120px 20px 100px 20px;
             display: flex;
             flex-direction: column;
-            height: 100%;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                        background 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: transform, box-shadow;
-        }
-        .market-pro-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 38px var(--glow-color);
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 80px);
+            width: 100%;
         }
 
-        .card-hero-banner { width: 100%; height: 210px; background: #0c101d; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .card-img-source { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        .market-pro-card:hover .card-img-source { transform: scale(1.04); }
-        .card-placeholder-icon { font-size: 44px; color: rgba(255,255,255,0.03); }
+        .coming-soon-card {
+            background: var(--card-gradient);
+            border: 1px solid var(--border-color);
+            border-radius: 32px;
+            padding: 3.5rem 2.5rem;
+            max-width: 780px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(24px);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
 
-        .card-category-tag { position: absolute; top: 14px; right: 14px; background: #05070c; color: var(--active-text-blue); font-size: 10px; font-weight: 800; padding: 4px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); text-transform: uppercase; letter-spacing: 0.5px; }
+        .coming-soon-card::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--glow-color) 0%, rgba(255, 107, 0, 0) 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
 
-        .card-content-area { padding: 24px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1; }
-        .card-meta-line { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-muted); font-weight: 600; }
-        .card-author-name { color: var(--active-text-blue); display: flex; align-items: center; gap: 4px; }
+        .badge-lock {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 107, 0, 0.12);
+            color: #ff6b00;
+            border: 1px solid rgba(255, 107, 0, 0.3);
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
 
-        .card-title-text { font-size: 17px; font-weight: 800; color: var(--text-main); line-height: 1.4; letter-spacing: -0.3px; }
-        .card-desc-short { font-size: 13.5px; color: var(--text-muted); line-height: 1.6; min-height: 44px; }
+        .hero-icon-box {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #ff6b00, #ea580c);
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem auto;
+            color: #ffffff;
+            font-size: 2.2rem;
+            box-shadow: 0 12px 35px rgba(255, 107, 0, 0.45);
+            position: relative;
+            z-index: 1;
+            animation: pulseGlow 3s infinite alternate ease-in-out;
+        }
 
-        .card-footer-action { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 16px; margin-top: auto; }
-        .card-price-tag { font-size: 16px; font-weight: 800; color: var(--active-text-blue); }
+        @keyframes pulseGlow {
+            0% { transform: scale(1); box-shadow: 0 12px 35px rgba(255, 107, 0, 0.45); }
+            100% { transform: scale(1.05); box-shadow: 0 18px 45px rgba(255, 107, 0, 0.7); }
+        }
 
-        .card-actions-envelope { display: flex; align-items: center; gap: 8px; }
-        .card-action-node { background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-muted); padding: 8px 12px; border-radius: 10px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px; cursor: pointer; transition: all 0.2s; }
-        .card-action-node:hover { background: rgba(255,255,255,0.05); color: var(--text-main); }
-        .card-action-node.liked { color: #ef4444; background: rgba(239, 68, 68, 0.08); border-color: rgba(239, 68, 68, 0.2); }
-        .card-action-node.bookmarked { color: #f59e0b; background: rgba(245, 158, 11, 0.08); border-color: rgba(245, 158, 11, 0.2); }
+        .cs-title {
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.5px;
+            line-height: 1.25;
+            position: relative;
+            z-index: 1;
+        }
 
-        /* PAGINATION */
-        .pagination-container { display: flex; justify-content: center; margin-top: 40px; width: 100%; max-width: 1140px; }
-        .pagination-box { background: var(--bg-panel); padding: 6px; border-radius: 14px; display: flex; align-items: center; gap: 8px; border: 1px solid var(--border-color); backdrop-filter: blur(10px); }
-        .page-link { width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; background: var(--input-bg); color: var(--text-main); border-radius: 8px; text-decoration: none; font-weight: 700; border: 1px solid var(--border-color); font-size: 13px; transition: all 0.2s ease; }
-        .page-link:hover { background: var(--active-text-blue); color: #ffffff; box-shadow: 0 4px 10px var(--glow-color); }
-        .page-current { padding: 0 12px; font-weight: 800; color: var(--active-text-blue); font-size: 13px; }
+        .cs-subtitle {
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            color: var(--text-muted);
+            line-height: 1.65;
+            max-width: 620px;
+            margin: 0 auto 2.5rem auto;
+            position: relative;
+            z-index: 1;
+        }
 
-        /* MODALS */
-        .cyber-modal-overlay { position: fixed; inset: 0; background: rgba(5, 7, 12, 0.4); backdrop-filter: blur(0px); z-index: 2000; display: none; justify-content: center; align-items: center; padding: 20px; transition: backdrop-filter 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: backdrop-filter; }
-        .cyber-modal-overlay.active-overlay { display: flex; backdrop-filter: blur(14px); background: rgba(5, 7, 12, 0.6); }
+        .cs-features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 1;
+        }
 
-        .cyber-modal-container { background: var(--card-gradient); border: 1px solid var(--border-color); width: 100%; max-width: 620px; border-radius: 28px; box-shadow: 0 10px 30px rgba(0,0,0,0); overflow: hidden; display: flex; flex-direction: column; transform: scale(0.95) translateY(15px); opacity: 0; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; }
-        .cyber-modal-overlay.active-overlay .cyber-modal-container { transform: scale(1) translateY(0); opacity: 1; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5); }
+        .cs-feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 1.4rem 1.2rem;
+            text-align: center;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .cs-feature-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 107, 0, 0.3);
+        }
 
-        .modal-banner-area { width: 100%; height: 260px; background: #0c101d; position: relative; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border-color); }
-        .modal-banner-img { width: 100%; height: 100%; object-fit: cover; }
-        .modal-close-trigger { position: absolute; top: 16px; right: 16px; background: rgba(5, 7, 12, 0.6); border: 1px solid var(--border-color); width: 36px; height: 36px; border-radius: 50%; color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; }
-        .modal-close-trigger:hover { background: #ef4444; border-color: #ef4444; transform: rotate(90deg); }
-        .modal-content-core { padding: 28px; display: flex; flex-direction: column; gap: 16px; }
-        .modal-title-main { font-size: 20px; font-weight: 800; color: var(--text-main); }
-        .modal-description-full { font-size: 14.5px; color: var(--text-muted); line-height: 1.6; white-space: pre-wrap; }
+        .cs-feat-icon {
+            font-size: 1.5rem;
+            color: #ff6b00;
+            margin-bottom: 0.75rem;
+        }
 
-        /* ── INSTAGRAM-STYLE MINIMALIST BOTTOM NAVIGATION (MOBILE) ── */
+        .cs-feat-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.4rem;
+        }
+
+        .cs-feat-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .btn-home-return {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #ff6b00, #ea580c);
+            color: #ffffff !important;
+            text-decoration: none;
+            padding: 14px 32px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 8px 25px rgba(255, 107, 0, 0.4);
+            transition: all 0.25s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-home-return:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(255, 107, 0, 0.6);
+        }
+
+        /* INSTAGRAM BOTTOM NAVIGATION */
         .bottom-nav {
             display: none;
             position: fixed;
@@ -206,300 +259,104 @@
             height: 48px;
             opacity: 1;
             transform: translateY(-8px);
-            box-shadow: 0 6px 20px rgba(255, 107, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+            box-shadow: 0 6px 20px rgba(255, 107, 0, 0.5);
             border: 3px solid #05070c;
             font-size: 20px;
             flex-shrink: 0;
-            position: relative !important;
-            left: auto !important;
-            margin-left: 0 !important;
         }
-        .bottom-nav-item.add-btn:active { transform: translateY(-4px) scale(0.95); }
         .bottom-nav-avatar {
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            object-fit: cover;
+            width: 26px; height: 26px; border-radius: 50%; object-fit: cover;
             border: 1.5px solid rgba(255, 255, 255, 0.25);
-            transition: border-color 0.2s ease;
-        }
-        .bottom-nav-item.active .bottom-nav-avatar {
-            border-color: var(--active-text-blue);
-            box-shadow: 0 0 10px rgba(255, 107, 0, 0.5);
         }
 
-        @media (max-width: 992px) { .posts-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 768px) {
-            body { padding-bottom: calc(90px + env(safe-area-inset-bottom)); }
-            .sidebar-container { display: none !important; }
-            .bottom-nav { display: flex; }
-            header { padding: env(safe-area-inset-top) 16px 0 16px; height: calc(64px + env(safe-area-inset-top)); }
-            .main-content { margin-left: 0 !important; margin-right: 0 !important; width: 100% !important; padding: calc(85px + env(safe-area-inset-top)) 14px 120px 14px !important; }
-            .header-container { display: grid; grid-template-columns: auto 1fr auto; align-items: center; }
-            .header-center { position: relative; left: 0; transform: none; display: flex; justify-content: flex-start; }
-            .menu-hamburger { display: none; }
-            .posts-grid { grid-template-columns: 1fr; }
+        [data-theme="light"] .bottom-nav {
+            background: rgba(255, 255, 255, 0.94) !important;
+            border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.06) !important;
         }
-
-    
-        /* MUKAMMAL MOBIL UI UCHUN QO'SHIMCHA SOZLAMALAR */
-        html, body {
-            overflow-x: hidden !important;
-            width: 100% !important; /* 100vw o'rniga 100% ishlatsak gorizontal scrollbar chiqmaydi */
-            max-width: 100%;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        .logo { white-space: nowrap !important; display: block !important; line-height: 1 !important; display: flex !important; align-items: center !important; }
 
         @media (max-width: 768px) {
-            /* iOS da inputlarga bosganda ekran zoom bo'lib ketmasligi uchun */
-            input, textarea, select { font-size: 16px !important; }
-            
-            /* Tepa panel moslashuvi (Notch kirmasligi uchun) */
-            header {
-                padding-top: env(safe-area-inset-top, 0px) !important;
-                padding-left: 14px !important;
-                padding-right: 14px !important;
-                height: calc(64px + env(safe-area-inset-top, 0px)) !important;
-            }
-            .header-add-btn { width: 40px !important; height: 40px !important; }
-
-            /* Asosiy kontent moslashuvi */
-            .main-content {
-                padding-top: calc(85px + env(safe-area-inset-top, 0px)) !important;
-                padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)) !important;
-                padding-left: 0 !important; padding-right: 0 !important;
-                width: 100% !important;
-            }
-            
-            /* Grid va qidiruv bo'limlari chetidan joy qoldirish */
-            .market-filter-bar, .builders-grid-layout, .profile-container, .form-container, .auth-wrapper {
-                padding-left: 14px !important;
-                padding-right: 14px !important;
-            }
-
-            /* Edge-to-Edge tweet cards */
-            .twitter-feed { gap: 10px !important; margin-bottom: 30px !important; }
-            .tweet-card {
-                border-radius: 0 !important;
-                border-left: none !important;
-                border-right: none !important;
-                margin-left: 0 !important; margin-right: 0 !important;
-                border-top: 1px solid var(--border-color) !important;
-                border-bottom: 1px solid var(--border-color) !important;
-            }
-            
-            /* Bottom Nav (Pastki menyu moslashuvi) */
-            .bottom-nav {
-                display: flex !important;
-                padding-bottom: env(safe-area-inset-bottom, 0px) !important;
-                height: calc(65px + env(safe-area-inset-bottom, 0px)) !important;
-                bottom: 0 !important; width: 100% !important; left: 0 !important;
-                border-radius: 0 !important; border-left: none !important; border-right: none !important; border-bottom: none !important;
-            }
-            
-            /* Modallar va Bottom sheets */
-            .secure-modal-overlay { align-items: flex-end !important; padding: 0 !important; }
-            .secure-modal, #contactModalInner {
-                margin: 0 !important; max-width: 100% !important;
-                border-radius: 32px 32px 0 0 !important; border-bottom: none !important;
-            }
+            .bottom-nav { display: flex !important; }
+            .coming-soon-card { padding: 2.5rem 1.4rem; border-radius: 24px; }
+            .cs-features-grid { grid-template-columns: 1fr; }
+            .main-content { padding-top: calc(85px + env(safe-area-inset-top)); padding-bottom: calc(90px + env(safe-area-inset-bottom)); }
         }
-
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     </style>
-
-<style id="market-toast-style">
-#market-toast {
-  position: fixed;
-  top: 80px;
-  right: -100%;
-  background: #1c1c1e;
-  border: 1px solid #2c2c2e;
-  border-left: 4px solid #ff6b00;
-  border-radius: 12px;
-  padding: 12px 16px 12px 12px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  z-index: 99999;
-  transition: right 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-  max-width: 400px;
-}
-#market-toast.show {
-  right: 24px;
-}
-#market-toast .mt-icon {
-  width: 36px; height: 36px;
-  background: rgba(255,107,0,0.08);
-  border: 1px solid rgba(255,107,0,0.25);
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 15px; color: #ff6b00; flex-shrink: 0;
-}
-#market-toast .mt-text { color: #f8fafc; font-size: 14px; font-weight: 500; font-family: 'Plus Jakarta Sans', sans-serif; display: flex; align-items: center; gap: 8px; line-height: 1.4; }
-@media(max-width:768px){ 
-  #market-toast { top: 70px; right: -100%; } 
-  #market-toast.show { right: 16px; left: 16px; width: calc(100% - 32px); } 
-}
-</style>
 </head>
 <body>
+
     <i class="fa-solid fa-helmet-safety bg-watermark"></i>
 
-    <div class="cyber-modal-overlay" id="marketDetailModal" onclick="closeMarketModal()">
-        <div class="cyber-modal-container" onclick="event.stopPropagation()">
-            <div class="modal-banner-area" id="mHeroZone">
-                <div class="modal-close-trigger" onclick="closeMarketModal()"><i class="fa-solid fa-xmark"></i></div>
-                <img src="" class="modal-banner-img" id="modalMainImg">
-                <div id="modalPlaceholderIcon" class="card-placeholder-icon" style="display:none;"><i class="fa-solid fa-helmet-safety"></i></div>
-            </div>
-            <div class="modal-content-core">
-                <div class="card-meta-line" style="border-bottom: 1px solid var(--border-color); padding-bottom: 14px;">
-                    <span id="modalAuthor" class="card-author-name"></span>
-                    <span id="modalDate"></span>
-                </div>
-                <h3 class="modal-title-main" id="modalTitle"></h3>
-                <p class="modal-description-full" id="modalDesc"></p>
-                <div class="card-footer-action" style="border:none; padding:0; margin-top:10px;">
-                    <div id="modalPrice" class="card-price-tag" style="font-size: 18px;"></div>
-                    <button class="filter-btn" id="modalContactBtn" style="background: var(--active-text-blue); color: white; border: none; padding: 10px 20px;"><i class="fa-regular fa-comment"></i> Bog'lanish</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="contactModal" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.6); backdrop-filter:blur(12px); align-items:center; justify-content:center;">
-        <div id="contactModalInner" style="background:linear-gradient(145deg,#0f0f1a,#1a1a2e); border:1px solid rgba(255,255,255,0.1); border-radius:32px; width:min(440px,92vw); position:relative; overflow:hidden;"><div style="height:4px; background:linear-gradient(90deg,#3b82f6,#6366f1,#8b5cf6); width:100%;"></div><div style="padding:28px; display:flex; align-items:center; gap:18px;"><img id="cModal-avatar" src="" style="width:72px;height:72px;border-radius:50%;object-fit:cover;background:black;"><div style="flex:1;"><div id="cModal-name" style="font-size:18px;font-weight:800;color:#fff;"></div><div id="cModal-username" style="font-size:13px;color:rgba(255,255,255,0.5);"></div><div id="cModal-role" style="font-size:11px;font-weight:700;color:#818cf8;margin-top:4px;"></div></div><button onclick="closeContactModal()" style="position:absolute;top:20px;right:20px;background:none;border:none;color:white;font-size:24px;cursor:pointer;">{% trans "&times;" %}</button></div><div id="cModal-buttons" style="display:flex;flex-direction:column;gap:10px;padding:0 28px 28px;"></div></div>
-    </div>
-
+    <!-- HEADER -->
     <header>
         <div class="header-container">
             <div class="header-left">
-                <i class="fa-solid fa-bars menu-hamburger" id="hamburgerBtn"></i>
+                <a href="{% url 'build:home' %}" style="text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-arrow-left"></i> {% trans "Orqaga" %}
+                </a>
             </div>
             <div class="header-center">
-                <a href="{% url 'build:home' %}" class="logo">{% trans "EasyBuild" %}</a>
+                <a href="{% url 'build:home' %}" class="logo">
+                    EasyBuild <i class="fa-solid fa-helmet-safety"></i>
+                </a>
             </div>
             <div class="header-right">
-                {% if user.is_authenticated %}
-                    <a href="{% url 'build:profile' %}">
-                        <img src="{{ user.profile.get_avatar_url }}" class="profile-avatar">
-                    </a>
-                {% endif %}
+                <a href="{% url 'build:profile' %}">
+                    {% if user.is_authenticated and user.profile.get_avatar_url %}
+                        <img src="{{ user.profile.get_avatar_url }}" class="profile-avatar" alt="Profile">
+                    {% else %}
+                        <div class="profile-avatar" style="display: flex; align-items: center; justify-content: center; color: #fff;"><i class="fa-regular fa-user"></i></div>
+                    {% endif %}
+                </a>
             </div>
         </div>
     </header>
 
-    <div class="sidebar-container" id="sidebarContainer">
-        <div class="icon-rail">
-            <a href="{% url 'build:home' %}" class="rail-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}" data-title="{% translate 'Bosh sahifa' %}"><i class="fa-solid fa-house"></i></a>
-            <a href="{% url 'build:network' %}" class="rail-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}" data-title="{% translate 'Hamkasblar' %}"><i class="fa-solid fa-users"></i></a>
-            <a href="{% url 'build:market' %}" class="rail-item {% if request.resolver_match.url_name == 'market' %}active{% endif %}" data-title="{% translate 'Market Pro' %}"><i class="fa-solid fa-store"></i></a>
-            <a href="{% url 'build:builder_list' %}" class="rail-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" data-title="{% translate 'Usta Qidirish' %}"><i class="fa-solid fa-helmet-safety"></i></a>
-            <a href="{% url 'chat:chat' %}" class="rail-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}" data-title="{% translate 'Chatlar' %}">
-                <i class="fa-regular fa-comment-dots"></i>
-                {% if unread_chat_count > 0 %}
-                <span style="position:absolute; top:8px; right:8px; background:var(--active-text-blue); color:white; font-size:10px; font-weight:800; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center;">{{ unread_chat_count }}</span>
-                {% endif %}
-            </a>
-            <a href="{% url 'build:payment_dashboard' %}" class="rail-item {% if request.resolver_match.url_name == 'payment_dashboard' %}active{% endif %}" data-title="{% translate 'Premium' %}"><i class="fa-solid fa-gem"></i></a>
-            <a href="{% url 'build:notifications_list' %}" class="rail-item {% if request.resolver_match.url_name == 'notifications_list' %}active{% endif %}" data-title="{% translate 'Bildirishnomalar' %}">
-                <i class="fa-solid fa-bell"></i>
-                {% if unread_notifications_count > 0 %}
-                    <span style="position:absolute; top:8px; right:8px; background:#ef4444; color:white; font-size:10px; font-weight:800; border-radius:50%; width:16px; height:16px; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-panel);">{{ unread_notifications_count }}</span>
-                {% endif %}
-            </a>
-            <div class="rail-divider"></div>
-            <a href="{% url 'build:profile' %}" class="rail-item">
-                {% if request.user.profile.avatar %}
-                    <img src="{{ request.user.profile.get_avatar_url }}" style="width:100%; height:100%; border-radius:14px; object-fit:cover;">
-                {% else %}
-                    <i class="fa-regular fa-user"></i>
-                {% endif %}
-            </a>
-        </div>
-            <a href="{% url 'build:profile' %}" class="rail-item" data-title="{% translate 'Profil Sozlamalari' %}">
-                {% if request.user.profile.avatar %}
-                    <img src="{{ request.user.profile.get_avatar_url }}" style="width:100%; height:100%; border-radius:14px; object-fit:cover;">
-                {% else %}
-                    <i class="fa-regular fa-user"></i>
-                {% endif %}
-            </a>
-        </div>
-    </div>
+    <!-- MAIN LOCKED COMING SOON SECTION -->
+    <main class="main-content">
+        <div class="coming-soon-card">
+            <div class="badge-lock">
+                <i class="fa-solid fa-lock"></i> {% trans "TEZ ORADA / СКОРО / COMING SOON" %}
+            </div>
 
-    <div class="main-content" id="mainContentArea">
+            <div class="hero-icon-box">
+                <i class="fa-solid fa-rocket"></i>
+            </div>
 
-        <!-- COMING SOON UI -->
-        <div style="width: 100%; max-width: 1140px; display: flex; flex-direction: column; align-items: center;">
-            
-            <!-- Filters (Visual only for coming soon) -->
-            <div class="market-filter-bar" style="justify-content: flex-start; margin-bottom: 60px;">
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
-                    <button class="filter-btn active" style="background:var(--active-text-blue); color:white; border-color:var(--active-text-blue); box-shadow:0 4px 12px var(--glow-color);"><i class="fa-solid fa-border-all"></i> {% translate "Barchasi" %}</button>
-                    <button class="filter-btn"><i class="fa-solid fa-boxes-stacked"></i> {% translate "Materiallar bozori" %}</button>
-                    <button class="filter-btn"><i class="fa-solid fa-tractor"></i> {% translate "Texnika ijarasi" %}</button>
+            <h1 class="cs-title">
+                {% trans "Market Pro (B2B) Bo'limi Tez Kunda Ishga Tushadi!" %}
+            </h1>
+
+            <p class="cs-subtitle">
+                {% trans "Ushbu bo'limda qurilish materiallari ulgurji bozori, distribyutorlar katalogi hamda maxsus B2B savdo xizmatlari platformamizning navbatdagi yirik yangilanishida taqdim etiladi." %}
+            </p>
+
+            <div class="cs-features-grid">
+                <div class="cs-feature-card">
+                    <div class="cs-feat-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
+                    <div class="cs-feat-title">{% trans "Ulgurji Bozor" %}</div>
+                    <div class="cs-feat-desc">{% trans "Material va uskunalar distribyutorlarining maxsus narxdagi katalogi." %}</div>
+                </div>
+
+                <div class="cs-feature-card">
+                    <div class="cs-feat-icon"><i class="fa-solid fa-file-contract"></i></div>
+                    <div class="cs-feat-title">{% trans "B2B Shartnomalar" %}</div>
+                    <div class="cs-feat-desc">{% trans "Tashkilotlar va ustalar o'rtasida rasmiy va kafolatlangan savdo." %}</div>
+                </div>
+
+                <div class="cs-feature-card">
+                    <div class="cs-feat-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                    <div class="cs-feat-title">{% trans "Tezkor Logistika" %}</div>
+                    <div class="cs-feat-desc">{% trans "Qurilish ob'ektlariga to'g'ridan-to'g'ri material yetkazish xizmati." %}</div>
                 </div>
             </div>
 
-            <!-- Hero Section -->
-            <div style="position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; margin-bottom: 60px; z-index: 1;">
-                <div style="width: 320px; height: 320px; background: rgba(255, 107, 0, 0.05); position: absolute; border-radius: 50%; filter: blur(60px); z-index: -1;"></div>
-                <div style="width: 80px; height: 80px; border-radius: 24px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); color: #3b82f6; font-size: 32px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.15);">
-                    <i class="fa-solid fa-store"></i>
-                </div>
-                <h1 style="font-size: 36px; font-weight: 800; color: var(--text-main); margin-bottom: 12px; letter-spacing: -0.5px;">{% trans "Market Pro (B2B)" %}</h1>
-                <p style="font-size: 16px; color: var(--text-muted); max-width: 480px; line-height: 1.6; font-weight: 500;">{% translate "Professional qurilish materiallari va texnika ijarasi bozori tez kunda ishga tushadi." %}</p>
-            </div>
-
-            <!-- Feature Cards -->
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%;">
-                
-                <div class="market-pro-card" style="padding: 32px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px;">
-                    <div style="width: 56px; height: 56px; border-radius: 16px; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2); color: #f59e0b; font-size: 24px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fa-solid fa-boxes-stacked"></i>
-                    </div>
-                    <div>
-                        <h3 style="font-size: 18px; font-weight: 800; color: var(--text-main); margin-bottom: 8px;">{% trans "Materiallar bozori" %}</h3>
-                        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">{% trans "Sement, g'isht, armatura va qurilish materiallarining eng katta bazasi." %}</p>
-                    </div>
-                </div>
-
-                <div class="market-pro-card" style="padding: 32px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px;">
-                    <div style="width: 56px; height: 56px; border-radius: 16px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); color: #3b82f6; font-size: 24px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fa-solid fa-truck-front"></i>
-                    </div>
-                    <div>
-                        <h3 style="font-size: 18px; font-weight: 800; color: var(--text-main); margin-bottom: 8px;">{% trans "Texnika ijarasi" %}</h3>
-                        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">{% trans "Ekskavator, kran va og'ir qurilish texnikalarini ishonchli ijaraga olish." %}</p>
-                    </div>
-                </div>
-
-                <div class="market-pro-card" style="padding: 32px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px;">
-                    <div style="width: 56px; height: 56px; border-radius: 16px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); color: #10b981; font-size: 24px; display: flex; align-items: center; justify-content: center;">
-                        <i class="fa-solid fa-handshake"></i>
-                    </div>
-                    <div>
-                        <h3 style="font-size: 18px; font-weight: 800; color: var(--text-main); margin-bottom: 8px;">{% trans "B2B Shartnomalar" %}</h3>
-                        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">{% trans "Kompaniyalar o'rtasida to'g'ridan-to'g'ri ishonchli shartnomalar tuzish imkoniyati." %}</p>
-                    </div>
-                </div>
-
-            </div>
+            <a href="{% url 'build:home' %}" class="btn-home-return">
+                <i class="fa-solid fa-house"></i> {% trans "Bosh sahifaga qaytish" %}
+            </a>
         </div>
-
-        <style>
-            @media (max-width: 992px) {
-                .posts-grid, div[style*="grid-template-columns: repeat(3, 1fr)"] { grid-template-columns: repeat(2, 1fr) !important; }
-            }
-            @media (max-width: 768px) {
-                .posts-grid, div[style*="grid-template-columns: repeat(3, 1fr)"] { grid-template-columns: 1fr !important; }
-                .market-filter-bar { justify-content: center !important; margin-bottom: 40px !important; }
-            }
-        </style>
-    </div>
+    </main>
 
     <!-- INSTAGRAM-STYLE MINIMALIST MOBILE BOTTOM NAVIGATION -->
     <div class="bottom-nav">
@@ -528,280 +385,5 @@
         </a>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const themeToggleBtn = document.getElementById('themeToggleBtn');
-            const hamburgerBtn = document.getElementById('hamburgerBtn');
-            const sidebar = document.getElementById('sidebarContainer');
-            const mainContent = document.getElementById('mainContentArea');
-
-            const currentTheme = localStorage.getItem('theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', currentTheme);
-            updateThemeIcon(currentTheme);
-
-            if (themeToggleBtn) {
-                if(themeToggleBtn) themeToggleBtn.addEventListener('click', () => {
-                    let theme = document.documentElement.getAttribute('data-theme');
-                    let newTheme = theme === 'dark' ? 'light' : 'dark';
-                    document.documentElement.setAttribute('data-theme', newTheme);
-                    localStorage.setItem('theme', newTheme);
-                    updateThemeIcon(newTheme);
-                });
-            }
-
-            function updateThemeIcon(theme) {
-                const icon = themeToggleBtn.querySelector('i');
-                icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-            }
-
-            if (hamburgerBtn && sidebar && mainContent) {
-                hamburgerBtn.addEventListener('click', () => {
-                    const isHidden = sidebar.style.transform === 'translateX(-150%)';
-                    if (!isHidden) {
-                        sidebar.style.transform = 'translateX(-150%)'; sidebar.style.opacity = '0';
-                        mainContent.style.marginLeft = '40px'; mainContent.style.width = 'calc(100% - 40px)';
-                    } else {
-                        sidebar.style.transform = 'translateX(0)'; sidebar.style.opacity = '1';
-                        mainContent.style.marginLeft = '120px'; mainContent.style.width = 'calc(100% - 120px)';
-                    }
-                });
-            }
-        });
-
-        // ⚡️ STRATEGIK FILTR SYSTEM: AMALDAGI SEARCH VA CATEGORY'LARNI BUZMASDAN URL QURADI
-        function executeOrderFilter(selectedValue) {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (selectedValue) {
-                urlParams.set('order_by', selectedValue);
-            } else {
-                urlParams.delete('order_by');
-            }
-            // Sahifani yangi parametrik URL bilan yangilaydi
-            window.location.search = urlParams.toString();
-        }
-
-        // DETAIL MODAL SYSTEM
-        function openMarketModal(card) {
-            document.getElementById('modalTitle').innerText = card.getAttribute('data-title');
-            document.getElementById('modalDesc').innerText = card.getAttribute('data-desc');
-            document.getElementById('modalAuthor').innerHTML = '<i class="fa-regular fa-circle-user"></i> ' + card.getAttribute('data-author');
-            document.getElementById('modalDate').innerText = card.getAttribute('data-date');
-            document.getElementById('modalPrice').innerText = card.getAttribute('data-price');
-
-            const mainImg = document.getElementById('modalMainImg');
-            const placeholderIcon = document.getElementById('modalPlaceholderIcon');
-            const imgUrl = card.getAttribute('data-image');
-
-            if (imgUrl && imgUrl !== '' && imgUrl !== 'None') {
-                mainImg.src = imgUrl; mainImg.style.display = 'block'; placeholderIcon.style.display = 'none';
-            } else {
-                mainImg.style.display = 'none'; placeholderIcon.style.display = 'block';
-            }
-
-            const authorId = card.getAttribute('data-author-id');
-            document.getElementById('modalContactBtn').onclick = function(e) {
-                closeMarketModal(); contactUser(e, authorId);
-            };
-
-            const overlay = document.getElementById('marketDetailModal');
-            overlay.style.display = 'flex';
-            setTimeout(() => { overlay.classList.add('active-overlay'); }, 10);
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeMarketModal() {
-            const overlay = document.getElementById('marketDetailModal');
-            overlay.classList.remove('active-overlay');
-            setTimeout(() => { overlay.style.display = 'none'; }, 350);
-            document.body.style.overflow = '';
-        }
-
-        // ⚡️ JONLI + MEXANIK MIXED SEARCH CONTROL
-        function filterGridLive(query) {
-            const cards = document.querySelectorAll('.market-pro-card');
-            const pag = document.getElementById('paginationWrapper');
-            cards.forEach(card => {
-                const title = card.getAttribute('data-title').toLowerCase();
-                const desc = card.getAttribute('data-desc').toLowerCase();
-                card.style.display = (title.includes(query.toLowerCase()) || desc.includes(query.toLowerCase())) ? 'flex' : 'none';
-            });
-            // Dinamik qidiruv vaqtida pagination vaqtincha yashiriladi
-            if (pag) pag.style.display = query.length > 0 ? 'none' : 'flex';
-        }
-        document.getElementById('liveSearchInput').addEventListener('input', (e) => filterGridLive(e.target.value.trim()));
-
-        // DYNAMIC LIKE INTERACTION
-        async function toggleLike(e, id, el) {
-            e.preventDefault();
-            const lang = window.location.pathname.split('/')[1] || 'uz';
-            const res = await fetch(`/${lang}/api/post/${id}/like/`, { method:'POST', headers:{'X-CSRFToken':'{{ csrf_token }}'} });
-            if(res.ok) {
-                const d = await res.json();
-                el.classList.toggle('liked', d.is_liked);
-                el.querySelector('i').className = d.is_liked ? 'fa-solid fa-heart' : 'fa-regular fa-heart';
-                el.querySelector('.likes-count').textContent = d.likes_count;
-            }
-        }
-
-        // DYNAMIC BOOKMARK INTERACTION
-        async function toggleBookmark(e, id, el) {
-            e.preventDefault();
-            const lang = window.location.pathname.split('/')[1] || 'uz';
-            const res = await fetch(`/${lang}/api/post/${id}/bookmark/`, { method:'POST', headers:{'X-CSRFToken':'{{ csrf_token }}'} });
-            if(res.ok) {
-                const d = await res.json();
-                el.classList.toggle('bookmarked', d.is_bookmarked);
-                el.querySelector('i').className = d.is_bookmarked ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark';
-            }
-        }
-
-        // CUSTOM TOAST FOR MARKET PRO
-        function showToast(type, message) {
-            if (!document.getElementById('custom-toast')) {
-                document.body.insertAdjacentHTML('beforeend', `
-                    <div id="custom-toast" style="
-                        position: fixed; top: 86px; right: -400px;
-                        background: linear-gradient(135deg, #1e1e2f, #151528);
-                        border: 1px solid rgba(255,255,255,0.08);
-                        border-left: 4px solid #ff6b00;
-                        border-radius: 12px; padding: 14px 20px;
-                        display: flex; align-items: center; gap: 12px;
-                        box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-                        z-index: 100000; transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                        max-width: 380px;">
-                        <div id="custom-toast-icon" style="
-                            width: 32px; height: 32px; border-radius: 50%;
-                            display: flex; align-items: center; justify-content: center;
-                            color: white; font-size: 14px; flex-shrink: 0;"></div>
-                        <div id="custom-toast-msg" style="color: #f8fafc; font-size: 14px; font-weight: 600;"></div>
-                    </div>
-                `);
-            }
-            const t = document.getElementById('custom-toast');
-            const icon = document.getElementById('custom-toast-icon');
-            const msg = document.getElementById('custom-toast-msg');
-
-            const configs = {
-                'success': { icon: '<i class="fa-solid fa-check"></i>', bg: '#10b981', border: '#10b981' },
-                'error':   { icon: '<i class="fa-solid fa-xmark"></i>', bg: '#ef4444', border: '#ef4444' },
-                'warning': { icon: '<i class="fa-solid fa-exclamation"></i>', bg: '#f59e0b', border: '#f59e0b' },
-                'info':    { icon: '<i class="fa-solid fa-info"></i>', bg: '#3b82f6', border: '#3b82f6' }
-            };
-            const cfg = configs[type] || configs['info'];
-            icon.innerHTML = cfg.icon;
-            icon.style.background = cfg.bg;
-            t.style.borderLeftColor = cfg.border;
-            msg.textContent = message;
-
-            t.style.right = '24px';
-            clearTimeout(t._timeout);
-            t._timeout = setTimeout(() => {
-                t.style.right = '-400px';
-            }, 3500);
-        }
-
-        // CONTACT USER SYSTEM FOR MARKET PRO
-        async function contactUser(event, userId) {
-            event.preventDefault();
-            if (!userId || userId === 'None') { showToast('error', `{% trans "Bu e'lonning muallifi mavjud emas."|escapejs %}`); return; }
-            if (userId == {{ request.user.id|default:0 }}) { showToast('info', `{% trans "Bu sizning o'z e'loningiz!"|escapejs %}`); return; }
-            try {
-                const res = await fetch(`/${window.location.pathname.split('/')[1]}/api/user/${userId}/contact/`, {
-                    headers: { 'X-CSRFToken': '{{ csrf_token }}', 'Content-Type': 'application/json' }
-                });
-                if (res.status === 401 || res.status === 403) {
-                    showToast('warning', `{% trans 'Iltimos, oldin tizimga kiring!'|escapejs %}`);
-                    setTimeout(()=>{ window.location.href = "{% url 'accounts:login' %}"; }, 1500);
-                    return;
-                }
-                const d = await res.json();
-                if (!res.ok) {
-                    showToast('error', d.error || `{% trans 'Xatolik yuz berdi!'|escapejs %}`);
-                    if (d.redirect) {
-                        setTimeout(() => { window.location.href = d.redirect; }, 1500);
-                    }
-                    return;
-                }
-
-                document.getElementById('cModal-avatar').src = d.avatar || '/static/images/default_avatar.svg';
-                document.getElementById('cModal-name').textContent = d.full_name;
-                document.getElementById('cModal-username').textContent = '@' + d.username + (d.city ? '  ·  ' + d.city : '');
-                document.getElementById('cModal-role').textContent = d.role;
-
-                let btns = '';
-                btns += `<button onclick="startChatWith(${userId})" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:18px;border:none;background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff;font-size:15px;font-weight:700;cursor:pointer;width:100%;transition:all 0.25s;box-shadow:0 8px 24px rgba(99,102,241,0.35);" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 12px 32px rgba(99,102,241,0.45)'" onmouseout="this.style.transform='';this.style.boxShadow='0 8px 24px rgba(99,102,241,0.35)'">
-                    <div style="width:40px;height:40px;background:rgba(255,255,255,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-regular fa-comment-dots" style="font-size:18px;"></i></div>
-                    <div style="text-align:left;"><div style="font-size:15px;font-weight:700;">EasyBuild Chat</div><div style="font-size:12px;opacity:0.7;font-weight:400;">Platforma ichida xabar yozish</div></div>
-                </button>`;
-                if (d.phone) {
-                    btns += `<a href="tel:${d.phone}" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:18px;border:1px solid rgba(16,185,129,0.25);background:rgba(16,185,129,0.07);color:#fff;font-size:15px;font-weight:600;text-decoration:none;transition:all 0.25s;" onmouseover="this.style.background='rgba(16,185,129,0.14)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(16,185,129,0.07)';this.style.transform=''">
-                        <div style="width:40px;height:40px;background:rgba(16,185,129,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-solid fa-phone" style="font-size:17px;color:#10b981;"></i></div>
-                        <div style="text-align:left;"><div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.85);">Telefon</div><div style="font-size:14px;color:#10b981;font-weight:600;">${d.phone}</div></div>
-                    </a>`;
-                }
-                if (d.telegram) {
-                    btns += `<a href="${d.telegram_url}" target="_blank" style="display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:18px;border:1px solid rgba(0,136,204,0.3);background:rgba(0,136,204,0.1);color:#fff;font-size:15px;font-weight:700;text-decoration:none;transition:all 0.25s;" onmouseover="this.style.background='rgba(0,136,204,0.2)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(0,136,204,0.1)';this.style.transform=''">
-                        <div style="width:40px;height:40px;background:rgba(0,136,204,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa-brands fa-telegram" style="font-size:20px;color:#29b6f6;"></i></div>
-                        <div style="text-align:left;"><div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.85);">Telegram</div><div style="font-size:14px;color:#29b6f6;font-weight:600;">${d.telegram}</div></div>
-                    </a>`;
-                }
-                
-                document.getElementById('cModal-buttons').innerHTML = btns;
-                document.getElementById('contactModal').style.display = 'flex';
-            } catch(e) {
-                showToast('error', `{% trans 'Xatolik yuz berdi!'|escapejs %}`);
-            }
-        }
-
-        function closeContactModal() {
-            const modal = document.getElementById('contactModal');
-            if (modal) modal.style.display = 'none';
-        }
-
-        async function startChatWith(userId) {
-            const lang = window.location.pathname.split('/')[1] || 'uz';
-            try {
-                const res = await fetch(`/${lang}/chat/api/start-chat/`, {
-                    method: 'POST',
-                    headers: { 'X-CSRFToken': '{{ csrf_token }}', 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ user_id: userId })
-                });
-                const d = await res.json();
-                if (res.ok) {
-                    window.location.href = `/${lang}/chat/?room_id=${d.room_id}`;
-                } else {
-                    showToast('error', d.error || `{% trans 'Chat boshlashda xatolik yuz berdi!'|escapejs %}`);
-                    if (d.redirect) {
-                        setTimeout(() => { window.location.href = d.redirect; }, 1500);
-                    }
-                }
-            } catch (err) {
-                showToast('error', `{% trans 'Xatolik yuz berdi!'|escapejs %}`);
-            }
-        }
-
-        document.getElementById('contactModal')?.addEventListener('click', function(e) {
-            if (e.target === this) closeContactModal();
-        });
-    </script>
-
-
-<script id="market-toast-script">
-function showMarketToast() {
-  if (!document.getElementById('market-toast')) {
-    document.body.insertAdjacentHTML('beforeend', `
-      <div id="market-toast">
-        <div class="mt-icon"><i class="fa-solid fa-rocket"></i></div>
-        <div class="mt-text">Market Pro bo'limi tez kunda ishga tushadi!</div>
-      </div>`);
-  }
-  const t = document.getElementById('market-toast');
-  t.classList.remove('show');
-  void t.offsetWidth; // trigger reflow
-  t.classList.add('show');
-  clearTimeout(t._tmr);
-  t._tmr = setTimeout(() => t.classList.remove('show'), 3500);
-}
-</script>
 </body>
 </html>

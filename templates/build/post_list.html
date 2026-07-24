@@ -167,7 +167,7 @@ body { overflow-x: hidden !important; width: 100% !important; max-width: 100vw !
   <aside class="sidebar">
     <a href="{% url 'build:home' %}" class="s-btn {% if request.resolver_match.url_name == 'home' %}active{% endif %}" title="{% translate 'Bosh sahifa' %}"><i class="fa-solid fa-house"></i></a>
     <a href="{% url 'build:network' %}" class="s-btn {% if request.resolver_match.url_name == 'network' %}active{% endif %}" title="{% translate 'Hamkasblar' %}"><i class="fa-solid fa-users"></i></a>
-    <a href="javascript:void(0)" onclick="showMarketToast()" data-old="" class="s-btn {% if request.resolver_match.url_name == 'post_list' %}active{% endif %}" title="{% translate 'Market Pro' %}"><i class="fa-solid fa-store"></i></a>
+    <a href="{% url 'build:market' %}" class="s-btn {% if request.resolver_match.url_name == 'market' %}active{% endif %}" title="{% translate 'Market Pro' %}"><i class="fa-solid fa-store"></i></a>
     <a href="{% url 'build:builder_list' %}" class="s-btn {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" title="{% translate 'Ustalar' %}"><i class="fa-solid fa-helmet-safety"></i></a>
     <a href="{% url 'build:post_create' %}" class="s-btn" title="Yangi e'lon"><i class="fa-solid fa-plus"></i></a>
     <a href="{% url 'chat:chat' %}" class="s-btn {% if request.resolver_match.namespace == 'chat' %}active{% endif %}" title="{% translate 'Xabarlar' %}" style="position:relative">

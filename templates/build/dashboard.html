@@ -663,7 +663,7 @@
                 </div>
                 <ul class="menu-list">
                     <li><a href="{% url 'build:home' %}" class="{% if request.resolver_match.url_name == 'home' %}active-link{% endif %}"><i class="fa-solid fa-house main-icon"></i> {% trans "Bosh sahifa" %}</a></li>
-                    <li><a href="javascript:void(0)" onclick="showMarketToast()" data-old="" class="{% if request.resolver_match.url_name == 'post_list' %}active-link{% endif %}"><i class="fa-solid fa-store main-icon"></i> {% trans "Market Pro (B2B)" %}</a></li>
+                    <li><a href="{% url 'build:market' %}" class="{% if request.resolver_match.url_name == 'market' %}active-link{% endif %}"><i class="fa-solid fa-store main-icon"></i> {% trans "Market Pro (B2B)" %}</a></li>
                     <li><a href="{% url 'build:builder_list' %}" class="{% if request.resolver_match.url_name == 'builder_list' %}active-link{% endif %}"><i class="fa-solid fa-helmet-safety main-icon"></i> {% trans "Usta Qidirish" %}</a></li>
                     <li><a href="{% url 'chat:chat' %}" class="{% if request.resolver_match.namespace == 'chat' %}active-link{% endif %}"><i class="fa-regular fa-comment-dots main-icon"></i> {% trans "Xabarlar" %} {% if unread_chat_count > 0 %}<span class="badge" style="background:linear-gradient(135deg, #ff6b00, #ff8c33); color:#ffffff; font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; margin-left:auto;">{{ unread_chat_count }}</span>{% endif %}</a></li>
                 <li><a href="{% url 'build:payment_dashboard' %}" class="{% if request.resolver_match.url_name == 'payment_dashboard' %}active-link{% endif %}"><i class="fa-solid fa-gem main-icon"></i> {% trans "Premium Obuna" %}</a></li>
@@ -798,7 +798,12 @@
             }
 
             if (hamburgerBtn && sidebar && mainContent) {
-                hamburgerBtn.addEventListener('click', function() {
+                hamburgerBtn.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 768) {
+                        e.stopPropagation();
+                        sidebar.classList.toggle('mobile-drawer-open');
+                        return;
+                    }
                     const isHidden = sidebar.style.transform === 'translateX(-150%)';
                     if (!isHidden) {
                         sidebar.style.transform = 'translateX(-150%)';
