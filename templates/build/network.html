@@ -366,30 +366,6 @@
         .logo { white-space: nowrap !important; display: block !important; line-height: 1 !important; display: flex !important; align-items: center !important; }
 
         @media (max-width: 768px) {
-            .sidebar-container { display: none !important; }
-            .sidebar-container.mobile-drawer-open {
-                display: flex !important;
-                position: fixed !important;
-                top: 64px !important; left: 0 !important;
-                width: 285px !important;
-                height: calc(100vh - 64px) !important;
-                z-index: 99999 !important;
-                background: var(--bg-panel) !important;
-                backdrop-filter: blur(30px) !important;
-                -webkit-backdrop-filter: blur(30px) !important;
-                border-right: 1px solid var(--border-color) !important;
-                box-shadow: 0 20px 50px rgba(0,0,0,0.6) !important;
-            }
-            .sidebar-container.mobile-drawer-open .expanded-menu {
-                width: 100% !important;
-                opacity: 1 !important;
-                visibility: visible !important;
-                margin-left: 0 !important;
-                pointer-events: auto !important;
-                border: none !important;
-                box-shadow: none !important;
-            }
-            .sidebar-container.mobile-drawer-open .icon-rail { display: none !important; }
             .header-left .menu-hamburger { display: flex !important; font-size: 22px; width: 44px; height: 44px; align-items: center; justify-content: center; border-radius: 12px; cursor: pointer; }
 
             /* iOS da inputlarga bosganda ekran zoom bo'lib ketmasligi uchun */
@@ -575,7 +551,7 @@
 
     <header>
         <div class="header-container">
-            <div class="header-left"><i class="fa-solid fa-bars menu-hamburger" onclick="toggleMobileDrawer(event)"></i></div>
+            <div class="header-left"><i class="fa-solid fa-bars menu-hamburger" onclick="window.toggleMobileDrawer(event)"></i></div>
             <div class="header-center">
                 <a href="{% url 'build:home' %}" class="logo" style="text-decoration: none;">
                     EasyBuild <i class="fa-solid fa-helmet-safety"></i>

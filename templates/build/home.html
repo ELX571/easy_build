@@ -279,31 +279,6 @@
 
         @media (max-width: 768px) {
             body { background-color: var(--bg-body); }
-            /* Menyular va oraliqlar */
-            .sidebar-container { display: none !important; }
-            .sidebar-container.mobile-drawer-open {
-                display: flex !important;
-                position: fixed !important;
-                top: 64px !important; left: 0 !important;
-                width: 285px !important;
-                height: calc(100vh - 64px) !important;
-                z-index: 99999 !important;
-                background: var(--bg-panel) !important;
-                backdrop-filter: blur(30px) !important;
-                -webkit-backdrop-filter: blur(30px) !important;
-                border-right: 1px solid var(--border-color) !important;
-                box-shadow: 0 20px 50px rgba(0,0,0,0.6) !important;
-            }
-            .sidebar-container.mobile-drawer-open .expanded-menu {
-                width: 100% !important;
-                opacity: 1 !important;
-                visibility: visible !important;
-                margin-left: 0 !important;
-                pointer-events: auto !important;
-                border: none !important;
-                box-shadow: none !important;
-            }
-            .sidebar-container.mobile-drawer-open .icon-rail { display: none !important; }
             .bottom-nav { display: flex; }
 
             /* Tepa qism: Qidiruv paneli ekranga yopishadi */
@@ -502,7 +477,7 @@
 
     <header>
         <div class="header-container">
-            <div class="header-left"><i class="fa-solid fa-bars menu-hamburger" onclick="toggleMobileDrawer(event)"></i></div>
+            <div class="header-left"><i class="fa-solid fa-bars menu-hamburger" onclick="window.toggleMobileDrawer(event)"></i></div>
             <div class="header-center">
                 <a href="{% url 'build:home' %}" class="logo" style="text-decoration: none;">
                     EasyBuild <i class="fa-solid fa-helmet-safety"></i>
@@ -551,7 +526,10 @@
 
         <div class="expanded-menu">
             <div class="menu-col">
-                <div class="menu-title"><i class="fa-solid fa-compass" style="color: var(--active-text-blue); transform: rotate(15deg);"></i> {% translate "Navigator" %}</div>
+                <div class="menu-title">
+                    <span><i class="fa-solid fa-compass" style="color: var(--active-text-blue); transform: rotate(15deg);"></i> {% translate "Navigator" %}</span>
+                    <i class="fa-solid fa-xmark drawer-close-btn" style="cursor: pointer; font-size: 22px; color: var(--text-muted); padding: 6px;" onclick="window.closeMobileDrawer(event)"></i>
+                </div>
                 <ul class="menu-list">
                     <li><a href="{% url 'build:home' %}" class="{% if request.resolver_match.url_name == 'home' %}active-link{% endif %}"><i class="fa-solid fa-house main-icon"></i> {% trans "Bosh sahifa" %}</a></li>
                     <li><a href="{% url 'build:network' %}" class="{% if request.resolver_match.url_name == 'network' %}active-link{% endif %}"><i class="fa-solid fa-users main-icon"></i> {% trans "Hamkasblar" %}</a></li>
