@@ -189,6 +189,7 @@
             .sidebar-container.mobile-drawer-open .expanded-menu {
                 width: 100% !important;
                 opacity: 1 !important;
+                visibility: visible !important;
                 margin-left: 0 !important;
                 pointer-events: auto !important;
                 border: none !important;
@@ -288,7 +289,6 @@
                 const sidebar = document.querySelector('.sidebar-container');
                 
                 if (burgerBtn && sidebar) {
-                    e.preventDefault();
                     e.stopPropagation();
                     sidebar.classList.toggle('mobile-drawer-open');
                     return;
