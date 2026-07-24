@@ -71,7 +71,9 @@
         }
 
         /* ── PROFILE CONTAINER ── */
-        .profile-container { width: 100%; max-width: 680px; display: flex; flex-direction: column; gap: 24px; position: relative; margin-left: 120px; animation: fadeIn 0.6s ease; }
+        @media (min-width: 769px) {
+            .profile-container { width: 100%; max-width: 680px; display: flex; flex-direction: column; gap: 24px; position: relative; margin-left: 120px; animation: fadeIn 0.6s ease; }
+        }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .profile-top-navigation { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 4px; }

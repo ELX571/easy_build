@@ -150,7 +150,9 @@
         /* —————————————————————————————————————————————————————————
            MARKET PRO WORKSPACE & TWITTER FEED STYLE
            ————————————————————————————————————————————————————————— */
-        .main-content { margin-left: 120px; padding: 120px 40px 40px 40px; animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        @media (min-width: 769px) {
+            .main-content { margin-left: 120px; padding: 120px 40px 40px 40px; animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        }
         .market-filter-bar { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 35px; max-width: 1200px; }
 
         .filter-btn { background: var(--bg-panel); border: 1px solid var(--border-color); color: var(--text-main); padding: 10px 20px; border-radius: 14px; font-weight: 600; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(10px); text-decoration: none; }

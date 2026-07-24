@@ -137,7 +137,9 @@
         /* —————————————————————————————————————————————————————————
            MAIN CONTENT & SEARCH (Global)
            ————————————————————————————————————————————————————————— */
-        .main-content { margin-left: 120px; padding: 120px 40px 40px 40px; animation: fadeIn 0.8s ease; }
+        @media (min-width: 769px) {
+            .main-content { margin-left: 120px; padding: 120px 40px 40px 40px; animation: fadeIn 0.8s ease; }
+        }
         .market-filter-bar { max-width: 600px; margin: 0 auto 30px auto; }
 
         .search-wrapper { position: relative; width: 100%; border-radius: 50px; background: rgba(12, 14, 22, 0.9); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 20px 40px rgba(0, 0, 0, 0.45), 0 4px 12px rgba(0, 0, 0, 0.3); backdrop-filter: blur(32px); transition: 0.3s ease; }

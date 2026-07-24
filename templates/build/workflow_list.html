@@ -141,7 +141,9 @@
         /* —————————————————————————————————————————————————————————
            WORKFLOW DASHBOARD WORKSPACE (KANBAN / WORKSPACE)
            ————————————————————————————————————————————————————————— */
-        .main-content { margin-left: 120px; padding: 120px 40px 40px 40px; animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        @media (min-width: 769px) {
+            .main-content { margin-left: 120px; padding: 120px 40px 40px 40px; animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        }
 
         .workspace-header { margin-bottom: 30px; max-width: 1200px; }
         .workspace-header h2 { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }

@@ -99,7 +99,9 @@
         .loader-progress-track { width: 220px; height: 4px; background: rgba(255, 255, 255, 0.05); border-radius: 20px; margin: 0 auto; overflow: hidden; position: relative; border: 1px solid rgba(255, 255, 255, 0.02); }
         .loader-progress-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #ff6b00, #ff9e54); border-radius: 20px; box-shadow: 0 0 12px #ff6b00; transition: width 0.1s linear; }
 
-        .main-content { margin-left: 120px; padding: 120px 40px 40px 40px; animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        @media (min-width: 769px) {
+            .main-content { margin-left: 120px; padding: 120px 40px 40px 40px; animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        }
         .search-wrapper-card { background: var(--card-gradient); border-radius: 24px; border: 1px solid var(--border-color); padding: 30px; margin-bottom: 40px; backdrop-filter: blur(20px); box-shadow: 0 20px 40px var(--shadow-rail); max-width: 1200px; position: relative; z-index: 100; }
         .search-grid-form { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 16px; align-items: flex-end; }
         .input-box-group { display: flex; flex-direction: column; gap: 8px; }
