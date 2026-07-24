@@ -172,9 +172,8 @@
         }
 
         @media (max-width: 768px) {
-            /* Desktop Sidebar hide on Mobile */
-            .sidebar-container { display: none !important; }
-            .sidebar-container.mobile-drawer-open {
+            /* Desktop Sidebar hide on Mobile, slide out on drawer open */
+            .sidebar-container, #sideDrawer, .offcanvas-menu {
                 display: flex !important;
                 position: fixed !important;
                 top: 0 !important;
@@ -184,17 +183,34 @@
                 height: 100vh !important;
                 height: 100dvh !important;
                 padding-top: calc(64px + env(safe-area-inset-top, 0px)) !important;
-                z-index: 999999 !important;
+                z-index: 100000 !important;
                 background: var(--bg-panel, #090d16) !important;
                 backdrop-filter: blur(35px) !important;
                 -webkit-backdrop-filter: blur(35px) !important;
                 border-right: 1px solid var(--border-color, rgba(255,255,255,0.12)) !important;
                 box-shadow: 0 0 100px rgba(0,0,0,0.8) !important;
-                transform: none !important;
+                transform: translateX(-100%) !important;
+                transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, visibility 0.3s ease !important;
+                opacity: 0 !important;
+                visibility: hidden !important;
+                pointer-events: none !important;
+            }
+            .sidebar-container.mobile-drawer-open,
+            .sidebar-container.active,
+            .sidebar-container.open,
+            #sideDrawer.active,
+            #sideDrawer.open,
+            .offcanvas-menu.active,
+            .offcanvas-menu.open {
+                transform: translateX(0) !important;
                 opacity: 1 !important;
                 visibility: visible !important;
+                pointer-events: auto !important;
             }
-            .sidebar-container.mobile-drawer-open .expanded-menu {
+
+            .sidebar-container .expanded-menu,
+            #sideDrawer .expanded-menu,
+            .offcanvas-menu .expanded-menu {
                 display: flex !important;
                 flex-direction: column !important;
                 width: 100% !important;
@@ -210,7 +226,9 @@
                 transform: none !important;
                 background: transparent !important;
             }
-            .sidebar-container.mobile-drawer-open .icon-rail { display: none !important; }
+            .sidebar-container .icon-rail,
+            #sideDrawer .icon-rail,
+            .offcanvas-menu .icon-rail { display: none !important; }
 
             /* iOS Input Zoom Prevention */
             input, textarea, select { font-size: 16px !important; }
@@ -297,44 +315,80 @@
     </main>
 
     <!-- ⚡️ GLOBAL INSTAGRAM HAMBURGER MENU DRAWER OVERLAY & JS -->
-    <div id="mobileDrawerOverlay" onclick="toggleMobileDrawer(event)" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 999998; transition: opacity 0.3s ease;"></div>
+    <div id="mobileDrawerOverlay" class="drawer-backdrop drawer-overlay" onclick="closeMobileDrawer(event)" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 999998; transition: opacity 0.3s ease;"></div>
 
     <script>
+        window.openMobileDrawer = function() {
+            const sidebar = document.querySelector('.sidebar-container, #sideDrawer, .offcanvas-menu');
+            const overlay = document.getElementById('mobileDrawerOverlay');
+            if (sidebar) {
+                sidebar.classList.add('mobile-drawer-open', 'active', 'open');
+                if (overlay) {
+                    overlay.style.display = 'block';
+                    overlay.classList.add('active', 'open');
+                }
+                document.body.style.overflow = 'hidden';
+                document.documentElement.style.overflow = 'hidden';
+            }
+        };
+
+        window.closeMobileDrawer = function(e) {
+            if (e && typeof e.stopPropagation === 'function') {
+                e.stopPropagation();
+            }
+            const sidebar = document.querySelector('.sidebar-container, #sideDrawer, .offcanvas-menu');
+            const overlay = document.getElementById('mobileDrawerOverlay');
+            if (sidebar) {
+                sidebar.classList.remove('mobile-drawer-open', 'active', 'open');
+                if (overlay) {
+                    overlay.style.display = 'none';
+                    overlay.classList.remove('active', 'open');
+                }
+                document.body.style.overflow = '';
+                document.documentElement.style.overflow = '';
+            }
+        };
+
         window.toggleMobileDrawer = function(e) {
-            if (e) {
+            if (e && typeof e.preventDefault === 'function') {
                 e.preventDefault();
                 e.stopPropagation();
             }
-            const sidebar = document.querySelector('.sidebar-container');
-            const overlay = document.getElementById('mobileDrawerOverlay');
-            
-            if (sidebar) {
-                const isOpen = sidebar.classList.contains('mobile-drawer-open');
-                if (isOpen) {
-                    sidebar.classList.remove('mobile-drawer-open');
-                    if (overlay) overlay.style.display = 'none';
-                } else {
-                    sidebar.classList.add('mobile-drawer-open');
-                    if (overlay) overlay.style.display = 'block';
-                }
+            const sidebar = document.querySelector('.sidebar-container, #sideDrawer, .offcanvas-menu');
+            if (sidebar && sidebar.classList.contains('mobile-drawer-open')) {
+                closeMobileDrawer(e);
+            } else {
+                openMobileDrawer();
             }
         };
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Click handler for hamburger triggers and close buttons
             document.addEventListener('click', function(e) {
-                const burgerBtn = e.target.closest('.menu-hamburger');
+                const burgerBtn = e.target.closest('.menu-hamburger, #hamburgerBtn, .hamburger-trigger');
                 if (burgerBtn) {
                     toggleMobileDrawer(e);
                     return;
                 }
 
-                const sidebar = document.querySelector('.sidebar-container');
-                const overlay = document.getElementById('mobileDrawerOverlay');
+                const closeBtn = e.target.closest('#closeDrawerBtn, .drawer-close-btn, .drawer-overlay, #mobileDrawerOverlay');
+                if (closeBtn) {
+                    closeMobileDrawer(e);
+                    return;
+                }
+
+                const sidebar = document.querySelector('.sidebar-container, #sideDrawer, .offcanvas-menu');
                 if (sidebar && sidebar.classList.contains('mobile-drawer-open')) {
-                    if (!sidebar.contains(e.target) && !e.target.closest('#mobileDrawerOverlay')) {
-                        sidebar.classList.remove('mobile-drawer-open');
-                        if (overlay) overlay.style.display = 'none';
+                    if (!sidebar.contains(e.target)) {
+                        closeMobileDrawer(e);
                     }
+                }
+            });
+
+            // Escape Key listener
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' || e.key === 'Esc') {
+                    closeMobileDrawer(e);
                 }
             });
         });
