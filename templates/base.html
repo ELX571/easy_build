@@ -280,5 +280,27 @@
         {% endblock %}
     </main>
 
+    <!-- ⚡️ GLOBAL INSTAGRAM HAMBURGER MENU DRAWER JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('click', function(e) {
+                const burgerBtn = e.target.closest('.menu-hamburger');
+                const sidebar = document.querySelector('.sidebar-container');
+                
+                if (burgerBtn && sidebar) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    sidebar.classList.toggle('mobile-drawer-open');
+                    return;
+                }
+
+                if (sidebar && sidebar.classList.contains('mobile-drawer-open')) {
+                    if (!sidebar.contains(e.target)) {
+                        sidebar.classList.remove('mobile-drawer-open');
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -884,20 +884,17 @@
 
             if (hamburgerBtn && sidebar && mainContent) {
                 hamburgerBtn.addEventListener('click', function(e) {
-                    if (window.innerWidth <= 768) {
-                        e.stopPropagation();
-                        sidebar.classList.toggle('mobile-drawer-open');
-                        return;
-                    }
-                    const isHidden = sidebar.style.transform === 'translateX(-150%)';
-                    if (!isHidden) {
-                        sidebar.style.transform = 'translateX(-150%)';
-                        sidebar.style.opacity = '0';
-                        mainContent.style.marginLeft = '40px';
-                    } else {
-                        sidebar.style.transform = 'translateX(0)';
-                        sidebar.style.opacity = '1';
-                        mainContent.style.marginLeft = '120px';
+                    if (window.innerWidth > 768) {
+                        const isHidden = sidebar.style.transform === 'translateX(-150%)';
+                        if (!isHidden) {
+                            sidebar.style.transform = 'translateX(-150%)';
+                            sidebar.style.opacity = '0';
+                            mainContent.style.marginLeft = '40px';
+                        } else {
+                            sidebar.style.transform = 'translateX(0)';
+                            sidebar.style.opacity = '1';
+                            mainContent.style.marginLeft = '120px';
+                        }
                     }
                 });
             }
