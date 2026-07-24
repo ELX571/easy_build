@@ -522,35 +522,12 @@
 <header>
         <div class="header-container">
             <div class="header-left"><i class="fa-solid fa-bars menu-hamburger"></i></div>
-            <div class="header-center"><div class="logo">{% trans "EasyBuild" %}</div></div>
+            <div class="header-center">
+                <a href="{% url 'build:home' %}" class="logo" style="text-decoration: none;">
+                    EasyBuild <i class="fa-solid fa-helmet-safety"></i>
+                </a>
+            </div>
             <div class="header-right">
-
-                <!-- ⚡️ KAFOLATLI ISHLAYDIGAN NATIVE TILLAR FORMASI -->
-                <div style="position: relative;">
-    <button type="button" id="lang-btn" onclick="document.getElementById('lang-menu').classList.toggle('show-lang')">
-        {% if request.LANGUAGE_CODE == 'ru' %}
-            <img src="https://flagcdn.com/w80/ru.png" class="flag-icon"> <span>{% trans "Русский" %}</span>
-        {% elif request.LANGUAGE_CODE == 'en' %}
-            <img src="https://flagcdn.com/w80/us.png" class="flag-icon"> <span>{% trans "English" %}</span>
-        {% else %}
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Flag_of_Uzbekistan.svg" class="flag-icon" style="object-position: 20% 50%;"> <span>{% trans "O'zbekcha" %}</span>
-        {% endif %}
-        <i class="fa-solid fa-chevron-down" style="font-size: 11px; margin-left: 2px;"></i>
-    </button>
-
-    <div id="lang-menu">
-        <a href="/uz{{ request.path|slice:'3:' }}" style="text-decoration: none; display: flex; align-items: center; gap: 12px; padding: 10px 14px; color: var(--text-muted); font-weight: 600; font-size: 14px; border-radius: 10px; transition: 0.2s;" onmouseover="this.style.background='var(--link-hover-bg)'; this.style.color='var(--text-main)'" onmouseout="this.style.background='transparent'; this.style.color='var(--text-muted)'">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Flag_of_Uzbekistan.svg" class="flag-icon" style="object-position: 20% 50%; width: 24px; height: 24px; border-radius: 50%;"> O'zbekcha
-        </a>
-        <a href="/ru{{ request.path|slice:'3:' }}" style="text-decoration: none; display: flex; align-items: center; gap: 12px; padding: 10px 14px; color: var(--text-muted); font-weight: 600; font-size: 14px; border-radius: 10px; transition: 0.2s;" onmouseover="this.style.background='var(--link-hover-bg)'; this.style.color='var(--text-main)'" onmouseout="this.style.background='transparent'; this.style.color='var(--text-muted)'">
-            <img src="https://flagcdn.com/w80/ru.png" class="flag-icon" style="width: 24px; height: 24px; border-radius: 50%;"> Русский
-        </a>
-        <a href="/en{{ request.path|slice:'3:' }}" style="text-decoration: none; display: flex; align-items: center; gap: 12px; padding: 10px 14px; color: var(--text-muted); font-weight: 600; font-size: 14px; border-radius: 10px; transition: 0.2s;" onmouseover="this.style.background='var(--link-hover-bg)'; this.style.color='var(--text-main)'" onmouseout="this.style.background='transparent'; this.style.color='var(--text-muted)'">
-            <img src="https://flagcdn.com/w80/us.png" class="flag-icon" style="width: 24px; height: 24px; border-radius: 50%;"> English
-        </a>
-    </div>
-</div>
-
                 {% if user.is_authenticated %}
                     <a href="{% url 'build:profile' %}">
                         <img src="{{ user.profile.get_avatar_url }}" class="profile-avatar" alt="{% translate 'Profil' %}">
