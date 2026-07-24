@@ -219,10 +219,15 @@
         }
 
         /* 🚀 MASTER PREMIUM OFF-CANVAS SIDE DRAWER CSS (MOBILE & TABLET) */
+        @keyframes drawerSlideIn {
+            from { transform: translateX(-100%); }
+            to   { transform: translateX(0); }
+        }
+
         @media (max-width: 1024px) {
-            /* 1. Hide sidebar off-screen by default on mobile/tablet */
+            /* ─── 1. COMPLETELY HIDDEN BY DEFAULT (display:none is bulletproof) ─── */
             .sidebar-container, #sideDrawer, .offcanvas-menu {
-                display: flex !important;
+                display: none !important;
                 flex-direction: column !important;
                 position: fixed !important;
                 top: 0 !important;
@@ -233,30 +238,23 @@
                 height: 100dvh !important;
                 z-index: 100000 !important;
                 background: linear-gradient(160deg, #0d1117 0%, #111827 50%, #0d1117 100%) !important;
-                backdrop-filter: blur(40px) !important;
-                -webkit-backdrop-filter: blur(40px) !important;
-                border-right: 1px solid rgba(255, 107, 0, 0.12) !important;
-                box-shadow: 8px 0 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04) inset !important;
-                transform: translateX(-100%) !important;
-                transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1) !important;
-                opacity: 1 !important;
-                visibility: hidden !important;
-                pointer-events: none !important;
+                border-right: 1px solid rgba(255, 107, 0, 0.15) !important;
+                box-shadow: 8px 0 60px rgba(0,0,0,0.75) !important;
                 margin: 0 !important;
                 padding: 0 !important;
                 overflow: hidden !important;
             }
 
-            /* Light mode drawer */
+            /* Light mode */
             [data-theme="light"] .sidebar-container,
             [data-theme="light"] #sideDrawer,
             [data-theme="light"] .offcanvas-menu {
                 background: linear-gradient(160deg, #ffffff 0%, #f8fafc 50%, #ffffff 100%) !important;
                 border-right: 1px solid rgba(255, 107, 0, 0.15) !important;
-                box-shadow: 8px 0 60px rgba(0,0,0,0.15) !important;
+                box-shadow: 8px 0 50px rgba(0,0,0,0.15) !important;
             }
 
-            /* 2. When open, slide in as a full drawer */
+            /* ─── 2. OPEN STATE: slide in with animation ─── */
             .sidebar-container.mobile-drawer-open,
             .sidebar-container.active,
             .sidebar-container.open,
@@ -265,57 +263,53 @@
             #sideDrawer.open,
             .offcanvas-menu.active,
             .offcanvas-menu.open {
-                transform: translateX(0) !important;
-                visibility: visible !important;
-                pointer-events: auto !important;
+                display: flex !important;
+                animation: drawerSlideIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) both !important;
             }
 
-            /* 3. Hide narrow desktop icon-rail completely on mobile */
+            /* ─── 3. icon-rail: completely hidden on mobile ─── */
             .sidebar-container .icon-rail,
             #sideDrawer .icon-rail,
             .offcanvas-menu .icon-rail {
                 display: none !important;
             }
 
-            /* 4. Show full expanded menu with labels and smooth scrolling */
+            /* ─── 4. expanded-menu: full size inside drawer ─── */
             .sidebar-container .expanded-menu,
             #sideDrawer .expanded-menu,
             .offcanvas-menu .expanded-menu {
                 display: flex !important;
                 flex-direction: column !important;
                 width: 100% !important;
-                height: 100% !important;
-                opacity: 1 !important;
-                visibility: visible !important;
-                margin: 0 !important;
+                flex: 1 !important;
+                overflow-y: auto !important;
+                overflow-x: hidden !important;
+                -webkit-overflow-scrolling: touch !important;
                 padding: 0 16px calc(40px + env(safe-area-inset-bottom, 0px)) 16px !important;
-                pointer-events: auto !important;
+                margin: 0 !important;
                 border: none !important;
                 box-shadow: none !important;
-                overflow-y: auto !important;
-                transform: none !important;
                 background: transparent !important;
-                -webkit-overflow-scrolling: touch !important;
             }
 
             .expanded-menu .menu-col {
-                min-width: 100% !important;
                 width: 100% !important;
+                min-width: 0 !important;
                 padding: 0 !important;
-                height: auto !important;
+                flex: 1 !important;
             }
 
-            /* Premium drawer header */
+            /* ─── Drawer header (logo + close btn) ─── */
             .expanded-menu .menu-title {
-                font-size: 17px !important;
-                font-weight: 800 !important;
-                margin-bottom: 8px !important;
-                padding: calc(env(safe-area-inset-top, 0px) + 20px) 4px 18px 4px !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: space-between !important;
                 width: 100% !important;
+                padding: calc(env(safe-area-inset-top, 0px) + 22px) 4px 18px 4px !important;
+                margin-bottom: 6px !important;
                 border-bottom: 1px solid rgba(255, 107, 0, 0.12) !important;
+                font-size: 17px !important;
+                font-weight: 800 !important;
                 color: #f8fafc !important;
                 letter-spacing: -0.3px !important;
                 flex-shrink: 0 !important;
@@ -326,32 +320,39 @@
                 border-bottom-color: rgba(255, 107, 0, 0.15) !important;
             }
 
-            .expanded-menu .menu-title .drawer-close-btn {
+            /* Close button */
+            .expanded-menu .menu-title .drawer-close-btn,
+            .expanded-menu .menu-title button.drawer-close-btn {
                 width: 36px !important;
                 height: 36px !important;
                 min-width: 36px !important;
                 border-radius: 10px !important;
-                background: rgba(255, 107, 0, 0.1) !important;
+                background: rgba(255, 107, 0, 0.12) !important;
+                border: none !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: center !important;
                 color: #ff6b00 !important;
                 cursor: pointer !important;
-                transition: background 0.2s, transform 0.15s !important;
                 font-size: 15px !important;
                 flex-shrink: 0 !important;
                 padding: 0 !important;
+                transition: background 0.2s, transform 0.15s !important;
             }
-            .expanded-menu .menu-title .drawer-close-btn:active {
-                transform: scale(0.9) !important;
-                background: rgba(255, 107, 0, 0.2) !important;
+            .expanded-menu .menu-title .drawer-close-btn:active,
+            .expanded-menu .menu-title button.drawer-close-btn:active {
+                transform: scale(0.88) !important;
+                background: rgba(255, 107, 0, 0.22) !important;
             }
 
+            /* ─── Menu list ─── */
             .expanded-menu .menu-list {
+                list-style: none !important;
                 display: flex !important;
                 flex-direction: column !important;
-                gap: 3px !important;
-                margin-top: 12px !important;
+                gap: 2px !important;
+                margin: 12px 0 0 0 !important;
+                padding: 0 !important;
             }
 
             .expanded-menu .menu-list li a {
@@ -362,17 +363,14 @@
                 font-weight: 600 !important;
                 border-radius: 14px !important;
                 color: #94a3b8 !important;
-                transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease !important;
                 text-decoration: none !important;
+                transition: background 0.18s ease, color 0.18s ease !important;
                 line-height: 1 !important;
+                gap: 0 !important;
             }
 
             [data-theme="light"] .expanded-menu .menu-list li a {
                 color: #475569 !important;
-            }
-
-            .expanded-menu .menu-list li a:active {
-                transform: scale(0.97) !important;
             }
 
             .expanded-menu .menu-list li a:hover,
@@ -391,25 +389,25 @@
                 font-size: 17px !important;
                 margin-right: 14px !important;
                 width: 22px !important;
+                min-width: 22px !important;
                 text-align: center !important;
-                flex-shrink: 0 !important;
             }
 
-            /* section label inside drawer */
+            /* ─── Section label ─── */
             .expanded-menu .section-label {
+                display: block !important;
                 font-size: 10px !important;
                 font-weight: 700 !important;
                 text-transform: uppercase !important;
                 letter-spacing: 1.2px !important;
-                color: rgba(148, 163, 184, 0.6) !important;
-                margin: 16px 4px 6px 14px !important;
-                display: block !important;
+                color: rgba(148, 163, 184, 0.55) !important;
+                margin: 18px 0 4px 14px !important;
+                padding: 0 !important;
             }
 
-            /* iOS Input Zoom Prevention */
+            /* ─── Mobile layout fixes ─── */
             input, textarea, select { font-size: 16px !important; }
 
-            /* Top Header Notch Alignment */
             header {
                 padding-top: env(safe-area-inset-top, 0px) !important;
                 padding-left: 14px !important;
@@ -418,22 +416,21 @@
             }
             .header-add-btn { width: 40px !important; height: 40px !important; }
 
-            /* Safe Main Content Padding */
             .main-content {
-                padding-top: calc(80px + env(safe-area-inset-top, 0px)) !important;
+                padding-top: calc(72px + env(safe-area-inset-top, 0px)) !important;
                 padding-bottom: calc(85px + env(safe-area-inset-bottom, 0px)) !important;
-                padding-left: 12px !important; padding-right: 12px !important;
-                margin-left: 0 !important; margin-right: 0 !important;
+                padding-left: 12px !important;
+                padding-right: 12px !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
                 width: 100% !important;
             }
 
-            /* Responsive Grid & Container Spacing */
             .market-filter-bar, .builders-grid-layout, .profile-container, .form-container, .auth-wrapper {
-                padding-left: 12px !important;
-                padding-right: 12px !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
             }
 
-            /* Modals & Bottom sheets */
             .secure-modal-overlay { align-items: flex-end !important; padding: 0 !important; }
             .secure-modal, #contactModalInner {
                 margin: 0 !important; max-width: 100% !important;
