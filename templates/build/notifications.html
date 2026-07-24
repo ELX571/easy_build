@@ -419,51 +419,9 @@
             </div>
         </div>
     </header>
+    {% include "includes/sidebar_drawer.html" %}
 
-    <div class="sidebar-container">
-        <div class="icon-rail">
-            <a href="{% url 'build:home' %}" class="rail-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}" data-title="{% translate 'Bosh sahifa' %}"><i class="fa-solid fa-house"></i></a>
-            <a href="{% url 'build:network' %}" class="rail-item {% if request.resolver_match.url_name == 'network' %}active{% endif %}" data-title="{% translate 'Hamkasblar' %}"><i class="fa-solid fa-users"></i></a>
-            <a href="{% url 'build:market' %}" class="rail-item {% if request.resolver_match.url_name == 'market' %}active{% endif %}" data-title="{% translate 'Market Pro' %}"><i class="fa-solid fa-store"></i></a>
-            <a href="{% url 'build:builder_list' %}" class="rail-item {% if request.resolver_match.url_name == 'builder_list' %}active{% endif %}" data-title="{% translate 'Usta Qidirish' %}"><i class="fa-solid fa-helmet-safety"></i></a>
-            <a href="{% url 'chat:chat' %}" class="rail-item {% if request.resolver_match.namespace == 'chat' %}active{% endif %}" data-title="{% translate 'Chatlar' %}">
-                <i class="fa-regular fa-comment-dots"></i>
-                {% if unread_chat_count > 0 %}
-                <span style="position:absolute; top:8px; right:8px; background:var(--active-text-blue); color:white; font-size:10px; font-weight:800; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center;">{{ unread_chat_count }}</span>
-                {% endif %}
-            </a>
-            <a href="{% url 'build:payment_dashboard' %}" class="rail-item {% if request.resolver_match.url_name == 'payment_dashboard' %}active{% endif %}" data-title="{% translate 'Premium' %}"><i class="fa-solid fa-gem"></i></a>
-            <a href="{% url 'build:notifications_list' %}" class="rail-item {% if request.resolver_match.url_name == 'notifications_list' %}active{% endif %}" data-title="{% translate 'Bildirishnomalar' %}">
-                <i class="fa-solid fa-bell"></i>
-                {% if unread_notifications_count > 0 %}
-                    <span style="position:absolute; top:8px; right:8px; background:#ef4444; color:white; font-size:10px; font-weight:800; border-radius:50%; width:16px; height:16px; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-panel);">{{ unread_notifications_count }}</span>
-                {% endif %}
-            </a>
-            <div class="rail-divider"></div>
-            <a href="{% url 'build:profile' %}" class="rail-item">
-                {% if request.user.profile.avatar %}
-                    <img src="{{ request.user.profile.get_avatar_url }}" style="width:100%; height:100%; border-radius:14px; object-fit:cover;">
-                {% else %}
-                    <i class="fa-regular fa-user"></i>
-                {% endif %}
-            </a>
-        </div>
 
-        <div class="expanded-menu">
-            <div class="menu-col">
-                <div class="menu-title"><i class="fa-solid fa-compass" style="color: var(--active-text-blue); transform: rotate(15deg);"></i> {% translate "Navigator" %}</div>
-                <ul class="menu-list">
-                    <li><a href="{% url 'build:home' %}"><i class="fa-solid fa-house main-icon"></i> {% translate "Usta Qidirish" %}</a></li>
-                    <li><a href="{% url 'build:market' %}" class="{% if request.resolver_match.url_name == 'market' %}active-link{% endif %}"><i class="fa-solid fa-store main-icon"></i> {% translate "Market Pro (B2B)" %}</a></li>
-                    <li><a href="#"><i class="fa-regular fa-comment-dots main-icon"></i> {% translate "Xabarlar" %} <span class="badge">3</span></a></li>
-                </ul>
-                <div class="section-label">{% trans "Tizim" %}</div>
-                <ul class="menu-list">
-                    <li><a href="{% url 'build:workflow' %}" class="active-link"><i class="fa-solid fa-layer-group main-icon"></i> {% translate "Ish jarayonlari" %}</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
 
     <div class="main-content" style="display: flex; justify-content: center; align-items: flex-start;">
         <div style="width: 100%; max-width: 720px; display: flex; flex-direction: column; gap: 24px;">

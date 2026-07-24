@@ -1201,26 +1201,9 @@
         </div>
     </div>
 </header>
+    {% include "includes/sidebar_drawer.html" %}
 
-<!-- SIDEBAR NAV -->
-<div class="sidebar-container">
-    <div class="icon-rail">
-        <a href="{% url 'build:home' %}" class="rail-item" data-title="{% translate 'Bosh sahifa' %}"><i class="fa-solid fa-house"></i></a>
-        <a href="{% url 'build:network' %}" class="rail-item" data-title="{% translate 'Hamkasblar' %}"><i class="fa-solid fa-users"></i></a>
-        <a href="{% url 'build:builder_list' %}" class="rail-item" data-title="{% translate 'Usta Qidirish' %}"><i class="fa-solid fa-helmet-safety"></i></a>
-        <a href="{% url 'chat:chat' %}" class="rail-item" data-title="{% translate 'Chatlar' %}">
-            <i class="fa-regular fa-comment-dots"></i>
-        </a>
-        <a href="{% url 'build:payment_dashboard' %}" class="rail-item active" data-title="{% translate 'Premium' %}"><i class="fa-solid fa-gem"></i></a>
-        <a href="{% url 'build:notifications_list' %}" class="rail-item" data-title="{% translate 'Bildirishnomalar' %}">
-            <i class="fa-solid fa-bell"></i>
-        </a>
-        <div class="rail-divider"></div>
-        <a href="{% url 'build:profile' %}" class="rail-item" data-title="{% translate 'Profil sozlamalari' %}">
-            <i class="fa-regular fa-user"></i>
-        </a>
-    </div>
-</div>
+
 
 <!-- INSTAGRAM-STYLE MINIMALIST MOBILE BOTTOM NAVIGATION -->
 <div class="bottom-nav">
