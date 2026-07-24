@@ -197,13 +197,82 @@
         .dashboard-card h1 { font-size: 24px; font-weight: 800; margin-bottom: 10px; }
         .dashboard-card p { color: var(--text-muted); font-size: 15px; }
 
-        /* ── BOTTOM NAVIGATION (MOBILE) ── */
-        .bottom-nav { display: none; position: fixed; bottom: 0; padding-bottom: env(safe-area-inset-bottom); left: 0; width: 100%; background: var(--bg-panel); backdrop-filter: blur(24px); border-top: 1px solid var(--border-color); z-index: 1000; justify-content: space-around; align-items: center; height: calc(65px + env(safe-area-inset-bottom)); box-shadow: 0 -10px 30px rgba(0,0,0,0.1); }
-        .bottom-nav-item { color: var(--text-muted); font-size: 22px; display: flex; align-items: center; justify-content: center; width: 100%; height: 65px; text-decoration: none; position: relative; transition: 0.2s; }
-        .bottom-nav-item.active { color: var(--active-text-blue); }
-        .bottom-nav-item.add-btn { background: linear-gradient(135deg, #ff6b00, #ff8c33); color: #fff !important; border-radius: 50%; width: 56px; height: 56px; flex-shrink: 0; transform: translateY(-20px); box-shadow: 0 8px 25px var(--glow-color); border: 4px solid var(--bg-body); font-size: 24px; position: absolute; left: 50%; margin-left: -28px; z-index: 10; }
-        .bottom-nav-item.add-btn:active { transform: translateY(-15px) scale(0.95); }
-        .bottom-nav-item .badge { position: absolute; top: 12px; right: calc(50% - 18px); background: #ef4444; color: #fff; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 10px; border: 2px solid var(--bg-panel); }
+        /* ── INSTAGRAM-STYLE MINIMALIST BOTTOM NAVIGATION (MOBILE) ── */
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: calc(58px + env(safe-area-inset-bottom, 0px));
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+            background: rgba(9, 13, 22, 0.94);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            z-index: 9999;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.4);
+        }
+        .bottom-nav-item {
+            color: #64748b;
+            font-size: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 20%;
+            height: 58px;
+            text-decoration: none;
+            position: relative;
+            opacity: 0.55;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .bottom-nav-item.active {
+            color: var(--active-text-blue);
+            opacity: 1;
+            font-size: 21px;
+        }
+        .bottom-nav-item.active .nav-active-dot {
+            position: absolute;
+            bottom: 6px;
+            width: 4px;
+            height: 4px;
+            background-color: var(--active-text-blue);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--active-text-blue);
+        }
+        .bottom-nav-item:hover { color: #ffffff; opacity: 1; }
+        .bottom-nav-item.add-btn {
+            background: linear-gradient(135deg, #ff6b00, #ea580c);
+            color: #ffffff !important;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            opacity: 1;
+            transform: translateY(-8px);
+            box-shadow: 0 6px 20px rgba(255, 107, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+            border: 3px solid #05070c;
+            font-size: 20px;
+            flex-shrink: 0;
+            position: relative !important;
+            left: auto !important;
+            margin-left: 0 !important;
+        }
+        .bottom-nav-item.add-btn:active { transform: translateY(-4px) scale(0.95); }
+        .bottom-nav-avatar {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            transition: border-color 0.2s ease;
+        }
+        .bottom-nav-item.active .bottom-nav-avatar {
+            border-color: var(--active-text-blue);
+            box-shadow: 0 0 10px rgba(255, 107, 0, 0.5);
+        }
 
         @media (max-width: 768px) {
             body { padding-bottom: calc(90px + env(safe-area-inset-bottom)); }
