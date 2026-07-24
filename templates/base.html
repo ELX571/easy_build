@@ -215,11 +215,78 @@
             color: #ff6b00 !important;
         }
         [data-theme="light"] .bottom-nav-avatar {
-            border-color: rgba(0, 0, 0, 0.15) !important;
+            border-color: rgba(0, 0, 0        /* 🚀 MASTER INSTAGRAM OFF-CANVAS SIDE DRAWER CSS (ANY VIEWPORT WIDTH) */
+        .sidebar-container.mobile-drawer-open,
+        .sidebar-container.active,
+        .sidebar-container.open,
+        .sidebar-container.expanded,
+        #sideDrawer.active,
+        #sideDrawer.open,
+        .offcanvas-menu.active,
+        .offcanvas-menu.open {
+            display: flex !important;
+            flex-direction: column !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 300px !important;
+            max-width: 85vw !important;
+            height: 100vh !important;
+            height: 100dvh !important;
+            z-index: 100000 !important;
+            background: var(--bg-panel, #090d16) !important;
+            backdrop-filter: blur(35px) !important;
+            -webkit-backdrop-filter: blur(35px) !important;
+            border-right: 1px solid var(--border-color, rgba(255,255,255,0.12)) !important;
+            box-shadow: 0 0 100px rgba(0,0,0,0.8) !important;
+            transform: translateX(0) !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden !important;
         }
 
-        @media (max-width: 768px) {
-            /* 🚀 INSTAGRAM / iOS PREMIUM MOBILE OFF-CANVAS DRAWER MASTER CSS */
+        /* When drawer is open, hide the narrow 60px icon-rail on all screens */
+        .sidebar-container.mobile-drawer-open .icon-rail,
+        .sidebar-container.active .icon-rail,
+        .sidebar-container.open .icon-rail,
+        .sidebar-container.expanded .icon-rail,
+        #sideDrawer.active .icon-rail,
+        #sideDrawer.open .icon-rail,
+        .offcanvas-menu.active .icon-rail,
+        .offcanvas-menu.open .icon-rail {
+            display: none !important;
+        }
+
+        /* Show full expanded menu with labels and smooth scrolling when drawer is open */
+        .sidebar-container.mobile-drawer-open .expanded-menu,
+        .sidebar-container.active .expanded-menu,
+        .sidebar-container.open .expanded-menu,
+        .sidebar-container.expanded .expanded-menu,
+        #sideDrawer.active .expanded-menu,
+        #sideDrawer.open .expanded-menu,
+        .offcanvas-menu.active .expanded-menu,
+        .offcanvas-menu.open .expanded-menu {
+            display: flex !important;
+            flex-direction: column !important;
+            width: 100% !important;
+            height: 100% !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            margin: 0 !important;
+            padding: calc(20px + env(safe-area-inset-top, 0px)) 16px calc(40px + env(safe-area-inset-bottom, 0px)) 16px !important;
+            pointer-events: auto !important;
+            border: none !important;
+            box-shadow: none !important;
+            overflow-y: auto !important;
+            transform: none !important;
+            background: transparent !important;
+            -webkit-overflow-scrolling: touch !important;
+        }
+
+        @media (max-width: 1024px) {
             .sidebar-container, #sideDrawer, .offcanvas-menu {
                 display: flex !important;
                 flex-direction: column !important;
@@ -246,45 +313,10 @@
                 overflow: hidden !important;
             }
 
-            .sidebar-container.mobile-drawer-open,
-            .sidebar-container.active,
-            .sidebar-container.open,
-            #sideDrawer.active,
-            #sideDrawer.open,
-            .offcanvas-menu.active,
-            .offcanvas-menu.open {
-                transform: translateX(0) !important;
-                opacity: 1 !important;
-                visibility: visible !important;
-                pointer-events: auto !important;
-            }
-
-            /* Hide desktop icon-rail completely on mobile */
             .sidebar-container .icon-rail,
             #sideDrawer .icon-rail,
             .offcanvas-menu .icon-rail {
                 display: none !important;
-            }
-
-            /* Show full expanded menu with labels and smooth scrolling */
-            .sidebar-container .expanded-menu,
-            #sideDrawer .expanded-menu,
-            .offcanvas-menu .expanded-menu {
-                display: flex !important;
-                flex-direction: column !important;
-                width: 100% !important;
-                height: 100% !important;
-                opacity: 1 !important;
-                visibility: visible !important;
-                margin: 0 !important;
-                padding: calc(20px + env(safe-area-inset-top, 0px)) 16px calc(40px + env(safe-area-inset-bottom, 0px)) 16px !important;
-                pointer-events: auto !important;
-                border: none !important;
-                box-shadow: none !important;
-                overflow-y: auto !important;
-                transform: none !important;
-                background: transparent !important;
-                -webkit-overflow-scrolling: touch !important;
             }
 
             .expanded-menu .menu-col {
@@ -336,6 +368,7 @@
 
             /* iOS Input Zoom Prevention */
             input, textarea, select { font-size: 16px !important; }
+        }
             
             /* Top Header Notch Alignment */
             header {
